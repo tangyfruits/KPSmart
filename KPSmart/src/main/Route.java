@@ -5,6 +5,7 @@ public class Route {
 	private Location destination;
 	private String company;
 	private String type;
+	private String priority;
 	private double weightCost;
 	private double volumeCost;
 	private int maxWeight;
