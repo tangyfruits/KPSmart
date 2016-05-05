@@ -8,6 +8,12 @@ public class Location {
 	private List<Route> routes;
 	private List<CustomerPrice> prices;
 
+	public Location(String name, List<Route> routes, List<CustomerPrice> prices) {
+		this.name = name;
+		this.routes = routes;
+		this.prices = prices;
+	}
+
 	public String getName() {
 		return name;
 	}

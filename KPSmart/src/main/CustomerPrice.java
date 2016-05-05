@@ -12,6 +12,15 @@ public class CustomerPrice {
 		Standard, DomesticAir, International;
 	}
 
+	public CustomerPrice(Location origin, Location destination, Priority priority, double weightCost,
+			double volumeCost) {
+		this.origin = origin;
+		this.destination = destination;
+		this.priority = priority;
+		this.weightCost = weightCost;
+		this.volumeCost = volumeCost;
+	}
+
 	public double getWeightCost() {
 		return weightCost;
 	}

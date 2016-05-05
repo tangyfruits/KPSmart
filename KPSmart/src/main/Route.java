@@ -23,6 +23,24 @@ public class Route {
 		Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday;
 	}
 
+	public Route(Location origin, Location destination, String company, String type, Priority priority,
+			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, int frquency, Day day,
+			CustomerPrice price) {
+		this.origin = origin;
+		this.destination = destination;
+		this.company = company;
+		this.type = type;
+		this.priority = priority;
+		this.weightCost = weightCost;
+		this.volumeCost = volumeCost;
+		this.maxWeight = maxWeight;
+		this.maxVolume = maxVolume;
+		this.duration = duration;
+		this.frquency = frquency;
+		this.day = day;
+		this.price = price;
+	}
+
 	public Location getOrigin() {
 		return origin;
 	}
