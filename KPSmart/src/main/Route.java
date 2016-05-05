@@ -5,7 +5,7 @@ public class Route {
 	private Location destination;
 	private String company;
 	private String type;
-	private String priority;
+	private Priority priority;
 	private double weightCost;
 	private double volumeCost;
 	private int maxWeight;
@@ -14,6 +14,10 @@ public class Route {
 	private int frquency;
 	private Day day;
 	private CustomerPrice price;
+
+	private enum Priority {
+		Standard, DomesticAir, International;
+	}
 
 	private enum Day {
 		Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday;
@@ -87,7 +91,7 @@ public class Route {
 		return day;
 	}
 
-	public void setDay(String day) {
+	public void setDay(Day day) {
 		this.day = day;
 	}
 
@@ -99,11 +103,11 @@ public class Route {
 		this.price = price;
 	}
 
-	public String getPriority() {
+	public Priority getPriority() {
 		return priority;
 	}
 
-	public void setPriority(String priority) {
+	public void setPriority(Priority priority) {
 		this.priority = priority;
 	}
 }

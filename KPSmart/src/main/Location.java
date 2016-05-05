@@ -23,7 +23,7 @@ public class Location {
 	public void setRoutes(List<Route> routes) {
 		this.routes = routes;
 	}
-	
+
 	public void addRoute(Route route) {
 		this.routes.add(route);
 	}
@@ -35,9 +35,9 @@ public class Location {
 	public void setPrices(List<CustomerPrice> prices) {
 		this.prices = prices;
 	}
-	
+
 	public void addPrice(CustomerPrice price) {
 		this.prices.add(price);
 	}
-	
+
 }

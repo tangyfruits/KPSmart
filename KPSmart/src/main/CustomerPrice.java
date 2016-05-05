@@ -1,32 +1,42 @@
 package main;
 
 public class CustomerPrice {
-	
+
 	private Location origin;
 	private Location destination;
-	private String priority;
+	private Priority priority;
 	private double weightCost;
 	private double volumeCost;
-		
+
+	private enum Priority {
+		Standard, DomesticAir, International;
+	}
+
 	public double getWeightCost() {
 		return weightCost;
 	}
+
 	public void setWeightCost(double weightCost) {
 		this.weightCost = weightCost;
 	}
+
 	public double getVolumeCost() {
 		return volumeCost;
 	}
+
 	public void setVolumeCost(double volumeCost) {
 		this.volumeCost = volumeCost;
 	}
+
 	public Location getOrigin() {
 		return origin;
 	}
+
 	public Location getDestination() {
 		return destination;
 	}
-	public String getPriority() {
+
+	public Priority getPriority() {
 		return priority;
 	}
 }
