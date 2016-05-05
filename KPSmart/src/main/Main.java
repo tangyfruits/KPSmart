@@ -41,10 +41,25 @@ public class Main {
 		price = getCustomerPrice(originLoc, destinationLoc, origin,
 				destination, priority);
 
-		// create route and add to graph
+		//check if route already exists, if it does, update it
+		for(int k = 0; k<originLoc.getRoutes().size(); k++ ){
+			Route r = originLoc.getRoutes().get(k);
+			if(r.getDestination().equals(destinationLoc) && r.getCompany().equals(company) && r.getType().equals(type)){
+				r.setWeightCost(weightCost);
+				r.setVolumeCost(volumeCost);
+				r.setMaxWeight(maxWeight);
+				r.setMaxVolume(maxVolume);
+				r.setDuration(duration);
+				r.setFrequency(frequency);
+				r.setDay(day);
+			}
+		}
+		
+		// if it doesn't always exist, create route and add to graph
 		Route route = new Route(originLoc, destinationLoc, company, type,
 				priority, weightCost, volumeCost, maxWeight, maxVolume,
 				duration, frequency, day, price);
+		
 		originLoc.addRoute(route);
 
 		//TODO add event to logfile

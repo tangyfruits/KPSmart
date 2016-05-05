@@ -89,11 +89,11 @@ public class Route {
 		this.duration = duration;
 	}
 	
-	public int getFrquency() {
+	public int getFrequency() {
 		return frequency;
 	}
 	
-	public void setFrquency(int frquency) {
+	public void setFrequency(int frquency) {
 		this.frequency = frquency;
 	}
 	
