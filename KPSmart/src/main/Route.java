@@ -93,5 +93,13 @@ public class Route {
 
 	public void setPrice(CustomerPrice price) {
 		this.price = price;
+	}
+
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
 	}	
 }
