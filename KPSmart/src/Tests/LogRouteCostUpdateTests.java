@@ -90,6 +90,16 @@ public class LogRouteCostUpdateTests {
 		assertEquals(routeFinal.getType(), typeStart);
 	}
 	
+	//add the same route again - shouldn't add
+	@Test
+	public void test8() {
+		Main main = setUpRoutes();
+		assertEquals(1,main.getLocations().get(0).getRoutes().size());
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air", "Domestic Air", 3.5, 4.5, 15, 50, 12, 18, "Tuesday");
+		assertEquals(2, main.getLocations().size());
+		assertEquals(1,main.getLocations().get(0).getRoutes().size());
+	}
+	
 	//HELPER
 	public Main setUpRoutes() {
 		Main main = new Main();
