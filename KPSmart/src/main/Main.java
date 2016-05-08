@@ -5,10 +5,13 @@ import java.util.List;
 
 public class Main {
 
-	private static List<Location> locations = new ArrayList<Location>();
+	private List<Location> locations;
 	
+	public Main() {
+		locations = new ArrayList<Location>();
+	}
 	
-	public static void logTransportCostUpdate(String origin, String destination,
+	public void logTransportCostUpdate(String origin, String destination,
 			String company, String type, String priority, double weightCost,
 			double volumeCost, int maxWeight, int maxVolume, int duration,
 			int frequency, String day) {
@@ -30,11 +33,11 @@ public class Main {
 		// if Locations don't exist yet, add them to the graph
 		if (originLoc == null) {
 			originLoc = new Location(origin);
-			locations.add(originLoc);
+			addLocation(originLoc);
 		}
 		if (destinationLoc == null) {
 			destinationLoc = new Location(destination);
-			locations.add(destinationLoc);
+			addLocation(destinationLoc);
 		}
 
 		// get customer price matching the route
@@ -65,7 +68,7 @@ public class Main {
 		//TODO add event to logfile
 	}
 	
-	public static CustomerPrice getCustomerPrice(Location originLoc,
+	public CustomerPrice getCustomerPrice(Location originLoc,
 			Location destinationLoc, String origin, String destination,
 			String priority) {
 		// check if there's already a price for the (origin, destination,
@@ -92,11 +95,10 @@ public class Main {
 		return customerPrice;
 	}
 	
-	public static List<Location> getLocations() {
+	public List<Location> getLocations() {
 		return locations;
 	}
-	public static void setLocations(List<Location> location) {
-		locations = location;
+	public void addLocation(Location location) {
+		locations.add(location);
 	}
-
 }
