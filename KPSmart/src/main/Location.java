@@ -1,12 +1,17 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Location {
 
 	private String name;
-	private List<Route> routes;
-	private List<CustomerPrice> prices;
+	private List<Route> routes = new ArrayList<Route>();
+	private List<CustomerPrice> prices = new ArrayList<CustomerPrice>();
+	
+	public Location(String name) {
+		this.name = name;
+	}
 
 	public String getName() {
 		return name;
