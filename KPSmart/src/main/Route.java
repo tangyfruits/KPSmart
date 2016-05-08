@@ -11,9 +11,27 @@ public class Route {
 	private int maxWeight;
 	private int maxVolume;
 	private int duration;
-	private int frquency;
+	private int frequency;
 	private String day;
 	private CustomerPrice price;
+	
+	public Route(Location origin, Location destination, String company, String type, 
+			String priority, double weightCost, double volumeCost, int maxWeight, 
+			int maxVolume, int duration, int frequency, String day, CustomerPrice customerPrice){
+		this.origin = origin;
+		this.destination = destination;
+		this.company = company;
+		this.type = type;
+		this.priority = priority;
+		this.weightCost = weightCost;
+		this.volumeCost = volumeCost;
+		this.maxWeight = maxWeight;
+		this.maxVolume = maxVolume;
+		this.duration = duration;
+		this.frequency = frequency;
+		this.day = day;
+		this.price = customerPrice;
+	}
 	
 	public Location getOrigin() {
 		return origin;
@@ -71,12 +89,12 @@ public class Route {
 		this.duration = duration;
 	}
 	
-	public int getFrquency() {
-		return frquency;
+	public int getFrequency() {
+		return frequency;
 	}
 	
-	public void setFrquency(int frquency) {
-		this.frquency = frquency;
+	public void setFrequency(int frquency) {
+		this.frequency = frquency;
 	}
 	
 	public String getDay() {
