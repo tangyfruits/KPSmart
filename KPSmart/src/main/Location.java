@@ -7,8 +7,6 @@ public class Location {
 	private String name;
 	private List<Route> routes;
 	private List<CustomerPrice> prices;
-	private List<Route> directRoutes;
-	private double lowestPrice = 999;
 
 	public Location(String name, List<Route> routes, List<CustomerPrice> prices) {
 		this.name = name;
@@ -16,21 +14,7 @@ public class Location {
 		this.prices = prices;
 	}
 
-	public Route getBestRoute(Location origin, Location destination) {
-		for (Route r : routes) {
-			if (r.getDestination() == destination) {
-				directRoutes.add(r);
-			}
-		}
-		// for (Route r : directRoutes){
-		// if (r.getPrice() < lowestPrice){
-		//
-		// }
-		// }
 
-		return null;
-
-	}
 
 	public String getName() {
 		return name;

@@ -128,4 +128,7 @@ public class Route {
 	public void setPriority(Priority priority) {
 		this.priority = priority;
 	}
+	public double getCost(double weight, double volume){
+		return (this.volumeCost * volume + this.weightCost * weight);
+	}
 }
