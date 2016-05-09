@@ -20,9 +20,10 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {		
-		Parent root = FXMLLoader.load(getClass().getResource("gui.fxml"));
-		primaryStage.setTitle("This is the Window title woooo!!!");
-		primaryStage.setScene(new Scene(root, 300, 275));
+		Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+		primaryStage.setTitle("KPSmart");
+		Scene scene = new Scene(root, 600, 400);
+		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 	
