@@ -7,14 +7,33 @@ public class Location {
 	private String name;
 	private List<Route> routes;
 	private List<CustomerPrice> prices;
+	private double costSoFar;
+	
+
+	private boolean visited;
+	public Location fromLocation;
+
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
+	}
 
 	public Location(String name, List<Route> routes, List<CustomerPrice> prices) {
 		this.name = name;
 		this.routes = routes;
 		this.prices = prices;
+		this.fromLocation = null;
+	}
+	public double getCostSoFar() {
+		return costSoFar;
 	}
 
-
+	public void setCostSoFar(double costSoFar) {
+		this.costSoFar = costSoFar;
+	}
 
 	public String getName() {
 		return name;
