@@ -98,6 +98,7 @@ public class Main {
 	public List<Location> getLocations() {
 		return locations;
 	}
+	
 	public void addLocation(Location location) {
 		locations.add(location);
 	}
