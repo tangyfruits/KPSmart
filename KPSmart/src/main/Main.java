@@ -58,8 +58,7 @@ public class Main {
 					weightCost, volumeCost);
 			originLoc.addPrice(price);
 			return price;
-		}
-		
+		}		
 		return null;
 	}
 	
