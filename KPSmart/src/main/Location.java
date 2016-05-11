@@ -8,7 +8,6 @@ public class Location {
 	private List<Route> routes;
 	private List<CustomerPrice> prices;
 	private double costSoFar;
-	
 
 	private boolean visited;
 	public Location fromLocation;
@@ -21,18 +20,8 @@ public class Location {
 		this.visited = visited;
 	}
 
-	public Location(String name, List<Route> routes, List<CustomerPrice> prices) {
+	public Location(String name) {
 		this.name = name;
-		this.routes = routes;
-		this.prices = prices;
-		this.fromLocation = null;
-	}
-	public double getCostSoFar() {
-		return costSoFar;
-	}
-
-	public void setCostSoFar(double costSoFar) {
-		this.costSoFar = costSoFar;
 	}
 
 	public String getName() {
@@ -65,6 +54,11 @@ public class Location {
 
 	public void addPrice(CustomerPrice price) {
 		this.prices.add(price);
+	}
+
+	public void setCostSoFar(double costSoFar) {
+		this.costSoFar = costSoFar;
+		
 	}
 
 }
