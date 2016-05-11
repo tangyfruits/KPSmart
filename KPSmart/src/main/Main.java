@@ -131,7 +131,7 @@ public class Main {
 		CustomerPrice customerPrice = null;
 		for (int k = 0; k < originLoc.getPrices().size(); k++) {
 			if (originLoc.getPrices().get(k).getDestination()
-					.equals(destination)
+					.equals(destinationLoc)
 					&& originLoc.getPrices().get(k).getPriority()
 							.equals(priority)) {
 				customerPrice = originLoc.getPrices().get(k);
@@ -147,15 +147,11 @@ public class Main {
 			    try{
 		            custWeightCost = Double.parseDouble(input.readLine());
 		        } catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			    System.out.print("Enter volumeCost");
 			    try{
 		            custVolCost = Double.parseDouble(input.readLine());
 			    }catch(IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 		      
 			logCustomerPriceUpdate(origin, destination, priority, custWeightCost, custVolCost);
