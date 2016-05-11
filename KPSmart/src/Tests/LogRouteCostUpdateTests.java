@@ -17,8 +17,8 @@ import org.junit.Test;
  */
 public class LogRouteCostUpdateTests {
 
-	// add Locations that don't already exist
-	@Test
+	//add Locations that don't already exist
+	@Test 
 	public void test1() {
 		Main main = setUpRoutes();
 		assertEquals(2, main.getLocations().size());
