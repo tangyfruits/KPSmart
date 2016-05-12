@@ -40,26 +40,25 @@ public class Main {
 		}
 		
 		//check if customer price already exists, if so, update it
-		Boolean priceExists = false;
 		for(int i = 0; i<originLoc.getPrices().size(); i++){
 			CustomerPrice c = originLoc.getPrices().get(i);
 			if(c.getDestination().equals(destinationLoc) && c.getPriority().equals(priority)){
 				c.setVolumeCost(volumeCost);
 				c.setWeightCost(weightCost);
-				priceExists = true;
 				return c;
+				//TODO add event to log
+				//TODO add 1 to total events
 			}
 		}
 		
 		//if it doesn't exist, create it, add it to the relevant Location
 		CustomerPrice price;
-		if (!priceExists) {
 			price = new CustomerPrice(originLoc, destinationLoc, priority,
 					weightCost, volumeCost);
 			originLoc.addPrice(price);
 			return price;
-		}		
-		return null;
+			//TODO add event to log
+			//TODO add 1 to total events
 	}
 	
 	public void logTransportCostUpdate(String origin, String destination,
@@ -120,6 +119,7 @@ public class Main {
 		}
 
 		//TODO add event to logfile
+		//TODO add 1 to total events
 	}
 	
 	public CustomerPrice getCustomerPrice(Location originLoc,
