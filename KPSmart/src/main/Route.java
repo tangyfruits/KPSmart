@@ -89,15 +89,14 @@ public class Route {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
-<<<<<<< HEAD
 
 	public int getFrquency() {
-		return frquency;
+		return frequency;
 	}
 
 	public void setFrquency(int frquency) {
-		this.frquency = frquency;
-=======
+		this.frequency = frquency;
+	}
 	
 	public int getFrequency() {
 		return frequency;
@@ -105,14 +104,13 @@ public class Route {
 	
 	public void setFrequency(int frquency) {
 		this.frequency = frquency;
->>>>>>> refs/remotes/origin/master
 	}
 
-	public Day getDay() {
+	public String getDay() {
 		return day;
 	}
 
-	public void setDay(Day day) {
+	public void setDay(String day) {
 		this.day = day;
 	}
 
@@ -124,11 +122,11 @@ public class Route {
 		this.price = price;
 	}
 
-	public Priority getPriority() {
+	public String getPriority() {
 		return priority;
 	}
 
-	public void setPriority(Priority priority) {
+	public void setPriority(String priority) {
 		this.priority = priority;
 	}
 	public double getCost(double weight, double volume){
