@@ -5,27 +5,20 @@ public class Route {
 	private Location destination;
 	private String company;
 	private String type;
-	private Priority priority;
+	private String priority;
 	private double weightCost;
 	private double volumeCost;
 	private int maxWeight;
 	private int maxVolume;
 	private int duration;
-	private int frquency;
-	private Day day;
+	private int frequency;
+	private String day;
 	private CustomerPrice price;
+	
+	public Route(Location origin, Location destination, String company, String type, 
+			String priority, double weightCost, double volumeCost, int maxWeight, 
+			int maxVolume, int duration, int frequency, String day, CustomerPrice customerPrice){
 
-	private enum Priority {
-		Standard, DomesticAir, International;
-	}
-
-	private enum Day {
-		Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday;
-	}
-
-	public Route(Location origin, Location destination, String company, String type, Priority priority,
-			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, int frquency, Day day,
-			CustomerPrice price) {
 		this.origin = origin;
 		this.destination = destination;
 		this.company = company;
@@ -36,9 +29,9 @@ public class Route {
 		this.maxWeight = maxWeight;
 		this.maxVolume = maxVolume;
 		this.duration = duration;
-		this.frquency = frquency;
+		this.frequency = frequency;
 		this.day = day;
-		this.price = price;
+		this.price = customerPrice;
 	}
 
 	public Location getOrigin() {
@@ -96,6 +89,7 @@ public class Route {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
+<<<<<<< HEAD
 
 	public int getFrquency() {
 		return frquency;
@@ -103,6 +97,15 @@ public class Route {
 
 	public void setFrquency(int frquency) {
 		this.frquency = frquency;
+=======
+	
+	public int getFrequency() {
+		return frequency;
+	}
+	
+	public void setFrequency(int frquency) {
+		this.frequency = frquency;
+>>>>>>> refs/remotes/origin/master
 	}
 
 	public Day getDay() {

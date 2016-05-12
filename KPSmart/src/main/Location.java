@@ -1,12 +1,13 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Location {
 
 	private String name;
-	private List<Route> routes;
-	private List<CustomerPrice> prices;
+	private List<Route> routes= new ArrayList<Route>();
+	private List<CustomerPrice> prices = new ArrayList<CustomerPrice>();;
 	private double costSoFar;
 
 	private boolean visited;
@@ -19,6 +20,8 @@ public class Location {
 	public void setVisited(boolean visited) {
 		this.visited = visited;
 	}
+
+
 
 	public Location(String name) {
 		this.name = name;

@@ -4,16 +4,13 @@ public class CustomerPrice {
 
 	private Location origin;
 	private Location destination;
-	private Priority priority;
+	private String priority;
 	private double weightCost;
 	private double volumeCost;
 
-	private enum Priority {
-		Standard, DomesticAir, International;
-	}
+	public CustomerPrice(Location origin, Location destination,
+			String priority, double weightCost, double volumeCost) {
 
-	public CustomerPrice(Location origin, Location destination, Priority priority, double weightCost,
-			double volumeCost) {
 		this.origin = origin;
 		this.destination = destination;
 		this.priority = priority;
@@ -45,7 +42,7 @@ public class CustomerPrice {
 		return destination;
 	}
 
-	public Priority getPriority() {
+	public String getPriority() {
 		return priority;
 	}
 }

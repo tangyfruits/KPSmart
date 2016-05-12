@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: FFF3E0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="KPSmart" textFill="#655a5a">
+         <font>
+            <Font name="System Bold" size="35.0" />
+         </font>
+      </Label>
+      <Button layoutX="359.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: E9D5B9;" text="History">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+      <Button layoutX="439.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: E9D5B9;" text="Reports">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+      <Button layoutX="521.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: E9D5B9;" text="Logout">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+      <Separator layoutY="61.0" prefHeight="5.0" prefWidth="600.0" />
+      <MenuButton layoutX="201.0" layoutY="22.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="140.0" style="-fx-background-color: E9D5B9;" text="Log Event">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Delivery Request" />
+          <MenuItem mnemonicParsing="false" text="Discontinue Transport" />
+            <MenuItem mnemonicParsing="false" text="Update Existing Log" />
+        </items>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </MenuButton>
+     
+   </children>
+
+</AnchorPane>

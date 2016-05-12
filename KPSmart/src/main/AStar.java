@@ -48,12 +48,12 @@ public class AStar {
 			}
 			for (Route r : myTuple.start.getRoutes()) {
 				Location neighbour = null;
-				if (myTuple.start == r.getOrigin()) {
+				if (myTuple.start.getName() == r.getOrigin()) {
 					neighbour = r.getDestination();
 					
 				}
-				if (myTuple.start == r.getDestination()) {
-					neighbour = r.getOrigin();
+				if (myTuple.start.getName() == r.getDestination()) {
+					neighbour = new Location(r.getOrigin());
 				}
 				if (!neighbour.isVisited()) {
 					double costToNeigh = myTuple.costSoFar + r.getCost(weight, volume);
