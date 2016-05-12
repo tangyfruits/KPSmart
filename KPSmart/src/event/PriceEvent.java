@@ -1,7 +1,5 @@
 package event;
 
-import main.Location;
-
 public class PriceEvent implements Event {
 	
 	// VARIABLES
@@ -20,45 +18,37 @@ public class PriceEvent implements Event {
 		this.volumeCost = volumeCost;
 	}
 
-	
 	// METHODS
+	// Getters
 	public String getOrigin() {
 		return origin;
 	}
-
 	public String getDestination() {
 		return destination;
 	}
-
 	public String getPriority() {
 		return priority;
 	}
-
 	public double getWeightCost() {
 		return weightCost;
 	}
-
 	public double getVolumeCost() {
 		return volumeCost;
 	}
 
-	
+	// Setters
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}
-
 	public void setDestination(String destination) {
 		this.destination = destination;
 	}
-
 	public void setPriority(String priority) {
 		this.priority = priority;
 	}
-
 	public void setWeightCost(double weightCost) {
 		this.weightCost = weightCost;
 	}
-
 	public void setVolumeCost(double volumeCost) {
 		this.volumeCost = volumeCost;
 	}

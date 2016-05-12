@@ -1,13 +1,23 @@
 package Tests;
 
 import static org.junit.Assert.*;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import main.LogWriter;
 import event.*;
 
 public class LogWriterTests {
-
+	
+	LogWriter writer;
+	
+	@Before
+	public void setupLogWriter() {
+		writer = new LogWriter("logfile.xml");
+	}
+	
+	
 	@Test
 	public void testLogFileExists() {
 		fail("Not yet implemented");
@@ -30,7 +40,8 @@ public class LogWriterTests {
 
 	@Test
 	public void testWriteDiscontinue() {
-		fail("Not yet implemented");
+		DiscontinueEvent disc = new DiscontinueEvent("NZ Post", "Wellington", "Christchurch", "Sea");
+		writer.writeDiscontinue(disc);
 	}
 
 }
