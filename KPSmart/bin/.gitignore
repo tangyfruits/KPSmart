@@ -1,4 +1,9 @@
 /Tests/
+<<<<<<< HEAD
 /fxmlTest/
 /main/
 /views/
+=======
+/main/
+/fxmlTest/
+>>>>>>> master
