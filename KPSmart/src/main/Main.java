@@ -1,5 +1,8 @@
 package main;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +12,54 @@ public class Main {
 	
 	public Main() {
 		locations = new ArrayList<Location>();
+	}
+	
+	public CustomerPrice logCustomerPriceUpdate(String origin, String destination, 
+			String priority, double weightCost, double volumeCost){
+		
+		//find the locations matching the given starings, if they are already in the graph
+		Location originLoc = null;
+		Location destinationLoc = null;
+		for (int i = 0; i < locations.size(); i++) {
+			if (locations.get(i).getName().equals(origin)) {
+				originLoc = locations.get(i);
+			}
+			if (locations.get(i).getName().equals(destination)) {
+				destinationLoc = locations.get(i);
+			}
+		}
+		
+		//if locations don't exist yet, add them to the graph
+		if (originLoc == null) {
+			originLoc = new Location(origin);
+			addLocation(originLoc);
+		}
+		if (destinationLoc == null) {
+			destinationLoc = new Location(destination);
+			addLocation(destinationLoc);
+		}
+		
+		//check if customer price already exists, if so, update it
+		Boolean priceExists = false;
+		for(int i = 0; i<originLoc.getPrices().size(); i++){
+			CustomerPrice c = originLoc.getPrices().get(i);
+			if(c.getDestination().equals(destinationLoc) && c.getPriority().equals(priority)){
+				c.setVolumeCost(volumeCost);
+				c.setWeightCost(weightCost);
+				priceExists = true;
+				return c;
+			}
+		}
+		
+		//if it doesn't exist, create it, add it to the relevant Location
+		CustomerPrice price;
+		if (!priceExists) {
+			price = new CustomerPrice(originLoc, destinationLoc, priority,
+					weightCost, volumeCost);
+			originLoc.addPrice(price);
+			return price;
+		}		
+		return null;
 	}
 	
 	public void logTransportCostUpdate(String origin, String destination,
@@ -45,6 +96,7 @@ public class Main {
 				destination, priority);
 
 		//check if route already exists, if it does, update it
+		Boolean routeExists = false;
 		for(int k = 0; k<originLoc.getRoutes().size(); k++ ){
 			Route r = originLoc.getRoutes().get(k);
 			if(r.getDestination().equals(destinationLoc) && r.getCompany().equals(company) && r.getType().equals(type)){
@@ -55,15 +107,17 @@ public class Main {
 				r.setDuration(duration);
 				r.setFrequency(frequency);
 				r.setDay(day);
+				routeExists = true;
 			}
 		}
 		
-		// if it doesn't always exist, create route and add to graph
-		Route route = new Route(originLoc, destinationLoc, company, type,
-				priority, weightCost, volumeCost, maxWeight, maxVolume,
-				duration, frequency, day, price);
-		
-		originLoc.addRoute(route);
+		if (!routeExists) {
+			// if it doesn't always exist, create route and add to graph
+			Route route = new Route(originLoc, destinationLoc, company, type,
+					priority, weightCost, volumeCost, maxWeight, maxVolume,
+					duration, frequency, day, price);
+			originLoc.addRoute(route);
+		}
 
 		//TODO add event to logfile
 	}
@@ -76,21 +130,30 @@ public class Main {
 		CustomerPrice customerPrice = null;
 		for (int k = 0; k < originLoc.getPrices().size(); k++) {
 			if (originLoc.getPrices().get(k).getDestination()
-					.equals(destination)
+					.equals(destinationLoc)
 					&& originLoc.getPrices().get(k).getPriority()
 							.equals(priority)) {
 				customerPrice = originLoc.getPrices().get(k);
 			}
 		}
-		//if there's no customer price
+		//if there's no customer price, request one
+		//TODO replace console input with GUI
 		if (customerPrice == null) {
-			// load customerPrice
-			//TODO call logCustomerPrice here and replace this stuff
-			double custWeightCost = -1; 
-			double custVolumeCost = -1;
-			customerPrice = new CustomerPrice(originLoc, destinationLoc,
-					priority, custWeightCost, custVolumeCost);
-			
+			double custWeightCost = -1;
+			double custVolCost = -1;
+			    BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+			    System.out.print("Enter weightCost");
+			    try{
+		            custWeightCost = Double.parseDouble(input.readLine());
+		        } catch (IOException e) {
+				}
+			    System.out.print("Enter volumeCost");
+			    try{
+		            custVolCost = Double.parseDouble(input.readLine());
+			    }catch(IOException e) {
+				}
+		      
+			logCustomerPriceUpdate(origin, destination, priority, custWeightCost, custVolCost);
 		}
 		return customerPrice;
 	}

@@ -108,8 +108,4 @@ public class Route {
 	public CustomerPrice getPrice() {
 		return price;
 	}
-
-	public void setPrice(CustomerPrice price) {
-		this.price = price;
-	}	
 }
