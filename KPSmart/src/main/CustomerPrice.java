@@ -2,12 +2,14 @@ package main;
 
 public class CustomerPrice {
 	
+	// VARIABLES
 	private Location origin;
 	private Location destination;
 	private String priority;
 	private double weightCost;
 	private double volumeCost;
 	
+	// CONSTRUCTORS
 	public CustomerPrice(Location origin, Location destination,
 			String priority, double weightCost, double volumeCost) {
 		this.origin = origin;
@@ -16,7 +18,8 @@ public class CustomerPrice {
 		this.weightCost = weightCost;
 		this.volumeCost = volumeCost;
 	}
-		
+	
+	// METHODS
 	public double getWeightCost() {
 		return weightCost;
 	}

@@ -1,9 +1,10 @@
-package main;
+package event;
 
-public class Route {
+public class CostEvent implements Event {
+	
 	// VARIABLES
-	private Location origin;
-	private Location destination;
+	private String origin;
+	private String destination;
 	private String company;
 	private String type;
 	private String priority;
@@ -14,12 +15,18 @@ public class Route {
 	private int duration;
 	private int frequency;
 	private String day;
-	private CustomerPrice price;
 	
 	// CONSTRUCTOR
-	public Route(Location origin, Location destination, String company, String type, 
-			String priority, double weightCost, double volumeCost, int maxWeight, 
-			int maxVolume, int duration, int frequency, String day, CustomerPrice customerPrice){
+	
+	
+	// METHODS
+	// Getter
+	public String getOrigin() {
+		return origin;
+	}
+	public CostEvent(String origin, String destination, String company, String type, String priority, 
+			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, 
+			int frequency, String day) {
 		this.origin = origin;
 		this.destination = destination;
 		this.company = company;
@@ -32,15 +39,8 @@ public class Route {
 		this.duration = duration;
 		this.frequency = frequency;
 		this.day = day;
-		this.price = customerPrice;
 	}
-	
-	// METHODS
-	// Getters
-	public Location getOrigin() {
-		return origin;
-	}
-	public Location getDestination() {
+	public String getDestination() {
 		return destination;
 	}
 	public String getCompany() {
@@ -73,14 +73,26 @@ public class Route {
 	public String getDay() {
 		return day;
 	}
-	public CustomerPrice getPrice() {
-		return price;
-	}
 	
 	// Setters
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
 	public void setWeightCost(double weightCost) {
 		this.weightCost = weightCost;
-	}	
+	}
 	public void setVolumeCost(double volumeCost) {
 		this.volumeCost = volumeCost;
 	}
@@ -93,13 +105,10 @@ public class Route {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
-	public void setFrequency(int frquency) {
-		this.frequency = frquency;
+	public void setFrequency(int frequency) {
+		this.frequency = frequency;
 	}
 	public void setDay(String day) {
 		this.day = day;
 	}
-	public void setPrice(CustomerPrice price) {
-		this.price = price;
-	}	
 }
