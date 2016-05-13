@@ -2,18 +2,22 @@ package event;
 
 public class DiscontinueEvent implements Event {
 	
+	// VARIABLES
 	private String company;
 	private String to;
 	private String from;
 	private String type;
 	
+	// CONSTRUCTOR
 	public DiscontinueEvent(String company, String to, String from, String type) {
 		this.company = company;
 		this.to = to;
 		this.from = from;
 		this.type = type;
 	}
-
+	
+	// METHODS
+	// Getters
 	public String getCompany() {
 		return company;
 	}
@@ -26,7 +30,8 @@ public class DiscontinueEvent implements Event {
 	public String getType() {
 		return type;
 	}
-
+	
+	// Setters
 	public void setCompany(String company) {
 		this.company = company;
 	}

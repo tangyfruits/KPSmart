@@ -1,6 +1,7 @@
 package main;
 
 public class Route {
+	// VARIABLES
 	private Location origin;
 	private Location destination;
 	private String company;
@@ -15,6 +16,7 @@ public class Route {
 	private String day;
 	private CustomerPrice price;
 	
+	// CONSTRUCTOR
 	public Route(Location origin, Location destination, String company, String type, 
 			String priority, double weightCost, double volumeCost, int maxWeight, 
 			int maxVolume, int duration, int frequency, String day, CustomerPrice customerPrice){
@@ -33,82 +35,70 @@ public class Route {
 		this.price = customerPrice;
 	}
 	
+	// METHODS
+	// Getters
 	public Location getOrigin() {
 		return origin;
 	}
-	
 	public Location getDestination() {
 		return destination;
 	}
-	
 	public String getCompany() {
 		return company;
 	}
-	
 	public String getType() {
 		return type;
 	}
-	
+	public String getPriority() {
+		return priority;
+	}
 	public double getWeightCost() {
 		return weightCost;
 	}
-	
-	public void setWeightCost(double weightCost) {
-		this.weightCost = weightCost;
-	}
-	
 	public double getVolumeCost() {
 		return volumeCost;
 	}
-	
-	public void setVolumeCost(double volumeCost) {
-		this.volumeCost = volumeCost;
-	}
-	
 	public int getMaxWeight() {
 		return maxWeight;
 	}
-	
-	public void setMaxWeight(int maxWeight) {
-		this.maxWeight = maxWeight;
-	}
-	
 	public int getMaxVolume() {
 		return maxVolume;
 	}
-	
-	public void setMaxVolume(int maxVolume) {
-		this.maxVolume = maxVolume;
-	}
-	
 	public int getDuration() {
 		return duration;
 	}
-	
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
-	
 	public int getFrequency() {
 		return frequency;
 	}
-	
-	public void setFrequency(int frquency) {
-		this.frequency = frquency;
-	}
-	
 	public String getDay() {
 		return day;
 	}
-	
-	public void setDay(String day) {
-		this.day = day;
-	}
-
 	public CustomerPrice getPrice() {
 		return price;
 	}
-
+	
+	// Setters
+	public void setWeightCost(double weightCost) {
+		this.weightCost = weightCost;
+	}	
+	public void setVolumeCost(double volumeCost) {
+		this.volumeCost = volumeCost;
+	}
+	public void setMaxWeight(int maxWeight) {
+		this.maxWeight = maxWeight;
+	}
+	public void setMaxVolume(int maxVolume) {
+		this.maxVolume = maxVolume;
+	}
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+	public void setFrequency(int frquency) {
+		this.frequency = frquency;
+	}
+	public void setDay(String day) {
+		this.day = day;
+	}
 	public void setPrice(CustomerPrice price) {
 		this.price = price;
 	}	
