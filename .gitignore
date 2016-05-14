@@ -1,5 +1,5 @@
 # Class files
-bin/
+bin/*
 
 # Eclipse config files
 .project
