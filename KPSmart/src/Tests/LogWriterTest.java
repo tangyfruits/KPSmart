@@ -11,7 +11,7 @@ import main.LogWriter;
 import main.Route;
 import event.*;
 
-public class LogWriterTests {
+public class LogWriterTest {
 	
 	LogWriter writer;
 	

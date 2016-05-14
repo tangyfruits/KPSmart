@@ -17,13 +17,6 @@ public class CostEvent implements Event {
 	private String day;
 	
 	// CONSTRUCTOR
-	
-	
-	// METHODS
-	// Getter
-	public String getOrigin() {
-		return origin;
-	}
 	public CostEvent(String origin, String destination, String company, String type, String priority, 
 			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, 
 			int frequency, String day) {
@@ -39,6 +32,12 @@ public class CostEvent implements Event {
 		this.duration = duration;
 		this.frequency = frequency;
 		this.day = day;
+	}
+	
+	// METHODS
+	// Getter
+	public String getOrigin() {
+		return origin;
 	}
 	public String getDestination() {
 		return destination;
