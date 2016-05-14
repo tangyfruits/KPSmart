@@ -1,6 +1,12 @@
 # Class files
-bin/*
+KPSmart/bin/
 
 # Eclipse config files
 .project
 .classpath
+KPSmart/.classpath
+KPSmart/.project
+KPSmart/.settings/
+
+# LogFile
+logfile.xml
