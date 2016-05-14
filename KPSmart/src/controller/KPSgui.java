@@ -20,9 +20,9 @@ public class KPSgui extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {		
-		Parent root = FXMLLoader.load(getClass().getResource("/views/kpsgui.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/views/reports.fxml"));
 		primaryStage.setTitle("KPSmart");
-		Scene scene = new Scene(root, 600, 400);
+		Scene scene = new Scene(root, 700, 600);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
@@ -31,4 +31,3 @@ public class KPSgui extends Application {
 		launch(args);
 	}
 }
-
