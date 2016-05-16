@@ -35,7 +35,7 @@ public class AStar {
 		this.goal = goal;
 	}
 
-	public Location algo(double weight, double volume) {
+	public Location cheapestRouteAlgorithm(double weight, double volume) {
 		double estimate = 0;
 		start.setVisited(true);
 		Tuple startTuple = new Tuple(start, null, 0, estimate);
@@ -66,13 +66,50 @@ public class AStar {
 					double estTotal = costToNeigh;
 					fringe.offer(new Tuple(neighbour, myTuple.start, costToNeigh, estTotal));
 				}
-
 			}
 		}
-
 		return goal;
 
 	}
+	public Location highestPriorityAlgorithm(double weight, double volume) {
+		Queue<TuplePriority> fringe = new PriorityQueue<TuplePriority>();
+		double estimate = 0;
+		start.setVisited(true);
+		TuplePriority startTuple = new TuplePriority(start, null, 0, estimate, "Air");
+		fringe.offer(startTuple);
+
+		while (fringe.peek() != null) {
+			TuplePriority myTuple = fringe.poll();
+			if (myTuple.start.isVisited() == false) {
+				myTuple.start.setVisited(true);
+				myTuple.start.fromLocation = myTuple.from;
+				myTuple.start.setCostSoFar(myTuple.costSoFar);
+			}
+			if (myTuple.start == goal) {
+				break;
+			}
+			for (Route r : myTuple.start.getRoutes()) {
+				Location neighbour = null;
+				if (myTuple.start == r.getOrigin()) {
+					neighbour = r.getDestination();
+					neighbour.setPriority(r.getPriority());
+				}
+				if (myTuple.start == r.getDestination()) {
+					System.out.println("FIRST IF"+r.getDestination().toString());
+					neighbour = r.getOrigin();
+					neighbour.setPriority(r.getPriority());
+				}
+				if (!neighbour.isVisited()) {
+					double costToNeigh = myTuple.costSoFar + r.getCost(weight, volume);
+					double estTotal = costToNeigh;
+					fringe.offer(new TuplePriority(neighbour, myTuple.start, costToNeigh, estTotal, neighbour.getPriority()));
+				}
+		
+			}
+		}
+		return goal;
+	}
+	
 	
 	public Location algo2(double weight,double volume){
 		double estimate = 0;
@@ -86,7 +123,6 @@ public class AStar {
 			Tuple current = fringe.poll();
 			Location startLoc = current.getStart();
 			Location fromLoc = current.getFrom();
-			
 			if (!startLoc.isVisited()) {
 				startLoc.setVisited(true);
 				startLoc.setFrom(fromLoc);
@@ -99,7 +135,6 @@ public class AStar {
 				Location neighbour = null;
 				if (startLoc == r.getOrigin()) {
 					neighbour = r.getDestination();
-					
 				}
 				if (startLoc == r.getDestination()) {
 					//System.out.println("FIRST IF"+r.getDestination().toString());

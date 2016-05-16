@@ -6,12 +6,24 @@ import java.util.List;
 public class Location {
 
 	private String name;
-	private List<Route> routes= new ArrayList<Route>();
+	private String priority;
+	public Location fromLocation;
+	private List<Route> routes = new ArrayList<Route>();
 	private List<CustomerPrice> prices = new ArrayList<CustomerPrice>();;
 	private double costSoFar;
-
 	private boolean visited;
-	public Location fromLocation;
+
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+
+	public double getCostSoFar() {
+		return costSoFar;
+	}
 
 	public boolean isVisited() {
 		return visited;
@@ -60,17 +72,17 @@ public class Location {
 	public void setCostSoFar(double costSoFar) {
 		this.costSoFar = costSoFar;
 	}
-	
-	public void setFrom(Location l){
+
+	public void setFrom(Location l) {
 		this.fromLocation = l;
 	}
-	
-	public Location getFrom(){
+
+	public Location getFrom() {
 		return fromLocation;
 	}
-	
-	public String toString(){
-		return ("Loc name: "+getName());
+
+	public String toString() {
+		return ("Loc name: " + getName());
 	}
 
 }
