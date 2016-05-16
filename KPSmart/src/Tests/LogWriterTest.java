@@ -1,7 +1,10 @@
 package Tests;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,12 +18,40 @@ public class LogWriterTest {
 	
 	LogWriter writer;
 	
+	@Test
+	public void testEnsureLogExists1() {
+		String fileName = "thing.xml";
+		File file = new File(fileName);
+		assertFalse(file.isFile());
+		LogWriter log = new LogWriter(fileName);
+		log.ensureLogExists();
+		
+		assertTrue(file.isFile());
+	}
+	
+	@Test
+	public void testEnsureLogExists2() {
+		String fileName = "thing.xml";
+		File file = new File(fileName);
+		
+		try {
+			file.createNewFile();
+			assertTrue(file.isFile());
+			LogWriter log = new LogWriter(fileName);
+			log.ensureLogExists();
+			
+			assertTrue(file.isFile());
+			
+		} catch (IOException e) { e.printStackTrace(); }
+	}
+	
+	
 	@Before
 	public void setupLogWriter() {
 		writer = new LogWriter("logfile.xml");
 	}
 	
-
+	
 	@Test
 	public void testWriteDelivery() {
 		

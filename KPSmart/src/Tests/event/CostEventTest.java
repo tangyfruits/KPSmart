@@ -16,6 +16,7 @@ public class CostEventTest {
 		cost = new CostEvent("Start", "End", "Company", "Type", "Priority", 4.0, 8.0, 400, 800, 100, 12, "Monday");
 	}
 	
+	// Getters
 	@Test
 	public void testGetOrigin() {
 		assertEquals("Start", cost.getOrigin());
@@ -64,7 +65,8 @@ public class CostEventTest {
 	public void testGetDay() {
 		assertEquals("Monday", cost.getDay());
 	}
-
+	
+	// Setters
 	@Test
 	public void testSetOrigin() {
 		cost.setOrigin("thing");

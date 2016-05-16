@@ -14,6 +14,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 
@@ -22,12 +23,14 @@ public class LogWriter {
 	// VARIABLES
 	private String logFileName;
 	private File logFile;
+	private BufferedWriter writer;
+	
 	private Transformer transformer;
 	private DocumentBuilder docBuilder;
 	private TransformerFactory transformerFactory = TransformerFactory.newInstance();
     private DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
     
-	// CONSTRUCTOR
+	// CONSTRUCTORS
 	public LogWriter(String logFileName) {
 		this.logFileName = logFileName;
 		this.logFile = new File(logFileName);
@@ -41,10 +44,37 @@ public class LogWriter {
 			e.printStackTrace();
 		}
 	}
+	public LogWriter(File logFile) {
+		this.logFileName = logFile.getName();
+		this.logFile = logFile;
+		
+        try {
+			docBuilder = docBuilderFactory.newDocumentBuilder();
+	        transformer = transformerFactory.newTransformer();
+	        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+	        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	// METHODS
+	public void ensureLogExists() {
+		if (!logFile.isFile()) {
+			try {
+				logFile.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.print("Error creating log file in LogWriter");
+			}
+		}
+	}
+	
+	// Event Writers
 	/**
-	 * FORMAT:
+	 * Writes a mail delivery event to the log file.
+	 * 
 	 * 	<mail>
 	 *		<day>%s</day>
 	 *		<legs>
@@ -136,8 +166,10 @@ public class LogWriter {
 	
 	public void writeRoute(CostEvent event) {
 		
-		// Make document + Elements
-        Document doc = docBuilder.newDocument();
+		// Get/Make Document
+		Document doc = docBuilder.newDocument();
+		
+		// Make Elements
         Element cost = doc.createElement("cost");
         Element company = doc.createElement("company");
         Element to = doc.createElement("to");
@@ -218,8 +250,10 @@ public class LogWriter {
 	
 	public void writeCustomerPrice(PriceEvent event) {
 		
-		// Make document + Elements
-        Document doc = docBuilder.newDocument();
+		// Get/Make Document
+		Document doc = docBuilder.newDocument();
+		
+		// Make Elements
         Element price = doc.createElement("price");
         Element to = doc.createElement("to");
         Element from = doc.createElement("from");
