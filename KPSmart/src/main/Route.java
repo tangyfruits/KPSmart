@@ -132,4 +132,8 @@ public class Route {
 	public double getCost(double weight, double volume){
 		return (this.volumeCost * volume + this.weightCost * weight);
 	}
+	
+	public String toString(){
+		return ("R ORIGIN: "+getOrigin().toString()+" R DEST: "+getDestination().toString());
+	}
 }

@@ -24,4 +24,11 @@ public class Tuple implements Comparable<Tuple> {
 			return 0;
 	}
 
+	public Location getStart(){
+		return start;
+	}
+	
+	public Location getFrom(){
+		return from;
+	}
 }

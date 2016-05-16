@@ -1,4 +1,7 @@
 package main;
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -21,9 +24,11 @@ public class AStar {
 	 * goal ) fringe.enqueue([neighbour, node, costToNeigh, estTotal])
 	 */
 
-	Location start;
-	Location goal;
+	public Location start;
+	public Location goal;
 	Queue<Tuple> fringe = new PriorityQueue<Tuple>();
+	
+	public ArrayList<Route> routes = new ArrayList<Route>();
 
 	public AStar(Location start, Location goal) {
 		this.start = start;
@@ -48,12 +53,13 @@ public class AStar {
 			}
 			for (Route r : myTuple.start.getRoutes()) {
 				Location neighbour = null;
-				if (myTuple.start.getName() == r.getOrigin()) {
+				if (myTuple.start == r.getOrigin()) {
 					neighbour = r.getDestination();
 					
 				}
-				if (myTuple.start.getName() == r.getDestination()) {
-					neighbour = new Location(r.getOrigin());
+				if (myTuple.start == r.getDestination()) {
+					System.out.println("FIRST IF"+r.getDestination().toString());
+					neighbour = r.getOrigin();
 				}
 				if (!neighbour.isVisited()) {
 					double costToNeigh = myTuple.costSoFar + r.getCost(weight, volume);
@@ -66,5 +72,49 @@ public class AStar {
 
 		return goal;
 
+	}
+	
+	public Location algo2(double weight,double volume){
+		double estimate = 0;
+		start.setVisited(true);
+		Tuple startTuple = new Tuple(start, null, 0, estimate);
+		Queue<Tuple> fringe = new PriorityQueue<Tuple>();
+		
+		fringe.offer(startTuple);
+
+		while (!fringe.isEmpty()) {
+			Tuple current = fringe.poll();
+			Location startLoc = current.getStart();
+			Location fromLoc = current.getFrom();
+			
+			if (!startLoc.isVisited()) {
+				startLoc.setVisited(true);
+				startLoc.setFrom(fromLoc);
+				startLoc.setCostSoFar(current.costSoFar);
+			}
+			if (startLoc == goal) {
+				break;
+			}
+			for (Route r : startLoc.getRoutes()) {
+				Location neighbour = null;
+				if (startLoc == r.getOrigin()) {
+					neighbour = r.getDestination();
+					
+				}
+				if (startLoc == r.getDestination()) {
+					//System.out.println("FIRST IF"+r.getDestination().toString());
+					neighbour = r.getOrigin();
+				}
+				if (!neighbour.isVisited()) {
+					System.out.println("neighbour!visit");
+					double costToNeigh = current.costSoFar + r.getCost(weight, volume);
+					double estTotal = costToNeigh;
+					fringe.offer(new Tuple(neighbour, startLoc, costToNeigh, estTotal));
+				}
+
+			}
+		}
+
+		return goal;
 	}
 }

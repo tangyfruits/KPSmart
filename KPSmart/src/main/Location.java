@@ -21,8 +21,6 @@ public class Location {
 		this.visited = visited;
 	}
 
-
-
 	public Location(String name) {
 		this.name = name;
 	}
@@ -61,7 +59,18 @@ public class Location {
 
 	public void setCostSoFar(double costSoFar) {
 		this.costSoFar = costSoFar;
-		
+	}
+	
+	public void setFrom(Location l){
+		this.fromLocation = l;
+	}
+	
+	public Location getFrom(){
+		return fromLocation;
+	}
+	
+	public String toString(){
+		return ("Loc name: "+getName());
 	}
 
 }
