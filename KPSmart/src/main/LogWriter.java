@@ -12,10 +12,19 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
+
+/*
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.Writer;
+*/
 import java.io.File;
 import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+
 
 
 public class LogWriter {
@@ -23,52 +32,68 @@ public class LogWriter {
 	// VARIABLES
 	private String logFileName;
 	private File logFile;
-	private BufferedWriter writer;
+	/*	private static FileWriter writer; // */
 	
+	//*
 	private Transformer transformer;
 	private DocumentBuilder docBuilder;
+	private Document doc;
 	private TransformerFactory transformerFactory = TransformerFactory.newInstance();
     private DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+    // */
     
 	// CONSTRUCTORS
-	public LogWriter(String logFileName) {
-		this.logFileName = logFileName;
-		this.logFile = new File(logFileName);
-		
-        try {
-			docBuilder = docBuilderFactory.newDocumentBuilder();
-	        transformer = transformerFactory.newTransformer();
-	        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-	        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	public LogWriter(File logFile) {
+	public LogWriter(File logFile) throws Exception {
 		this.logFileName = logFile.getName();
 		this.logFile = logFile;
 		
-        try {
-			docBuilder = docBuilderFactory.newDocumentBuilder();
-	        transformer = transformerFactory.newTransformer();
-	        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-	        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		/*
+		writer = new FileWriter(logFileName, true);
+		writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
+		writer.write("test");
+		System.out.println("WRITER MADE: "+ logFileName);
+		writer.close();
+		//*/
+		
+		//*
+		docBuilder = docBuilderFactory.newDocumentBuilder();
+        transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        doc = ensureLogExists();
+        //*/
+
+	}
+	public LogWriter(String logFileName) throws Exception {
+		this(new File(logFileName));
 	}
 	
 	// METHODS
-	public void ensureLogExists() {
-		if (!logFile.isFile()) {
-			try {
-				logFile.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.out.print("Error creating log file in LogWriter");
-			}
+	public Document ensureLogExists() {
+		// All gee in the directoree
+				if (!logFile.isFile()) {
+					try {
+						logFile.createNewFile();
+					} catch (IOException e) {
+						e.printStackTrace();
+						System.out.print("Error creating log file in LogWriter");
+					}
+				}
+		
+		// Make log all good with XML Parser
+		try {
+			doc = docBuilder.parse(logFile);
+		} catch (SAXException e) {
+			doc = docBuilder.newDocument();
+		} catch (IOException e) {
+			System.out.println("--->ERROR! There's some problem with the logfile. IT can't be read by the XML Reader.");
+			doc = docBuilder.newDocument();
+			e.printStackTrace();
 		}
+		
+		doc.normalizeDocument();
+		
+		return doc;
 	}
 	
 	// Event Writers
@@ -87,8 +112,6 @@ public class LogWriter {
 	 *				<from>%s</from>
  	 *			</leg>
 	 *		</legs>
-	 *		<to>%s</to>
-	 *		<from>%s</from>
 	 *		<weight>%s</weight>
 	 *		<volume>%s</volume>
 	 *		<priority>%s</priority>
@@ -98,11 +121,52 @@ public class LogWriter {
 	 *	</mail>
 	 * 
 	 * @param event
+	 * @throws IOException 
 	 */
-	public void writeDelivery(MailEvent event) {
+	public void writeDelivery(MailEvent event) throws Exception {
+		/*
+		writer = new FileWriter(logFileName, true);
+		String mail = "";
+		
+		String mailPt1 =  "<mail>\n" +
+						  "  <day>%s</day>\n" +
+				 		  "    <legs>\n";
+		String leg = 	  "      <leg>\n" +
+		 		  		  "        <to>%s</to>\n" +
+		 		  		  "        <from>%s</from>\n" +
+		 		  		  "      </leg>\n";
+		String mailPt2 =  "    </legs>\n" +
+				 		  "  <weight>%f</weight>\n" +
+				 		  "  <volume>%f</volume>\n" +
+				 		  "  <priority>%s</priority>\n" +
+				 		  "  <price>%f</price>\n" +
+				 		  "  <cost>%f</cost>\n" +
+		 				  "  <duration>%d</duration>\n" +
+		 				  "</mail>\n";
+		
+		mail += String.format(mailPt1, event.getDay());
+		
+		for (Leg legObject : event.getLegList()) {
+			mail += String.format(leg, legObject.getTo(), legObject.getFrom());
+		}
+		
+		mail += String.format(mailPt2, event.getWeight(),
+									   event.getVolume(),
+									   event.getPriority(),
+									   event.getPrice(),
+									   event.getCost(),
+									   event.getDuration());
+		ensureLogExists();
+		writer.write(mail);
+		System.out.print("Printed to "+logFileName+":\n"+mail);
+		writer.close();
+		//*/
+		
+		//*
 		
 		// Make document + Elements
-        Document doc = docBuilder.newDocument();
+		doc = ensureLogExists();
+		
         Element mail = doc.createElement("mail");
         Element day = doc.createElement("day");
         Element legs = doc.createElement("legs");
@@ -146,6 +210,7 @@ public class LogWriter {
         mail.appendChild(duration);
         
         // Write the content into xml file
+        doc.normalizeDocument();
         DOMSource source = new DOMSource(doc);
         StreamResult output = new StreamResult(logFile);
         try {
@@ -164,10 +229,65 @@ public class LogWriter {
         // */
 	}
 	
-	public void writeRoute(CostEvent event) {
+	/**
+	 * Writes cost event to log file.
+	   <cost>
+		  <company>%s</company>
+		  <to>%s</to>
+		  <from>%s</from>
+		  <type>%s</type>
+		  <priority>%s</priority>
+		  <weightCost>4.0</weightCost>
+		  <volumeCost>6.0</volumeCost>
+		  <maxWeight>400.0</maxWeight>
+		  <maxVolume>150.0</maxVolume>
+		  <duration>6.0</duration>
+		  <frequency>12.0</frequency>
+		  <day>Thursday</day>
+		</cost>
+	 * 
+	 * @param event
+	 * @throws IOException 
+	 */
+	public void writeRoute(CostEvent event) throws Exception {
+		/*
+		writer = new FileWriter(logFileName, true);
+		String cost = "<cost>\n" +
+					  "  <company>%s</company>\n" +
+					  "  <to>%s</to>\n" +
+					  "  <from>%s</from>\n" +
+					  "  <type>%s</type>\n" +
+					  "  <priority>%s</priority>\n" +
+					  "  <weightCost>%f</weightCost>\n" +
+					  "  <volumeCost>%f</volumeCost>\n" +
+					  "  <maxWeight>%d</maxWeight>\n" +
+					  "  <maxVolume>%d</maxVolume>\n" +
+					  "  <duration>%d</duration>\n" +
+					  "  <frequency>%d</frequency>\n" +
+					  "  <day>%s</day>\n" +
+					  "</cost>\n";
 		
+		cost = String.format(cost, event.getCompany(),
+								   event.getDestination(),
+								   event.getOrigin(),
+								   event.getType(),
+								   event.getPriority(),
+								   event.getWeightCost(),
+								   event.getVolumeCost(),
+								   event.getMaxWeight(),
+								   event.getMaxVolume(),
+								   event.getDuration(),
+								   event.getFrequency(),
+								   event.getDay());
+		ensureLogExists();
+		writer.write(cost);
+		System.out.println(cost);
+		writer.close();
+		//*/
+		
+		//*
 		// Get/Make Document
-		Document doc = docBuilder.newDocument();
+		doc = ensureLogExists();
 		
 		// Make Elements
         Element cost = doc.createElement("cost");
@@ -214,6 +334,7 @@ public class LogWriter {
         cost.appendChild(day);
 
         // Write the content into xml file
+        doc.normalizeDocument();
         DOMSource source = new DOMSource(doc);
         StreamResult output = new StreamResult(logFile);
         try {
@@ -229,8 +350,9 @@ public class LogWriter {
         } catch (TransformerException e) {
       	  e.printStackTrace();
         }
+        //*/
 	}
-	public void writeRoute(Route route) {
+	public void writeRoute(Route route) throws Exception {
 		
 		CostEvent event = new CostEvent(route.getOrigin().getName(), 
 										route.getDestination().getName(), 
@@ -248,10 +370,50 @@ public class LogWriter {
 		writeRoute(event);
 	}
 	
-	public void writeCustomerPrice(PriceEvent event) {
+	/**
+	 * Writes price event to the log file.
+	 * <cost>
+		  <company>%s</company>
+		  <to>%s</to>
+		  <from>%s</from>
+		  <type>%s</type>
+		  <priority>%s</priority>
+		  <weightCost>20.8</weightCost>
+		  <volumeCost>56.2</volumeCost>
+		  <maxWeight>43.0</maxWeight>
+		  <maxVolume>123.0</maxVolume>
+		  <duration>33.0</duration>
+		  <frequency>2.0</frequency>
+		  <day>%s</day>
+		</cost>
+	 * @throws IOException 
+	 * 
+	 */
+	public void writeCustomerPrice(PriceEvent event) throws Exception {
+		/*
+		writer = new FileWriter(logFileName, true);
+		String price = "<price>\n" +
+				  	   "  <to>%s</to>\n" +
+					   "  <from>%s</from>\n" +
+					   "  <priority>%s</priority>\n" +
+					   "  <weightCost>%f</weightCost>\n" +
+					   "  <volumeCost>%f</volumeCost>\n" +
+					   "</price>\n";
 		
+		price = String.format(price, event.getDestination(),
+									 event.getOrigin(),
+									 event.getPriority(),
+									 event.getWeightCost(),
+									 event.getVolumeCost());
+		ensureLogExists();
+		writer.write(price);
+		System.out.println(price);
+		writer.close();
+		//*/
+		
+		//*
 		// Get/Make Document
-		Document doc = docBuilder.newDocument();
+		doc = ensureLogExists();
 		
 		// Make Elements
         Element price = doc.createElement("price");
@@ -277,13 +439,11 @@ public class LogWriter {
         price.appendChild(volumeCost);
 
         // Write the content into xml file
+        doc.normalizeDocument();
         DOMSource source = new DOMSource(doc);
         StreamResult output = new StreamResult(logFile);
-        try {
-      	  transformer.transform(source, output);
-        } catch (TransformerException e) {
-      	  e.printStackTrace();
-        }
+        transformer.transform(source, output);
+
         
         // Output to console for testing
         StreamResult consoleResult =  new StreamResult(System.out);
@@ -294,58 +454,84 @@ public class LogWriter {
         }
         // */
 	}
-	public void writeCustomerPrice(CustomerPrice price) {
+	public void writeCustomerPrice(CustomerPrice price) throws Exception {
 		PriceEvent event = new PriceEvent(price.getOrigin().getName(), 
 										  price.getDestination().getName(), 
 										  price.getPriority(), 
 										  price.getWeightCost(), 
 										  price.getVolumeCost());
 		writeCustomerPrice(event);
-		
 	}
 	
-	public void writeDiscontinue(DiscontinueEvent event) {
-	      
-    	  // Make document
-          Document doc = docBuilder.newDocument();
-          
-          // Make Elements
-          Element discontinue = doc.createElement("discontinue");
-          Element company = doc.createElement("company");
-          Element to = doc.createElement("to");
-          Element from = doc.createElement("from");
-          Element type = doc.createElement("type");
-          
-          // Add text values to tags
-          company.appendChild(doc.createTextNode(event.getCompany()));
-          to.appendChild(doc.createTextNode(event.getTo()));
-          from.appendChild(doc.createTextNode(event.getFrom()));
-          type.appendChild(doc.createTextNode(event.getType()));
-          
-          // add tags together
-          doc.appendChild(discontinue);
-          discontinue.appendChild(company);
-          discontinue.appendChild(to);
-          discontinue.appendChild(from);
-          discontinue.appendChild(type);
-
-          // Write the content into xml file
-          DOMSource source = new DOMSource(doc);
-          StreamResult output = new StreamResult(logFile);
-          try {
-        	  transformer.transform(source, output);
-          } catch (TransformerException e) {
-        	  e.printStackTrace();
-          }
-          
-          // Output to console for testing
-          StreamResult consoleResult =  new StreamResult(System.out);
-          try {
-        	  transformer.transform(source, consoleResult);
-          } catch (TransformerException e) {
-        	  e.printStackTrace();
-          }
-          // */
+	/**
+	 * Writes discontinue event to log file.
+<discontinue>
+  <company>NZ Post</company>
+  <to>Wellington</to>
+  <from>Christchurch</from>
+  <type>Sea</type>
+</discontinue>
+	 * @throws IOException 
+	 * 
+	 */
+	public void writeDiscontinue(DiscontinueEvent event) throws Exception {
+		/*
+		writer = new FileWriter(logFileName, true);
+		String disc = "<discontinue>\n" +
+					  "  <company>%s</company>\n" +
+					  "  <to>%s</to>\n" +
+					  "  <from>%s</from>\n" +
+					  "  <type>%s</type>\n" +
+					  "</discontinue>\n";
+		
+		disc = String.format(disc, event.getCompany(),
+								   event.getTo(),
+								   event.getFrom(),
+								   event.getType());
+		ensureLogExists();
+		writer.write(disc);
+		System.out.println(disc);
+		writer.close();
+		//*/
+		
+		//* 
+		// Make document
+		doc = ensureLogExists();
+	  
+	  	// Make Elements
+	  	Element discontinue = doc.createElement("discontinue");
+	  	Element company = doc.createElement("company");
+	  	Element to = doc.createElement("to");
+	  	Element from = doc.createElement("from");
+	  	Element type = doc.createElement("type");
+	  	
+	  	// Add text values to tags
+	  	company.appendChild(doc.createTextNode(event.getCompany()));
+	  	to.appendChild(doc.createTextNode(event.getTo()));
+	  	from.appendChild(doc.createTextNode(event.getFrom()));
+	  	type.appendChild(doc.createTextNode(event.getType()));
+	  	
+	  	// add tags together
+	  	doc.appendChild(discontinue);
+	  	discontinue.appendChild(company);
+	  	discontinue.appendChild(to);
+	  	discontinue.appendChild(from);
+	  	discontinue.appendChild(type);
+	
+	  	// Write the content into xml file
+	  	doc.normalizeDocument();
+	  	DOMSource source = new DOMSource(doc);
+	  	StreamResult output = new StreamResult(logFile);
+		transformer.transform(source, output);
+	
+	  	// Output to console for testing
+	  	StreamResult consoleResult =  new StreamResult(System.out);
+	  	try {
+		  	transformer.transform(source, consoleResult);
+	  	} catch (TransformerException e) {
+		  	e.printStackTrace();
+	  	}
+	  	// */
 	}
 	
 	public void clearFile() {
@@ -354,6 +540,7 @@ public class LogWriter {
 			pw.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			System.out.println("Error occured when clearing logfile. Logfile could not be cleared.");
 		}
 	}
 }

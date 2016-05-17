@@ -10,3 +10,6 @@ KPSmart/.settings/
 
 # LogFile
 logfile.xml
+
+# Any other test LogFiles
+*.xml
