@@ -2,11 +2,9 @@ package Tests;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
-//import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -18,27 +16,20 @@ import event.*;
 
 public class LogWriterTest {
 	
+	// Console Logging
+	private static boolean LOGS = false;
+	
 	// VARIABLES
 	static String filename1 = "test_1.xml";
-	static String filename3 = "test_logfile.xml";
+	static String filename3 = "logfile.xml";
 	static File file1 = new File(filename1);
 	static File file2 = new File("test_2.xml");
 	static File file3 = new File(filename3);
 	static LogWriter log;
 	
-	// SETUPS
-	
+	// HELPER
 	@BeforeClass
-	public static void setupLogWriter() {
-		try {
-			log = new LogWriter(filename3);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	// */
-	@BeforeClass
-	public static void clearFiles() {
+	public static void setup() throws Exception {
 		if (file1.isFile()) {
 			file1.delete();
 		}
@@ -50,125 +41,90 @@ public class LogWriterTest {
 		if (file3.isFile()) {
 			file3.delete();
 		}
+		
+		log = new LogWriter(filename3);
 	}
 	
 	// TESTS
 	@Test
-	public void extraSHit() {
+	public void eXtRaSHiT() {
 		FileWriter lalala;
 		try {
 			lalala = new FileWriter("test_sheeit.xml", true);
-			lalala.write("MANG FUCK THIS SHIIIIT\n");
+			lalala.write("MANG FUCK THIS SHIIIIT");
 			lalala.write("SERILSUY WAT THE FUK\n");
+			lalala.write("SUC-FUCKIN-CESS BOOOOOY! UGH!\n");
+			lalala.write("https://www.youtube.com/watch?v=66EBzbzzObY\n");
 			lalala.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 	
-	// /*
+	// Things that check the log file actually exists
 	@Test
-	public void testEnsureLogExists1() {
+	public void testEnsureLogExists1() throws Exception {
 		LogWriter log;
-		try {
-			log = new LogWriter(filename1);
-			log.ensureLogExists();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+		log = new LogWriter(filename1);
+		log.ensureLogExists();
 		assertTrue(file1.isFile());
 	}
 	@Test
-	public void testEnsureLogExists2() {		
-		try {
-			file2.createNewFile();
-		} catch (IOException e) { 
-			e.printStackTrace();
-		}	
-		
+	public void testEnsureLogExists2() throws Exception {		
+		file2.createNewFile();
+
 		LogWriter log;
-		try {
-			log = new LogWriter(file2);
-			log.ensureLogExists();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
+		log = new LogWriter(file2);
+		log.ensureLogExists();
 		assertTrue(file2.isFile());		
 	}
 	@Test
-	public void testEnsureLogExists3() {
+	public void testEnsureLogExists3() throws Exception {
 		log.ensureLogExists();
 		assertTrue(file3.isFile());
 	}
 	
-	// Writes
+	// Writers
 	@Test
-	public void testWriteDelivery() {
-		
+	public void testWriteDelivery() throws Exception {
+		if (LOGS) {System.out.println("\n----------mail");}
 		ArrayList<Leg> legs = new ArrayList<Leg>();
 		legs.add(new Leg("new", "old"));
-		
 		MailEvent mail = new MailEvent("Wednesday", legs, 40.0, 20.0, "International Air", 37.2, 552.3, 30);
-		try {
-			log.writeDelivery(mail);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		log.writeDelivery(mail);
 	}
-
 	@Test
-	public void testWriteRoute1() {
+	public void testWriteRoute1() throws Exception {
+		if (LOGS) {System.out.println("\n----------cost1");}
 		CostEvent cost = new CostEvent("Wellington", "Christchurch", "NZ Post", "Sea", "Local Standard", 
 				4.00, 6.00, 400, 150, 6, 12,"Thursday");
-		try {
-			log.writeRoute(cost);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		log.writeRoute(cost);
 	}
 	@Test
-	public void testWriteRoute2() {
+	public void testWriteRoute2() throws Exception {
+		if (LOGS) {System.out.println("\n----------cost2");}
 		CustomerPrice price = new CustomerPrice(new Location("place"), new Location("otherplace"), "Super Imp", 30.54, 20.0);
 		Route route = new Route(new Location("Auckland"), new Location("Dunedin"), "UPS", "Land", 
 				"Local Standard", 20.8, 56.2, 43,123,33, 2, "Saturday", price);
-		try {
-			log.writeRoute(route);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		log.writeRoute(route);
 	}
-
 	@Test
-	public void testWriteCustomerPrice1() {
+	public void testWriteCustomerPrice1() throws Exception {
+		if (LOGS) {System.out.println("\n----------price1");}
 		PriceEvent price = new PriceEvent("StartPlace", "EndPlace", "Stand LOcal brah", 3.0, 5.0);
-		try {
-			log.writeCustomerPrice(price);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		log.writeCustomerPrice(price);
 	}
 	@Test
-	public void testWriteCustomerPrice2() {
+	public void testWriteCustomerPrice2() throws Exception {
+		if (LOGS) {System.out.println("\n----------price2");}
 		CustomerPrice price = new CustomerPrice(new Location("place"), new Location("otherplace"), "Super Imp", 30.54, 20.0);
-		try {
-			log.writeCustomerPrice(price);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		log.writeCustomerPrice(price);
 	}
-
 	@Test
-	public void testWriteDiscontinue() {
+	public void testWriteDiscontinue() throws Exception {
+		if (LOGS) {System.out.println("\n----------disc.");}
 		DiscontinueEvent disc = new DiscontinueEvent("NZ Post", "Wellington", "Christchurch", "Sea");
-		try {
-			log.writeDiscontinue(disc);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		log.writeDiscontinue(disc);
 	}
-	// */
 }
