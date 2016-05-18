@@ -12,9 +12,10 @@ public class Main {
 	public Main() {
 		locations = new ArrayList<Location>();
 		accounts = new HashMap<String, String>();
-		//read from encrypted file and add them in!
+		//read from encrypted file,create User objects and add them in!
 		//if ( accounts.containsValue("String") && accounts.get("String").equals("password);
 		//currentUser = new User();
+		//want to look into apache shiro tbh but everyone will have to install maven. Apache shiro is a really good framework for logins
 	}
 	
 	public void logTransportCostUpdate(String origin, String destination,
