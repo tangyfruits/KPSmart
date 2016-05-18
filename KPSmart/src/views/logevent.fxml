@@ -8,6 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import java.util.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: FFF3E0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -57,7 +58,7 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <MenuButton layoutX="410.0" layoutY="108.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: E9D5B9;" text="Choose location" GridPane.columnIndex="3">
+            <MenuButton fx:id="destination" layoutX="410.0" layoutY="108.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: E9D5B9;" text="Choose location" GridPane.columnIndex="3">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
@@ -69,9 +70,10 @@
                   <MenuItem mnemonicParsing="false" text="Wellington" />
                   <MenuItem mnemonicParsing="false" text="Christchurch" />
                   <MenuItem mnemonicParsing="false" text="Dunedin" />
+                  <MenuItem mnemonicParsing="false" text="Other" />
                </items>
             </MenuButton>
-            <MenuButton layoutX="130.0" layoutY="108.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: E9D5B9;" text="Choose location" GridPane.columnIndex="1">
+            <MenuButton fx:id="origin" layoutX="130.0" layoutY="108.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: E9D5B9;" text="Choose location" GridPane.columnIndex="1">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
@@ -83,6 +85,7 @@
                   <MenuItem mnemonicParsing="false" text="Wellington" />
                   <MenuItem mnemonicParsing="false" text="Christchurch" />
                   <MenuItem mnemonicParsing="false" text="Dunedin" />
+                  <MenuItem mnemonicParsing="false" text="Other" />
                </items>
             </MenuButton>
             <Text layoutX="79.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Origin:">
@@ -108,18 +111,18 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <MenuButton layoutX="276.0" layoutY="412.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: #FFFFFF;" text="Choose priority" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <MenuButton fx:id="priority" layoutX="276.0" layoutY="412.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: #FFFFFF;" text="Choose priority" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
                <items>
-                  <MenuItem mnemonicParsing="false" text="International Air " />
+                  <MenuItem mnemonicParsing="false" text="International Air" />
                   <MenuItem mnemonicParsing="false" text="International Standard" />
                   <MenuItem mnemonicParsing="false" text="Domestic Air" />
                   <MenuItem mnemonicParsing="false" text="Domestic Standard" />
                </items>
             </MenuButton>
-            <TextField layoutX="275.0" layoutY="377.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="volume" layoutX="275.0" layoutY="377.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Text layoutX="223.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Priority:" GridPane.rowIndex="2">
                <font>
                   <Font name="Gulim" size="13.0" />
@@ -135,7 +138,7 @@
                   <Font name="Gulim" size="13.0" />
                </font>
             </Text>
-            <TextField layoutX="275.0" layoutY="341.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" />
+            <TextField fx:id="weight" layoutX="275.0" layoutY="341.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <Button id="submit" layoutX="318.0" layoutY="523.0" mnemonicParsing="false" style="-fx-background-color: E9D5B9;" text="Submit">

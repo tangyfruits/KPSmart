@@ -8,6 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import java.util.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: FFF3E0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -48,22 +49,22 @@
       <Separator layoutY="61.0" prefHeight="5.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
       <TabPane layoutX="52.0" layoutY="94.0" prefHeight="448.0" prefWidth="597.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab style="-fx-background-color: E9D5B9;" text="General Report">
+          <Tab style="-fx-background-color: E9D5B9; -fx-font-family: Gulim;" text="General Report">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="246.0" prefWidth="437.0" style="-fx-background-radius: 10; -fx-background-color: E9D5B9;" />
             </content>
           </Tab>
-          <Tab style="-fx-background-color: F2DFC4;" text="Route Load">
+          <Tab style="-fx-background-color: F2DFC4; -fx-font-family: Gulim;" text="Route Load">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: F2DFC4; -fx-background-radius: 10;" />
             </content>
           </Tab>
-            <Tab style="-fx-background-color: FAE7CC;" text="Critical Routes">
+            <Tab style="-fx-background-color: FAE7CC; -fx-font-family: Gulim;" text="Critical Routes">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: FAE7CC; -fx-background-radius: 10;" />
                </content>
             </Tab>
-            <Tab style="-fx-background-color: FFEDD3;" text="Average Delivery Times">
+            <Tab style="-fx-background-color: FFEDD3; -fx-font-family: Gulim;" text="Average Delivery Times">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: FFEDD3; -fx-background-radius: 10;" />
                </content>

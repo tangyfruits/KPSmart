@@ -11,4 +11,5 @@
 
 .tab-pane .tab-header-area .tab-header-background {
     -fx-background-color: #FFF3E0;
+    -fx-font-family: "Gulim";
 }

@@ -11,16 +11,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import javafx.fxml.Initializable;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 
 public class KPSgui extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {		
-		Parent root = FXMLLoader.load(getClass().getResource("/views/reports.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
 		primaryStage.setTitle("KPSmart");
 		Scene scene = new Scene(root, 700, 600);
 		primaryStage.setScene(scene);

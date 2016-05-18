@@ -1,12 +1,13 @@
 package controller;
 
 import javafx.fxml.Initializable;
+
+import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
+
 
 public class Controller implements Initializable {
 
@@ -15,9 +16,17 @@ public class Controller implements Initializable {
         System.out.println("View is now loaded!");
     }
     
-    @FXML private Text actiontarget;
+    @FXML
+    private TextField idnumber;
+    @FXML
+    private TextField password;
     
-    @FXML protected void handleSubmitButtonAction(ActionEvent event) {
-        actiontarget.setText("Log in button pressed");
+    @FXML
+    private void logInButtonAction(ActionEvent event) {
+    	String id = this.idnumber.getText();
+    	String pass = this.password.getText();
+        System.out.println("ID number: " + id);
+        System.out.println("Password: " + pass);
     }
+
 }
