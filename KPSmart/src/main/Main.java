@@ -16,7 +16,7 @@ public class Main {
 		locations = new ArrayList<Location>();
 	}
 
-	public void logDeliveryRequest(String origin, String destination,
+	public Route[] getPossibleRoutes(String origin, String destination,
 			double weight, double volume) {
 		Location originLoc = null;
 		Location desinationLoc = null;
@@ -34,8 +34,28 @@ public class Main {
 		
 		//route selection
 		//TODO uncomment once route selection is finished and merged in
-		List<Route> route = new ArrayList<>();
+		Route[] route = new Route[5];
 		//List<Route> route = bestRoutes(originLoc, destinationLoc, weight, volume);
+		
+		return route;
+	}
+	
+	public DeliveryRequest logDeliveryRequest(String origin, String destination,
+			double weight, double volume, List<Route> route) {
+		
+		Location originLoc = null;
+		Location desinationLoc = null;
+
+		// find the locations matching the given strings
+		Location destinationLoc = null;
+		for (int i = 0; i < locations.size(); i++) {
+			if (locations.get(i).getName().equals(origin)) {
+				originLoc = locations.get(i);
+			}
+			if (locations.get(i).getName().equals(destination)) {
+				destinationLoc = locations.get(i);
+			}
+		}
 		
 		//calculate priority
 		//TODO replace placeholder
@@ -65,6 +85,8 @@ public class Main {
 		
 		//TODO log in file
 		//TODO add to reports: revenue, expenditure, total events
+		
+		return request;
 		
 
 	}
