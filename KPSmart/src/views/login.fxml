@@ -42,7 +42,7 @@
             <PasswordField fx:id="password" layoutX="264.0" layoutY="238.0" prefHeight="27.0" prefWidth="286.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <Button id="login" fx:id="login" layoutX="311.0" layoutY="305.0" mnemonicParsing="false" onAction="#logInActionButton" style="-fx-background-color: E9D5B9;" text="Log In">
+      <Button id="login" fx:id="login" layoutX="311.0" layoutY="305.0" mnemonicParsing="false" onAction="#logInButtonAction" style="-fx-background-color: E9D5B9;" text="Log In">
          <font>
             <Font name="Gulim" size="15.0" />
          </font>

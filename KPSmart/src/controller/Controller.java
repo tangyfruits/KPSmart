@@ -2,11 +2,14 @@ package controller;
 
 import javafx.fxml.Initializable;
 
-import java.awt.*;
+
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 
 public class Controller implements Initializable {
@@ -19,7 +22,7 @@ public class Controller implements Initializable {
     @FXML
     private TextField idnumber;
     @FXML
-    private TextField password;
+    private PasswordField password;
     
     @FXML
     private void logInButtonAction(ActionEvent event) {
