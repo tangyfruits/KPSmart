@@ -9,21 +9,23 @@ public class Main {
 	private List<Location> locations;
 	private List<User> accounts;
 	private User currentUser;
+
 	public Main() {
 		locations = new ArrayList<Location>();
 		accounts = new ArrayList<User>();
-		//read from encrypted file and add them in!
+		// read from encrypted file and add them in!
 
-		//read from encrypted file,create User objects and add them in!
-		//if ( accounts.containsValue("String") && accounts.get("String").equalsss("password);
-		//currentUser = new User();
-		//want to look into apache shiro tbh but everyone will have to install maven. Apache shiro is a really good framework for logins
+		// read from encrypted file,create User objects and add them in!
+		// if ( accounts.containsValue("String") &&
+		// accounts.get("String").equalsss("password);
+		// currentUser = new User();
+		// want to look into apache shiro tbh but everyone will have to install
+		// maven. Apache shiro is a really good framework for logins
 	}
-	
-	public void logTransportCostUpdate(String origin, String destination,
-			String company, String type, String priority, double weightCost,
-			double volumeCost, int maxWeight, int maxVolume, int duration,
-			int frequency, String day) {
+
+	public void logTransportCostUpdate(String origin, String destination, String company, String type, String priority,
+			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, int frequency,
+			String day) {
 
 		// find the Locations matching the given strings, if they are already in
 		// the graph
@@ -50,13 +52,13 @@ public class Main {
 		}
 
 		// get customer price matching the route
-		price = getCustomerPrice(originLoc, destinationLoc, origin,
-				destination, priority);
+		price = getCustomerPrice(originLoc, destinationLoc, origin, destination, priority);
 
-		//check if route already exists, if it does, update it
-		for(int k = 0; k<originLoc.getRoutes().size(); k++ ){
+		// check if route already exists, if it does, update it
+		for (int k = 0; k < originLoc.getRoutes().size(); k++) {
 			Route r = originLoc.getRoutes().get(k);
-			if(r.getDestination().equals(destinationLoc) && r.getCompany().equals(company) && r.getType().equals(type)){
+			if (r.getDestination().equals(destinationLoc) && r.getCompany().equals(company)
+					&& r.getType().equals(type)) {
 				r.setWeightCost(weightCost);
 				r.setVolumeCost(volumeCost);
 				r.setMaxWeight(maxWeight);
@@ -66,74 +68,69 @@ public class Main {
 				r.setDay(day);
 			}
 		}
-		
+
 		// if it doesn't always exist, create route and add to graph
-		Route route = new Route(originLoc, destinationLoc, company, type,
-				priority, weightCost, volumeCost, maxWeight, maxVolume,
-				duration, frequency, day, price);
-		
+		Route route = new Route(originLoc, destinationLoc, company, type, priority, weightCost, volumeCost, maxWeight,
+				maxVolume, duration, frequency, day, price);
+
 		originLoc.addRoute(route);
 
-		//TODO add event to logfile
+		// TODO add event to logfile
 	}
-	
-	public CustomerPrice getCustomerPrice(Location originLoc,
-			Location destinationLoc, String origin, String destination,
-			String priority) {
+
+	public CustomerPrice getCustomerPrice(Location originLoc, Location destinationLoc, String origin,
+			String destination, String priority) {
 		// check if there's already a price for the (origin, destination,
 		// priority)
 		CustomerPrice customerPrice = null;
 		for (int k = 0; k < originLoc.getPrices().size(); k++) {
-			if (originLoc.getPrices().get(k).getDestination()
-					.equals(destination)
-					&& originLoc.getPrices().get(k).getPriority()
-							.equals(priority)) {
+			if (originLoc.getPrices().get(k).getDestination().equals(destination)
+					&& originLoc.getPrices().get(k).getPriority().equals(priority)) {
 				customerPrice = originLoc.getPrices().get(k);
 			}
 		}
-		//if there's no customer price
+		// if there's no customer price
 		if (customerPrice == null) {
 			// load customerPrice
-			//TODO call logCustomerPrice here and replace this stuff
-			double custWeightCost = -1; 
+			// TODO call logCustomerPrice here and replace this stuff
+			double custWeightCost = -1;
 			double custVolumeCost = -1;
-			customerPrice = new CustomerPrice(originLoc, destinationLoc,
-					priority, custWeightCost, custVolumeCost);
-			
+			customerPrice = new CustomerPrice(originLoc, destinationLoc, priority, custWeightCost, custVolumeCost);
+
 		}
 		return customerPrice;
 	}
-	
+
 	public List<Location> getLocations() {
 		return locations;
 	}
+
 	public void addLocation(Location location) {
 		locations.add(location);
 	}
 
-	public List<Route> bestRoutes(Location origin, Location destination, double weight, double volume) {
+	public ArrayList<ArrayList<Route>> bestRoutes(Location origin, Location destination, double weight, double volume) {
+		ArrayList<ArrayList<Route>> listOfListOfRoutes = new ArrayList<ArrayList<Route>>();
 		Route directRoute = getDirectRoute(destination, destination, weight, volume);
-		if(directRoute == null){
-			 //TODO indirect routes
-		}
-		else{
-			List<Route> best = new ArrayList<>();
+		if (directRoute == null) {
+			AStar astar = new AStar(origin, destination);
+			return astar.listOfRoutes(weight, volume);
+		} else {
+			ArrayList<Route> best = new ArrayList<>();
 			best.add(directRoute);
-			return best;
+			listOfListOfRoutes.add(best);
+			return listOfListOfRoutes;
 		}
-		return null;
-		
-
 	}
 
 	public Route getDirectRoute(Location origin, Location destination, double weight, double volume) {
-		List<Route> directRoutes = new ArrayList<>();
+		ArrayList<Route> directRoutes = new ArrayList<>();
 		for (Route r : origin.getRoutes()) {
 			if (r.getDestination() == destination) {
 				directRoutes.add(r);
 			}
 		}
-		if(directRoutes.isEmpty()){
+		if (directRoutes.isEmpty()) {
 			return null;
 		}
 		return getCheapestRoute(directRoutes, weight, volume);
@@ -141,8 +138,8 @@ public class Main {
 
 	public Route getCheapestRoute(List<Route> routes, double weight, double volume) {
 		Route cheapest = routes.get(0);
-		for(Route r : routes){
-			if(cheapest.getCost(weight, volume) > r.getCost(weight, volume)){
+		for (Route r : routes) {
+			if (cheapest.getCost(weight, volume) > r.getCost(weight, volume)) {
 				cheapest = r;
 			}
 		}
