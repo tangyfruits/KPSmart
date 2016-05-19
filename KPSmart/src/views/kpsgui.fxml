@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import java.util.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: FFF3E0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: FFF3E0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="KPSmart" textFill="#655a5a">
          <font>
@@ -19,12 +19,12 @@
       </Label>
       <Pane layoutX="289.0" layoutY="20.0">
          <children>
-            <Button layoutX="236.0" layoutY="1.0" mnemonicParsing="false" style="-fx-background-color: E9D5B9;" text="Reports">
+            <Button fx:id="reports" layoutX="236.0" layoutY="1.0" mnemonicParsing="false" onAction="#reportButtonAction" style="-fx-background-color: E9D5B9;" text="Reports">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </Button>
-            <Button layoutX="161.0" layoutY="1.0" mnemonicParsing="false" style="-fx-background-color: E9D5B9;" text="History">
+            <Button fx:id="history" layoutX="161.0" layoutY="1.0" mnemonicParsing="false" onAction="#historyButtonAction" style="-fx-background-color: E9D5B9;" text="History">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
@@ -39,7 +39,7 @@
                   <Font name="Gulim" size="13.0" />
                </font>
             </MenuButton>
-            <Button layoutX="317.0" layoutY="1.0" mnemonicParsing="false" style="-fx-background-color: E9D5B9;" text="Logout">
+            <Button fx:id="logout" layoutX="317.0" layoutY="1.0" mnemonicParsing="false" onAction="#logoutButtonAction" style="-fx-background-color: E9D5B9;" text="Logout">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
