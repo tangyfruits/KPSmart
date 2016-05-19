@@ -89,8 +89,8 @@ public class LogWriterTest {
 	@Test
 	public void testWriteDelivery() throws Exception {
 		if (LOGS) {System.out.println("\n----------mail");}
-		ArrayList<Leg> legs = new ArrayList<Leg>();
-		legs.add(new Leg("new", "old"));
+		ArrayList<LegEvent> legs = new ArrayList<LegEvent>();
+		legs.add(new LegEvent("new", "old"));
 		MailEvent mail = new MailEvent("Wednesday", legs, 40.0, 20.0, "International Air", 37.2, 552.3, 30);
 		log.writeDelivery(mail);
 	}

@@ -142,7 +142,7 @@ public class LogWriter {
         Element duration = doc.createElement("duration");
         
         // Make leg Elements
-    	for (Leg legObject : event.getLegList()) {
+    	for (LegEvent legObject : event.getLegList()) {
     		Element leg = doc.createElement("leg");
             Element to = doc.createElement("to");
             Element from = doc.createElement("from");

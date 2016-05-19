@@ -1,13 +1,13 @@
 package event;
 
-public class Leg {
+public class LegEvent {
 	
 	// VARIABLES
 	private String to;
 	private String from;
 	
 	// CONSTRUCTOR
-	public Leg(String to, String from) {
+	public LegEvent(String to, String from) {
 		this.to = to;
 		this.from = from;
 	}

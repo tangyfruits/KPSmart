@@ -6,7 +6,7 @@ public class MailEvent implements Event {
 	
 	// VARIABLES
 	private String day;
-	private ArrayList<Leg> legList;
+	private ArrayList<LegEvent> legList;
 	private double weight;
 	private double volume;
 	private String priority;
@@ -15,7 +15,7 @@ public class MailEvent implements Event {
 	private int duration;
 
 	// CONSTRUCTOR
-	public MailEvent(String day, ArrayList<Leg> legList, double weight, double volume, 
+	public MailEvent(String day, ArrayList<LegEvent> legList, double weight, double volume, 
 					  String priority, double price, double cost, int duration) {
 		this.day = day;
 		this.legList = legList;
@@ -32,7 +32,7 @@ public class MailEvent implements Event {
 	public String getDay() {
 		return day;
 	}
-	public ArrayList<Leg> getLegList() {
+	public ArrayList<LegEvent> getLegList() {
 		return legList;
 	}
 	public double getWeight() {
@@ -58,7 +58,7 @@ public class MailEvent implements Event {
 	public void setDay(String day) {
 		this.day = day;
 	}
-	public void setLegList(ArrayList<Leg> legList) {
+	public void setLegList(ArrayList<LegEvent> legList) {
 		this.legList = legList;
 	}
 	public void setWeight(double weight) {
