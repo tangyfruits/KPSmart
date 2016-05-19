@@ -7,11 +7,11 @@ import java.util.List;
 public class Main {
 
 	private List<Location> locations;
-	private HashMap<String, String> accounts;
+	private List<User> accounts;
 	private User currentUser;
 	public Main() {
 		locations = new ArrayList<Location>();
-		accounts = new HashMap<String, String>();
+		accounts = new ArrayList<User>();
 		//read from encrypted file and add them in!
 		//if ( accounts.containsValue("String") && accounts.get("String").equals("password);
 		//currentUser = new User();
