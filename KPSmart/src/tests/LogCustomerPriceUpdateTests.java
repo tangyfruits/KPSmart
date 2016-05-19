@@ -1,5 +1,3 @@
-package tests;
-
 import static org.junit.Assert.*;
 
 import java.util.List;
@@ -200,5 +198,3 @@ public class LogCustomerPriceUpdateTests {
 		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air",
 				"Domestic Air", 3.5, 4.5, 15, 50, 12, 18, "Tuesday");
 	}
-	
-}

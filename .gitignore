@@ -1,1 +1,17 @@
+# Class files
+KPSmart/bin/
 
+# Eclipse config files
+.project
+.classpath
+KPSmart/.classpath
+KPSmart/.project
+KPSmart/.settings/
+
+# LogFile
+logfile.xml
+
+# Any other test LogFiles
+*.xml
+/bin/
+KPSmart/src/tests/LogRouteCostUpdateTests.java
