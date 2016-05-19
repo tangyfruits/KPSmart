@@ -19,8 +19,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-
-
 public class LogWriter {
 	
 	// Console Logging for Debugging
@@ -53,6 +51,7 @@ public class LogWriter {
 	}
 	
 	// METHODS
+	@SuppressWarnings("fallthrough")
 	public void ensureLogExists() throws Exception {
 		
 		if (LOGS) {System.out.println("ENSURE:           "+logFileName);}
