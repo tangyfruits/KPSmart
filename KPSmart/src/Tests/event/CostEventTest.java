@@ -1,4 +1,4 @@
-package Tests.event;
+package tests.event;
 
 import static org.junit.Assert.*;
 

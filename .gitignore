@@ -1,17 +1,9 @@
-# Class files
-KPSmart/bin/
+# Class files - Nope not going to ignore them
 
-# Eclipse config files
-.project
-.classpath
-KPSmart/.classpath
-KPSmart/.project
-KPSmart/.settings/
+# Eclipse config files - Nope gonna keep these too
+# KPSmart/.classpath
+# KPSmart/.project
+# KPSmart/.settings/
 
-# LogFile
-logfile.xml
-
-# Any other test LogFiles
+# LogFiles
 *.xml
-/bin/
-KPSmart/src/tests/LogRouteCostUpdateTests.java

@@ -1,4 +1,4 @@
-package Tests;
+package tests.main;
 
 import java.io.File;
 import java.io.FileWriter;
