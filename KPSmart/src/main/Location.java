@@ -7,7 +7,7 @@ public class Location {
 
 	private String name;
 	private String priority;
-	public Location fromLocation;
+	private Location fromLocation;
 	private List<Route> routes = new ArrayList<Route>();
 	private List<CustomerPrice> prices = new ArrayList<CustomerPrice>();;
 	private double costSoFar;
