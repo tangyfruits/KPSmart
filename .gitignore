@@ -13,3 +13,4 @@ logfile.xml
 
 # Any other test LogFiles
 *.xml
+/bin/
