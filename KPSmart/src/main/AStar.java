@@ -39,6 +39,7 @@ public class AStar {
 		ArrayList<Route> priorityRoutes = new ArrayList<>();
 		while (cheapestLocation.getFrom() != null) {
 			for (Route r : cheapestLocation.getFrom().getRoutes()) {
+				//need to change this because only checks if there is one instead of multiple
 				if (r.getDestination().getName().equals(cheapestLocation.getName())) {
 					cheapestRoutes.add(r);
 				}
@@ -47,6 +48,7 @@ public class AStar {
 		}
 		while (priorityLocation.getFrom() != null) {
 			for (Route r : priorityLocation.getFrom().getRoutes()) {
+				//need to change this because only checks if there is one instead of multiple
 				if (r.getDestination().getName().equals(priorityLocation.getName())) {
 					priorityRoutes.add(r);
 				}

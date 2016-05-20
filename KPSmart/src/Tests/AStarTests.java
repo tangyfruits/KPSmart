@@ -16,14 +16,25 @@ public class AStarTests {
 	
 	Location loc1 = new Location("Lower Hutt");
 	Location loc2 = new Location("Wellington");
-	Location loc3 = new Location("Auckland ");
+	Location loc3 = new Location("Auckland");
 	Location loc4 = new Location("Hamilton");
 	Location loc5 = new Location("Tauranga");
 	Location loc6 = new Location("Upper Hutt");
 	Location loc7 = new Location("Turangi");
 	Location loc8 = new Location("Kuratau");
 	Location loc9 = new Location("Lake Taupo");
-	
+	CustomerPrice cp1 = new CustomerPrice(loc1, loc2, "Land", 1.0, 1.0);
+	CustomerPrice cp2 = new CustomerPrice(loc1, loc2, "Air", 2.0, 2.0);
+	CustomerPrice cp3 = new CustomerPrice(loc1, loc3, "Land", 1.0, 1.0);
+	CustomerPrice cp4 = new CustomerPrice(loc1, loc3, "Air", 2.0, 2.0);
+	CustomerPrice cp5 = new CustomerPrice(loc2, loc3, "Land", 1.0, 1.0);
+	CustomerPrice cp6 = new CustomerPrice(loc2, loc3, "Air", 2.0, 2.0);
+	Route r1 = new Route(loc1, loc2, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp1);
+	Route r2 = new Route(loc1, loc2, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp2);
+	Route r3 = new Route(loc1, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp3);
+	Route r4 = new Route(loc1, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp4);
+	Route r5 = new Route(loc2, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp5);
+	Route r6 = new Route(loc2, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp6);
 	AStar astar = new AStar(loc1, loc2);
 	AStar astarNull = new AStar(null, null);
 	
@@ -35,20 +46,7 @@ public class AStarTests {
 
 	
 	@Test
-	public void testAlgo1(){
-		System.out.println("testAlgo1");
-		CustomerPrice cp1 = new CustomerPrice(loc1, loc2, "Land", 1.0, 1.0);
-		CustomerPrice cp2 = new CustomerPrice(loc1, loc2, "Air", 2.0, 2.0);
-		CustomerPrice cp3 = new CustomerPrice(loc1, loc3, "Land", 1.0, 1.0);
-		CustomerPrice cp4 = new CustomerPrice(loc1, loc3, "Air", 2.0, 2.0);
-		CustomerPrice cp5 = new CustomerPrice(loc2, loc3, "Land", 1.0, 1.0);
-		CustomerPrice cp6 = new CustomerPrice(loc2, loc3, "Air", 2.0, 2.0);
-		Route r1 = new Route(loc1, loc2, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp1);
-		Route r2 = new Route(loc1, loc2, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp2);
-		Route r3 = new Route(loc1, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp3);
-		Route r4 = new Route(loc1, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp4);
-		Route r5 = new Route(loc2, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp5);
-		Route r6 = new Route(loc2, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp6);
+	public void testDirectRoute(){
 		loc1.addRoute(r1);
 		loc1.addRoute(r2);
 		loc1.addRoute(r3);
@@ -62,6 +60,8 @@ public class AStarTests {
 		System.out.println(bestRoutes.get(0).get(0).getDestination().getName());
 		assertTrue(bestRoutes.get(0).get(0).getOrigin().getName().equals("Lower Hutt") && bestRoutes.get(0).get(0).getDestination().getName().equals("Auckland"));
 	}
+
+	
 	
 
 	
