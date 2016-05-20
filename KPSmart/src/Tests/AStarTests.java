@@ -23,12 +23,14 @@ public class AStarTests {
 	Location loc7 = new Location("Turangi");
 	Location loc8 = new Location("Kuratau");
 	Location loc9 = new Location("Lake Taupo");
+	
 	CustomerPrice cp1 = new CustomerPrice(loc1, loc2, "Land", 1.0, 1.0);
 	CustomerPrice cp2 = new CustomerPrice(loc1, loc2, "Air", 2.0, 2.0);
 	CustomerPrice cp3 = new CustomerPrice(loc1, loc3, "Land", 1.0, 1.0);
 	CustomerPrice cp4 = new CustomerPrice(loc1, loc3, "Air", 2.0, 2.0);
 	CustomerPrice cp5 = new CustomerPrice(loc2, loc3, "Land", 1.0, 1.0);
 	CustomerPrice cp6 = new CustomerPrice(loc2, loc3, "Air", 2.0, 2.0);
+	
 	Route r1 = new Route(loc1, loc2, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp1);
 	Route r2 = new Route(loc1, loc2, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp2);
 	Route r3 = new Route(loc1, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp3);
