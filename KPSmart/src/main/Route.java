@@ -20,6 +20,7 @@ public class Route {
 	public Route(Location origin, Location destination, String company, String type, 
 			String priority, double weightCost, double volumeCost, int maxWeight, 
 			int maxVolume, int duration, int frequency, String day, CustomerPrice customerPrice){
+
 		this.origin = origin;
 		this.destination = destination;
 		this.company = company;
@@ -34,7 +35,7 @@ public class Route {
 		this.day = day;
 		this.price = customerPrice;
 	}
-	
+
 	// METHODS
 	// Getters
 	public Location getOrigin() {
@@ -101,5 +102,17 @@ public class Route {
 	}
 	public void setPrice(CustomerPrice price) {
 		this.price = price;
-	}	
+	}
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+	
+	// Other (Stuff for Route Selection?)
+	public double getCost(double weight, double volume){
+		return (this.volumeCost * volume + this.weightCost * weight);
+	}
+	
+	public String toString(){
+		return ("R ORIGIN: "+getOrigin().toString()+" R DEST: "+getDestination().toString());
+	}
 }

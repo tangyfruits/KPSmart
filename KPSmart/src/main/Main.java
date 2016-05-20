@@ -4,17 +4,33 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import java.util.HashMap;
 import java.util.Date;
 import java.util.List;
 
 public class Main {
 
 	private List<Location> locations;
+	private List<User> accounts;
+	private User currentUser;
+
 	private List<DeliveryRequest> deliveryRequests;
+
 
 	public Main() {
 		locations = new ArrayList<Location>();
+		accounts = new ArrayList<User>();
+		// read from encrypted file and add them in!
+
+		// read from encrypted file,create User objects and add them in!
+		// if ( accounts.containsValue("String") &&
+		// accounts.get("String").equalsss("password);
+		// currentUser = new User();
+		// want to look into apache shiro tbh but everyone will have to install
+		// maven. Apache shiro is a really good framework for logins
 	}
+
 
 	public Route[] getPossibleRoutes(String origin, String destination,
 			double weight, double volume) {
@@ -171,8 +187,7 @@ public class Main {
 		}
 
 		// get customer price matching the route
-		price = getCustomerPrice(originLoc, destinationLoc, origin,
-				destination, priority);
+		price = getCustomerPrice(originLoc, destinationLoc, origin, destination, priority);
 
 		// check if route already exists, if it does, update it
 		Boolean routeExists = false;
@@ -211,6 +226,8 @@ public class Main {
 		// priority)
 		CustomerPrice customerPrice = null;
 		for (int k = 0; k < originLoc.getPrices().size(); k++) {
+			
+
 			if (originLoc.getPrices().get(k).getDestination()
 					.equals(destinationLoc)
 					&& originLoc.getPrices().get(k).getPriority()
@@ -221,6 +238,7 @@ public class Main {
 		// if there's no customer price, request one
 		// TODO replace console input with GUI
 		if (customerPrice == null) {
+			
 			double custWeightCost = -1;
 			double custVolCost = -1;
 			BufferedReader input = new BufferedReader(new InputStreamReader(
@@ -248,5 +266,42 @@ public class Main {
 
 	public void addLocation(Location location) {
 		locations.add(location);
+	}
+
+	public ArrayList<ArrayList<Route>> bestRoutes(Location origin, Location destination, double weight, double volume) {
+		ArrayList<ArrayList<Route>> listOfListOfRoutes = new ArrayList<ArrayList<Route>>();
+		Route directRoute = getDirectRoute(destination, destination, weight, volume);
+		if (directRoute == null) {
+			AStar astar = new AStar(origin, destination);
+			return astar.listOfRoutes(weight, volume);
+		} else {
+			ArrayList<Route> best = new ArrayList<>();
+			best.add(directRoute);
+			listOfListOfRoutes.add(best);
+			return listOfListOfRoutes;
+		}
+	}
+
+	public Route getDirectRoute(Location origin, Location destination, double weight, double volume) {
+		ArrayList<Route> directRoutes = new ArrayList<>();
+		for (Route r : origin.getRoutes()) {
+			if (r.getDestination() == destination) {
+				directRoutes.add(r);
+			}
+		}
+		if (directRoutes.isEmpty()) {
+			return null;
+		}
+		return getCheapestRoute(directRoutes, weight, volume);
+	}
+
+	public Route getCheapestRoute(List<Route> routes, double weight, double volume) {
+		Route cheapest = routes.get(0);
+		for (Route r : routes) {
+			if (cheapest.getCost(weight, volume) > r.getCost(weight, volume)) {
+				cheapest = r;
+			}
+		}
+		return cheapest;
 	}
 }

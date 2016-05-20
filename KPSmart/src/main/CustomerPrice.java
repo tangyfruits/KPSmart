@@ -1,14 +1,13 @@
 package main;
 
 public class CustomerPrice {
-	
 	// VARIABLES
 	private Location origin;
 	private Location destination;
 	private String priority;
 	private double weightCost;
 	private double volumeCost;
-	
+
 	// CONSTRUCTORS
 	public CustomerPrice(Location origin, Location destination,
 			String priority, double weightCost, double volumeCost) {
@@ -20,17 +19,12 @@ public class CustomerPrice {
 	}
 	
 	// METHODS
+	// Getters
 	public double getWeightCost() {
 		return weightCost;
 	}
-	public void setWeightCost(double weightCost) {
-		this.weightCost = weightCost;
-	}
 	public double getVolumeCost() {
 		return volumeCost;
-	}
-	public void setVolumeCost(double volumeCost) {
-		this.volumeCost = volumeCost;
 	}
 	public Location getOrigin() {
 		return origin;
@@ -40,5 +34,13 @@ public class CustomerPrice {
 	}
 	public String getPriority() {
 		return priority;
+	}
+
+	// Setters
+	public void setWeightCost(double weightCost) {
+		this.weightCost = weightCost;
+	}
+	public void setVolumeCost(double volumeCost) {
+		this.volumeCost = volumeCost;
 	}
 }
