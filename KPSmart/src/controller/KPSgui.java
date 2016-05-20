@@ -1,4 +1,4 @@
-package fxmlTest;
+package controller;
 
 //import javafx.scene.control.Button;
 //import javafx.scene.layout.StackPane;
@@ -11,18 +11,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import javafx.fxml.Initializable;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 
-public class Main extends Application {
+public class KPSgui extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {		
-		Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
 		primaryStage.setTitle("KPSmart");
-		Scene scene = new Scene(root, 600, 400);
+		Scene scene = new Scene(root, 700, 600);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

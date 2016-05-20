@@ -1,1 +1,9 @@
+# Class files - Nope not going to ignore them
 
+# Eclipse config files - Nope gonna keep these too
+# KPSmart/.classpath
+# KPSmart/.project
+# KPSmart/.settings/
+
+# LogFiles
+*.xml
