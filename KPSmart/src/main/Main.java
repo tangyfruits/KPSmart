@@ -31,7 +31,7 @@ public class Main {
 		// maven. Apache shiro is a really good framework for logins
 	}
 
-	public Route[] getPossibleRoutes(String origin, String destination,
+	public ArrayList<ArrayList<Route>> getPossibleRoutes(String origin, String destination,
 			double weight, double volume) {
 		Location originLoc = null;
 		Location desinationLoc = null;
@@ -48,11 +48,9 @@ public class Main {
 		}
 		
 		//route selection
-		//TODO uncomment once route selection is finished and merged in
-		Route[] route = new Route[5];
-		//List<Route> route = bestRoutes(originLoc, destinationLoc, weight, volume);
-		
-		return route;
+		AStar astar = new AStar(originLoc, destinationLoc);
+		return astar.listOfRoutes(weight, volume);
+
 	}
 	
 	public DeliveryRequest logDeliveryRequest(String origin, String destination,
@@ -262,7 +260,6 @@ public class Main {
 	public void discontinueTransportRoute(String origin, String destination, String company, String type){
 		
 		Location originLoc = null;
-		Location desinationLoc = null;
 
 		// find the locations matching the given strings
 		Location destinationLoc = null;
@@ -270,18 +267,23 @@ public class Main {
 			if (locations.get(i).getName().equals(origin)) {
 				originLoc = locations.get(i);
 			}
-			if (locations.get(i).getName().equals(destination)) {
-				destinationLoc = locations.get(i);
-			}
 		}
 		
-		Route toCancel;
+		Route toCancel=null;
 		//find the matching route out of origin
 		for(Route r: originLoc.getRoutes()){
 			if(r.getCompany().equals(company) && r.getDestination().getName().equals(destination) && r.getType().equals(type)){
 				toCancel = r;
 			}
 		}
+		if(toCancel !=null){
+			originLoc.removeRoute(toCancel);
+			//TODO log in file
+		}
+		else{
+			//TODO display error
+		}
+		
 	}
 	
 	public List<Location> getLocations() {
