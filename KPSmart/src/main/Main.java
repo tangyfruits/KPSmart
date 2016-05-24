@@ -33,11 +33,11 @@ public class Main {
 
 	public ArrayList<ArrayList<Route>> getPossibleRoutes(String origin, String destination,
 			double weight, double volume) {
-		Location originLoc = null;
-		Location desinationLoc = null;
 
 		// find the locations matching the given strings
+		Location originLoc = null;
 		Location destinationLoc = null;
+		
 		for (int i = 0; i < locations.size(); i++) {
 			if (locations.get(i).getName().equals(origin)) {
 				originLoc = locations.get(i);
@@ -54,13 +54,14 @@ public class Main {
 	}
 	
 	public DeliveryRequest logDeliveryRequest(String origin, String destination,
-			double weight, double volume, List<Route> route) {
+			double weight, double volume, List<Route> route, String priority) {
 		
-		Location originLoc = null;
-		Location desinationLoc = null;
+
 
 		// find the locations matching the given strings
+		Location originLoc = null;
 		Location destinationLoc = null;
+		
 		for (int i = 0; i < locations.size(); i++) {
 			if (locations.get(i).getName().equals(origin)) {
 				originLoc = locations.get(i);
@@ -71,9 +72,25 @@ public class Main {
 		}
 		
 		//calculate priority
-		//TODO replace placeholder
-		String priority = "";
+		String overallPriority = "";
+		List<String> domesticCities = new ArrayList<>();
+		domesticCities.add("Auckland");
+		domesticCities.add("Hamilton");
+		domesticCities.add("Rotorua");
+		domesticCities.add("Palmerston North");
+		domesticCities.add("Wellington");
+		domesticCities.add("Christchurch");
+		domesticCities.add("Dunedin");
 		
+		if(domesticCities.contains(origin)&&domesticCities.contains(destination)){
+			overallPriority.concat("Domestic ");
+		}
+		else{
+			overallPriority.concat("International ");
+		}
+		
+		overallPriority.concat(priority);
+				
 		//calculate duration
 		//TODO replace placeholder
 		int duration = 0;
@@ -91,7 +108,7 @@ public class Main {
 		}
 		
 		//create Delivery request
-		DeliveryRequest request = new DeliveryRequest(new Date(), originLoc, destinationLoc, weight, volume, priority, duration, legs);
+		DeliveryRequest request = new DeliveryRequest(new Date(), originLoc, destinationLoc, weight, volume, overallPriority, duration, legs);
 		
 		//add to delivery events field
 		deliveryRequests.add(request);
@@ -262,7 +279,6 @@ public class Main {
 		Location originLoc = null;
 
 		// find the locations matching the given strings
-		Location destinationLoc = null;
 		for (int i = 0; i < locations.size(); i++) {
 			if (locations.get(i).getName().equals(origin)) {
 				originLoc = locations.get(i);
