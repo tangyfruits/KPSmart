@@ -31,7 +31,6 @@ public class Main {
 		// maven. Apache shiro is a really good framework for logins
 	}
 
-
 	public Route[] getPossibleRoutes(String origin, String destination,
 			double weight, double volume) {
 		Location originLoc = null;
@@ -260,6 +259,31 @@ public class Main {
 		return customerPrice;
 	}
 
+	public void discontinueTransportRoute(String origin, String destination, String company, String type){
+		
+		Location originLoc = null;
+		Location desinationLoc = null;
+
+		// find the locations matching the given strings
+		Location destinationLoc = null;
+		for (int i = 0; i < locations.size(); i++) {
+			if (locations.get(i).getName().equals(origin)) {
+				originLoc = locations.get(i);
+			}
+			if (locations.get(i).getName().equals(destination)) {
+				destinationLoc = locations.get(i);
+			}
+		}
+		
+		Route toCancel;
+		//find the matching route out of origin
+		for(Route r: originLoc.getRoutes()){
+			if(r.getCompany().equals(company) && r.getDestination().getName().equals(destination) && r.getType().equals(type)){
+				toCancel = r;
+			}
+		}
+	}
+	
 	public List<Location> getLocations() {
 		return locations;
 	}
