@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import main.AStar;
@@ -13,6 +14,12 @@ import main.Location;
 import main.Route;
 
 public class AStarTests {
+	
+	boolean logs = true; // Turn console logging on or off
+	
+	ArrayList<Location> locations = new ArrayList<Location>();
+	boolean routesAdded = false;
+	
 	Location loc1 = new Location("Lower Hutt");
 	Location loc2 = new Location("Wellington");
 	Location loc3 = new Location("Auckland");
@@ -25,7 +32,7 @@ public class AStarTests {
 	Location loc10 = new Location("Cape Reinga");
 	Location loc11 = new Location("Paraparaumu");
 	Location loc12 = new Location("Dunedin");
-
+	
 	CustomerPrice cp1 = new CustomerPrice(loc1, loc2, "Land", 1.0, 1.0);
 	CustomerPrice cp2 = new CustomerPrice(loc1, loc2, "Air", 2.0, 2.0);
 	CustomerPrice cp3 = new CustomerPrice(loc1, loc3, "Land", 1.0, 1.0);
@@ -58,20 +65,32 @@ public class AStarTests {
 	Route r14 = new Route(loc3, loc4, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp14);
 	Route r15 = new Route(loc1, loc3, "", "", "TEST", 1.0, 1.0, 99, 99, 5, 5, "", cp15);
 
+	
+	// Should do a test where there is no route between the origin and destination
+	
+	// Also one where there is a route between them but no air route.
+	
+	
 	@Test
 	public void testDirectRoute1() {
-		AStar astar = new AStar(loc1, loc3);
+		addLocationsToArray();
 		addRoutesToLocations();
+		AStar astar = new AStar(locations, loc1, loc3);
+		
 		ArrayList<ArrayList<Route>> bestRoutes = astar.twoListsOfRoutes(2, 2);
 		assertTrue(bestRoutes.get(0).get(0).getOrigin().getName().equals("Lower Hutt")
 				&& bestRoutes.get(0).get(0).getDestination().getName().equals("Auckland"));
 	}
+	
 
 	@Test
 	public void testCompoundRoute1() {
-		AStar astar = new AStar(loc1, loc5);
+		addLocationsToArray();
 		addRoutesToLocations();
+		AStar astar = new AStar(locations, loc1, loc5);
+		
 		ArrayList<ArrayList<Route>> bestRoutes = astar.twoListsOfRoutes(2, 2);
+		/*
 		System.out.println(bestRoutes.size());
 		for (Route r : bestRoutes.get(0)){
 			System.out.println(r.getPrice().toString());
@@ -81,6 +100,7 @@ public class AStarTests {
 		}
 		System.out.println(bestRoutes.get(0).get(0).getOrigin().getName());
 		System.out.println(bestRoutes.get(0).get(0).getDestination().getName());
+		System.out.println(bestRoutes.get(0).size());
 		System.out.println(bestRoutes.get(0).get(0).getPriority());
 		System.out.println(bestRoutes.get(0).get(1).getPriority());
 		System.out.println(bestRoutes.get(0).get(2).getPriority());
@@ -89,37 +109,66 @@ public class AStarTests {
 		System.out.println(bestRoutes.get(1).get(0).getPriority());
 		System.out.println(bestRoutes.get(1).get(1).getPriority());
 		System.out.println(bestRoutes.get(1).get(2).getPriority());
+		/**/
 		assertTrue(bestRoutes.get(0).get(0).getOrigin().getName().equals("Auckland")
 				&& bestRoutes.get(0).get(0).getDestination().getName().equals("Tauranga"));
 	}
 
 	@Test
 	public void testCompoundRoute2() {
-		AStar astar = new AStar(loc1, loc5);
+		addLocationsToArray();
 		addRoutesToLocations();
+		AStar astar = new AStar(locations, loc1, loc5);
+		
 		ArrayList<ArrayList<Route>> bestRoutes = astar.twoListsOfRoutes(2, 2);
-		System.out.println(bestRoutes.get(0).get(1).getOrigin().getName());
+		/**/
+		for (ArrayList<Route> ar : bestRoutes) {
+			for (Route r : ar) {
+				System.out.print(r.toPretty()+", ");
+			}
+			System.out.println();
+		}
+		System.out.print(bestRoutes.get(0).get(1).getOrigin().getName()+" -> ");
 		System.out.println(bestRoutes.get(0).get(1).getDestination().getName());
+		/**/
 		assertTrue(bestRoutes.get(0).get(2).getOrigin().getName().equals("Lower Hutt")
 				&& bestRoutes.get(0).get(2).getDestination().getName().equals("Auckland"));
 	}
+	// HELPER
 
 	// helper methods
 	private void addRoutesToLocations() {
-		loc1.addRoute(r1);
-		loc1.addRoute(r2);
-		loc1.addRoute(r3);
-		loc1.addRoute(r4);
-		loc2.addRoute(r5);
-		loc2.addRoute(r6);
-		loc2.addRoute(r7);
-		loc2.addRoute(r8);
-		loc4.addRoute(r9);
-		loc4.addRoute(r10);
-		loc3.addRoute(r11);
-		loc3.addRoute(r12);
-		loc3.addRoute(r13);
-		loc3.addRoute(r14);
+		if (!routesAdded) {
+			loc1.addRoute(r1);
+			loc1.addRoute(r2);
+			loc1.addRoute(r3);
+			loc1.addRoute(r4);
+			loc2.addRoute(r5);
+			loc2.addRoute(r6);
+			loc2.addRoute(r7);
+			loc2.addRoute(r8);
+			loc4.addRoute(r9);
+			loc4.addRoute(r10);
+			loc3.addRoute(r11);
+			loc3.addRoute(r12);
+			loc3.addRoute(r13);
+			loc3.addRoute(r14);
+			routesAdded = true;
+		}
 	}
-
+	public void addLocationsToArray() {
+		locations.clear();
+		locations.add(loc1);
+		locations.add(loc2);
+		locations.add(loc3);
+		locations.add(loc4);
+		locations.add(loc5);
+		locations.add(loc6);
+		locations.add(loc7);
+		locations.add(loc8);
+		locations.add(loc9);
+		locations.add(loc10);
+		locations.add(loc11);
+		locations.add(loc12);		
+	}
 }

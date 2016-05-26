@@ -6,10 +6,11 @@ import java.util.List;
 public class Location {
 	// VARIABLES
 	private String name;
-	private String priority;
-	private Location fromLocation;
 	private List<Route> routes = new ArrayList<Route>();
 	private List<CustomerPrice> prices = new ArrayList<CustomerPrice>();;
+	
+	private String priority;
+	private Location fromLocation;
 	private double costSoFar;
 	private boolean visited;
 	
@@ -20,15 +21,6 @@ public class Location {
 	
 	// METHODS
 	// Getters
-	public String getPriority() {
-		return priority;
-	}
-	public double getCostSoFar() {
-		return costSoFar;
-	}
-	public boolean isVisited() {
-		return visited;
-	}
 	public String getName() {
 		return name;
 	}
@@ -40,12 +32,6 @@ public class Location {
 	}
 
 	// Setters (Adders)
-	public void setPriority(String priority) {
-		this.priority = priority;
-	}
-	public void setVisited(boolean visited) {
-		this.visited = visited;
-	}
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -62,11 +48,35 @@ public class Location {
 		this.prices.add(price);
 	}
 	
-	// Others
+	// Other
+	public String toString() {
+		return ("Loc name: " + getName());
+	}
+	public String toPretty() { // (like toString but prettier)
+		return name;
+	}
+	
+	
+	// Shouldn't be in Location
+	public String getPriority() {
+		return priority;
+	}
+	public double getCostSoFar() {
+		return costSoFar;
+	}
+	public boolean isVisited() {
+		return visited;
+	}
 	public Location getFrom() {
 		return fromLocation;
 	}
 	
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+	public void setVisited(boolean visited) {
+		this.visited = visited;
+	}
 	public void setFrom(Location l) {
 		this.fromLocation = l;
 	}
@@ -74,8 +84,6 @@ public class Location {
 		this.costSoFar = costSoFar;
 	}
 	
-	public String toString() {
-		return ("Loc name: " + getName());
-	}
+	
 
 }
