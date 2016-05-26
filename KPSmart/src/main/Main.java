@@ -114,7 +114,7 @@ public class Main {
 		Route directRoute = getDirectRoute(destination, destination, weight, volume);
 		if (directRoute == null) {
 			AStar astar = new AStar(origin, destination);
-			return astar.listOfRoutes(weight, volume);
+			return astar.twoListsOfRoutes(weight, volume);
 		} else {
 			ArrayList<Route> best = new ArrayList<>();
 			best.add(directRoute);

@@ -45,4 +45,10 @@ public class CustomerPrice {
 	public String getPriority() {
 		return priority;
 	}
+
+	@Override
+	public String toString() {
+		return "CustomerPrice [origin=" + origin + ", destination=" + destination + ", priority=" + priority
+				+ ", weightCost=" + weightCost + ", volumeCost=" + volumeCost + "]";
+	}
 }

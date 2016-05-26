@@ -32,7 +32,7 @@ public class AStar {
 		this.goal = goal;
 	}
 
-	public ArrayList<ArrayList<Route>> listOfRoutes(double weight, double volume) {
+	public ArrayList<ArrayList<Route>> twoListsOfRoutes(double weight, double volume) {
 		Location cheapestLocation = cheapestRouteAlgorithm(weight, volume);
 		Location priorityLocation = highestPriorityAlgorithm(weight, volume);
 		ArrayList<Route> cheapestRoutes = new ArrayList<>();
@@ -40,6 +40,9 @@ public class AStar {
 		while (cheapestLocation.getFrom() != null) {
 			for (Route r : cheapestLocation.getFrom().getRoutes()) {
 				//need to change this because only checks if there is one instead of multiple
+				//this adds all routes that have the same location
+				//need unique identifier? getName isn't unique
+				//have a method that reverse a route and creates it two way, then compare?
 				if (r.getDestination().getName().equals(cheapestLocation.getName())) {
 					cheapestRoutes.add(r);
 				}
@@ -49,6 +52,7 @@ public class AStar {
 		while (priorityLocation.getFrom() != null) {
 			for (Route r : priorityLocation.getFrom().getRoutes()) {
 				//need to change this because only checks if there is one instead of multiple
+				//this adds all routes that have the same location
 				if (r.getDestination().getName().equals(priorityLocation.getName())) {
 					priorityRoutes.add(r);
 				}
@@ -135,6 +139,28 @@ public class AStar {
 			}
 		}
 		return goal;
+	}
+	public Route getDirectRoute(Location origin, Location destination, double weight, double volume) {
+		ArrayList<Route> directRoutes = new ArrayList<>();
+		for (Route r : origin.getRoutes()) {
+			if (r.getDestination() == destination) {
+				directRoutes.add(r);
+			}
+		}
+		if (directRoutes.isEmpty()) {
+			return null;
+		}
+		return getCheapestRoute(directRoutes, weight, volume);
+	}
+
+	public Route getCheapestRoute(ArrayList<Route> routes, double weight, double volume) {
+		Route cheapest = routes.get(0);
+		for (Route r : routes) {
+			if (cheapest.getCost(weight, volume) > r.getCost(weight, volume)) {
+				cheapest = r;
+			}
+		}
+		return cheapest;
 	}
 
 }
