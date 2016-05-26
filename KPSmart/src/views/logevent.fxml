@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import java.util.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: FFF3E0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="KPSmart" textFill="#655a5a">
+         <font>
+            <Font name="Gulim" size="35.0" />
+         </font>
+      </Label>
+      <Pane layoutX="289.0" layoutY="20.0">
+         <children>
+            <Button fx:id="reports" layoutX="236.0" layoutY="1.0" mnemonicParsing="false" onAction="#reportButtonAction" style="-fx-background-color: E9D5B9;" text="Reports">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="history" layoutX="161.0" layoutY="1.0" mnemonicParsing="false" onAction="#historyButtonAction" style="-fx-background-color: E9D5B9;" text="History">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Button>
+            <MenuButton mnemonicParsing="false" prefHeight="22.0" prefWidth="145.0" style="-fx-background-color: E9D5B9;" text="Log Event">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Delivery Request" />
+                <MenuItem mnemonicParsing="false" text="Discontinue Transport" />
+                  <MenuItem mnemonicParsing="false" text="Update Existing Log" />
+              </items>
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </MenuButton>
+            <Button fx:id="logout" layoutX="317.0" layoutY="1.0" mnemonicParsing="false" onAction="#logoutButtonAction" style="-fx-background-color: E9D5B9;" text="Logout">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Separator layoutY="61.0" prefHeight="5.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+      <GridPane hgap="10.0" layoutX="79.0" layoutY="90.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <MenuButton fx:id="destination" layoutX="410.0" layoutY="108.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: E9D5B9;" text="Choose location" GridPane.columnIndex="3">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+               <items>
+                  <CheckMenuItem fx:id="AucklandDest" mnemonicParsing="false" onAction="#selectAucklandDest" text="Auckland" />
+                  <CheckMenuItem fx:id="HamiltonDest" mnemonicParsing="false" onAction="#selectHamiltonDest" text="Hamilton" />
+                  <CheckMenuItem fx:id="RotoruaDest" mnemonicParsing="false" onAction="#selectRotoruaDest" text="Rotorua" />
+                  <CheckMenuItem fx:id="PalmerstonDest" mnemonicParsing="false" onAction="#selectPalmerstonDest" text="Palmerston North" />
+                  <CheckMenuItem fx:id="WellingtonDest" mnemonicParsing="false" onAction="#selectWellingtonDest" text="Wellington" />
+                  <CheckMenuItem fx:id="ChristchurchDest" mnemonicParsing="false" onAction="#selectChristchurchDest" text="ChristChurch" />
+                  <CheckMenuItem fx:id="DunedinDest" mnemonicParsing="false" onAction="#selectDunedinDest" text="Dunedin" />
+                  <CheckMenuItem fx:id="OtherDest" mnemonicParsing="false" onAction="#selectOtherDest" text="Other" />
+               </items>
+            </MenuButton>
+            <MenuButton fx:id="origin" layoutX="130.0" layoutY="108.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: E9D5B9;" text="Choose location" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+               <items>
+                  <CheckMenuItem fx:id="AucklandOrigin" mnemonicParsing="false" onAction="#selectAucklandOrigin" text="Auckland" />
+                  <CheckMenuItem fx:id="HamiltonOrigin" mnemonicParsing="false" onAction="#selectHamiltonOrigin" text="Hamilton" />
+                  <CheckMenuItem fx:id="RotoruaOrigin" mnemonicParsing="false" onAction="#selectRotoruaOrigin" text="Rotorua" />
+                  <CheckMenuItem fx:id="PalmerstonOrigin" mnemonicParsing="false" text="Palmerston North" />
+                  <CheckMenuItem fx:id="WellingtonOrigin" mnemonicParsing="false" onAction="#selectWellingtonOrigin" text="Wellington" />
+                  <CheckMenuItem fx:id="ChristchurchOrigin" mnemonicParsing="false" onAction="#selectChristchurchOrigin" text="Christchurch" />
+                  <CheckMenuItem fx:id="DunedinOrigin" mnemonicParsing="false" onAction="#selectDunedinOrigin" text="Dunedin" />
+                  <CheckMenuItem fx:id="OtherOrigin" mnemonicParsing="false" onAction="#selectOtherOrigin" text="Other" />
+               </items>
+            </MenuButton>
+            <Text layoutX="79.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Origin:">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Text>
+            <Text layoutX="327.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destination:" GridPane.columnIndex="2">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Text>
+         </children>
+      </GridPane>
+      <GridPane hgap="10.0" layoutX="220.0" layoutY="415.0" vgap="5.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <MenuButton fx:id="priority" layoutX="276.0" layoutY="412.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: #FFFFFF;" text="Choose priority" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+               <items>
+                  <MenuItem mnemonicParsing="false" text="International Air" />
+                  <MenuItem mnemonicParsing="false" text="International Standard" />
+                  <MenuItem mnemonicParsing="false" text="Domestic Air" />
+                  <MenuItem mnemonicParsing="false" text="Domestic Standard" />
+               </items>
+            </MenuButton>
+            <TextField fx:id="volume" layoutX="275.0" layoutY="377.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Text layoutX="223.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Priority:" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Text>
+            <Text layoutX="220.0" layoutY="359.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weight:">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Text>
+            <Text layoutX="221.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Volume:" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Text>
+            <TextField fx:id="weight" layoutX="275.0" layoutY="341.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <Button id="submit" fx:id="submit" layoutX="318.0" layoutY="523.0" mnemonicParsing="false" onAction="#logEventButtonAction" style="-fx-background-color: E9D5B9;" text="Submit">
+         <font>
+            <Font name="Gulim" size="15.0" />
+         </font>
+      </Button>
+   </children>
+   <stylesheets>
+	<URL value="@kps.css" />
+   </stylesheets>
+</AnchorPane>
