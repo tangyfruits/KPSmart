@@ -17,29 +17,29 @@
             <Font name="Gulim" size="35.0" />
          </font>
       </Label>
-      <Pane layoutX="289.0" layoutY="20.0">
+      <Pane layoutX="266.0" layoutY="20.0" prefHeight="25.0" prefWidth="401.0">
          <children>
-            <Button fx:id="reports" layoutX="236.0" layoutY="1.0" mnemonicParsing="false" onAction="#reportButtonAction" style="-fx-background-color: E9D5B9;" text="Reports">
+            <Button fx:id="reports" layoutX="251.0" layoutY="1.0" mnemonicParsing="false" onAction="#reportButtonAction" style="-fx-background-color: E9D5B9;" text="Reports">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="history" layoutX="161.0" layoutY="1.0" mnemonicParsing="false" onAction="#historyButtonAction" style="-fx-background-color: E9D5B9;" text="History">
+            <Button fx:id="history" layoutX="181.0" layoutY="1.0" mnemonicParsing="false" onAction="#historyButtonAction" style="-fx-background-color: E9D5B9;" text="History">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </Button>
-            <MenuButton mnemonicParsing="false" prefHeight="22.0" prefWidth="145.0" style="-fx-background-color: E9D5B9;" text="Log Event">
+            <MenuButton fx:id="logeventmenu" layoutY="1.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="170.0" style="-fx-background-color: E9D5B9;" text="Discontinue Transport">
               <items>
-                <MenuItem mnemonicParsing="false" text="Delivery Request" />
-                <MenuItem mnemonicParsing="false" text="Discontinue Transport" />
-                  <MenuItem mnemonicParsing="false" text="Update Existing Log" />
+                <MenuItem fx:id="deliveryRequest" mnemonicParsing="false" onAction="#deliveryRequestAction" text="Delivery Request" />
+                <MenuItem fx:id="discontinueTransport" mnemonicParsing="false" onAction="#discontinueTransportAction" text="Discontinue Transport" />
+                <MenuItem fx:id="updateExistingLog" mnemonicParsing="false" onAction="#updateExistingLogAction" text="Update Log" />
               </items>
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </MenuButton>
-            <Button fx:id="logout" layoutX="317.0" layoutY="1.0" mnemonicParsing="false" onAction="#logoutButtonAction" style="-fx-background-color: E9D5B9;" text="Logout">
+            <Button fx:id="logout" layoutX="325.0" layoutY="1.0" mnemonicParsing="false" onAction="#logoutButtonAction" style="-fx-background-color: E9D5B9;" text="Logout">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
@@ -58,7 +58,7 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <MenuButton fx:id="destination" layoutX="410.0" layoutY="108.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: E9D5B9;" text="Choose location" GridPane.columnIndex="3">
+            <MenuButton fx:id="destinationMenu" layoutX="410.0" layoutY="108.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: E9D5B9;" text="Choose location" GridPane.columnIndex="3">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
@@ -73,7 +73,7 @@
                   <CheckMenuItem fx:id="OtherDest" mnemonicParsing="false" onAction="#selectOtherDest" text="Other" />
                </items>
             </MenuButton>
-            <MenuButton fx:id="origin" layoutX="130.0" layoutY="108.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: E9D5B9;" text="Choose location" GridPane.columnIndex="1">
+            <MenuButton fx:id="originMenu" layoutX="130.0" layoutY="108.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: E9D5B9;" text="Choose location" GridPane.columnIndex="1">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
@@ -81,7 +81,7 @@
                   <CheckMenuItem fx:id="AucklandOrigin" mnemonicParsing="false" onAction="#selectAucklandOrigin" text="Auckland" />
                   <CheckMenuItem fx:id="HamiltonOrigin" mnemonicParsing="false" onAction="#selectHamiltonOrigin" text="Hamilton" />
                   <CheckMenuItem fx:id="RotoruaOrigin" mnemonicParsing="false" onAction="#selectRotoruaOrigin" text="Rotorua" />
-                  <CheckMenuItem fx:id="PalmerstonOrigin" mnemonicParsing="false" text="Palmerston North" />
+                  <CheckMenuItem fx:id="PalmerstonOrigin" mnemonicParsing="false" onAction="#selectPalmerstonOrigin" text="Palmerston North" />
                   <CheckMenuItem fx:id="WellingtonOrigin" mnemonicParsing="false" onAction="#selectWellingtonOrigin" text="Wellington" />
                   <CheckMenuItem fx:id="ChristchurchOrigin" mnemonicParsing="false" onAction="#selectChristchurchOrigin" text="Christchurch" />
                   <CheckMenuItem fx:id="DunedinOrigin" mnemonicParsing="false" onAction="#selectDunedinOrigin" text="Dunedin" />
@@ -111,15 +111,15 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <MenuButton fx:id="priority" layoutX="276.0" layoutY="412.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: #FFFFFF;" text="Choose priority" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <MenuButton fx:id="prioritymenu" layoutX="276.0" layoutY="412.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: #FFFFFF;" text="Choose priority" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
                <items>
-                  <MenuItem mnemonicParsing="false" text="International Air" />
-                  <MenuItem mnemonicParsing="false" text="International Standard" />
-                  <MenuItem mnemonicParsing="false" text="Domestic Air" />
-                  <MenuItem mnemonicParsing="false" text="Domestic Standard" />
+                  <CheckMenuItem fx:id="intlAir" mnemonicParsing="false" onAction="#intlAirAction" text="International Air" />
+                  <CheckMenuItem fx:id="intlStd" mnemonicParsing="false" onAction="#intlStdAction" text="International Standard" />
+                  <CheckMenuItem fx:id="domesticAir" mnemonicParsing="false" onAction="#domesticAirAction" text="Domestic Air" />
+                  <CheckMenuItem fx:id="domesticStd" mnemonicParsing="false" onAction="#domesticStdAction" text="Domestic Standard" />
                </items>
             </MenuButton>
             <TextField fx:id="volume" layoutX="275.0" layoutY="377.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
