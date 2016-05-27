@@ -85,9 +85,9 @@ public class AStar {
 				Location neightbour = route.getDestination();
 				
 				// If Cheapest Start -> Neighbour Route - Add Route to 'previous'
-				Double altCost = costs.get(loc) + route.getCost(weight, volume);
-				if (altCost < costs.get(neightbour)) {
-					costs.put(neightbour, altCost);
+				Double newCost = costs.get(loc) + route.getCost(weight, volume);
+				if (newCost < costs.get(neightbour)) {
+					costs.put(neightbour, newCost);
 					previous.put(neightbour, route);
 				}
 			}
@@ -102,20 +102,21 @@ public class AStar {
 		ArrayList<Route> list = new ArrayList<Route>();			
 		Location origin = goal;
 		Route route = previous.get(origin);
+		
 		while (route != null && origin != start) {
-			list.add(route);
+			list.add(0, route);
 			origin = route.getOrigin();
 			route = previous.get(origin);
-			if (x++ < 40) {
-				/**System.out.println("c("+ origin.toPretty() +")");/**/
-			}
+//			if (x++ < 40) {
+//				/**System.out.println("c("+ origin.toPretty() +")");/**/
+//			}
 		}
 		
 		/**System.out.println("OUT: ");/**/
-		for (Route r : list) {
-			/**System.out.println(r.toPretty());/**/
-		}
-		
+//		for (Route r : list) {
+//			/**System.out.println(r.toPretty());/**/
+//		}
+//		
 		return list;
 	}
 	// Get Cheapest Air Priority Route
@@ -137,9 +138,9 @@ public class AStar {
 				// Check Only Air Routes
 				if (route.getPriority() == "Air") {
 					// If Cheapest (Start -> Neighbour) Route
-					Double altCost = costs.get(loc) + route.getCost(weight, volume);
-					if (altCost < costs.get(neightbour)) {
-						costs.put(neightbour, altCost);
+					Double newCost = costs.get(loc) + route.getCost(weight, volume);
+					if (newCost < costs.get(neightbour)) {
+						costs.put(neightbour, newCost);
 						previous.put(neightbour, route);
 					}
 				}
@@ -154,8 +155,9 @@ public class AStar {
 		ArrayList<Route> list = new ArrayList<Route>();			
 		Location origin = goal;
 		Route route = previous.get(origin);
+		
 		while (route != null && origin != start) {	
-			list.add(route);
+			list.add(0, route);
 			origin = route.getOrigin();
 			route = previous.get(origin);
 			if (x < 40) {
@@ -204,26 +206,26 @@ public class AStar {
 	
 	// TODO check cheapest Air and cheapest Overall aren't the same
 	
-	public Route getDirectRoute(Location origin, Location destination, double weight, double volume) {
-		ArrayList<Route> directRoutes = new ArrayList<>();
-		for (Route r : origin.getRoutes()) {
-			if (r.getDestination() == destination) {
-				directRoutes.add(r);
-			}
-		}
-		if (directRoutes.isEmpty()) {
-			return null;
-		}
-		return getCheapestRoute(directRoutes, weight, volume);
-	}
-	public Route getCheapestRoute(ArrayList<Route> routes, double weight, double volume) {
-		Route cheapest = routes.get(0);
-		for (Route r : routes) {
-			if (cheapest.getCost(weight, volume) > r.getCost(weight, volume)) {
-				cheapest = r;
-			}
-		}
-		return cheapest;
-	}
+//	public Route getDirectRoute(Location origin, Location destination, double weight, double volume) {
+//		ArrayList<Route> directRoutes = new ArrayList<>();
+//		for (Route r : origin.getRoutes()) {
+//			if (r.getDestination() == destination) {
+//				directRoutes.add(r);
+//			}
+//		}
+//		if (directRoutes.isEmpty()) {
+//			return null;
+//		}
+//		return getCheapestRoute(directRoutes, weight, volume);
+//	}
+//	public Route getCheapestRoute(ArrayList<Route> routes, double weight, double volume) {
+//		Route cheapest = routes.get(0);
+//		for (Route r : routes) {
+//			if (cheapest.getCost(weight, volume) > r.getCost(weight, volume)) {
+//				cheapest = r;
+//			}
+//		}
+//		return cheapest;
+//	}
 
 }

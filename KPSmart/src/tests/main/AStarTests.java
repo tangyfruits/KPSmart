@@ -14,12 +14,12 @@ import main.Location;
 import main.Route;
 
 public class AStarTests {
-	
+
 	boolean logs = true; // Turn console logging on or off
-	
+
 	ArrayList<Location> locations = new ArrayList<Location>();
 	boolean routesAdded = false;
-	
+
 	Location loc1 = new Location("Lower Hutt");
 	Location loc2 = new Location("Wellington");
 	Location loc3 = new Location("Auckland");
@@ -32,7 +32,7 @@ public class AStarTests {
 	Location loc10 = new Location("Cape Reinga");
 	Location loc11 = new Location("Paraparaumu");
 	Location loc12 = new Location("Dunedin");
-	
+
 	CustomerPrice cp1 = new CustomerPrice(loc1, loc2, "Land", 1.0, 1.0);
 	CustomerPrice cp2 = new CustomerPrice(loc1, loc2, "Air", 2.0, 2.0);
 	CustomerPrice cp3 = new CustomerPrice(loc1, loc3, "Land", 1.0, 1.0);
@@ -48,6 +48,7 @@ public class AStarTests {
 	CustomerPrice cp13 = new CustomerPrice(loc3, loc4, "Land", 1.0, 1.0);
 	CustomerPrice cp14 = new CustomerPrice(loc3, loc4, "Air", 2.0, 2.0);
 	CustomerPrice cp15 = new CustomerPrice(loc1, loc3, "TEST", 1.0, 1.0);
+	CustomerPrice cp16 = new CustomerPrice(loc3, loc6, "Land", 1.0, 1.0);
 
 	Route r1 = new Route(loc1, loc2, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp1);
 	Route r2 = new Route(loc1, loc2, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp2);
@@ -64,54 +65,33 @@ public class AStarTests {
 	Route r13 = new Route(loc3, loc4, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp13);
 	Route r14 = new Route(loc3, loc4, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp14);
 	Route r15 = new Route(loc1, loc3, "", "", "TEST", 1.0, 1.0, 99, 99, 5, 5, "", cp15);
+	Route r16 = new Route(loc3, loc6, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp16);
 
-	
-	// Should do a test where there is no route between the origin and destination
-	
+	// Should do a test where there is no route between the origin and
+	// destination
+
 	// Also one where there is a route between them but no air route.
-	
-	
+
 	@Test
 	public void testDirectRoute1() {
 		addLocationsToArray();
 		addRoutesToLocations();
 		AStar astar = new AStar(locations, loc1, loc3);
-		
+
 		ArrayList<ArrayList<Route>> bestRoutes = astar.twoListsOfRoutes(2, 2);
 		assertTrue(bestRoutes.get(0).get(0).getOrigin().getName().equals("Lower Hutt")
 				&& bestRoutes.get(0).get(0).getDestination().getName().equals("Auckland"));
 	}
-	
 
 	@Test
 	public void testCompoundRoute1() {
 		addLocationsToArray();
 		addRoutesToLocations();
 		AStar astar = new AStar(locations, loc1, loc5);
-		
+
 		ArrayList<ArrayList<Route>> bestRoutes = astar.twoListsOfRoutes(2, 2);
-		/*
-		System.out.println(bestRoutes.size());
-		for (Route r : bestRoutes.get(0)){
-			System.out.println(r.getPrice().toString());
-		}
-		for (Route r : bestRoutes.get(1)){
-			System.out.println(r.getPrice().toString());
-		}
-		System.out.println(bestRoutes.get(0).get(0).getOrigin().getName());
-		System.out.println(bestRoutes.get(0).get(0).getDestination().getName());
-		System.out.println(bestRoutes.get(0).size());
-		System.out.println(bestRoutes.get(0).get(0).getPriority());
-		System.out.println(bestRoutes.get(0).get(1).getPriority());
-		System.out.println(bestRoutes.get(0).get(2).getPriority());
-		System.out.println(bestRoutes.size());
-		System.out.println(bestRoutes.get(0).size());
-		System.out.println(bestRoutes.get(1).get(0).getPriority());
-		System.out.println(bestRoutes.get(1).get(1).getPriority());
-		System.out.println(bestRoutes.get(1).get(2).getPriority());
-		/**/
-		assertTrue(bestRoutes.get(0).get(0).getOrigin().getName().equals("Auckland")
-				&& bestRoutes.get(0).get(0).getDestination().getName().equals("Tauranga"));
+		assertTrue(bestRoutes.get(0).get(0).getOrigin().getName().equals("Lower Hutt" )
+				&& bestRoutes.get(0).get(0).getDestination().getName().equals("Auckland"));
 	}
 
 	@Test
@@ -119,21 +99,76 @@ public class AStarTests {
 		addLocationsToArray();
 		addRoutesToLocations();
 		AStar astar = new AStar(locations, loc1, loc5);
-		
+
 		ArrayList<ArrayList<Route>> bestRoutes = astar.twoListsOfRoutes(2, 2);
-		/**/
-		for (ArrayList<Route> ar : bestRoutes) {
-			for (Route r : ar) {
-				System.out.print(r.toPretty()+", ");
-			}
-			System.out.println();
+		for (Route r : bestRoutes.get(0)) {
+			System.out.println(r.toPretty());
 		}
-		System.out.print(bestRoutes.get(0).get(1).getOrigin().getName()+" -> ");
-		System.out.println(bestRoutes.get(0).get(1).getDestination().getName());
-		/**/
-		assertTrue(bestRoutes.get(0).get(2).getOrigin().getName().equals("Lower Hutt")
-				&& bestRoutes.get(0).get(2).getDestination().getName().equals("Auckland"));
+
+		assertTrue(bestRoutes.get(0).get(1).getOrigin().getName().equals("Auckland")
+				&& bestRoutes.get(0).get(1).getDestination().getName().equals("Tauranga"));
 	}
+
+	@Test
+	public void testNoAir1() {
+		addLocationsToArray();
+		addRoutesToLocations();
+		AStar astar = new AStar(locations, loc1, loc6);
+
+		ArrayList<ArrayList<Route>> bestRoutes = astar.twoListsOfRoutes(2, 2);
+		assertTrue(bestRoutes.size() == 1);
+	}
+
+	@Test
+	public void testNoRoute1() {
+		addLocationsToArray();
+		addRoutesToLocations();
+		AStar astar = new AStar(locations, loc1, loc12);
+
+		ArrayList<ArrayList<Route>> bestRoutes = astar.twoListsOfRoutes(2, 2);
+		assertTrue(bestRoutes.size() == 0);
+	}
+
+	@Test
+	public void testNoRoute2() {
+		addLocationsToArray();
+		addRoutesToLocations();
+		AStar astar = new AStar(locations, loc2, loc12);
+
+		ArrayList<ArrayList<Route>> bestRoutes = astar.twoListsOfRoutes(2, 2);
+		assertTrue(bestRoutes.size() == 0);
+	}
+
+	@Test
+	public void testNoRoute3() {
+		addLocationsToArray();
+		addRoutesToLocations();
+		AStar astar = new AStar(locations, loc6, loc12);
+
+		ArrayList<ArrayList<Route>> bestRoutes = astar.twoListsOfRoutes(2, 2);
+		assertTrue(bestRoutes.size() == 0);
+	}
+
+	@Test
+	public void testNoRoute4() {
+		addLocationsToArray();
+		addRoutesToLocations();
+		AStar astar = new AStar(locations, loc7, loc12);
+
+		ArrayList<ArrayList<Route>> bestRoutes = astar.twoListsOfRoutes(2, 2);
+		assertTrue(bestRoutes.size() == 0);
+	}
+
+	@Test
+	public void testNoRoute5() {
+		addLocationsToArray();
+		addRoutesToLocations();
+		AStar astar = new AStar(locations, loc8, loc2);
+
+		ArrayList<ArrayList<Route>> bestRoutes = astar.twoListsOfRoutes(2, 2);
+		assertTrue(bestRoutes.size() == 0);
+	}
+
 	// HELPER
 
 	// helper methods
@@ -153,9 +188,11 @@ public class AStarTests {
 			loc3.addRoute(r12);
 			loc3.addRoute(r13);
 			loc3.addRoute(r14);
+			loc3.addRoute(r16);
 			routesAdded = true;
 		}
 	}
+
 	public void addLocationsToArray() {
 		locations.clear();
 		locations.add(loc1);
@@ -169,6 +206,6 @@ public class AStarTests {
 		locations.add(loc9);
 		locations.add(loc10);
 		locations.add(loc11);
-		locations.add(loc12);		
+		locations.add(loc12);
 	}
 }
