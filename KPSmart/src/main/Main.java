@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.Date;
 import java.util.List;
 
+import event.Event;
+import event.MailEvent;
+
 public class Main {
 
 	private List<Location> locations;
@@ -16,11 +19,15 @@ public class Main {
 	private User currentUser;
 
 	private List<DeliveryRequest> deliveryRequests;
+	
+	private List<Event> events;
+	
 
 
 	public Main() {
 		locations = new ArrayList<Location>();
 		accounts = new ArrayList<User>();
+		
 		// read from encrypted file and add them in!
 
 		// read from encrypted file,create User objects and add them in!
@@ -29,6 +36,8 @@ public class Main {
 		// currentUser = new User();
 		// want to look into apache shiro tbh but everyone will have to install
 		// maven. Apache shiro is a really good framework for logins
+		
+		events = new ArrayList<Event>();
 	}
 
 
@@ -94,13 +103,19 @@ public class Main {
 		}
 		
 		//create Delivery request
-		DeliveryRequest request = new DeliveryRequest(new Date(), originLoc, destinationLoc, weight, volume, priority, duration, legs);
+		Date date =  new Date();//for consistency
+		DeliveryRequest request = new DeliveryRequest(date, originLoc, destinationLoc, weight, volume, priority, duration, legs);
 		
 		//add to delivery events field
 		deliveryRequests.add(request);
 		
 		//TODO log in file
 		//TODO add to reports: revenue, expenditure, total events
+		String strDate = date.toString();
+		//MainEvent delivery = new MailEvent(strDate, legs, weight, volume, priority, 1.00,3.00, duration);//ITS A MAIL EVENT RIGHT
+		//TODO calc cost+price
+		
+		//events.add(delivery);//BAM WHUT
 		
 		return request;
 		
