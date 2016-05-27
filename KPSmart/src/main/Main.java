@@ -92,8 +92,7 @@ public class Main {
 		overallPriority.concat(priority);
 				
 		//calculate duration
-		//TODO replace placeholder
-		int duration = 0;
+		int duration = getTotalDuration(LocalDateTime.now(), route);
 		
 		//translate route list into legs
 		List<Leg>legs = new ArrayList<>();
@@ -124,6 +123,7 @@ public class Main {
 	public int getTotalDuration(LocalDateTime currentTime, List<Route> routes){
 		int total = 0;
 		LocalDateTime current = currentTime;
+		System.out.println(current.toString());
 		for(Route r: routes){
 			int dur = getDuration(current, r);
 			current = current.plusHours(dur);
@@ -135,14 +135,17 @@ public class Main {
 	public int getDuration(LocalDateTime currentTime, Route route){
 		DayOfWeek day = currentTime.getDayOfWeek();
 		int currentInt = day.getValue()*24 + currentTime.getHour();
+		System.out.println("CurrentInt: " +currentInt);
 		int startInt = route.getDay().getValue()*24 + route.getStartTime();
+		System.out.println("StartInt: " +startInt);
 		if(startInt>currentInt){
 			return (startInt-currentInt)+route.getDuration();
 		}
 		else{
-			int departTime = currentInt;
+			int departTime = startInt;
 			while(currentInt>departTime){
 				departTime+=route.getFrequency();
+				System.out.println("Departs: "+departTime);
 			}
 			return (departTime-currentInt) + route.getDuration();
 		}
