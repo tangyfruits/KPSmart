@@ -11,8 +11,8 @@ import java.util.List;
 
 public class Main {
 
-	private List<Location> locations;
-	private List<User> accounts;
+	private ArrayList<Location> locations;
+	private ArrayList<User> accounts;
 	private User currentUser;
 
 	private List<DeliveryRequest> deliveryRequests;
@@ -272,8 +272,8 @@ public class Main {
 		ArrayList<ArrayList<Route>> listOfListOfRoutes = new ArrayList<ArrayList<Route>>();
 		Route directRoute = getDirectRoute(destination, destination, weight, volume);
 		if (directRoute == null) {
-			AStar astar = new AStar(origin, destination);
-			return astar.listOfRoutes(weight, volume);
+			AStar astar = new AStar(locations, origin, destination);
+			return astar.twoListsOfRoutes(weight, volume);
 		} else {
 			ArrayList<Route> best = new ArrayList<>();
 			best.add(directRoute);

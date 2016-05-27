@@ -43,4 +43,11 @@ public class CustomerPrice {
 	public void setVolumeCost(double volumeCost) {
 		this.volumeCost = volumeCost;
 	}
+
+	// To String
+	@Override
+	public String toString() {
+		return "CustomerPrice [origin=" + origin + ", destination=" + destination + ", priority=" + priority
+				+ ", weightCost=" + weightCost + ", volumeCost=" + volumeCost + "]";
+	}
 }

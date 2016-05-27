@@ -1,4 +1,5 @@
-# Class files - Nope not going to ignore them
+# Class files - Yep ignoring them again
+KPSmart/bin/
 
 # Eclipse config files - Nope gonna keep these too
 # KPSmart/.classpath

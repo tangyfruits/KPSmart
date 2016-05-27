@@ -115,4 +115,7 @@ public class Route {
 	public String toString(){
 		return ("R ORIGIN: "+getOrigin().toString()+" R DEST: "+getDestination().toString());
 	}
+	public String toPretty() { // (like toString but prettier)
+		return getOrigin().toPretty() + " ---> " + getDestination().toPretty();
+	}
 }
