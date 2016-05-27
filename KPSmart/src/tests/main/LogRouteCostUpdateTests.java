@@ -158,7 +158,7 @@ public class LogRouteCostUpdateTests {
 		// check the route has the new values
 		assertEquals(20, routeStart.getDuration(), 0);
 		assertEquals(60, routeStart.getFrequency(), 0);
-		assertEquals("Wednesday", routeStart.getDay());
+		assertEquals(DayOfWeek.MONDAY, routeStart.getDay());
 	}
 
 	// add the same route again - shouldn't add
