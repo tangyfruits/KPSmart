@@ -8,7 +8,6 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 
-
 public class AStar {
 	/*
 	 * A* algorithm (fast version)
@@ -26,7 +25,7 @@ public class AStar {
 	 * costToHere + edge.weight estTotal <- costToNeigh + estimate(neighbour,
 	 * goal ) fringe.enqueue([neighbour, node, costToNeigh, estTotal])
 	 */
-	
+
 	// VARIABLES
 	private Location start;
 	private Location goal;
@@ -66,7 +65,6 @@ public class AStar {
 		}
 		return list;
 	}
-	
 
 	// Get Cheapest Overall Route
 	public ArrayList<Route> cheapestRouteAlgorithm(double weight, double volume) {
@@ -94,32 +92,34 @@ public class AStar {
 			loc = getNextLocation();
 			/**System.out.println("Visit: "+loc);/**/
 		}
-		
+
 		// Create Route Array
-		int x = 0;
+		//int x = 0;
 		/**System.out.println("BACK");/**/
 		/**System.out.println(goal + " "+this.goal);/**/
 		ArrayList<Route> list = new ArrayList<Route>();			
 		Location origin = goal;
 		Route route = previous.get(origin);
+		
 		while (route != null && origin != start) {
-			list.add(route);
+			list.add(0, route);
 			origin = route.getOrigin();
 			route = previous.get(origin);
+			/*
 			if (x++ < 40) {
-				/**System.out.println("c("+ origin.toPretty() +")");/**/
+				System.out.println("c("+ origin.toPretty() +")");
 			}
+			*/
 		}
-		
-		/**System.out.println("OUT: ");/**/
+		/*
+		System.out.println("OUT: ");
 		for (Route r : list) {
-			/**System.out.println(r.toPretty());/**/
+			System.out.println(r.toPretty());
 		}
-		
+		*/
 		return list;
 	}
 	// Get Cheapest Air Priority Route
-	// TODO
 	public ArrayList<Route> airPriorityAlgorithm(double weight, double volume) {
 		resetGraph();
 		/**System.out.println("------------Priority------------");/**/
@@ -137,9 +137,9 @@ public class AStar {
 				// Check Only Air Routes
 				if (route.getPriority() == "Air") {
 					// If Cheapest (Start -> Neighbour) Route
-					Double altCost = costs.get(loc) + route.getCost(weight, volume);
-					if (altCost < costs.get(neightbour)) {
-						costs.put(neightbour, altCost);
+					Double newCost = costs.get(loc) + route.getCost(weight, volume);
+					if (newCost < costs.get(neightbour)) {
+						costs.put(neightbour, newCost);
 						previous.put(neightbour, route);
 					}
 				}
@@ -149,24 +149,28 @@ public class AStar {
 		}
 
 		// Create Route Array
-		int x = 0;
+		//int x = 0;
 		/**System.out.println("BACK");/**/
 		ArrayList<Route> list = new ArrayList<Route>();			
 		Location origin = goal;
 		Route route = previous.get(origin);
+		
 		while (route != null && origin != start) {	
-			list.add(route);
+			list.add(0, route);
 			origin = route.getOrigin();
 			route = previous.get(origin);
+			/*
 			if (x < 40) {
-				/**System.out.println("p("+ origin.toPretty() +")");/**/
+				System.out.println("p("+ origin.toPretty() +")");
 			}
+			*/
 		}
 		
-		/**System.out.println("OUT: ");/**/
+		/**System.out.println("OUT: ");
 		for (Route r : list) {
-			/**System.out.println(r.toPretty());/**/
+			/**System.out.println(r.toPretty());
 		}
+		*/
 		
 		return list;
 	}
@@ -180,9 +184,10 @@ public class AStar {
 				previous.put(location,  null);
 			}
 			costs.put(start, 0.0);
-		}
+	}
 	// Get Next Cheapest Unvisited Location
-	private Location getNextLocation() {			//System.out.println("Get cheapest Loc");
+	private Location getNextLocation() {
+		//System.out.println("Get cheapest Loc");
 		Location next = null;
 		double minCost = Double.MAX_VALUE;
 		
@@ -200,10 +205,10 @@ public class AStar {
 		}
 		return next;
 	}
-	
-	
+
 	// TODO check cheapest Air and cheapest Overall aren't the same
 	
+	/*
 	public Route getDirectRoute(Location origin, Location destination, double weight, double volume) {
 		ArrayList<Route> directRoutes = new ArrayList<>();
 		for (Route r : origin.getRoutes()) {
@@ -225,5 +230,5 @@ public class AStar {
 		}
 		return cheapest;
 	}
-
+	/**/
 }
