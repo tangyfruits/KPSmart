@@ -1,10 +1,14 @@
 package tests.main;
 
 import static org.junit.Assert.*;
+
+import java.time.DayOfWeek;
 import java.util.ArrayList;
+
 import main.CustomerPrice;
 import main.Main;
 import main.Route;
+
 import org.junit.Test;
 
 /**
@@ -38,11 +42,11 @@ public class LogDeliveryRequestTests {
 		CustomerPrice price = main.logCustomerPriceUpdate("Wellington",
 				"Auckland", "Air", 15, 14);
 		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air",
-				"Air", 3.5, 4.5, 15, 50, 12, 18, "Tuesday");
+				"Air", 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,15);
 		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost", "air",
-				"Air", 2.5, 2.8, 8, 12, 12, 32, "Wednesday");
+				"Air", 2.5, 2.8, 8, 12, 12, 32, DayOfWeek.MONDAY,15);
 		main.logTransportCostUpdate("Wellington", "Auckland", "USPS", "air",
-				"Air", 2.5, 2.8, 8, 12, 12, 32, "Wednesday");
+				"Air", 2.5, 2.8, 8, 12, 12, 32, DayOfWeek.MONDAY,15);
 		return main;
 
 	}

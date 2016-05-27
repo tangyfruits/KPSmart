@@ -2,6 +2,7 @@ package tests.main;
 
 import static org.junit.Assert.*;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +32,12 @@ public class AStarTests {
 	CustomerPrice cp5 = new CustomerPrice(loc2, loc3, "Land", 1.0, 1.0);
 	CustomerPrice cp6 = new CustomerPrice(loc2, loc3, "Air", 2.0, 2.0);
 	
-	Route r1 = new Route(loc1, loc2, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp1);
-	Route r2 = new Route(loc1, loc2, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp2);
-	Route r3 = new Route(loc1, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp3);
-	Route r4 = new Route(loc1, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp4);
-	Route r5 = new Route(loc2, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp5);
-	Route r6 = new Route(loc2, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp6);
+	Route r1 = new Route(loc1, loc2, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp1);
+	Route r2 = new Route(loc1, loc2, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp2);
+	Route r3 = new Route(loc1, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp3);
+	Route r4 = new Route(loc1, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp4);
+	Route r5 = new Route(loc2, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp5);
+	Route r6 = new Route(loc2, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp6);
 	AStar astar = new AStar(loc1, loc2);
 	AStar astarNull = new AStar(null, null);
 	

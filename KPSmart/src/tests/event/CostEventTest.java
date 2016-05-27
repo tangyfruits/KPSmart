@@ -2,6 +2,8 @@ package tests.event;
 
 import static org.junit.Assert.*;
 
+import java.time.DayOfWeek;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +15,7 @@ public class CostEventTest {
 
 	@Before
 	public void testCostEvent() {
-		cost = new CostEvent("Start", "End", "Company", "Type", "Priority", 4.0, 8.0, 400, 800, 100, 12, "Monday");
+		cost = new CostEvent("Start", "End", "Company", "Type", "Priority", 4.0, 8.0, 400, 800, 100, 12, DayOfWeek.MONDAY);
 	}
 	
 	// Getters
@@ -124,8 +126,8 @@ public class CostEventTest {
 	}
 	@Test
 	public void testSetDay() {
-		cost.setDay("AnotherDay");
-		assertEquals("AnotherDay", cost.getDay());
+		cost.setDay(DayOfWeek.MONDAY);
+		assertEquals(DayOfWeek.MONDAY, cost.getDay());
 	}
 
 }

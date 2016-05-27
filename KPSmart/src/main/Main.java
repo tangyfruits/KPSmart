@@ -3,8 +3,9 @@ package main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Main {
@@ -106,7 +107,7 @@ public class Main {
 		}
 		
 		//create Delivery request
-		DeliveryRequest request = new DeliveryRequest(new Date(), originLoc, destinationLoc, weight, volume, overallPriority, duration, legs);
+		DeliveryRequest request = new DeliveryRequest(LocalDateTime.now(), originLoc, destinationLoc, weight, volume, overallPriority, duration, legs);
 		
 		//add to delivery events field
 		deliveryRequests.add(request);
@@ -119,7 +120,31 @@ public class Main {
 
 	}
 	
-	public void getDuration(Date currentTime, Route route){
+	public int getTotalDuration(LocalDateTime currentTime, List<Route> routes){
+		int total = 0;
+		LocalDateTime current = currentTime;
+		for(Route r: routes){
+			int dur = getDuration(current, r);
+			current = current.plusHours(dur);
+			total += dur;
+		}
+		return total;
+	}
+	
+	public int getDuration(LocalDateTime currentTime, Route route){
+		DayOfWeek day = currentTime.getDayOfWeek();
+		int currentInt = day.getValue()*24 + currentTime.getHour();
+		int startInt = route.getDay().getValue()*24 + route.getStartTime();
+		if(startInt>currentInt){
+			return (startInt-currentInt)+route.getDuration();
+		}
+		else{
+			int departTime = currentInt;
+			while(currentInt>departTime){
+				departTime+=route.getFrequency();
+			}
+			return (departTime-currentInt) + route.getDuration();
+		}
 		
 	}
 
@@ -176,7 +201,7 @@ public class Main {
 	public void logTransportCostUpdate(String origin, String destination,
 			String company, String type, String priority, double weightCost,
 			double volumeCost, int maxWeight, int maxVolume, int duration,
-			int frequency, String day) {
+			int frequency, DayOfWeek day, int startTime) {
 
 		// find the Locations matching the given strings, if they are already in
 		// the graph
@@ -219,6 +244,7 @@ public class Main {
 				r.setDuration(duration);
 				r.setFrequency(frequency);
 				r.setDay(day);
+				r.setStartTime(startTime);
 				routeExists = true;
 			}
 		}
@@ -227,7 +253,7 @@ public class Main {
 			// if it doesn't always exist, create route and add to graph
 			Route route = new Route(originLoc, destinationLoc, company, type,
 					priority, weightCost, volumeCost, maxWeight, maxVolume,
-					duration, frequency, day, price);
+					duration, frequency, day, startTime, price);
 			originLoc.addRoute(route);
 		}
 

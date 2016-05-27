@@ -2,6 +2,7 @@ package tests.main;
 
 import static org.junit.Assert.*;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 import main.CustomerPrice;
@@ -171,7 +172,7 @@ public class LogCustomerPriceUpdateTests {
 		Main main = new Main();
 		CustomerPrice price = main.logCustomerPriceUpdate("Wellington", "Auckland", "Domestic Air", 15, 14);
 		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air",
-				"Domestic Air", 3.5, 4.5, 15, 50, 12, 18, "Tuesday");
+				"Domestic Air", 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY, 12);
 		assertEquals(price, main.getLocations().get(0).getRoutes().get(0).getPrice());
 	}
 	
@@ -181,7 +182,7 @@ public class LogCustomerPriceUpdateTests {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Domestic Air", 15, 14);
 		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air",
-				"Domestic Air", 3.5, 4.5, 15, 50, 12, 18, "Tuesday");
+				"Domestic Air", 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY, 13);
 		//check initial values
 		assertEquals(15, main.getLocations().get(0).getRoutes().get(0).getPrice().getWeightCost(), 0);
 		assertEquals(14, main.getLocations().get(0).getRoutes().get(0).getPrice().getVolumeCost(), 0);
@@ -198,6 +199,6 @@ public class LogCustomerPriceUpdateTests {
 		Main main = new Main();
 		CustomerPrice price = main.logCustomerPriceUpdate("Wellington", "Auckland", "Domestic Standard", 15, 14);
 		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air",
-				"Domestic Air", 3.5, 4.5, 15, 50, 12, 18, "Tuesday");
+				"Domestic Air", 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,14);
 	}
 }

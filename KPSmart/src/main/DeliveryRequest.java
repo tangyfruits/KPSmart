@@ -1,11 +1,12 @@
 package main;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 public class DeliveryRequest {
 	
-	private Date logTime;
+	private LocalDateTime logTime;
 	private Location origin;
 	private Location destination;
 	private double weight;
@@ -14,7 +15,7 @@ public class DeliveryRequest {
 	private int duration;
 	private List <Leg> legs;
 	
-	public DeliveryRequest(Date logTime, Location origin, Location destination, double weight, double volume, 
+	public DeliveryRequest(LocalDateTime logTime, Location origin, Location destination, double weight, double volume, 
 			String priority, int duration, List <Leg> legs) {
 		this.logTime = logTime;
 		this.origin = origin;
@@ -26,7 +27,7 @@ public class DeliveryRequest {
 		this.legs = legs;
 	}
 	
-	public Date getLogTime() {
+	public LocalDateTime getLogTime() {
 		return logTime;
 	}
 	public Location getOrigin() {

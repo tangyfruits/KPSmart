@@ -1,5 +1,7 @@
 package event;
 
+import java.time.DayOfWeek;
+
 public class CostEvent implements Event {
 	
 	// VARIABLES
@@ -14,12 +16,12 @@ public class CostEvent implements Event {
 	private int maxVolume;
 	private int duration;
 	private int frequency;
-	private String day;
+	private DayOfWeek day;
 	
 	// CONSTRUCTOR
 	public CostEvent(String origin, String destination, String company, String type, String priority, 
 			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, 
-			int frequency, String day) {
+			int frequency, DayOfWeek day) {
 		this.origin = origin;
 		this.destination = destination;
 		this.company = company;
@@ -70,7 +72,7 @@ public class CostEvent implements Event {
 		return frequency;
 	}
 	public String getDay() {
-		return day;
+		return day.name();
 	}
 	
 	// Setters
@@ -107,7 +109,7 @@ public class CostEvent implements Event {
 	public void setFrequency(int frequency) {
 		this.frequency = frequency;
 	}
-	public void setDay(String day) {
+	public void setDay(DayOfWeek day) {
 		this.day = day;
 	}
 }
