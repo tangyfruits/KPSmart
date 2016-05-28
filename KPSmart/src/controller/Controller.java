@@ -17,6 +17,7 @@ import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -324,11 +325,13 @@ public class Controller implements Initializable {
     private TextField duration;    
     @FXML
     private TextField frequency;
+
     
     /** Date and Time */
     @FXML
     private DatePicker date;
     
+    /** TRANSPORT ROUTE FORM */
     
     @FXML
     private void transportRouteButtonAction(ActionEvent event) {
@@ -353,15 +356,75 @@ public class Controller implements Initializable {
     	System.out.println("Time: " + this.date.getValue().toString());
     }
     
+    /** PRICE UPDATE FORM */
+    
+    @FXML
+    private TextField weight;
+    @FXML
+    private TextField volume;
+    
     @FXML
     private void priceUpdateButtonAction(ActionEvent event) {
     	System.out.println("Origin: " + selectedOrigin);
     	System.out.println("Destination: " + selectedDest);
-    	String wc = this.weightcost.getText();
-    	String vc = this.volumecost.getText();
-        System.out.println("Weight Cost: " + wc);
-        System.out.println("Volume Cost: " + vc);
-    	System.out.println("Priority: " + priority);
+    	String wc = this.weight.getText();
+    	String vc = this.volume.getText();
+        System.out.println("Weight: " + wc);
+        System.out.println("Volume: " + vc);
     }
-
+    
+    /** DELIVERY REQUEST FORM */
+    
+    @FXML
+    private RadioButton firstChoice;
+    @FXML
+    private RadioButton secondChoice;
+    
+    private boolean hasPriorities = false;
+    
+    private String chosenPriority = "";
+    
+    @FXML
+    private void findPrioritiesButtonAction(ActionEvent event) {
+    	System.out.println("Origin: " + selectedOrigin);
+    	System.out.println("Destination: " + selectedDest);
+    	String w = this.weight.getText();
+    	String v = this.volume.getText();
+    	System.out.println("Weight: " + w);
+        System.out.println("Volume: " + v);
+        firstChoice.setText("First Priority Choice");
+        secondChoice.setText("Second Priority Choice");
+        hasPriorities = true;
+    }
+    
+    @FXML
+    private void deliveryRequestButtonAction(ActionEvent event) {
+    	if(hasPriorities){
+    		System.out.println("Priority: " + chosenPriority);
+    	}
+    }
+    
+    @FXML
+    private void firstChoiceAction(ActionEvent event) {
+    	chosenPriority = "First Priority Choice";
+    }
+    
+    @FXML
+    private void secondChoiceAction(ActionEvent event) {
+    	chosenPriority = "Second Priority Choice";
+    }
+    
+    /** DISCONTINUE TRANSPORT */
+    
+    @FXML
+    private void findRoutesButtonAction(ActionEvent event) {
+    	System.out.println("Origin: " + selectedOrigin);
+    	System.out.println("Destination: " + selectedDest);
+    }
+    
+    @FXML
+    private void discTransportButtonAction(ActionEvent event) {
+    	System.out.println("Origin: " + selectedOrigin);
+    	System.out.println("Destination: " + selectedDest);
+    }
 }

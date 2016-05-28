@@ -140,7 +140,7 @@
             <TextField fx:id="weightcost" layoutX="275.0" layoutY="341.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <Button id="submit" fx:id="submit" layoutX="318.0" layoutY="523.0" mnemonicParsing="false" onAction="#priceUpdateButtonAction" style="-fx-background-color: E9D5B9;" text="Submit">
+      <Button id="submit" fx:id="submit" layoutX="345.0" layoutY="523.0" mnemonicParsing="false" onAction="#priceUpdateButtonAction" style="-fx-background-color: E9D5B9;" text="Submit">
          <font>
             <Font name="Gulim" size="15.0" />
          </font>
