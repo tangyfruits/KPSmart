@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -76,7 +77,6 @@ public class Controller implements Initializable {
     	Scene scene = new Scene(root);
     	stage.setScene(scene);
     	stage.show();
-    	
     }
     
     @FXML
@@ -91,11 +91,22 @@ public class Controller implements Initializable {
     }
     
     @FXML
-    private void updateExistingLogAction(ActionEvent event) throws IOException{
-    	System.out.println("Update Log");
-    	logeventmenu.setText("Update Log");
+    private void transportRouteAction(ActionEvent event) throws IOException{
+    	System.out.println("Transport Route");
+    	logeventmenu.setText("Transport Route");
     	Stage stage = (Stage) logeventmenu.getScene().getWindow();
-    	Parent root = FXMLLoader.load(getClass().getResource("/views/updatelog.fxml"));/* Exception */
+    	Parent root = FXMLLoader.load(getClass().getResource("/views/transportroute.fxml"));/* Exception */
+    	Scene scene = new Scene(root);
+      	stage.setScene(scene);
+    	stage.show();
+    }
+    
+    @FXML
+    private void priceUpdateAction(ActionEvent event) throws IOException{
+    	System.out.println("Customer Price Update");
+    	logeventmenu.setText("Customer Price Update");
+    	Stage stage = (Stage) logeventmenu.getScene().getWindow();
+    	Parent root = FXMLLoader.load(getClass().getResource("/views/priceupdate.fxml"));/* Exception */
     	Scene scene = new Scene(root);
       	stage.setScene(scene);
     	stage.show();
@@ -123,12 +134,8 @@ public class Controller implements Initializable {
     	stage.show();
     }
     
-    /** LOG EVENT SCREEN **/
-    @FXML
-    private TextField weight;
-    @FXML
-    private TextField volume;
-    
+    /** Origin and Destination  **/
+
     @FXML
     private CheckMenuItem AucklandDest;
     @FXML
@@ -167,151 +174,194 @@ public class Controller implements Initializable {
     @FXML
     private MenuButton destinationMenu;
     
-    private String selectedOrigin, selectedDest;
+    private String selectedOrigin = "";
+    private String selectedDest = "";
     
     @FXML
     private void selectAucklandOrigin(ActionEvent event) {
-    	AucklandOrigin.isSelected();
     	selectedOrigin = "Auckland";
     	originMenu.setText("Auckland");
     }
     @FXML
     private void selectHamiltonOrigin(ActionEvent event) {
-    	HamiltonOrigin.isSelected();
     	selectedOrigin = "Hamilton";
     	originMenu.setText("Hamilton");
     }
     @FXML
     private void selectRotoruaOrigin(ActionEvent event) {
-    	RotoruaOrigin.isSelected();
     	selectedOrigin = "Rotorua";
     	originMenu.setText("Rotorua");
     }
     @FXML
     private void selectPalmerstonOrigin(ActionEvent event) {
-    	PalmerstonOrigin.isSelected();
     	selectedOrigin = "Palmerston North";
     	originMenu.setText("Palmerston North");
     }
     @FXML
     private void selectWellingtonOrigin(ActionEvent event) {
-    	WellingtonOrigin.isSelected();
     	selectedOrigin = "Wellington";
     	originMenu.setText("Wellington");
     }
     @FXML
     private void selectChristchurchOrigin(ActionEvent event) {
-    	ChristchurchOrigin.isSelected();
     	selectedOrigin = "Christchurch";
     	originMenu.setText("Christchurch");
     }
     @FXML
     private void selectDunedinOrigin(ActionEvent event) {
-    	DunedinOrigin.isSelected();
     	selectedOrigin = "Dunedin";
     	originMenu.setText("Dunedin");
     }
     @FXML
     private void selectOtherOrigin(ActionEvent event) {
-    	OtherOrigin.isSelected();
     	selectedOrigin = "Other";
     	originMenu.setText("Other");
     }
     @FXML
     private void selectAucklandDest(ActionEvent event) {
-    	AucklandDest.isSelected();
     	selectedDest = "Auckland";
     	destinationMenu.setText("Auckland");
     }
     @FXML
     private void selectHamiltonDest(ActionEvent event) {
-    	HamiltonDest.isSelected();
     	selectedDest = "Hamilton";
     	destinationMenu.setText("Hamilton");
     }
     @FXML
     private void selectRotoruaDest(ActionEvent event) {
-    	RotoruaDest.isSelected();
     	selectedDest = "Rotorua";
     	destinationMenu.setText("Rotorua");
     }
     @FXML
     private void selectPalmerstonDest(ActionEvent event) {
-    	PalmerstonDest.isSelected();
     	selectedDest = "Palmerston North";
     	destinationMenu.setText("Palmerston North");
     }
     @FXML
     private void selectWellingtonDest(ActionEvent event) {
-    	WellingtonDest.isSelected();
     	selectedDest = "Wellington";
     	destinationMenu.setText("Wellington");
     }
     @FXML
     private void selectChristchurchDest(ActionEvent event) {
-    	ChristchurchDest.isSelected();
     	selectedDest = "Christchurch";
     	destinationMenu.setText("Christchurch");
     }
     @FXML
     private void selectDunedinDest(ActionEvent event) {
-    	DunedinDest.isSelected();
     	selectedDest = "Dunedin";
     	destinationMenu.setText("Dunedin");
     }
     @FXML
     private void selectOtherDest(ActionEvent event) {
-    	OtherDest.isSelected();
     	selectedDest = "Other";
     	destinationMenu.setText("Other");
     }
     
+    /** Priority Menu */
+    
     @FXML
-    private CheckMenuItem intlAir;
+    private CheckMenuItem airPriority;
     @FXML
-    private CheckMenuItem intlStd;
-    @FXML
-    private CheckMenuItem domesticAir;
-    @FXML
-    private CheckMenuItem domesticStd;
+    private CheckMenuItem stdPriority;
     @FXML
     private MenuButton prioritymenu;
 
-    private String priority;
+    private String priority = "";
     
     @FXML
-    private void intlAirAction(ActionEvent event) {
-    	intlAir.isSelected();
-    	priority = "International Air";
-    	prioritymenu.setText("International Air");
+    private void stdPriorityAction(ActionEvent event) {
+    	priority = "Standard";
+    	prioritymenu.setText("Standard");
     }
     @FXML
-    private void intlStdAction(ActionEvent event) {
-    	intlStd.isSelected();
-    	priority = "International Standard";
-    	prioritymenu.setText("International Standard");
-    }
-    @FXML
-    private void domesticAirAction(ActionEvent event) {
-    	domesticAir.isSelected();
-    	priority = "Domestic Air";
-    	prioritymenu.setText("Domestic Air");
-    }
-    @FXML
-    private void domesticStdAction(ActionEvent event) {
-    	domesticStd.isSelected();
-    	priority = "Domestic Standard";
-    	prioritymenu.setText("Domestic Standard");
+    private void airPriorityAction(ActionEvent event) {
+    	priority = "Air";
+    	prioritymenu.setText("Air");
     }
     
+    /** Type Menu */
+    
     @FXML
-    private void logEventButtonAction(ActionEvent event) {
+    private CheckMenuItem airType;
+    @FXML
+    private CheckMenuItem landType;
+    @FXML
+    private CheckMenuItem seaType;
+    @FXML
+    private MenuButton typemenu;
+    
+    private String type = "";
+    
+    @FXML
+    private void airTypeAction(ActionEvent event) {
+    	type = "Air";
+    	typemenu.setText("Air");
+    }
+    @FXML
+    private void landTypeAction(ActionEvent event) {
+    	type = "Land";
+    	typemenu.setText("Land");
+    }
+    @FXML
+    private void seaTypeAction(ActionEvent event) {
+    	type = "Sea";
+    	typemenu.setText("Sea");
+    }
+    
+    /** Text fields */
+    @FXML
+    private TextField company;
+    @FXML
+    private TextField maxweight;
+    @FXML
+    private TextField maxvolume;
+    @FXML
+    private TextField weightcost;    
+    @FXML
+    private TextField volumecost;
+    @FXML
+    private TextField duration;    
+    @FXML
+    private TextField frequency;
+    
+    /** Date and Time */
+    @FXML
+    private DatePicker date;
+    
+    
+    @FXML
+    private void transportRouteButtonAction(ActionEvent event) {
     	System.out.println("Origin: " + selectedOrigin);
     	System.out.println("Destination: " + selectedDest);
-    	String w = this.weight.getText();
-    	String v = this.volume.getText();
-        System.out.println("Weight: " + w);
-        System.out.println("Volume: " + v);
+    	String c = this.company.getText();
+    	String mw = this.maxweight.getText();
+    	String mv = this.maxvolume.getText();
+    	String wc = this.weightcost.getText();
+    	String vc = this.volumecost.getText();
+    	String d = this.duration.getText();
+    	String f = this.frequency.getText();
+        System.out.println("Company: " + c);
+        System.out.println("Max Weight: " + mw);
+        System.out.println("Max Volume: " + mv);
+        System.out.println("Weight Cost: " + wc);
+        System.out.println("Volume Cost: " + vc);
+        System.out.println("Duration: " + d);
+        System.out.println("Frequency: " + f);
+    	System.out.println("Priority: " + priority);
+    	System.out.println("Type: " + type);
+    	System.out.println("Time: " + this.date.getValue().toString());
+    }
+    
+    @FXML
+    private void priceUpdateButtonAction(ActionEvent event) {
+    	System.out.println("Origin: " + selectedOrigin);
+    	System.out.println("Destination: " + selectedDest);
+    	String wc = this.weightcost.getText();
+    	String vc = this.volumecost.getText();
+        System.out.println("Weight Cost: " + wc);
+        System.out.println("Volume Cost: " + vc);
     	System.out.println("Priority: " + priority);
     }
+
 }

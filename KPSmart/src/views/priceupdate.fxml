@@ -17,29 +17,30 @@
             <Font name="Gulim" size="35.0" />
          </font>
       </Label>
-      <Pane layoutX="266.0" layoutY="20.0" prefHeight="25.0" prefWidth="401.0">
+      <Pane layoutX="249.0" layoutY="20.0" prefHeight="25.0" prefWidth="418.0">
          <children>
-            <Button fx:id="reports" layoutX="251.0" layoutY="1.0" mnemonicParsing="false" onAction="#reportButtonAction" style="-fx-background-color: E9D5B9;" text="Reports">
+            <Button fx:id="reports" layoutX="271.0" layoutY="1.0" mnemonicParsing="false" onAction="#reportButtonAction" style="-fx-background-color: E9D5B9;" text="Reports">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="history" layoutX="181.0" layoutY="1.0" mnemonicParsing="false" onAction="#historyButtonAction" style="-fx-background-color: E9D5B9;" text="History">
+            <Button fx:id="history" layoutX="205.0" layoutY="1.0" mnemonicParsing="false" onAction="#historyButtonAction" style="-fx-background-color: E9D5B9;" text="History">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </Button>
-            <MenuButton fx:id="logeventmenu" layoutY="1.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="170.0" style="-fx-background-color: E9D5B9;" text="Update Log">
+            <MenuButton fx:id="logeventmenu" layoutX="15.0" layoutY="1.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="184.0" style="-fx-background-color: E9D5B9;" text="Customer Price Update">
               <items>
+                <MenuItem fx:id="transportRoute" mnemonicParsing="false" onAction="#transportRouteAction" text="Transport Route" />
                 <MenuItem fx:id="deliveryRequest" mnemonicParsing="false" onAction="#deliveryRequestAction" text="Delivery Request" />
                 <MenuItem fx:id="discontinueTransport" mnemonicParsing="false" onAction="#discontinueTransportAction" text="Discontinue Transport" />
-                <MenuItem fx:id="updateExistingLog" mnemonicParsing="false" onAction="#updateExistingLogAction" text="Update Log" />
+                  <MenuItem fx:id="priceUpdate" mnemonicParsing="false" onAction="#priceUpdateAction" text="Customer Price Update" />
               </items>
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </MenuButton>
-            <Button fx:id="logout" layoutX="325.0" layoutY="1.0" mnemonicParsing="false" onAction="#logoutButtonAction" style="-fx-background-color: E9D5B9;" text="Logout">
+            <Button fx:id="logout" layoutX="342.0" layoutY="1.0" mnemonicParsing="false" onAction="#logoutButtonAction" style="-fx-background-color: E9D5B9;" text="Logout">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
@@ -116,32 +117,30 @@
                   <Font name="Gulim" size="13.0" />
                </font>
                <items>
-                  <CheckMenuItem fx:id="intlAir" mnemonicParsing="false" onAction="#intlAirAction" text="International Air" />
-                  <CheckMenuItem fx:id="intlStd" mnemonicParsing="false" onAction="#intlStdAction" text="International Standard" />
-                  <CheckMenuItem fx:id="domesticAir" mnemonicParsing="false" onAction="#domesticAirAction" text="Domestic Air" />
-                  <CheckMenuItem fx:id="domesticStd" mnemonicParsing="false" onAction="#domesticStdAction" text="Domestic Standard" />
+                  <CheckMenuItem fx:id="airPriority" mnemonicParsing="false" onAction="#airPriorityAction" text="Air" />
+                  <CheckMenuItem fx:id="stdPriority" mnemonicParsing="false" onAction="#stdPriorityAction" text="Standard" />
                </items>
             </MenuButton>
-            <TextField fx:id="volume" layoutX="275.0" layoutY="377.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="volumecost" layoutX="275.0" layoutY="377.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Text layoutX="223.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Priority:" GridPane.rowIndex="2">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </Text>
-            <Text layoutX="220.0" layoutY="359.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weight:">
+            <Text layoutX="220.0" layoutY="359.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weight Cost:">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </Text>
-            <Text layoutX="221.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Volume:" GridPane.rowIndex="1">
+            <Text layoutX="221.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Volume Cost:" GridPane.rowIndex="1">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </Text>
-            <TextField fx:id="weight" layoutX="275.0" layoutY="341.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" />
+            <TextField fx:id="weightcost" layoutX="275.0" layoutY="341.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <Button id="submit" fx:id="submit" layoutX="318.0" layoutY="523.0" mnemonicParsing="false" onAction="#logEventButtonAction" style="-fx-background-color: E9D5B9;" text="Submit">
+      <Button id="submit" fx:id="submit" layoutX="318.0" layoutY="523.0" mnemonicParsing="false" onAction="#priceUpdateButtonAction" style="-fx-background-color: E9D5B9;" text="Submit">
          <font>
             <Font name="Gulim" size="15.0" />
          </font>
