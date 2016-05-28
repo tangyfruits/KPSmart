@@ -31,7 +31,7 @@ public class LogDeliveryRequestTests {
 		assertNotNull(r.get(0));
 		// should find only one
 		assertNotNull(r.get(1));
-		System.out.println(r.size());
+
 	}
 
 	// test Duration if logged before initial departure
@@ -40,7 +40,7 @@ public class LogDeliveryRequestTests {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
 		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
-				"Air", 10, 12, 20, 30, 15, 24, DayOfWeek.MONDAY, 12);
+				"Air", 10, 12, 20, 30, 15, 24, DayOfWeek.WEDNESDAY, 12);
 		ArrayList<Route> routes = new ArrayList<>();
 		routes.add(main.getLocations().get(0).getRoutes().get(0));
 		Calendar cal = Calendar.getInstance();
@@ -70,6 +70,24 @@ public class LogDeliveryRequestTests {
 		assertEquals(38, dur);
 	}
 
+	// test duration if logged in same hour(ie after)
+	@Test
+	public void test9() {
+		Main main = new Main();
+		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
+				"Air", 10, 12, 20, 30, 15, 24, DayOfWeek.MONDAY, 12);
+		ArrayList<Route> routes = new ArrayList<>();
+		routes.add(main.getLocations().get(0).getRoutes().get(0));
+		Calendar cal = Calendar.getInstance();
+		cal.set(2016, 4, 23, 12, 12);
+		LocalDateTime ldt = LocalDateTime.ofInstant(cal.toInstant(),
+				ZoneId.systemDefault());
+		// should be 15+23 = 38(duration =15 + 23 hours till next departure)
+		int dur = main.getTotalDuration(ldt, routes);
+		assertEquals(39, dur);
+	}
+
 	// test duration for multileg route if logged after initial departure and
 	// second departure after arrival
 	@Test
@@ -83,7 +101,6 @@ public class LogDeliveryRequestTests {
 		ArrayList<Route> routes = new ArrayList<>();
 		routes.add(main.getLocations().get(0).getRoutes().get(0));
 		routes.add(main.getLocations().get(0).getRoutes().get(1));
-		System.out.println(routes.get(0).getDuration());
 		Calendar cal = Calendar.getInstance();
 		cal.set(2016, 4, 23, 13, 12);
 		LocalDateTime ldt = LocalDateTime.ofInstant(cal.toInstant(),
@@ -107,7 +124,6 @@ public class LogDeliveryRequestTests {
 		ArrayList<Route> routes = new ArrayList<>();
 		routes.add(main.getLocations().get(0).getRoutes().get(0));
 		routes.add(main.getLocations().get(0).getRoutes().get(1));
-		System.out.println(routes.get(0).getDuration());
 		Calendar cal = Calendar.getInstance();
 		cal.set(2016, 4, 23, 13, 12);
 		LocalDateTime ldt = LocalDateTime.ofInstant(cal.toInstant(),
@@ -131,7 +147,6 @@ public class LogDeliveryRequestTests {
 		ArrayList<Route> routes = new ArrayList<>();
 		routes.add(main.getLocations().get(0).getRoutes().get(0));
 		routes.add(main.getLocations().get(0).getRoutes().get(1));
-		System.out.println(routes.get(0).getDuration());
 		Calendar cal = Calendar.getInstance();
 		cal.set(2016, 4, 23, 11, 12);
 		LocalDateTime ldt = LocalDateTime.ofInstant(cal.toInstant(),
@@ -155,7 +170,6 @@ public class LogDeliveryRequestTests {
 		ArrayList<Route> routes = new ArrayList<>();
 		routes.add(main.getLocations().get(0).getRoutes().get(0));
 		routes.add(main.getLocations().get(0).getRoutes().get(1));
-		System.out.println(routes.get(0).getDuration());
 		Calendar cal = Calendar.getInstance();
 		cal.set(2016, 4, 23, 11, 12);
 		LocalDateTime ldt = LocalDateTime.ofInstant(cal.toInstant(),
@@ -163,6 +177,27 @@ public class LogDeliveryRequestTests {
 		// should be 1+15+4+10
 		int dur = main.getTotalDuration(ldt, routes);
 		assertEquals(30, dur);
+	}
+
+	// test duration including weekend
+	@Test
+	public void test8() {
+		Main main = new Main();
+		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
+				"Air", 10, 12, 20, 30, 15, 24, DayOfWeek.MONDAY, 12);
+		main.logTransportCostUpdate("Wellington", "Auckland", "PostHaste",
+				"Air", "Air", 10, 12, 20, 30, 10, 120, DayOfWeek.FRIDAY, 12);
+		ArrayList<Route> routes = new ArrayList<>();
+		routes.add(main.getLocations().get(0).getRoutes().get(0));
+		routes.add(main.getLocations().get(0).getRoutes().get(1));
+		Calendar cal = Calendar.getInstance();
+		cal.set(2016, 4, 26, 13, 12);
+		LocalDateTime ldt = LocalDateTime.ofInstant(cal.toInstant(),
+				ZoneId.systemDefault());
+		// should be 1+15+4+10
+		int dur = main.getTotalDuration(ldt, routes);
+		assertEquals(249, dur);
 	}
 
 	// helper method
