@@ -2,6 +2,9 @@ package event;
 
 import java.util.ArrayList;
 
+import main.DeliveryRequest;
+import main.Leg;
+
 public class MailEvent implements Event {
 	
 	// VARIABLES
@@ -13,8 +16,8 @@ public class MailEvent implements Event {
 	private double price;
 	private double cost;
 	private int duration;
-
-	// CONSTRUCTOR
+	
+	// CONSTRUCTORS
 	public MailEvent(String day, ArrayList<LegEvent> legList, double weight, double volume, 
 					  String priority, double price, double cost, int duration) {
 		this.day = day;
@@ -25,6 +28,21 @@ public class MailEvent implements Event {
 		this.price = price;
 		this.cost = cost;
 		this.duration = duration;
+	}
+	@SuppressWarnings("deprecation")
+	public MailEvent(DeliveryRequest request) {
+		// TODO THIS DATE THING IS SUPER BAD - CHANGE IT SOMETHING NICE WHEN YOU CAN - Peter 29th May
+		this.day = dayIntToString(request.getLogTime().getDay());
+		this.legList = new ArrayList<LegEvent>();
+		for (Leg leg : request.getLegs()) {
+			legList.add(new LegEvent(leg));
+		}
+		this.weight = request.getWeight();
+		this.volume = request.getVolume();
+		this.priority = request.getPriority();
+		//this.price;
+		//this.cost = null;
+		this.duration = request.getDuration();
 	}
 	
 	// METHODS
@@ -78,5 +96,28 @@ public class MailEvent implements Event {
 	}
 	public void setDuration(int duration) {
 		this.duration = duration;
+	}
+	
+	// Helper
+	// TODO THIS DIS ALSO KINDA - MAYBE CHANGE IT LATER? - Peter 29th May
+	private String dayIntToString(int dayInt) {
+		String dayName = "";
+		switch (dayInt) {
+		case 1: dayName = "Monday";
+				break;
+		case 2: dayName = "Tuesday";
+				break;
+		case 3: dayName = "Wednesday";
+				break;
+		case 4: dayName = "Thursday";
+				break;
+		case 5: dayName = "Friday";
+				break;
+		case 6: dayName = "Saturday";
+				break;
+		case 0: dayName = "Sunday";
+				break;
+		}
+		return dayName;
 	}
 }

@@ -17,7 +17,7 @@ import event.*;
 public class LogWriterTest {
 	
 	// Console Logging
-	private static boolean LOGS = false;
+	private static boolean LOGS = true;
 	
 	// VARIABLES
 	static String filename1 = "test_1.xml";
