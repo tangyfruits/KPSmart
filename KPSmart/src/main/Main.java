@@ -19,6 +19,7 @@ public class Main {
 	public Main() {
 		locations = new ArrayList<Location>();
 		accounts = new ArrayList<User>();
+		deliveryRequests = new ArrayList<DeliveryRequest>();
 		// read from encrypted file and add them in!
 
 		// read from encrypted file,create User objects and add them in!
@@ -29,7 +30,7 @@ public class Main {
 		// maven. Apache shiro is a really good framework for logins
 	}
 
-	public ArrayList<ArrayList<Route>> getPossibleRoutes(String origin,
+	public ArrayList<RouteDisplay> getPossibleRoutes(String origin,
 			String destination, double weight, double volume) {
 
 		// find the locations matching the given strings
@@ -47,13 +48,68 @@ public class Main {
 
 		// route selection
 		AStar astar = new AStar(locations, originLoc, destinationLoc);
-		return astar.twoListsOfRoutes(weight, volume);
+		ArrayList<ArrayList<Route>> routes = astar.twoListsOfRoutes(weight,
+				volume);
+		
+		//set up list to pass to GUI
+		ArrayList<RouteDisplay> out = new ArrayList<>();
+		for (ArrayList<Route> list : routes) {
+			
+			// calculate priority 
+			String overallPriority = "";
+			List<String> domesticCities = new ArrayList<>();
+			domesticCities.add("Auckland");
+			domesticCities.add("Hamilton");
+			domesticCities.add("Rotorua");
+			domesticCities.add("Palmerston North");
+			domesticCities.add("Wellington");
+			domesticCities.add("Christchurch"); 
+			domesticCities.add("Dunedin");
+
+			if (domesticCities.contains(origin)
+					&& domesticCities.contains(destination)) {
+				overallPriority = overallPriority+"Domestic ";
+			} else {
+				overallPriority = overallPriority +"International ";
+			}
+
+			String priority = "Air";
+			for (Route r : list) {
+				if (!r.getPriority().equals("Air")) {
+					priority = "Standard";
+				}
+			}
+
+			overallPriority = overallPriority+priority;
+			
+			//calculate customer price
+			double price = 0.0;
+				for(Route k: list){
+				price += ( weight * k.getPrice().getWeightCost()
+						+ volume *k.getPrice().getVolumeCost());
+			}
+
+			RouteDisplay rDisp = new RouteDisplay(overallPriority, list, price);
+
+			// check if route is already in the list to be returned - only add
+			// it if it isn't
+			Boolean exists = false;
+			for (RouteDisplay r : out) {
+				if (r.equals(rDisp)) {
+					exists = true;
+				}
+			}
+
+			if (!exists) {
+				out.add(rDisp);
+			}
+		}
+		return out;
 
 	}
 
 	public DeliveryRequest logDeliveryRequest(String origin,
-			String destination, double weight, double volume,
-			List<Route> route, String priority) {
+			String destination, double weight, double volume, RouteDisplay route) {
 
 		// find the locations matching the given strings
 		Location originLoc = null;
@@ -68,32 +124,12 @@ public class Main {
 			}
 		}
 
-		// calculate priority
-		String overallPriority = "";
-		List<String> domesticCities = new ArrayList<>();
-		domesticCities.add("Auckland");
-		domesticCities.add("Hamilton");
-		domesticCities.add("Rotorua");
-		domesticCities.add("Palmerston North");
-		domesticCities.add("Wellington");
-		domesticCities.add("Christchurch");
-		domesticCities.add("Dunedin");
-
-		if (domesticCities.contains(origin)
-				&& domesticCities.contains(destination)) {
-			overallPriority.concat("Domestic ");
-		} else {
-			overallPriority.concat("International ");
-		}
-
-		overallPriority.concat(priority);
-
-		// calculate duration
-		int duration = getTotalDuration(LocalDateTime.now(), route);
+		// get duration
+		int duration = route.getTotalDuration(LocalDateTime.now());
 
 		// translate route list into legs
 		List<Leg> legs = new ArrayList<>();
-		for (Route r : route) {
+		for (Route r : route.getRoute()) {
 			double freightCost = weight * r.getWeightCost() + volume
 					* r.getVolumeCost();
 			double customerPrice = weight * r.getPrice().getWeightCost()
@@ -104,7 +140,7 @@ public class Main {
 
 		// create Delivery request
 		DeliveryRequest request = new DeliveryRequest(LocalDateTime.now(),
-				originLoc, destinationLoc, weight, volume, overallPriority,
+				originLoc, destinationLoc, weight, volume, route.getPriority(),
 				duration, legs);
 
 		// add to delivery events field
@@ -114,52 +150,6 @@ public class Main {
 		// TODO add to reports: revenue, expenditure, total events
 
 		return request;
-
-	}
-
-	public int getTotalDuration(LocalDateTime currentTime, List<Route> routes) {
-		int total = 0;
-		LocalDateTime current = currentTime;
-		for (Route r : routes) {
-			int dur = getDuration(current, r);
-			current = current.plusHours(dur);
-			total += dur;
-		}
-		return total;
-	}
-
-	public int getDuration(LocalDateTime currentTime, Route route) {
-		DayOfWeek day = currentTime.getDayOfWeek();
-		int currentInt = (day.getValue() - 1) * 24 + currentTime.getHour();
-		int startInt = (route.getDay().getValue() - 1) * 24
-				+ route.getStartTime();
-		int departTime;
-		if (startInt > currentInt) {
-			int difference = startInt;
-			while (difference < 120) {
-				difference += route.getFrequency();
-			}
-			int firstOfWeek = difference - 120;
-			departTime = getNextDeparture(firstOfWeek, currentInt,
-					route.getFrequency());
-			// return (departTime-currentInt)+route.getDuration();
-		} else {
-			departTime = getNextDeparture(startInt, currentInt,
-					route.getFrequency());
-		}
-		int weekend = 0;
-		if (departTime + route.getFrequency() > 120) {
-			weekend = 48;
-		}
-		return (departTime - currentInt) + route.getDuration() + weekend;
-	}
-
-	public int getNextDeparture(int startInt, int currentInt, int frequency) {
-		int departTime = startInt;
-		while (currentInt >= departTime) {
-			departTime += frequency;
-		}
-		return departTime;
 	}
 
 	public CustomerPrice logCustomerPriceUpdate(String origin,
@@ -346,6 +336,10 @@ public class Main {
 
 	}
 
+	public List<DeliveryRequest> getDeliveryRequests() {
+		return deliveryRequests;
+	}
+	
 	public List<Location> getLocations() {
 		return locations;
 	}
@@ -354,44 +348,45 @@ public class Main {
 		locations.add(location);
 	}
 
-	public ArrayList<ArrayList<Route>> bestRoutes(Location origin,
-			Location destination, double weight, double volume) {
-		ArrayList<ArrayList<Route>> listOfListOfRoutes = new ArrayList<ArrayList<Route>>();
-		Route directRoute = getDirectRoute(destination, destination, weight,
-				volume);
-		if (directRoute == null) {
-			AStar astar = new AStar(locations, origin, destination);
-			return astar.twoListsOfRoutes(weight, volume);
-		} else {
-			ArrayList<Route> best = new ArrayList<>();
-			best.add(directRoute);
-			listOfListOfRoutes.add(best);
-			return listOfListOfRoutes;
-		}
-	}
-
-	public Route getDirectRoute(Location origin, Location destination,
-			double weight, double volume) {
-		ArrayList<Route> directRoutes = new ArrayList<>();
-		for (Route r : origin.getRoutes()) {
-			if (r.getDestination() == destination) {
-				directRoutes.add(r);
-			}
-		}
-		if (directRoutes.isEmpty()) {
-			return null;
-		}
-		return getCheapestRoute(directRoutes, weight, volume);
-	}
-
-	public Route getCheapestRoute(List<Route> routes, double weight,
-			double volume) {
-		Route cheapest = routes.get(0);
-		for (Route r : routes) {
-			if (cheapest.getCost(weight, volume) > r.getCost(weight, volume)) {
-				cheapest = r;
-			}
-		}
-		return cheapest;
-	}
+	// public ArrayList<ArrayList<Route>> bestRoutes(Location origin,
+	// Location destination, double weight, double volume) {
+	// ArrayList<ArrayList<Route>> listOfListOfRoutes = new
+	// ArrayList<ArrayList<Route>>();
+	// Route directRoute = getDirectRoute(destination, destination, weight,
+	// volume);
+	// if (directRoute == null) {
+	// AStar astar = new AStar(locations, origin, destination);
+	// return astar.twoListsOfRoutes(weight, volume);
+	// } else {
+	// ArrayList<Route> best = new ArrayList<>();
+	// best.add(directRoute);
+	// listOfListOfRoutes.add(best);
+	// return listOfListOfRoutes;
+	// }
+	// }
+	//
+	// public Route getDirectRoute(Location origin, Location destination,
+	// double weight, double volume) {
+	// ArrayList<Route> directRoutes = new ArrayList<>();
+	// for (Route r : origin.getRoutes()) {
+	// if (r.getDestination() == destination) {
+	// directRoutes.add(r);
+	// }
+	// }
+	// if (directRoutes.isEmpty()) {
+	// return null;
+	// }
+	// return getCheapestRoute(directRoutes, weight, volume);
+	// }
+	//
+	// public Route getCheapestRoute(List<Route> routes, double weight,
+	// double volume) {
+	// Route cheapest = routes.get(0);
+	// for (Route r : routes) {
+	// if (cheapest.getCost(weight, volume) > r.getCost(weight, volume)) {
+	// cheapest = r;
+	// }
+	// }
+	// return cheapest;
+	// }
 }

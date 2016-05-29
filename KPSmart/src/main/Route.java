@@ -130,4 +130,14 @@ public class Route {
 	public String toPretty() { // (like toString but prettier)
 		return getOrigin().toPretty() + " ---> " + getDestination().toPretty();
 	}
+	
+	public boolean equals(Route r){
+		if(this.origin.equals(r.getOrigin())&& this.destination.equals(r.getDestination())
+				&& this.company.equals(r.getCompany())&& this.type.equals(r.getType())){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 }
