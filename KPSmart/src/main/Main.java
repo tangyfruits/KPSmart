@@ -9,8 +9,10 @@ import java.util.HashMap;
 import java.util.Date;
 import java.util.List;
 
+import event.CostEvent;
 import event.Event;
 import event.MailEvent;
+import event.PriceEvent;
 
 public class Main {
 
@@ -20,9 +22,10 @@ public class Main {
 
 	private List<DeliveryRequest> deliveryRequests;
 	
-	private List<Event> events;
+	private ArrayList<Event> events;
+	private double totalExp;
+	private double totalRev;
 	
-
 
 	public Main() {
 		locations = new ArrayList<Location>();
@@ -112,10 +115,10 @@ public class Main {
 		//TODO log in file
 		//TODO add to reports: revenue, expenditure, total events
 		String strDate = date.toString();
-		//MainEvent delivery = new MailEvent(strDate, legs, weight, volume, priority, 1.00,3.00, duration);//ITS A MAIL EVENT RIGHT
+		MailEvent delivery = new MailEvent(strDate, legs, weight, volume, priority, 1.00,3.00, duration);//ITS A MAIL EVENT RIGHT
 		//TODO calc cost+price
 		
-		//events.add(delivery);//BAM WHUT
+		events.add(delivery);//BAM WHUT
 		
 		return request;
 		
@@ -156,9 +159,10 @@ public class Main {
 					&& c.getPriority().equals(priority)) {
 				c.setVolumeCost(volumeCost);
 				c.setWeightCost(weightCost);
+				PriceEvent event = new PriceEvent(origin, destination, priority, weightCost, volumeCost);
+				events.add(event);
 				return c;
 				// TODO add event to log
-				// TODO add 1 to total events
 			}
 		}
 
@@ -167,9 +171,11 @@ public class Main {
 		price = new CustomerPrice(originLoc, destinationLoc, priority,
 				weightCost, volumeCost);
 		originLoc.addPrice(price);
+		PriceEvent event = new PriceEvent(origin, destination, priority, weightCost, volumeCost);
+		events.add(event);
 		return price;
 		// TODO add event to log
-		// TODO add 1 to total events
+		
 	}
 
 	public void logTransportCostUpdate(String origin, String destination,
@@ -231,7 +237,8 @@ public class Main {
 		}
 
 		// TODO add event to logfile
-		// TODO add 1 to total events
+		CostEvent event = new CostEvent(origin, destination, company, type, priority, weightCost, volumeCost, maxWeight, maxVolume, duration, frequency, day);
+		events.add(event);
 	}
 
 	public CustomerPrice getCustomerPrice(Location originLoc,
@@ -318,5 +325,33 @@ public class Main {
 			}
 		}
 		return cheapest;
+	}
+	
+	//REPORT DISPLAYING
+	
+	public void addTotalRev(double amount){
+		totalRev+=amount;
+	}
+	
+	public void addTotalExp(double amount){
+		totalExp += amount;
+	}
+	
+	public double getTotalRev(){
+		System.out.println("Total Revenue: $"+totalRev);
+		return totalRev;
+	}
+	
+	public double getTotalExp(){
+		System.out.println("Total Expenditure: $"+totalExp);
+		return totalExp;
+	}
+	
+	public ArrayList <Event> getTotalEvents(){
+		System.out.println("Total Events: ");
+		for (int i=0;i<events.size();i++){
+			System.out.println(i+ ": "+events.get(i));
+		}
+		return events;
 	}
 }
