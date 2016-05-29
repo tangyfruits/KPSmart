@@ -11,6 +11,7 @@ import java.util.List;
 
 import event.CostEvent;
 import event.Event;
+import event.LegEvent;
 import event.MailEvent;
 import event.PriceEvent;
 
@@ -22,7 +23,7 @@ public class Main {
 
 	private List<DeliveryRequest> deliveryRequests;
 	
-	private ArrayList<Event> events;
+	private int events;
 	private double totalExp;
 	private double totalRev;
 	
@@ -39,8 +40,6 @@ public class Main {
 		// currentUser = new User();
 		// want to look into apache shiro tbh but everyone will have to install
 		// maven. Apache shiro is a really good framework for logins
-		
-		events = new ArrayList<Event>();
 	}
 
 
@@ -113,13 +112,8 @@ public class Main {
 		deliveryRequests.add(request);
 		
 		//TODO log in file
-		//TODO add to reports: revenue, expenditure, total events
-		String strDate = date.toString();
-		MailEvent delivery = new MailEvent(strDate, legs, weight, volume, priority, 1.00,3.00, duration);//ITS A MAIL EVENT RIGHT
-		//TODO calc cost+price
-		
-		events.add(delivery);//BAM WHUT
-		
+		//TODO add to reports: revenue, expenditure
+		addEvent();
 		return request;
 		
 
@@ -159,10 +153,8 @@ public class Main {
 					&& c.getPriority().equals(priority)) {
 				c.setVolumeCost(volumeCost);
 				c.setWeightCost(weightCost);
-				PriceEvent event = new PriceEvent(origin, destination, priority, weightCost, volumeCost);
-				events.add(event);
+				addEvent();
 				return c;
-				// TODO add event to log
 			}
 		}
 
@@ -171,11 +163,8 @@ public class Main {
 		price = new CustomerPrice(originLoc, destinationLoc, priority,
 				weightCost, volumeCost);
 		originLoc.addPrice(price);
-		PriceEvent event = new PriceEvent(origin, destination, priority, weightCost, volumeCost);
-		events.add(event);
-		return price;
-		// TODO add event to log
-		
+		addEvent();
+		return price;		
 	}
 
 	public void logTransportCostUpdate(String origin, String destination,
@@ -236,9 +225,7 @@ public class Main {
 			originLoc.addRoute(route);
 		}
 
-		// TODO add event to logfile
-		CostEvent event = new CostEvent(origin, destination, company, type, priority, weightCost, volumeCost, maxWeight, maxVolume, duration, frequency, day);
-		events.add(event);
+		addEvent();
 	}
 
 	public CustomerPrice getCustomerPrice(Location originLoc,
@@ -337,6 +324,10 @@ public class Main {
 		totalExp += amount;
 	}
 	
+	public void addEvent(){
+		events+=1;
+	}
+	
 	public double getTotalRev(){
 		System.out.println("Total Revenue: $"+totalRev);
 		return totalRev;
@@ -347,11 +338,8 @@ public class Main {
 		return totalExp;
 	}
 	
-	public ArrayList <Event> getTotalEvents(){
-		System.out.println("Total Events: ");
-		for (int i=0;i<events.size();i++){
-			System.out.println(i+ ": "+events.get(i));
-		}
+	public int getTotalEvents(){
+		System.out.println("Total Events: "+events);
 		return events;
 	}
 }
