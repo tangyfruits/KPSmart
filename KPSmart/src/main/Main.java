@@ -13,7 +13,6 @@ public class Main {
 	private ArrayList<Location> locations;
 	private ArrayList<User> accounts;
 	private User currentUser;
-
 	private List<DeliveryRequest> deliveryRequests;
 
 	public Main() {
@@ -203,7 +202,7 @@ public class Main {
 	}
 
 	public void logTransportCostUpdate(String origin, String destination,
-			String company, String type, String priority, double weightCost,
+			String company, String type, double weightCost,
 			double volumeCost, int maxWeight, int maxVolume, int duration,
 			int frequency, DayOfWeek day, int startTime) {
 
@@ -229,6 +228,14 @@ public class Main {
 		if (destinationLoc == null) {
 			destinationLoc = new Location(destination);
 			addLocation(destinationLoc);
+		}
+		
+		//work out Priority
+		String priority;
+		if (type.equals("Air")) {
+			priority = "Air";
+		} else {
+			priority = "Standard";
 		}
 
 		// get customer price matching the route
@@ -336,14 +343,13 @@ public class Main {
 
 	}
 
+	//Getters and Setters
 	public List<DeliveryRequest> getDeliveryRequests() {
 		return deliveryRequests;
-	}
-	
+	}	
 	public List<Location> getLocations() {
 		return locations;
 	}
-
 	public void addLocation(Location location) {
 		locations.add(location);
 	}

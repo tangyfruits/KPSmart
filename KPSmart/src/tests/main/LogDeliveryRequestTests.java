@@ -1,22 +1,16 @@
 package tests.main;
 
 import static org.junit.Assert.*;
-
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-
-import main.CustomerPrice;
 import main.DeliveryRequest;
 import main.Main;
 import main.Route;
 import main.RouteDisplay;
-
 import org.junit.Test;
 
 /**
- * Will need to manually input customerPrices in console to run these.
  * 
  * @author Shelley
  *
@@ -29,7 +23,7 @@ public class LogDeliveryRequestTests {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
 		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
-				"Air", 1, 15, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
+				 1, 15, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Auckland", 15, 1);
 		// should find one route
@@ -40,13 +34,13 @@ public class LogDeliveryRequestTests {
 
 	// find a route - only one - multi
 	@Test
-	public void test17() {
+	public void test2() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
 		main.logCustomerPriceUpdate("Auckland", "Paris", "Air", 15, 14);
 		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
-				"Air", 10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
-		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air", "Air",
+				10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
+		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air", 
 				10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Auckland", 15, 1);
@@ -57,16 +51,16 @@ public class LogDeliveryRequestTests {
 
 	// Find one of each priority - single routes
 	@Test
-	public void test10() {
+	public void test3() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Standard", 15,
 				14);
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", 
 				"Air", 10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 
 		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost",
-				"Standard", "Standard", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY,
+				"Standard",  1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY,
 				15);
 
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
@@ -79,21 +73,21 @@ public class LogDeliveryRequestTests {
 
 	// Find one of each priority - multi routes
 	@Test
-	public void test16() {
+	public void test4() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Standard", 15,
 				14);
 		main.logCustomerPriceUpdate("Auckland", "Paris", "Air", 15, 14);
 		main.logCustomerPriceUpdate("Auckland", "Paris", "Standard", 15, 14);
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", 
 				"Air", 10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
-		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air", "Air",
+		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air", 
 				10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost",
-				"Standard", "Standard", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY,
+				"Standard",  1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY,
 				15);
-		main.logTransportCostUpdate("Auckland", "Paris", "NZPost", "Standard",
+		main.logTransportCostUpdate("Auckland", "Paris", "NZPost", 
 				"Standard", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Paris", 15, 1);
@@ -105,15 +99,15 @@ public class LogDeliveryRequestTests {
 
 	// Check Priority
 	@Test
-	public void test11() {
+	public void test5() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Standard", 15,
 				14);
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", 
 				"Air", 10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost",
-				"Standard", "Standard", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY,
+				"Standard", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY,
 				15);
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Auckland", 15, 1);
@@ -124,14 +118,14 @@ public class LogDeliveryRequestTests {
 
 	// Check Priority
 	@Test
-	public void test12() {
+	public void test6() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Paris", "Air", 15, 14);
 		main.logCustomerPriceUpdate("Wellington", "Paris", "Standard", 15, 14);
-		main.logTransportCostUpdate("Wellington", "Paris", "UPS", "Air", "Air",
+		main.logTransportCostUpdate("Wellington", "Paris", "UPS", "Air", 
 				10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		main.logTransportCostUpdate("Wellington", "Paris", "NZPost",
-				"Standard", "Standard", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY,
+				"Standard", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY,
 				15);
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Paris", 15, 1);
@@ -142,15 +136,15 @@ public class LogDeliveryRequestTests {
 
 	// Check Priority for multi-leg routes
 	@Test
-	public void test14() {
+	public void test7() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Auckland", "Paris", "Air", 10, 12);
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Standard", 15,
 				14);
-		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air", "Air",
+		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air", 
 				10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost",
-				"Standard", "Standard", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY,
+				"Standard",  1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY,
 				15);
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Paris", 15, 1);
@@ -162,13 +156,13 @@ public class LogDeliveryRequestTests {
 
 	// Check Priority for multi-leg routes
 	@Test
-	public void test15() {
+	public void test8() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Auckland", "Paris", "Air", 10, 12);
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
-		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air", "Air",
+		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air", 
 				10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
-		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost", 
 				"Air", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Paris", 15, 1);
@@ -180,14 +174,14 @@ public class LogDeliveryRequestTests {
 
 	// Check Price - single routes
 	@Test
-	public void test13() {
+	public void test9() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Paris", "Air", 10, 12);
 		main.logCustomerPriceUpdate("Wellington", "Paris", "Standard", 15, 14);
-		main.logTransportCostUpdate("Wellington", "Paris", "UPS", "Air", "Air",
+		main.logTransportCostUpdate("Wellington", "Paris", "UPS", "Air", 
 				10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		main.logTransportCostUpdate("Wellington", "Paris", "NZPost",
-				"Standard", "Standard", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY,
+				"Standard",  1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY,
 				15);
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Paris", 15, 1);
@@ -199,21 +193,21 @@ public class LogDeliveryRequestTests {
 
 	// Check price - multi routes
 	@Test
-	public void test18() {
+	public void test10() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Standard", 10,
 				12);
 		main.logCustomerPriceUpdate("Auckland", "Paris", "Air", 13, 20);
 		main.logCustomerPriceUpdate("Auckland", "Paris", "Standard", 16, 19);
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", 
 				"Air", 10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
-		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air", "Air",
+		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air", 
 				10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost",
-				"Standard", "Standard", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY,
+				"Standard",  1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY,
 				15);
-		main.logTransportCostUpdate("Auckland", "Paris", "NZPost", "Standard",
+		main.logTransportCostUpdate("Auckland", "Paris", "NZPost", 
 				"Standard", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Paris", 1, 1);
@@ -225,19 +219,19 @@ public class LogDeliveryRequestTests {
 
 	// check adding new Delivery Request
 	@Test
-	public void test19() {
+	public void test11() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Auckland", "Paris", "Air", 10, 12);
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
-		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air", "Air",
+		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air",
 				10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
-		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost", 
 				"Air", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Paris", 15, 1);
 		// should have no requests so far
 		assertEquals(0, main.getDeliveryRequests().size());
-		DeliveryRequest req = main.logDeliveryRequest("Wellington", "Paris",
+		main.logDeliveryRequest("Wellington", "Paris",
 				15, 1, r.get(0));
 		// should add a request
 		assertEquals(1, main.getDeliveryRequests().size());
@@ -245,13 +239,13 @@ public class LogDeliveryRequestTests {
 
 	// check legs are created correctly
 	@Test
-	public void test20() {
+	public void test12() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Auckland", "Paris", "Air", 10, 12);
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
-		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air", "Air",
+		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air", 
 				10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
-		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost",
 				"Air", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Paris", 1, 1);
@@ -276,13 +270,13 @@ public class LogDeliveryRequestTests {
 	// check details of delivery request once created
 	// check legs are created correctly
 	@Test
-	public void test21() {
+	public void test13() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Auckland", "Paris", "Air", 10, 12);
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
-		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air", "Air",
+		main.logTransportCostUpdate("Auckland", "Paris", "UPS", "Air",
 				10, 12, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
-		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost", 
 				"Air", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Paris", 1, 1);
@@ -301,10 +295,10 @@ public class LogDeliveryRequestTests {
 
 	// test Duration if logged before initial departure
 	@Test
-	public void test2() {
+	public void test14() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", 
 				"Air", 10, 12, 20, 30, 15, 24, DayOfWeek.WEDNESDAY, 12);
 		ArrayList<Route> routes = new ArrayList<>();
 		routes.add(main.getLocations().get(0).getRoutes().get(0));
@@ -320,10 +314,10 @@ public class LogDeliveryRequestTests {
 
 	// test duration if logged after initial departure
 	@Test
-	public void test3() {
+	public void test15() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", 
 				"Air", 10, 12, 20, 30, 15, 24, DayOfWeek.MONDAY, 12);
 		ArrayList<Route> routes = new ArrayList<>();
 		routes.add(main.getLocations().get(0).getRoutes().get(0));
@@ -339,10 +333,10 @@ public class LogDeliveryRequestTests {
 
 	// test duration if logged in same hour(ie after)
 	@Test
-	public void test9() {
+	public void test16() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", 
 				"Air", 10, 12, 20, 30, 15, 24, DayOfWeek.MONDAY, 12);
 		ArrayList<Route> routes = new ArrayList<>();
 		routes.add(main.getLocations().get(0).getRoutes().get(0));
@@ -359,13 +353,13 @@ public class LogDeliveryRequestTests {
 	// test duration for multileg route if logged after initial departure and
 	// second departure after arrival
 	@Test
-	public void test4() {
+	public void test17() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", 
 				"Air", 10, 12, 20, 30, 15, 24, DayOfWeek.MONDAY, 12);
 		main.logTransportCostUpdate("Wellington", "Auckland", "PostHaste",
-				"Air", "Air", 10, 12, 20, 30, 10, 24, DayOfWeek.WEDNESDAY, 12);
+				"Air",  10, 12, 20, 30, 10, 24, DayOfWeek.WEDNESDAY, 12);
 		ArrayList<Route> routes = new ArrayList<>();
 		routes.add(main.getLocations().get(0).getRoutes().get(0));
 		routes.add(main.getLocations().get(0).getRoutes().get(1));
@@ -383,13 +377,13 @@ public class LogDeliveryRequestTests {
 	// test duration for multileg route if logged after initial departure and
 	// second departure before arrival
 	@Test
-	public void test5() {
+	public void test18() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", 
 				"Air", 10, 12, 20, 30, 15, 24, DayOfWeek.MONDAY, 12);
 		main.logTransportCostUpdate("Wellington", "Auckland", "PostHaste",
-				"Air", "Air", 10, 12, 20, 30, 10, 24, DayOfWeek.TUESDAY, 12);
+				"Air",10, 12, 20, 30, 10, 24, DayOfWeek.TUESDAY, 12);
 		ArrayList<Route> routes = new ArrayList<>();
 		routes.add(main.getLocations().get(0).getRoutes().get(0));
 		routes.add(main.getLocations().get(0).getRoutes().get(1));
@@ -407,13 +401,13 @@ public class LogDeliveryRequestTests {
 	// test duration for multileg route if logged Before initial departure and
 	// second departure after arrival
 	@Test
-	public void test6() {
+	public void test19() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", 
 				"Air", 10, 12, 20, 30, 15, 24, DayOfWeek.MONDAY, 12);
 		main.logTransportCostUpdate("Wellington", "Auckland", "PostHaste",
-				"Air", "Air", 10, 12, 20, 30, 10, 24, DayOfWeek.TUESDAY, 12);
+				"Air",  10, 12, 20, 30, 10, 24, DayOfWeek.TUESDAY, 12);
 		ArrayList<Route> routes = new ArrayList<>();
 		routes.add(main.getLocations().get(0).getRoutes().get(0));
 		routes.add(main.getLocations().get(0).getRoutes().get(1));
@@ -431,13 +425,13 @@ public class LogDeliveryRequestTests {
 	// test duration for multileg route if logged Before initial departure and
 	// second departure after arrival
 	@Test
-	public void test7() {
+	public void test20() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS",
 				"Air", 10, 12, 20, 30, 15, 24, DayOfWeek.MONDAY, 12);
 		main.logTransportCostUpdate("Wellington", "Auckland", "PostHaste",
-				"Air", "Air", 10, 12, 20, 30, 10, 6, DayOfWeek.TUESDAY, 1);
+				"Air", 10, 12, 20, 30, 10, 6, DayOfWeek.TUESDAY, 1);
 		ArrayList<Route> routes = new ArrayList<>();
 		routes.add(main.getLocations().get(0).getRoutes().get(0));
 		routes.add(main.getLocations().get(0).getRoutes().get(1));
@@ -453,13 +447,13 @@ public class LogDeliveryRequestTests {
 
 	// test duration including weekend
 	@Test
-	public void test8() {
+	public void test21() {
 		Main main = new Main();
 		main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 15, 14);
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air",
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", 
 				"Air", 10, 12, 20, 30, 15, 24, DayOfWeek.MONDAY, 12);
 		main.logTransportCostUpdate("Wellington", "Auckland", "PostHaste",
-				"Air", "Air", 10, 12, 20, 30, 10, 120, DayOfWeek.FRIDAY, 12);
+				"Air", 10, 12, 20, 30, 10, 120, DayOfWeek.FRIDAY, 12);
 		ArrayList<Route> routes = new ArrayList<>();
 		routes.add(main.getLocations().get(0).getRoutes().get(0));
 		routes.add(main.getLocations().get(0).getRoutes().get(1));
