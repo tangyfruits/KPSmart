@@ -1,29 +1,73 @@
 package event;
 
+import main.Leg;
+
 public class LegEvent {
 	
 	// VARIABLES
-	private String to;
-	private String from;
+	private String origin;
+	private String destination;
+	private String type;
+	private String company;
+	private double cost;
+	private double price;
 	
 	// CONSTRUCTOR
-	public LegEvent(String to, String from) {
-		this.to = to;
-		this.from = from;
+	public LegEvent(String origin, String destination, String type, String company, double freightCost, double customerPrice) {
+		this.origin = origin;
+		this.destination = destination;
+		this.type = type;
+		this.company = company;
+		this.cost = freightCost;
+		this.price = customerPrice;
+	}
+	public LegEvent(Leg leg) {
+		this.origin = leg.getOrigin().getName();
+		this.destination = leg.getDestination().getName();
+		this.type = leg.getType();
+		this.company = leg.getCompany();
+		this.cost = leg.getFreightCost();
+		this.price = leg.getCustomerPrice();
 	}
 	
 	// METHODS
-	public String getTo() {
-		return to;
+	// Getters
+	public String getOrigin() {
+		return origin;
 	}
-	public String getFrom() {
-		return from;
+	public String getDestination() {
+		return destination;
 	}
-
-	public void setTo(String to) {
-		this.to = to;
+	public String getType() {
+		return type;
 	}
-	public void setFrom(String from) {
-		this.from = from;
+	public String getCompany() {
+		return company;
+	}
+	public double getCost() {
+		return cost;
+	}
+	public double getPrice() {
+		return price;
+	}
+	
+	// Setters
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+	public void setPrice(double price) {
+		this.price = price;
 	}
 }

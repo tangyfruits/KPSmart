@@ -3,8 +3,10 @@ package main;
 import java.awt.List;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Queue;
+
 
 public class AStar {
 	/*
@@ -24,117 +26,209 @@ public class AStar {
 	 * goal ) fringe.enqueue([neighbour, node, costToNeigh, estTotal])
 	 */
 
-	public Location start;
-	public Location goal;
-
-	public AStar(Location start, Location goal) {
+	// VARIABLES
+	private Location start;
+	private Location goal;
+	private ArrayList<Location> graph;
+	private HashMap<Location, Boolean> visited;
+	private HashMap<Location, Double> costs;
+	private HashMap<Location, Route> previous;
+	
+	// CONSTRUCTOR
+	public AStar(ArrayList<Location> graph, Location start, Location goal) {
 		this.start = start;
 		this.goal = goal;
-	}
+		this.graph = graph;
+		this.visited = new HashMap<>();
+		this.costs = new HashMap<>();
+		this.previous = new HashMap<>();
+		resetGraph();
 
-	public ArrayList<ArrayList<Route>> listOfRoutes(double weight, double volume) {
-		Location cheapestLocation = cheapestRouteAlgorithm(weight, volume);
-		Location priorityLocation = highestPriorityAlgorithm(weight, volume);
-		ArrayList<Route> cheapestRoutes = new ArrayList<>();
-		ArrayList<Route> priorityRoutes = new ArrayList<>();
-		while (cheapestLocation.getFrom() != null) {
-			for (Route r : cheapestLocation.getFrom().getRoutes()) {
-				//need to change this because only checks if there is one instead of multiple
-				if (r.getDestination().getName().equals(cheapestLocation.getName())) {
-					cheapestRoutes.add(r);
-				}
-			}
-			cheapestLocation = cheapestLocation.getFrom();
-		}
-		while (priorityLocation.getFrom() != null) {
-			for (Route r : priorityLocation.getFrom().getRoutes()) {
-				//need to change this because only checks if there is one instead of multiple
-				if (r.getDestination().getName().equals(priorityLocation.getName())) {
-					priorityRoutes.add(r);
-				}
-			}
-			priorityLocation = priorityLocation.getFrom();
-		}
+		/**System.out.println("\n\n----------------------------------------");/**/
+		/**System.out.print("PLAN: ");/**/
+		/**System.out.println(start.toPretty()+" ---> "+goal.toPretty());	/**/
+	}
+	
+	// METHODS
+	// MAIN METHOD
+	public ArrayList<ArrayList<Route>> twoListsOfRoutes(double weight, double volume) {		
 		ArrayList<ArrayList<Route>> list = new ArrayList<ArrayList<Route>>();
-		list.add(cheapestRoutes);
-		list.add(priorityRoutes);
+
+		ArrayList<Route> cheapestRoute = cheapestRouteAlgorithm(weight, volume);
+		ArrayList<Route> priorityRoute = airPriorityAlgorithm(weight, volume);
+		
+		if (cheapestRoute.size() > 0) {
+			list.add(cheapestRoute);
+		}
+		if (priorityRoute.size() > 0) {
+			list.add(priorityRoute);
+		}
 		return list;
-
 	}
 
-	public Location cheapestRouteAlgorithm(double weight, double volume) {
-		Queue<Tuple> fringe = new PriorityQueue<Tuple>();
-		double estimate = 0;
-		start.setVisited(true);
-		Tuple startTuple = new Tuple(start, null, 0, estimate);
-		fringe.offer(startTuple);
+	// Get Cheapest Overall Route
+	public ArrayList<Route> cheapestRouteAlgorithm(double weight, double volume) {
+		resetGraph();
+		/**System.out.println("\n------------Cheap------------");/**/
+		
+		// Find Cheapest Route
+		Location loc = getNextLocation();
+		/**System.out.println("Visit: "+loc);/**/
+		while (loc != null && loc != goal) {
+			// Mark Location Visited
+			visited.put(loc, true);							
+			
+			// Visit its Neighbours
+			for (Route route : loc.getRoutes()) {
+				Location neightbour = route.getDestination();
+				
+				// If Cheapest Start -> Neighbour Route - Add Route to 'previous'
+				Double altCost = costs.get(loc) + route.getCost(weight, volume);
+				if (altCost < costs.get(neightbour)) {
+					costs.put(neightbour, altCost);
+					previous.put(neightbour, route);
+				}
+			}
+			loc = getNextLocation();
+			/**System.out.println("Visit: "+loc);/**/
+		}
 
-		while (fringe.peek() != null) {
-			Tuple myTuple = fringe.poll();
-			if (myTuple.start.isVisited() == false) {
-				myTuple.start.setVisited(true);
-				myTuple.start.setFrom(myTuple.from);
-				myTuple.start.setCostSoFar(myTuple.costSoFar);
+		// Create Route Array
+		//int x = 0;
+		/**System.out.println("BACK");/**/
+		/**System.out.println(goal + " "+this.goal);/**/
+		ArrayList<Route> list = new ArrayList<Route>();			
+		Location origin = goal;
+		Route route = previous.get(origin);
+		
+		while (route != null && origin != start) {
+			list.add(0, route);
+			origin = route.getOrigin();
+			route = previous.get(origin);
+			/*
+			if (x++ < 40) {
+				System.out.println("c("+ origin.toPretty() +")");
 			}
-			if (myTuple.start == goal) {
-				break;
+			*/
+		}
+		/*
+		System.out.println("OUT: ");
+		for (Route r : list) {
+			System.out.println(r.toPretty());
+		}
+		*/
+		return list;
+	}
+	// Get Cheapest Air Priority Route
+	public ArrayList<Route> airPriorityAlgorithm(double weight, double volume) {
+		resetGraph();
+		/**System.out.println("------------Priority------------");/**/
+		
+		Location loc = getNextLocation();
+		/**System.out.println("Visit: "+loc);/**/
+		while (loc != null && loc != goal) {
+			// Mark Location Visited
+			visited.put(loc, true);	
+			
+			// Visit its Neighbours
+			for (Route route : loc.getRoutes()) {
+				Location neightbour = route.getDestination();
+				
+				// Check Only Air Routes
+				if (route.getPriority() == "Air") {
+					// If Cheapest (Start -> Neighbour) Route
+					Double newCost = costs.get(loc) + route.getCost(weight, volume);
+					if (newCost < costs.get(neightbour)) {
+						costs.put(neightbour, newCost);
+						previous.put(neightbour, route);
+					}
+				}
 			}
-			for (Route r : myTuple.start.getRoutes()) {
-				Location neighbour = null;
-				if (myTuple.start == r.getOrigin()) {
-					neighbour = r.getDestination();
-				}
-				if (myTuple.start == r.getDestination()) {
-					neighbour = r.getOrigin();
-				}
-				if (!neighbour.isVisited()) {
-					double costToNeigh = myTuple.costSoFar + r.getCost(weight, volume);
-					double estTotal = costToNeigh;
-					fringe.offer(new Tuple(neighbour, myTuple.start, costToNeigh, estTotal));
+			loc = getNextLocation();
+			/**System.out.println("Visit: "+loc);/**/
+		}
+
+		// Create Route Array
+		//int x = 0;
+		/**System.out.println("BACK");/**/
+		ArrayList<Route> list = new ArrayList<Route>();			
+		Location origin = goal;
+		Route route = previous.get(origin);
+		
+		while (route != null && origin != start) {	
+			list.add(0, route);
+			origin = route.getOrigin();
+			route = previous.get(origin);
+			/*
+			if (x < 40) {
+				System.out.println("p("+ origin.toPretty() +")");
+			}
+			*/
+		}
+		
+		/**System.out.println("OUT: ");
+		for (Route r : list) {
+			/**System.out.println(r.toPretty());
+		}
+		*/
+		
+		return list;
+	}
+	
+	// HELPERS
+	// Clear Graph
+	public void resetGraph() {
+			for (Location location : graph) {	
+				visited.put(location, false);
+				costs.put(location, Double.MAX_VALUE);
+				previous.put(location,  null);
+			}
+			costs.put(start, 0.0);
+	}
+	// Get Next Cheapest Unvisited Location
+	private Location getNextLocation() {
+		//System.out.println("Get cheapest Loc");
+		Location next = null;
+		double minCost = Double.MAX_VALUE;
+		
+		for (Location location : graph) {
+			//System.out.println(" check: "+location);
+			double cost = costs.get(location);
+			
+			if (!visited.get(location)) {
+				if (cost < minCost) {
+				//System.out.println(" added");
+				next = location;
+				minCost = cost;
 				}
 			}
 		}
-		return goal;
-
+		return next;
 	}
 
-	public Location highestPriorityAlgorithm(double weight, double volume) {
-		Queue<TuplePriority> fringe = new PriorityQueue<TuplePriority>();
-		double estimate = 0;
-		start.setVisited(true);
-		TuplePriority startTuple = new TuplePriority(start, null, 0, estimate, "Air");
-		fringe.offer(startTuple);
-
-		while (fringe.peek() != null) {
-			TuplePriority myTuple = fringe.poll();
-			if (myTuple.start.isVisited() == false) {
-				myTuple.start.setVisited(true);
-				myTuple.start.setFrom(myTuple.from);
-				myTuple.start.setCostSoFar(myTuple.costSoFar);
-			}
-			if (myTuple.start == goal) {
-				break;
-			}
-			for (Route r : myTuple.start.getRoutes()) {
-				Location neighbour = null;
-				if (myTuple.start == r.getOrigin()) {
-					neighbour = r.getDestination();
-					neighbour.setPriority(r.getPriority());
-				}
-				if (myTuple.start == r.getDestination()) {
-					neighbour = r.getOrigin();
-					neighbour.setPriority(r.getPriority());
-				}
-				if (!neighbour.isVisited()) {
-					double costToNeigh = myTuple.costSoFar + r.getCost(weight, volume);
-					double estTotal = costToNeigh;
-					fringe.offer(new TuplePriority(neighbour, myTuple.start, costToNeigh, estTotal,
-							neighbour.getPriority()));
-				}
-
+	// TODO check cheapest Air and cheapest Overall aren't the same
+	
+	/*
+	public Route getDirectRoute(Location origin, Location destination, double weight, double volume) {
+		ArrayList<Route> directRoutes = new ArrayList<>();
+		for (Route r : origin.getRoutes()) {
+			if (r.getDestination() == destination) {
+				directRoutes.add(r);
 			}
 		}
-		return goal;
+		if (directRoutes.isEmpty()) {
+			return null;
+		}
+		return getCheapestRoute(directRoutes, weight, volume);
 	}
-
+	public Route getCheapestRoute(ArrayList<Route> routes, double weight, double volume) {
+		Route cheapest = routes.get(0);
+		for (Route r : routes) {
+			if (cheapest.getCost(weight, volume) > r.getCost(weight, volume)) {
+				cheapest = r;
+			}
+		}
+		return cheapest;
+	}
+	/**/
 }

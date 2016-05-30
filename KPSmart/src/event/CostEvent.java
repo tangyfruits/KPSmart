@@ -1,5 +1,7 @@
 package event;
 
+import main.Route;
+
 public class CostEvent implements Event {
 	
 	// VARIABLES
@@ -16,7 +18,7 @@ public class CostEvent implements Event {
 	private int frequency;
 	private String day;
 	
-	// CONSTRUCTOR
+	// CONSTRUCTORS
 	public CostEvent(String origin, String destination, String company, String type, String priority, 
 			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, 
 			int frequency, String day) {
@@ -33,6 +35,22 @@ public class CostEvent implements Event {
 		this.frequency = frequency;
 		this.day = day;
 	}
+	public CostEvent(Route route) {
+		
+		this.origin = route.getOrigin().getName();
+		this.destination = route.getDestination().getName();
+		this.company = 	route.getCompany();
+		this.type = route.getType();
+		this.priority = route.getPriority();
+		this.weightCost = route.getWeightCost();
+		this.volumeCost = route.getVolumeCost();
+		this.maxWeight = route.getMaxWeight();
+		this.maxVolume = route.getMaxVolume();
+		this.duration = route.getDuration();
+		this.frequency = route.getFrequency();
+		this.day = route.getDay();
+	}
+
 	
 	// METHODS
 	// Getter
