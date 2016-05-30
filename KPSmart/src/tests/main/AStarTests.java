@@ -2,6 +2,7 @@ package tests.main;
 
 import static org.junit.Assert.*;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,17 @@ public class AStarTests {
 	CustomerPrice cp4 = new CustomerPrice(loc1, loc3, "Air", 2.0, 2.0);
 	CustomerPrice cp5 = new CustomerPrice(loc2, loc3, "Land", 1.0, 1.0);
 	CustomerPrice cp6 = new CustomerPrice(loc2, loc3, "Air", 2.0, 2.0);
+	
+//	Route r1 = new Route(loc1, loc2, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp1);
+//	Route r2 = new Route(loc1, loc2, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp2);
+//	Route r3 = new Route(loc1, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp3);
+//	Route r4 = new Route(loc1, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp4);
+//	Route r5 = new Route(loc2, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp5);
+//	Route r6 = new Route(loc2, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp6);
+//	AStar astar = new AStar(loc1, loc2);
+//	AStar astarNull = new AStar(null, null);
+	
+
 	CustomerPrice cp7 = new CustomerPrice(loc2, loc4, "Land", 1.0, 1.0);
 	CustomerPrice cp8 = new CustomerPrice(loc2, loc4, "Air", 2.0, 2.0);
 	CustomerPrice cp9 = new CustomerPrice(loc4, loc5, "Land", 1.0, 1.0);
@@ -50,27 +62,28 @@ public class AStarTests {
 	CustomerPrice cp15 = new CustomerPrice(loc1, loc3, "TEST", 1.0, 1.0);
 	CustomerPrice cp16 = new CustomerPrice(loc3, loc6, "Land", 1.0, 1.0);
 
-	Route r1 = new Route(loc1, loc2, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp1);
-	Route r2 = new Route(loc1, loc2, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp2);
-	Route r3 = new Route(loc1, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp3);
-	Route r4 = new Route(loc1, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp4);
-	Route r5 = new Route(loc2, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp5);
-	Route r6 = new Route(loc2, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp6);
-	Route r7 = new Route(loc2, loc4, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp7);
-	Route r8 = new Route(loc2, loc4, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp8);
-	Route r9 = new Route(loc4, loc5, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp9);
-	Route r10 = new Route(loc4, loc5, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp10);
-	Route r11 = new Route(loc3, loc5, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp11);
-	Route r12 = new Route(loc3, loc5, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp12);
-	Route r13 = new Route(loc3, loc4, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp13);
-	Route r14 = new Route(loc3, loc4, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, "", cp14);
-	Route r15 = new Route(loc1, loc3, "", "", "TEST", 1.0, 1.0, 99, 99, 5, 5, "", cp15);
-	Route r16 = new Route(loc3, loc6, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, "", cp16);
+	Route r1 = new Route(loc1, loc2, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp1);
+	Route r2 = new Route(loc1, loc2, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp2);
+	Route r3 = new Route(loc1, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp3);
+	Route r4 = new Route(loc1, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp4);
+	Route r5 = new Route(loc2, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp5);
+	Route r6 = new Route(loc2, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp6);
+	Route r7 = new Route(loc2, loc4, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp7);
+	Route r8 = new Route(loc2, loc4, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp8);
+	Route r9 = new Route(loc4, loc5, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp9);
+	Route r10 = new Route(loc4, loc5, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp10);
+	Route r11 = new Route(loc3, loc5, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp11);
+	Route r12 = new Route(loc3, loc5, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp12);
+	Route r13 = new Route(loc3, loc4, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp13);
+	Route r14 = new Route(loc3, loc4, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp14);
+	Route r15 = new Route(loc1, loc3, "", "", "TEST", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp15);
+	Route r16 = new Route(loc3, loc6, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp16);
 
 	// Should do a test where there is no route between the origin and
 	// destination
 
 	// Also one where there is a route between them but no air route.
+
 
 	@Test
 	public void testDirectRoute1() {

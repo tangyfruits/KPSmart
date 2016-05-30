@@ -32,7 +32,7 @@ public class MailEvent implements Event {
 	@SuppressWarnings("deprecation")
 	public MailEvent(DeliveryRequest request) {
 		// TODO THIS DATE THING IS SUPER BAD - CHANGE IT SOMETHING NICE WHEN YOU CAN - Peter 29th May
-		this.day = dayIntToString(request.getLogTime().getDay());
+		this.day = request.getLogTime().getDayOfWeek().name();
 		this.legList = new ArrayList<LegEvent>();
 		for (Leg leg : request.getLegs()) {
 			legList.add(new LegEvent(leg));

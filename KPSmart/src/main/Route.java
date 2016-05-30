@@ -1,5 +1,7 @@
 package main;
 
+import java.time.DayOfWeek;
+
 public class Route {
 	// VARIABLES
 	private Location origin;
@@ -13,13 +15,14 @@ public class Route {
 	private int maxVolume;
 	private int duration;
 	private int frequency;
-	private String day;
+	private DayOfWeek day;
+	private int startTime;
 	private CustomerPrice price;
 	
 	// CONSTRUCTOR
 	public Route(Location origin, Location destination, String company, String type, 
 			String priority, double weightCost, double volumeCost, int maxWeight, 
-			int maxVolume, int duration, int frequency, String day, CustomerPrice customerPrice){
+			int maxVolume, int duration, int frequency, DayOfWeek day, int startTime, CustomerPrice customerPrice){
 
 		this.origin = origin;
 		this.destination = destination;
@@ -33,6 +36,7 @@ public class Route {
 		this.duration = duration;
 		this.frequency = frequency;
 		this.day = day;
+		this.startTime = startTime;
 		this.price = customerPrice;
 	}
 
@@ -71,7 +75,7 @@ public class Route {
 	public int getFrequency() {
 		return frequency;
 	}
-	public String getDay() {
+	public DayOfWeek getDay() {
 		return day;
 	}
 	public CustomerPrice getPrice() {
@@ -97,9 +101,17 @@ public class Route {
 	public void setFrequency(int frquency) {
 		this.frequency = frquency;
 	}
-	public void setDay(String day) {
+	public void setDay(DayOfWeek day) {
 		this.day = day;
 	}
+	public int getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(int startTime) {
+		this.startTime = startTime;
+	}
+
 	public void setPrice(CustomerPrice price) {
 		this.price = price;
 	}
@@ -117,5 +129,15 @@ public class Route {
 	}
 	public String toPretty() { // (like toString but prettier)
 		return getOrigin().toPretty() + " ---> " + getDestination().toPretty();
+	}
+	
+	public boolean equals(Route r){
+		if(this.origin.equals(r.getOrigin())&& this.destination.equals(r.getDestination())
+				&& this.company.equals(r.getCompany())&& this.type.equals(r.getType())){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 }

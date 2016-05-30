@@ -31,10 +31,10 @@ public class LogReader {
 	}
 	
 	// METHODS
-	private MailEvent readMail() {
-		//MailEvent mail = new MailEvent();
-	}
-	
+//	private MailEvent readMail() {
+//		//MailEvent mail = new MailEvent();
+//	}
+//	
 }
 
 class UserHandler extends DefaultHandler {
