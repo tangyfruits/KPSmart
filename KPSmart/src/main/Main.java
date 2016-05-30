@@ -14,11 +14,16 @@ public class Main {
 	private ArrayList<User> accounts;
 	private User currentUser;
 	private List<DeliveryRequest> deliveryRequests;
+	
+	private int events;
+	private double totalExp;
+	private double totalRev;
 
 	public Main() {
 		locations = new ArrayList<Location>();
 		accounts = new ArrayList<User>();
 		deliveryRequests = new ArrayList<DeliveryRequest>();
+
 		// read from encrypted file and add them in!
 
 		// read from encrypted file,create User objects and add them in!
@@ -144,9 +149,11 @@ public class Main {
 
 		// add to delivery events field
 		deliveryRequests.add(request);
+		
+		addEvent();
 
 		// TODO log in file
-		// TODO add to reports: revenue, expenditure, total events
+		// TODO add to reports: revenue, expenditure
 
 		return request;
 	}
@@ -196,9 +203,11 @@ public class Main {
 		price = new CustomerPrice(originLoc, destinationLoc, priority,
 				weightCost, volumeCost);
 		originLoc.addPrice(price);
+		
+		addEvent();
 		return price;
 		// TODO add event to log
-		// TODO add 1 to total events
+		
 	}
 
 	public void logTransportCostUpdate(String origin, String destination,
@@ -270,7 +279,7 @@ public class Main {
 		}
 
 		// TODO add event to logfile
-		// TODO add 1 to total events
+		addEvent();
 	}
 
 	public CustomerPrice getCustomerPrice(Location originLoc,
@@ -337,6 +346,7 @@ public class Main {
 		if (toCancel != null) {
 			originLoc.removeRoute(toCancel);
 			// TODO log in file
+			addEvent();
 		} else {
 			// TODO display error
 		}
@@ -353,5 +363,34 @@ public class Main {
 	public void addLocation(Location location) {
 		locations.add(location);
 	}
-
+	
+	//REPORT DISPLAYING
+	
+	public void addTotalRev(double amount){
+		totalRev+=amount;
+	}
+	
+	public void addTotalExp(double amount){
+		totalExp += amount;
+	}
+	
+	public void addEvent(){
+		events+=1;
+	}
+	
+	public double getTotalRev(){
+		System.out.println("Total Revenue: $"+totalRev);
+		return totalRev;
+	}
+	
+	public double getTotalExp(){
+		System.out.println("Total Expenditure: $"+totalExp);
+		return totalExp;
+	}
+	
+	public int getTotalEvents(){
+		System.out.println("Total Events: "+events);
+		return events;
+	}
+	
 }

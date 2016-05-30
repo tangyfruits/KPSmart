@@ -4,12 +4,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
-
 import static org.junit.Assert.*;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import main.CustomerPrice;
 import main.Location;
 import main.LogWriter;
@@ -92,7 +89,7 @@ public class LogWriterTest {
 	public void testWriteDelivery() throws Exception {
 		if (LOGS) {System.out.println("\n----------mail");}
 		ArrayList<LegEvent> legs = new ArrayList<LegEvent>();
-		legs.add(new LegEvent("new", "old"));
+//		legs.add(new LegEvent("new", "old"));
 		MailEvent mail = new MailEvent("Wednesday", legs, 40.0, 20.0, "International Air", 37.2, 552.3, 30);
 		log.writeDelivery(mail);
 	}

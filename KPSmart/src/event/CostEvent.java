@@ -1,5 +1,6 @@
 package event;
 
+import main.Route;
 import java.time.DayOfWeek;
 
 public class CostEvent implements Event {
@@ -35,7 +36,22 @@ public class CostEvent implements Event {
 		this.frequency = frequency;
 		this.day = day;
 	}
-	
+
+	public CostEvent(Route route) {
+		
+		this.origin = route.getOrigin().getName();
+		this.destination = route.getDestination().getName();
+		this.company = 	route.getCompany();
+		this.type = route.getType();
+		this.priority = route.getPriority();
+		this.weightCost = route.getWeightCost();
+		this.volumeCost = route.getVolumeCost();
+		this.maxWeight = route.getMaxWeight();
+		this.maxVolume = route.getMaxVolume();
+		this.duration = route.getDuration();
+		this.frequency = route.getFrequency();
+		this.day = route.getDay();
+	}
 	// METHODS
 	// Getter
 	public String getOrigin() {
