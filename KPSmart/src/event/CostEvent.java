@@ -5,6 +5,7 @@ import main.Route;
 public class CostEvent implements Event {
 	
 	// VARIABLES
+	private String eventType = "cost";
 	private String origin;
 	private String destination;
 	private String company;
@@ -36,7 +37,6 @@ public class CostEvent implements Event {
 		this.day = day;
 	}
 	public CostEvent(Route route) {
-		
 		this.origin = route.getOrigin().getName();
 		this.destination = route.getDestination().getName();
 		this.company = 	route.getCompany();
@@ -50,7 +50,9 @@ public class CostEvent implements Event {
 		this.frequency = route.getFrequency();
 		this.day = route.getDay();
 	}
-
+	public CostEvent(){
+		
+	}
 	
 	// METHODS
 	// Getter
@@ -89,6 +91,9 @@ public class CostEvent implements Event {
 	}
 	public String getDay() {
 		return day;
+	}
+	public String getEventType() {
+		return eventType;
 	}
 	
 	// Setters

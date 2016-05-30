@@ -29,6 +29,9 @@ public class LegEvent {
 		this.cost = leg.getFreightCost();
 		this.price = leg.getCustomerPrice();
 	}
+	public LegEvent() {
+		
+	}
 	
 	// METHODS
 	// Getters

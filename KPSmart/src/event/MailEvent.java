@@ -8,6 +8,7 @@ import main.Leg;
 public class MailEvent implements Event {
 	
 	// VARIABLES
+	private String eventType = "cost";
 	private String day;
 	private ArrayList<LegEvent> legList;
 	private double weight;
@@ -44,6 +45,9 @@ public class MailEvent implements Event {
 		//this.cost = null;
 		this.duration = request.getDuration();
 	}
+	public MailEvent() {
+		
+	}
 	
 	// METHODS
 	// Getters
@@ -70,6 +74,9 @@ public class MailEvent implements Event {
 	}
 	public int getDuration() {
 		return duration;
+	}
+	public String getEventType() {
+		return eventType;
 	}
 	
 	// Setters

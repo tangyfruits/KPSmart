@@ -3,6 +3,7 @@ package event;
 public class DiscontinueEvent implements Event {
 	
 	// VARIABLES
+	private String eventType = "discontinue";
 	private String company;
 	private String to;
 	private String from;
@@ -14,6 +15,9 @@ public class DiscontinueEvent implements Event {
 		this.to = to;
 		this.from = from;
 		this.type = type;
+	}
+	public DiscontinueEvent() {
+		
 	}
 	
 	// METHODS
@@ -30,9 +34,12 @@ public class DiscontinueEvent implements Event {
 	public String getType() {
 		return type;
 	}
+	public String getEventType() {
+		return eventType;
+	}
 	
 	// Setters
-	public void setCompany(String company) {
+ 	public void setCompany(String company) {
 		this.company = company;
 	}
 	public void setTo(String to) {
@@ -44,6 +51,4 @@ public class DiscontinueEvent implements Event {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
 }
