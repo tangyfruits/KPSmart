@@ -354,45 +354,4 @@ public class Main {
 		locations.add(location);
 	}
 
-	// public ArrayList<ArrayList<Route>> bestRoutes(Location origin,
-	// Location destination, double weight, double volume) {
-	// ArrayList<ArrayList<Route>> listOfListOfRoutes = new
-	// ArrayList<ArrayList<Route>>();
-	// Route directRoute = getDirectRoute(destination, destination, weight,
-	// volume);
-	// if (directRoute == null) {
-	// AStar astar = new AStar(locations, origin, destination);
-	// return astar.twoListsOfRoutes(weight, volume);
-	// } else {
-	// ArrayList<Route> best = new ArrayList<>();
-	// best.add(directRoute);
-	// listOfListOfRoutes.add(best);
-	// return listOfListOfRoutes;
-	// }
-	// }
-	//
-	// public Route getDirectRoute(Location origin, Location destination,
-	// double weight, double volume) {
-	// ArrayList<Route> directRoutes = new ArrayList<>();
-	// for (Route r : origin.getRoutes()) {
-	// if (r.getDestination() == destination) {
-	// directRoutes.add(r);
-	// }
-	// }
-	// if (directRoutes.isEmpty()) {
-	// return null;
-	// }
-	// return getCheapestRoute(directRoutes, weight, volume);
-	// }
-	//
-	// public Route getCheapestRoute(List<Route> routes, double weight,
-	// double volume) {
-	// Route cheapest = routes.get(0);
-	// for (Route r : routes) {
-	// if (cheapest.getCost(weight, volume) > r.getCost(weight, volume)) {
-	// cheapest = r;
-	// }
-	// }
-	// return cheapest;
-	// }
 }

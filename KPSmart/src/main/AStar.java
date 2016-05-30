@@ -208,27 +208,4 @@ public class AStar {
 
 	// TODO check cheapest Air and cheapest Overall aren't the same
 	
-	/*
-	public Route getDirectRoute(Location origin, Location destination, double weight, double volume) {
-		ArrayList<Route> directRoutes = new ArrayList<>();
-		for (Route r : origin.getRoutes()) {
-			if (r.getDestination() == destination) {
-				directRoutes.add(r);
-			}
-		}
-		if (directRoutes.isEmpty()) {
-			return null;
-		}
-		return getCheapestRoute(directRoutes, weight, volume);
-	}
-	public Route getCheapestRoute(ArrayList<Route> routes, double weight, double volume) {
-		Route cheapest = routes.get(0);
-		for (Route r : routes) {
-			if (cheapest.getCost(weight, volume) > r.getCost(weight, volume)) {
-				cheapest = r;
-			}
-		}
-		return cheapest;
-	}
-	/**/
 }
