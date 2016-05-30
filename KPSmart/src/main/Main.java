@@ -9,6 +9,12 @@ import java.util.HashMap;
 import java.util.Date;
 import java.util.List;
 
+import event.CostEvent;
+import event.Event;
+import event.LegEvent;
+import event.MailEvent;
+import event.PriceEvent;
+
 public class Main {
 
 	private ArrayList<Location> locations;
@@ -16,11 +22,16 @@ public class Main {
 	private User currentUser;
 
 	private List<DeliveryRequest> deliveryRequests;
-
+	
+	private int events;
+	private double totalExp;
+	private double totalRev;
+	
 
 	public Main() {
 		locations = new ArrayList<Location>();
 		accounts = new ArrayList<User>();
+		
 		// read from encrypted file and add them in!
 
 		// read from encrypted file,create User objects and add them in!
@@ -94,14 +105,15 @@ public class Main {
 		}
 		
 		//create Delivery request
-		DeliveryRequest request = new DeliveryRequest(new Date(), originLoc, destinationLoc, weight, volume, priority, duration, legs);
+		Date date =  new Date();//for consistency
+		DeliveryRequest request = new DeliveryRequest(date, originLoc, destinationLoc, weight, volume, priority, duration, legs);
 		
 		//add to delivery events field
 		deliveryRequests.add(request);
 		
 		//TODO log in file
-		//TODO add to reports: revenue, expenditure, total events
-		
+		//TODO add to reports: revenue, expenditure
+		addEvent();
 		return request;
 		
 
@@ -141,9 +153,8 @@ public class Main {
 					&& c.getPriority().equals(priority)) {
 				c.setVolumeCost(volumeCost);
 				c.setWeightCost(weightCost);
+				addEvent();
 				return c;
-				// TODO add event to log
-				// TODO add 1 to total events
 			}
 		}
 
@@ -152,9 +163,8 @@ public class Main {
 		price = new CustomerPrice(originLoc, destinationLoc, priority,
 				weightCost, volumeCost);
 		originLoc.addPrice(price);
-		return price;
-		// TODO add event to log
-		// TODO add 1 to total events
+		addEvent();
+		return price;		
 	}
 
 	public void logTransportCostUpdate(String origin, String destination,
@@ -215,8 +225,7 @@ public class Main {
 			originLoc.addRoute(route);
 		}
 
-		// TODO add event to logfile
-		// TODO add 1 to total events
+		addEvent();
 	}
 
 	public CustomerPrice getCustomerPrice(Location originLoc,
@@ -272,7 +281,7 @@ public class Main {
 		ArrayList<ArrayList<Route>> listOfListOfRoutes = new ArrayList<ArrayList<Route>>();
 		Route directRoute = getDirectRoute(destination, destination, weight, volume);
 		if (directRoute == null) {
-			AStar astar = new AStar(locations, origin, destination);
+			AStar astar = new AStar(locations,origin, destination);
 			return astar.twoListsOfRoutes(weight, volume);
 		} else {
 			ArrayList<Route> best = new ArrayList<>();
@@ -303,5 +312,34 @@ public class Main {
 			}
 		}
 		return cheapest;
+	}
+	
+	//REPORT DISPLAYING
+	
+	public void addTotalRev(double amount){
+		totalRev+=amount;
+	}
+	
+	public void addTotalExp(double amount){
+		totalExp += amount;
+	}
+	
+	public void addEvent(){
+		events+=1;
+	}
+	
+	public double getTotalRev(){
+		System.out.println("Total Revenue: $"+totalRev);
+		return totalRev;
+	}
+	
+	public double getTotalExp(){
+		System.out.println("Total Expenditure: $"+totalExp);
+		return totalExp;
+	}
+	
+	public int getTotalEvents(){
+		System.out.println("Total Events: "+events);
+		return events;
 	}
 }
