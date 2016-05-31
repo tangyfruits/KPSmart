@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -29,6 +31,7 @@ public class LogWriterTest {
 	
 	// HELPER
 	@BeforeClass
+	@AfterClass
 	public static void setup() throws Exception {
 		if (file1.isFile()) {
 			file1.delete();
@@ -51,10 +54,12 @@ public class LogWriterTest {
 		FileWriter lalala;
 		try {
 			lalala = new FileWriter("test_sheeit.xml", true);
-			lalala.write("MANG FUCK THIS SHIIIIT");
+			lalala.write("\nMANG FUCK THIS SHIIIIT");
 			lalala.write("SERILSUY WAT THE FUK\n");
 			lalala.write("SUC-FUCKIN-CESS BOOOOOY! UGH!\n");
 			lalala.write("https://www.youtube.com/watch?v=66EBzbzzObY\n");
+			lalala.write("wate that doesn't work anymore\n");
+			lalala.write("https://soundcloud.com/chancetherapper/smoke-break-feat-future\n");
 			lalala.close();
 		} catch (Exception e) {
 			e.printStackTrace();

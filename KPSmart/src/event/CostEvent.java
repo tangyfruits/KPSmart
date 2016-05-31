@@ -5,7 +5,7 @@ import main.Route;
 public class CostEvent implements Event {
 	
 	// VARIABLES
-	private String eventType = "cost";
+	private final String eventType = "cost";
 	private String origin;
 	private String destination;
 	private String company;

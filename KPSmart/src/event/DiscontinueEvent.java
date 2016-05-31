@@ -3,7 +3,7 @@ package event;
 public class DiscontinueEvent implements Event {
 	
 	// VARIABLES
-	private String eventType = "discontinue";
+	private final String eventType = "discontinue";
 	private String company;
 	private String to;
 	private String from;

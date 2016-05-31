@@ -3,7 +3,7 @@ package event;
 public class PriceEvent implements Event {
 	
 	// VARIABLES
-	private String eventType = "price";
+	private final String eventType = "price";
 	private String origin;
 	private String destination;
 	private String priority;
