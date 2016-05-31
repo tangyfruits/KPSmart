@@ -2,23 +2,22 @@ package event;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
-import main.Leg;
 import main.Location;
 
-public class DeliveryRequest {
+public class DeliveryRequest implements Event{
 	
 	// FIELDS
-	private final String eventType = "cost";
 	private LocalDateTime logTime;
 	private Location origin;
 	private Location destination;
+	private ArrayList<Leg> legs;
 	private double weight;
 	private double volume;
 	private String priority;
 	private int duration;
-	private ArrayList<Leg> legs;
+	
+	private final String eventType = "cost";
 	
 	// CONSTRUCTOR
 	public DeliveryRequest(LocalDateTime logTime, Location origin, Location destination, double weight, double volume, 
@@ -43,6 +42,9 @@ public class DeliveryRequest {
 	public Location getDestination() {
 		return destination;
 	}
+	public ArrayList<Leg> getLegs() {
+		return legs;
+	}
 	public double getWeight() {
 		return weight;
 	}
@@ -55,9 +57,7 @@ public class DeliveryRequest {
 	public int getDuration() {
 		return duration;
 	}
-	public ArrayList<Leg> getLegs() {
-		return legs;
-	}
+	
 	public String getEventType() {
 		return eventType;
 	}

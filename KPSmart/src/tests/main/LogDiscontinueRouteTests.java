@@ -7,11 +7,11 @@ import java.util.List;
 
 import main.Location;
 import main.Main;
-import main.Route;
 
 import org.junit.Test;
 
 import event.CustomerPrice;
+import event.Route;
 
 /**
  *

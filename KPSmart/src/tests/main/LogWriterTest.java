@@ -13,7 +13,6 @@ import org.junit.Test;
 
 import main.Location;
 import main.LogWriter;
-import main.Route;
 import event.*;
 
 public class LogWriterTest {
@@ -129,7 +128,7 @@ public class LogWriterTest {
 	@Test
 	public void testWriteDiscontinue() throws Exception {
 		if (LOGS) {System.out.println("\n----------disc.");}
-		DiscontinueEvent disc = new DiscontinueEvent("NZ Post", "Wellington", "Christchurch", "Sea");
+		DiscontinueRoute disc = new DiscontinueRoute("NZ Post", "Wellington", "Christchurch", "Sea");
 		log.writeDiscontinue(disc);
 	}
 }

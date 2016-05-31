@@ -25,7 +25,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class LogReader {
 	
-	// VARIABLES
+	// FIELDS
 	// Tools
 	private Main main;
 	private XMLInputFactory inputFactory;
@@ -38,7 +38,7 @@ public class LogReader {
 	private LegEvent leg;
 	private CostEvent cost;
 	private HashMap<String, String> price;
-	private DiscontinueEvent discont;
+	private DiscontinueRoute discont;
 	
 	// Current Variables
 	private String currentVariable;
@@ -143,7 +143,7 @@ public class LogReader {
 			price = new HashMap();
      	   	currentEvent = price;
 		} else if (xmlTagName.equalsIgnoreCase("discontinue")) {
-     	   	discont = new DiscontinueEvent();
+     	   	discont = new DiscontinueRoute();
 			currentEvent = discont;
 		} else {
 			System.out.println("Error setting the current event!");

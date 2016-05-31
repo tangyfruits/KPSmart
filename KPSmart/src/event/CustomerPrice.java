@@ -4,7 +4,7 @@ import main.*;
 
 public class CustomerPrice implements Event {
 	
-	// VARIABLES
+	// FIELDS
 	private final String eventType = "price";
 	private Location origin;
 	private Location destination;

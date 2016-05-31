@@ -10,9 +10,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import event.CustomerPrice;
+import event.Route;
 import main.AStar;
 import main.Location;
-import main.Route;
 
 public class AStarTests {
 

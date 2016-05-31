@@ -21,13 +21,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 public class LogWriter {
 	
 	// Console Logging for Debugging
 	private static boolean LOGS = true;
 	
-	// VARIABLES
+	// FIELDS
 	private File logFile;
 	private DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 	private DocumentBuilder docBuilder;
@@ -44,9 +46,8 @@ public class LogWriter {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         ensureLogExists();
-        //doc = docBuilder.parse(logFile);
         
-        // Stop error writing to stderr. Errors are being caught. 
+        // TODO Stop error writing to stderr. Errors are being caught. 
         docBuilder.setErrorHandler(new ErrorHandler() {
         	/**/
         	@Override
@@ -69,14 +70,9 @@ public class LogWriter {
             	//throw e;
             }/**/
         });
-
-	}
-	public LogWriter(String filename) throws Exception {
-		this(new File(filename));
 	}
 	
 	// METHODS
-	@SuppressWarnings("fallthrough")
 	public void ensureLogExists() throws Exception {
 		
 		if (LOGS) {System.out.println("ENSURE:           "+logFile.getName());}
@@ -134,6 +130,8 @@ public class LogWriter {
 	 * ------- FORMAT -------
 	   <mail>
 	 		<day>%s</day>
+	 		<from> TODO
+	 		<to> TODO
 	 		<legs>
 	 			<leg>
 	 				<to>%s</to>
@@ -158,21 +156,29 @@ public class LogWriter {
 	 * @param event
 	 * @throws IOException 
 	 */
-	public void writeDelivery(MailEvent event) throws Exception {
+	public void writeDelivery(DeliveryRequest event) throws Exception {
+		
 		doc = docBuilder.parse(logFile);
 		Element events = doc.getDocumentElement();
 		
+		// Make Elements
         Element mail = doc.createElement("mail");
         Element day = doc.createElement("day");
         Element legs = doc.createElement("legs");
         Element weight = doc.createElement("weight");
         Element volume = doc.createElement("volume");
         Element priority = doc.createElement("priority");
-        
         Element duration = doc.createElement("duration");
         
+        // Add text values to tags
+        day.appendChild(doc.createTextNode(event.getLogTime().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH)));
+        weight.appendChild(doc.createTextNode(Double.toString(event.getWeight())));
+        volume.appendChild(doc.createTextNode(Double.toString(event.getVolume())));
+        priority.appendChild(doc.createTextNode(event.getPriority()));
+        duration.appendChild(doc.createTextNode(Double.toString(event.getDuration())));
+        
         // Make leg Elements
-    	for (LegEvent legObject : event.getLegList()) {
+    	for (Leg legObject : event.getLegs()) {
     		Element leg = doc.createElement("leg");
             Element to = doc.createElement("to");
             Element from = doc.createElement("from");
@@ -180,8 +186,8 @@ public class LogWriter {
             Element cost = doc.createElement("cost");
             Element price = doc.createElement("price");
             
-            to.appendChild(doc.createTextNode(legObject.getDestination()));
-            from.appendChild(doc.createTextNode(legObject.getOrigin()));
+            to.appendChild(doc.createTextNode(legObject.getDestination().getName()));
+            from.appendChild(doc.createTextNode(legObject.getOrigin().getName()));
             company.appendChild(doc.createTextNode(legObject.getCompany()));
             cost.appendChild(doc.createTextNode(Double.toString(legObject.getCost())));
             price.appendChild(doc.createTextNode(Double.toString(legObject.getPrice())));
@@ -194,23 +200,15 @@ public class LogWriter {
             legs.appendChild(leg);
     	}
         
-        // Add text values to tags
-        day.appendChild(doc.createTextNode(event.getDay()));
-        weight.appendChild(doc.createTextNode(Double.toString(event.getWeight())));
-        volume.appendChild(doc.createTextNode(Double.toString(event.getVolume())));
-        priority.appendChild(doc.createTextNode(event.getPriority()));
-        duration.appendChild(doc.createTextNode(Double.toString(event.getDuration())));
-        
-        // add tags together
+        // Add tags together
         events.appendChild(mail);
         mail.appendChild(day);
+        
         mail.appendChild(legs);
         mail.appendChild(weight);
         mail.appendChild(volume);
         mail.appendChild(priority);
         mail.appendChild(duration);
-        
-        //doc.normalizeDocument();
         
         // Write to XML file
         DOMSource    source = new DOMSource(doc);
@@ -223,10 +221,7 @@ public class LogWriter {
 	      	transformer.transform(source, consoleResult);
    	    }
 	}
-	public void writeDelivery(DeliveryRequest request) throws Exception {
-		MailEvent event = new MailEvent(request);
-		writeDelivery(event);
-	}
+
 	/**
 	 * Writes Cost Event to log file.
 	 * 
@@ -250,7 +245,7 @@ public class LogWriter {
 	 * @param event
 	 * @throws IOException 
 	 */
-	public void writeRoute(CostEvent event) throws Exception {
+	public void writeRoute(Route event) throws Exception {
 		
 		doc = docBuilder.parse(logFile);
 		Element events = doc.getDocumentElement();
@@ -272,8 +267,8 @@ public class LogWriter {
         
         // Add text values to tags
         company.appendChild(doc.createTextNode(event.getCompany()));
-        to.appendChild(doc.createTextNode(event.getDestination()));
-        from.appendChild(doc.createTextNode(event.getOrigin()));
+        to.appendChild(doc.createTextNode(event.getDestination().getName()));
+        from.appendChild(doc.createTextNode(event.getOrigin().getName()));
         type.appendChild(doc.createTextNode(event.getType()));
         priority.appendChild(doc.createTextNode(event.getPriority()));
         weightCost.appendChild(doc.createTextNode(Double.toString(event.getWeightCost())));
@@ -282,9 +277,9 @@ public class LogWriter {
         maxVolume.appendChild(doc.createTextNode(Integer.toString(event.getMaxVolume())));
         duration.appendChild(doc.createTextNode(Integer.toString(event.getDuration())));
         frequency.appendChild(doc.createTextNode(Integer.toString(event.getFrequency())));
-        day.appendChild(doc.createTextNode(event.getDay()));
+        day.appendChild(doc.createTextNode(event.getDay().getDisplayName(TextStyle.FULL, Locale.ENGLISH)));
         
-        // add tags together
+        // Add tags together
         cost.appendChild(company);
         cost.appendChild(to);
         cost.appendChild(from);
@@ -299,8 +294,6 @@ public class LogWriter {
         cost.appendChild(day);
         events.appendChild(cost);
         
-        //doc.normalizeDocument();
-        
         // Write to XML file
         DOMSource    source = new DOMSource(doc);
         StreamResult output = new StreamResult(logFile);
@@ -312,10 +305,7 @@ public class LogWriter {
 	      	transformer.transform(source, consoleResult);
       	}
 	}
-	public void writeRoute(Route route) throws Exception {
-		CostEvent event = new CostEvent(route);
-		writeRoute(event);
-	}
+
 	/**
 	 * Writes Price Event to the log file.
 	 * 
@@ -353,15 +343,13 @@ public class LogWriter {
         weightCost.appendChild(doc.createTextNode(Double.toString(event.getWeightCost())));
         volumeCost.appendChild(doc.createTextNode(Double.toString(event.getVolumeCost())));
         
-        // add tags together
+        // Add tags together
         price.appendChild(to);
         price.appendChild(from);
         price.appendChild(priority);
         price.appendChild(weightCost);
         price.appendChild(volumeCost);
         events.appendChild(price);
-        
-        //doc.normalizeDocument();
         
         // Write to XML file
         DOMSource    source = new DOMSource(doc);
@@ -390,7 +378,7 @@ public class LogWriter {
 	 * @param event
 	 * @throws IOException 
 	 */
-	public void writeDiscontinue(DiscontinueEvent event) throws Exception {
+	public void writeDiscontinue(DiscontinueRoute event) throws Exception {
 		
 		doc = docBuilder.parse(logFile);
 		Node events = doc.getDocumentElement();
@@ -414,8 +402,6 @@ public class LogWriter {
 	  	discontinue.appendChild(from);
 	  	discontinue.appendChild(type);
 	  	events.appendChild(discontinue);
-	  	
-	  	//doc.normalizeDocument();
 	  	
 	  	// Write to XML file
 	  	DOMSource    source = new DOMSource(doc);
