@@ -48,7 +48,7 @@ public class CostEvent implements Event {
 		this.maxVolume = route.getMaxVolume();
 		this.duration = route.getDuration();
 		this.frequency = route.getFrequency();
-		this.day = route.getDay();
+		this.day = route.getDay().name();
 	}
 	public CostEvent(){
 		
