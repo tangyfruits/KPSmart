@@ -8,6 +8,7 @@ import main.Leg;
 public class MailEvent implements Event {
 	
 	// VARIABLES
+	private final String eventType = "cost";
 	private String day;
 	private ArrayList<LegEvent> legList;
 	private double weight;
@@ -44,6 +45,9 @@ public class MailEvent implements Event {
 		//this.cost = null;
 		this.duration = request.getDuration();
 	}
+	public MailEvent() {
+		this.legList = new ArrayList<LegEvent>();
+	}
 	
 	// METHODS
 	// Getters
@@ -71,8 +75,11 @@ public class MailEvent implements Event {
 	public int getDuration() {
 		return duration;
 	}
+	public String getEventType() {
+		return eventType;
+	}
 	
-	// Setters
+	// Setters (Adder)
 	public void setDay(String day) {
 		this.day = day;
 	}
@@ -97,7 +104,9 @@ public class MailEvent implements Event {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
-	
+	public void addLeg(LegEvent leg) {
+		legList.add(leg);
+	}
 	// Helper
 	// TODO THIS DIS ALSO KINDA - MAYBE CHANGE IT LATER? - Peter 29th May
 	private String dayIntToString(int dayInt) {

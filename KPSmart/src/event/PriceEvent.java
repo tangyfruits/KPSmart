@@ -3,6 +3,7 @@ package event;
 public class PriceEvent implements Event {
 	
 	// VARIABLES
+	private final String eventType = "price";
 	private String origin;
 	private String destination;
 	private String priority;
@@ -17,7 +18,10 @@ public class PriceEvent implements Event {
 		this.weightCost = weightCost;
 		this.volumeCost = volumeCost;
 	}
-
+	public PriceEvent() {
+		
+	}
+	
 	// METHODS
 	// Getters
 	public String getOrigin() {
@@ -35,7 +39,10 @@ public class PriceEvent implements Event {
 	public double getVolumeCost() {
 		return volumeCost;
 	}
-
+	public String getEventType() {
+		return eventType;
+	}
+	
 	// Setters
 	public void setOrigin(String origin) {
 		this.origin = origin;
@@ -52,5 +59,4 @@ public class PriceEvent implements Event {
 	public void setVolumeCost(double volumeCost) {
 		this.volumeCost = volumeCost;
 	}
-		
 }

@@ -2,9 +2,10 @@ package event;
 
 import main.Leg;
 
-public class LegEvent {
+public class LegEvent implements Event{
 	
 	// VARIABLES
+	private final String eventType = "leg";
 	private String origin;
 	private String destination;
 	private String type;
@@ -29,6 +30,9 @@ public class LegEvent {
 		this.cost = leg.getFreightCost();
 		this.price = leg.getCustomerPrice();
 	}
+	public LegEvent() {
+		
+	}
 	
 	// METHODS
 	// Getters
@@ -49,6 +53,9 @@ public class LegEvent {
 	}
 	public double getPrice() {
 		return price;
+	}
+	public String getEventType() {
+		return eventType;
 	}
 	
 	// Setters

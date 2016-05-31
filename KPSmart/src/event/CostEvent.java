@@ -1,11 +1,11 @@
 package event;
 
 import main.Route;
-import java.time.DayOfWeek;
 
 public class CostEvent implements Event {
 	
 	// VARIABLES
+	private final String eventType = "cost";
 	private String origin;
 	private String destination;
 	private String company;
@@ -17,12 +17,12 @@ public class CostEvent implements Event {
 	private int maxVolume;
 	private int duration;
 	private int frequency;
-	private DayOfWeek day;
+	private String day;
 	
-	// CONSTRUCTOR
+	// CONSTRUCTORS
 	public CostEvent(String origin, String destination, String company, String type, String priority, 
 			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, 
-			int frequency, DayOfWeek day) {
+			int frequency, String day) {
 		this.origin = origin;
 		this.destination = destination;
 		this.company = company;
@@ -36,9 +36,7 @@ public class CostEvent implements Event {
 		this.frequency = frequency;
 		this.day = day;
 	}
-
 	public CostEvent(Route route) {
-		
 		this.origin = route.getOrigin().getName();
 		this.destination = route.getDestination().getName();
 		this.company = 	route.getCompany();
@@ -52,6 +50,10 @@ public class CostEvent implements Event {
 		this.frequency = route.getFrequency();
 		this.day = route.getDay();
 	}
+	public CostEvent(){
+		
+	}
+	
 	// METHODS
 	// Getter
 	public String getOrigin() {
@@ -88,7 +90,10 @@ public class CostEvent implements Event {
 		return frequency;
 	}
 	public String getDay() {
-		return day.name();
+		return day;
+	}
+	public String getEventType() {
+		return eventType;
 	}
 	
 	// Setters
@@ -125,7 +130,7 @@ public class CostEvent implements Event {
 	public void setFrequency(int frequency) {
 		this.frequency = frequency;
 	}
-	public void setDay(DayOfWeek day) {
+	public void setDay(String day) {
 		this.day = day;
 	}
 }
