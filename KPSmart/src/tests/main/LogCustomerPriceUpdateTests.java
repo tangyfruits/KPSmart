@@ -5,12 +5,13 @@ import static org.junit.Assert.*;
 import java.time.DayOfWeek;
 import java.util.List;
 
-import main.CustomerPrice;
 import main.Location;
 import main.Main;
 import main.Route;
 
 import org.junit.Test;
+
+import event.CustomerPrice;
 
 /**
  *

@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import event.CustomerPrice;
+import event.DeliveryRequest;
+
 public class Main {
 
 	private ArrayList<Location> locations;
@@ -352,15 +355,26 @@ public class Main {
 		}
 
 	}
-
+	
+	public Location getLocation(String name) {
+		Location location = null;
+		for (Location loc : locations) {
+			if (loc.getName().equals(name)) {
+				location = loc;
+			}
+		}
+		return location;
+	}
+	
 	//Getters and Setters
+
 	public List<DeliveryRequest> getDeliveryRequests() {
 		return deliveryRequests;
 	}	
 	public List<Location> getLocations() {
 		return locations;
 	}
-	public void addLocation(Location location) {
+	private void addLocation(Location location) {
 		locations.add(location);
 	}
 	

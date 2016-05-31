@@ -5,6 +5,8 @@ import event.*;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -31,11 +33,11 @@ public class LogReader {
 	//private File logFile;
 	
 	// Current Events
-	private Event currentEvent;
+	private HashMap<String, String> currentEvent;
 	private MailEvent mail;
 	private LegEvent leg;
 	private CostEvent cost;
-	private PriceEvent price;
+	private HashMap<String, String> price;
 	private DiscontinueEvent discont;
 	
 	// Current Variables
@@ -138,7 +140,7 @@ public class LogReader {
 			cost = new CostEvent();
      	   	currentEvent = cost;
 		} else if (xmlTagName.equalsIgnoreCase("price")) {
-			price = new PriceEvent();
+			price = new HashMap();
      	   	currentEvent = price;
 		} else if (xmlTagName.equalsIgnoreCase("discontinue")) {
      	   	discont = new DiscontinueEvent();

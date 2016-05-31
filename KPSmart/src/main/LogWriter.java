@@ -333,7 +333,7 @@ public class LogWriter {
 	 * @param event
 	 * @throws IOException 
 	 */
-	public void writeCustomerPrice(PriceEvent event) throws Exception {
+	public void writeCustomerPrice(CustomerPrice event) throws Exception {
 		
 		doc = docBuilder.parse(logFile);
 		Node events = doc.getDocumentElement();
@@ -347,8 +347,8 @@ public class LogWriter {
         Element volumeCost = doc.createElement("volumeCost");
         
         // Add text values to tags
-        to.appendChild(doc.createTextNode(event.getDestination()));
-        from.appendChild(doc.createTextNode(event.getOrigin()));
+        to.appendChild(doc.createTextNode(event.getDestination().getName()));
+        from.appendChild(doc.createTextNode(event.getOrigin().getName()));
         priority.appendChild(doc.createTextNode(event.getPriority()));
         weightCost.appendChild(doc.createTextNode(Double.toString(event.getWeightCost())));
         volumeCost.appendChild(doc.createTextNode(Double.toString(event.getVolumeCost())));
@@ -374,14 +374,7 @@ public class LogWriter {
 	      	transformer.transform(source, consoleResult);
         }
 	}
-	public void writeCustomerPrice(CustomerPrice price) throws Exception {
-		PriceEvent event = new PriceEvent(price.getOrigin().getName(), 
-										  price.getDestination().getName(), 
-										  price.getPriority(), 
-										  price.getWeightCost(), 
-										  price.getVolumeCost());
-		writeCustomerPrice(event);
-	}
+
 	/**
 	 * Writes Discontinue Event to log file.
 	 * 

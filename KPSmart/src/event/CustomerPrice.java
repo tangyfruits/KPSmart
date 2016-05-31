@@ -1,7 +1,11 @@
-package main;
+package event;
 
-public class CustomerPrice {
+import main.*;
+
+public class CustomerPrice implements Event {
+	
 	// VARIABLES
+	private final String eventType = "price";
 	private Location origin;
 	private Location destination;
 	private String priority;
@@ -35,7 +39,10 @@ public class CustomerPrice {
 	public String getPriority() {
 		return priority;
 	}
-
+	public String getEventType() {
+		return eventType;
+	}
+	
 	// Setters
 	public void setWeightCost(double weightCost) {
 		this.weightCost = weightCost;
@@ -43,11 +50,12 @@ public class CustomerPrice {
 	public void setVolumeCost(double volumeCost) {
 		this.volumeCost = volumeCost;
 	}
-
+	
 	// To String
 	@Override
 	public String toString() {
 		return "CustomerPrice [origin=" + origin + ", destination=" + destination + ", priority=" + priority
 				+ ", weightCost=" + weightCost + ", volumeCost=" + volumeCost + "]";
 	}
+
 }

@@ -11,7 +11,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import main.CustomerPrice;
 import main.Location;
 import main.LogWriter;
 import main.Route;

@@ -9,8 +9,8 @@ import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import event.CustomerPrice;
 import main.AStar;
-import main.CustomerPrice;
 import main.Location;
 import main.Route;
 

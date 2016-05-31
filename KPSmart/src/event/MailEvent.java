@@ -2,7 +2,6 @@ package event;
 
 import java.util.ArrayList;
 
-import main.DeliveryRequest;
 import main.Leg;
 
 public class MailEvent implements Event {

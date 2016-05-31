@@ -2,6 +2,8 @@ package main;
 
 import java.time.DayOfWeek;
 
+import event.CustomerPrice;
+
 public class Route {
 	// VARIABLES
 	private Location origin;

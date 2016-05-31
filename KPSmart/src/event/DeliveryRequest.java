@@ -1,11 +1,16 @@
-package main;
+package event;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
+import main.Leg;
+import main.Location;
 
 public class DeliveryRequest {
 	
+	// FIELDS
+	private final String eventType = "cost";
 	private LocalDateTime logTime;
 	private Location origin;
 	private Location destination;
@@ -13,10 +18,11 @@ public class DeliveryRequest {
 	private double volume;
 	private String priority;
 	private int duration;
-	private List <Leg> legs;
+	private ArrayList<Leg> legs;
 	
+	// CONSTRUCTOR
 	public DeliveryRequest(LocalDateTime logTime, Location origin, Location destination, double weight, double volume, 
-			String priority, int duration, List <Leg> legs) {
+			String priority, int duration, ArrayList<Leg> legs) {
 		this.logTime = logTime;
 		this.origin = origin;
 		this.destination = destination;
@@ -27,6 +33,7 @@ public class DeliveryRequest {
 		this.legs = legs;
 	}
 	
+	// METHODS
 	public LocalDateTime getLogTime() {
 		return logTime;
 	}
@@ -48,11 +55,10 @@ public class DeliveryRequest {
 	public int getDuration() {
 		return duration;
 	}
-	public List<Leg> getLegs() {
+	public ArrayList<Leg> getLegs() {
 		return legs;
 	}
-	
-	
-	
-
+	public String getEventType() {
+		return eventType;
+	}
 }
