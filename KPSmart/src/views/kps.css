@@ -1,6 +1,10 @@
+@font-face {
+    font-family: 'Gulim';
+    src: url('Gulim.ttf');
+}
+
 #login, #submit{
     -fx-text-fill: white;
-    -fx-font-family: "Arial Narrow";
     -fx-background-color: linear-gradient(#61a2b1, #2A5058);
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
@@ -11,5 +15,9 @@
 
 .tab-pane .tab-header-area .tab-header-background {
     -fx-background-color: #FFF3E0;
+    -fx-font-family: "Gulim";
+}
+
+* {
     -fx-font-family: "Gulim";
 }

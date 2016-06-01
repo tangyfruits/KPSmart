@@ -48,7 +48,7 @@
          </children>
       </Pane>
       <Separator layoutY="61.0" prefHeight="5.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
-      <GridPane hgap="10.0" layoutX="79.0" layoutY="90.0">
+      <GridPane hgap="20.0" layoutX="82.0" layoutY="121.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -71,7 +71,10 @@
                   <CheckMenuItem fx:id="WellingtonDest" mnemonicParsing="false" onAction="#selectWellingtonDest" text="Wellington" />
                   <CheckMenuItem fx:id="ChristchurchDest" mnemonicParsing="false" onAction="#selectChristchurchDest" text="ChristChurch" />
                   <CheckMenuItem fx:id="DunedinDest" mnemonicParsing="false" onAction="#selectDunedinDest" text="Dunedin" />
-                  <CheckMenuItem fx:id="OtherDest" mnemonicParsing="false" onAction="#selectOtherDest" text="Other" />
+                  <CheckMenuItem fx:id="OtherDest" mnemonicParsing="false" onAction="#selectOtherDest" text="Other">
+                     <graphic>
+                        <TextField fx:id="otherDestText" />
+                     </graphic></CheckMenuItem>
                </items>
             </MenuButton>
             <MenuButton fx:id="originMenu" layoutX="130.0" layoutY="108.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: E9D5B9;" text="Choose location" GridPane.columnIndex="1">
@@ -86,10 +89,13 @@
                   <CheckMenuItem fx:id="WellingtonOrigin" mnemonicParsing="false" onAction="#selectWellingtonOrigin" text="Wellington" />
                   <CheckMenuItem fx:id="ChristchurchOrigin" mnemonicParsing="false" onAction="#selectChristchurchOrigin" text="Christchurch" />
                   <CheckMenuItem fx:id="DunedinOrigin" mnemonicParsing="false" onAction="#selectDunedinOrigin" text="Dunedin" />
-                  <CheckMenuItem fx:id="OtherOrigin" mnemonicParsing="false" onAction="#selectOtherOrigin" text="Other" />
+                  <CheckMenuItem fx:id="OtherOrigin" mnemonicParsing="false" onAction="#selectOtherOrigin" text="Other">
+                     <graphic>
+                        <TextField fx:id="otherOriginText" />
+                     </graphic></CheckMenuItem>
                </items>
             </MenuButton>
-            <Text layoutX="79.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Origin:">
+            <Text layoutX="79.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Origin:" wrappingWidth="41.3583984375">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
@@ -101,7 +107,7 @@
             </Text>
          </children>
       </GridPane>
-      <GridPane hgap="10.0" layoutX="69.0" layoutY="374.0" vgap="5.0">
+      <GridPane hgap="10.0" layoutX="69.0" layoutY="215.0" vgap="10.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -113,53 +119,67 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <TextField fx:id="weightcost" layoutX="464.0" layoutY="389.0" prefHeight="23.0" prefWidth="188.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <Text layoutX="82.0" layoutY="439.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Max Volume:" GridPane.rowIndex="2">
+            <Text layoutX="70.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Day:" GridPane.rowIndex="4">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </Text>
-            <TextField fx:id="volumecost" layoutX="464.0" layoutY="421.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Text layoutX="368.0" layoutY="471.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Frequency:" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <TextField fx:id="maxvolume" layoutX="157.0" layoutY="438.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="duration" layoutX="157.0" layoutY="470.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="maxweight" layoutX="157.0" layoutY="406.0" prefHeight="23.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Text layoutX="355.0" layoutY="488.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Frequency:" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </Text>
-            <Text layoutX="82.0" layoutY="471.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Duration:" GridPane.rowIndex="3">
+            <Text layoutX="355.0" layoutY="456.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Volume Cost: " GridPane.columnIndex="2" GridPane.rowIndex="2">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </Text>
-            <TextField fx:id="duration" layoutX="170.0" layoutY="453.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Text layoutX="368.0" layoutY="407.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Weight Cost: " GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <font>
-                  <Font name="Gulim" size="13.0" />
-               </font>
-            </Text>
-            <Text layoutX="402.0" layoutY="375.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Priority:" GridPane.columnIndex="2">
-               <font>
-                  <Font name="Gulim" size="13.0" />
-               </font>
-            </Text>
-            <TextField fx:id="frequency" layoutX="464.0" layoutY="453.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <TextField fx:id="maxvolume" layoutX="170.0" layoutY="421.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Text layoutX="368.0" layoutY="439.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Volume Cost: " GridPane.columnIndex="2" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Gulim" size="13.0" />
-               </font>
-            </Text>
-            <MenuButton fx:id="prioritymenu" layoutX="466.0" layoutY="358.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="183.0" style="-fx-background-color: #FFFFFF;" text="Choose priority" GridPane.columnIndex="3">
+            <MenuButton fx:id="dayMenu" layoutX="158.0" layoutY="506.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="186.0" style="-fx-background-color: #FFFFFF;" text="Choose day" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
                <items>
-                  <CheckMenuItem fx:id="airPriority" mnemonicParsing="false" onAction="#airPriorityAction" text="Air" />
-                  <CheckMenuItem fx:id="stdPriority" mnemonicParsing="false" onAction="#stdPriorityAction" text="Standard" />
+                  <CheckMenuItem fx:id="monday" mnemonicParsing="false" onAction="#mondayAction" text="Monday" />
+                  <CheckMenuItem fx:id="tuesday" mnemonicParsing="false" onAction="#tuesdayAction" text="Tuesday" />
+                  <CheckMenuItem fx:id="wednesday" mnemonicParsing="false" onAction="#wednesdayAction" text="Wednesday" />
+                  <CheckMenuItem fx:id="thursday" mnemonicParsing="false" onAction="#thursdayAction" text="Thursday" />
+                  <CheckMenuItem fx:id="friday" mnemonicParsing="false" onAction="#fridayAction" text="Friday" />
                </items>
             </MenuButton>
-            <MenuButton fx:id="typemenu" layoutX="170.0" layoutY="358.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="186.0" style="-fx-background-color: #FFFFFF;" text="Choose type" GridPane.columnIndex="1">
+            <Text layoutX="69.0" layoutY="424.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Max Weight:" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Text>
+            <TextField fx:id="company" layoutX="451.0" layoutY="374.0" prefHeight="27.0" prefWidth="187.0" GridPane.columnIndex="3" />
+            <Text layoutX="69.0" layoutY="392.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:" wrappingWidth="41.60938262939453">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Text>
+            <Text layoutX="355.0" layoutY="516.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Time: " GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Text>
+            <Text layoutX="69.0" layoutY="456.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Max Volume:" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Text>
+            <TextField fx:id="volumecost" layoutX="451.0" layoutY="438.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Text layoutX="355.0" layoutY="424.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Weight Cost: " GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Text>
+            <MenuButton fx:id="typemenu" layoutX="157.0" layoutY="376.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="186.0" style="-fx-background-color: #FFFFFF;" text="Choose type" GridPane.columnIndex="1">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
@@ -169,68 +189,57 @@
                   <CheckMenuItem fx:id="seaType" mnemonicParsing="false" onAction="#seaTypeAction" text="Sea" />
                </items>
             </MenuButton>
-            <Text layoutX="82.0" layoutY="407.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Max Weight:" GridPane.rowIndex="1">
+            <MenuButton fx:id="timeMenu" layoutX="452.0" layoutY="500.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="186.0" style="-fx-background-color: #FFFFFF;" text="Choose time" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+               <items>
+                  <CheckMenuItem fx:id="zero" mnemonicParsing="false" onAction="#zeroAction" text="00" />
+                  <CheckMenuItem fx:id="one" mnemonicParsing="false" onAction="#oneAction" text="01" />
+                  <CheckMenuItem fx:id="two" mnemonicParsing="false" onAction="#twoAction" text="02" />
+                  <CheckMenuItem fx:id="three" mnemonicParsing="false" onAction="#threeAction" text="03" />
+                  <CheckMenuItem fx:id="four" mnemonicParsing="false" onAction="#fourAction" text="04" />
+                  <CheckMenuItem fx:id="five" mnemonicParsing="false" onAction="#fiveAction" text="05" />
+                  <CheckMenuItem fx:id="six" mnemonicParsing="false" onAction="#sixAction" text="06" />
+                  <CheckMenuItem fx:id="seven" mnemonicParsing="false" onAction="#sevenAction" text="07" />
+                  <CheckMenuItem fx:id="eight" mnemonicParsing="false" onAction="#eightAction" text="08" />
+                  <CheckMenuItem fx:id="nine" mnemonicParsing="false" onAction="#nineAction" text="09" />
+                  <CheckMenuItem fx:id="ten" mnemonicParsing="false" onAction="#tenAction" text="10" />
+                  <CheckMenuItem fx:id="eleven" mnemonicParsing="false" onAction="#elevenAction" text="11" />
+                  <CheckMenuItem fx:id="twelve" mnemonicParsing="false" onAction="#twelveAction" text="12" />
+                  <CheckMenuItem fx:id="thirteen" mnemonicParsing="false" onAction="#thirteenAction" text="13" />
+                  <CheckMenuItem fx:id="fourteen" mnemonicParsing="false" onAction="#fourteenAction" text="14" />
+                  <CheckMenuItem fx:id="fifteen" mnemonicParsing="false" onAction="#fifteenAction" text="15" />
+                  <CheckMenuItem fx:id="sixteen" mnemonicParsing="false" onAction="#sixteenAction" text="16" />
+                  <CheckMenuItem fx:id="seventeen" mnemonicParsing="false" onAction="#seventeenAction" text="17" />
+                  <CheckMenuItem fx:id="eighteen" mnemonicParsing="false" onAction="#eighteenAction" text="18" />
+                  <CheckMenuItem fx:id="nineteen" mnemonicParsing="false" onAction="#nineteenAction" text="19" />
+                  <CheckMenuItem fx:id="twenty" mnemonicParsing="false" onAction="#twentyAction" text="20" />
+                  <CheckMenuItem fx:id="twentyone" mnemonicParsing="false" onAction="#twentyoneAction" text="21" />
+                  <CheckMenuItem fx:id="twentytwo" mnemonicParsing="false" onAction="#twentytwoAction" text="22" />
+                  <CheckMenuItem fx:id="twentythree" mnemonicParsing="false" onAction="#twentythreeAction" text="23" />
+                  <CheckMenuItem fx:id="twentyfour" mnemonicParsing="false" onAction="#twentyfourAction" text="24" />
+               </items>
+            </MenuButton>
+            <TextField fx:id="weightcost" layoutX="451.0" layoutY="406.0" prefHeight="23.0" prefWidth="188.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Text layoutX="355.0" layoutY="392.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Company:" GridPane.columnIndex="2">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </Text>
-            <Text layoutX="105.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:" wrappingWidth="41.60938262939453">
+            <Text layoutX="69.0" layoutY="488.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Duration:" GridPane.rowIndex="3">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </Text>
-            <TextField fx:id="maxweight" layoutX="170.0" layoutY="389.0" prefHeight="23.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="frequency" layoutX="451.0" layoutY="470.0" prefHeight="27.0" prefWidth="188.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <Button id="submit" fx:id="submit" layoutX="346.0" layoutY="545.0" mnemonicParsing="false" onAction="#transportRouteButtonAction" style="-fx-background-color: E9D5B9;" text="Submit">
+      <Button id="submit" fx:id="submit" layoutX="332.0" layoutY="447.0" mnemonicParsing="false" onAction="#transportRouteButtonAction" style="-fx-background-color: E9D5B9;" text="Submit">
          <font>
             <Font name="Gulim" size="15.0" />
          </font>
       </Button>
-      <Text layoutX="70.0" layoutY="363.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Company:">
-         <font>
-            <Font name="Gulim" size="13.0" />
-         </font>
-      </Text>
-      <TextField fx:id="company" layoutX="157.0" layoutY="341.0" prefHeight="27.0" prefWidth="187.0" />
-      <Text layoutX="70.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Day:">
-         <font>
-            <Font name="Gulim" size="13.0" />
-         </font>
-      </Text>
-      <DatePicker fx:id="date" layoutX="157.0" layoutY="499.0" prefHeight="27.0" prefWidth="187.0" />
-      <Text layoutX="355.0" layoutY="516.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Time: ">
-         <font>
-            <Font name="Gulim" size="13.0" />
-         </font>
-      </Text>
-      <GridPane layoutX="454.0" layoutY="499.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="4.341796875" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <MenuButton fx:id="minutes" layoutX="523.0" layoutY="502.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="56.0" style="-fx-background-color: #FFFFFF;" text="00" GridPane.columnIndex="2">
-               <font>
-                  <Font name="Gulim" size="13.0" />
-               </font>
-            </MenuButton>
-            <MenuButton fx:id="hours" layoutX="451.0" layoutY="502.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="56.0" style="-fx-background-color: #FFFFFF;" text="00">
-               <font>
-                  <Font name="Gulim" size="13.0" />
-               </font>
-            </MenuButton>
-            <Text layoutX="513.0" layoutY="518.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" GridPane.columnIndex="1">
-               <font>
-                  <Font name="Gulim" size="13.0" />
-               </font>
-            </Text>
-         </children>
-      </GridPane>
    </children>
    <stylesheets>
 	<URL value="@kps.css" />

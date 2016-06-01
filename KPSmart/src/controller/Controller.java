@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import java.awt.MenuItem;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -138,6 +139,11 @@ public class Controller implements Initializable {
     /** Origin and Destination  **/
 
     @FXML
+    private ArrayList<CheckMenuItem> destination;
+    @FXML
+    private ArrayList<CheckMenuItem> origin;
+    
+    @FXML
     private CheckMenuItem AucklandDest;
     @FXML
     private CheckMenuItem HamiltonDest;
@@ -213,10 +219,14 @@ public class Controller implements Initializable {
     	selectedOrigin = "Dunedin";
     	originMenu.setText("Dunedin");
     }
+    
+    @FXML
+    private TextField otherOriginText;
+    
     @FXML
     private void selectOtherOrigin(ActionEvent event) {
     	selectedOrigin = "Other";
-    	originMenu.setText("Other");
+    	originMenu.setText(otherOriginText.getText());
     }
     @FXML
     private void selectAucklandDest(ActionEvent event) {
@@ -254,9 +264,11 @@ public class Controller implements Initializable {
     	destinationMenu.setText("Dunedin");
     }
     @FXML
+    private TextField otherDestText;
+    @FXML
     private void selectOtherDest(ActionEvent event) {
     	selectedDest = "Other";
-    	destinationMenu.setText("Other");
+    	destinationMenu.setText(otherDestText.getText());
     }
     
     /** Priority Menu */
@@ -326,10 +338,184 @@ public class Controller implements Initializable {
     @FXML
     private TextField frequency;
 
+    /** Day Menu */
     
-    /** Date and Time */
     @FXML
-    private DatePicker date;
+    private CheckMenuItem monday;
+    @FXML
+    private CheckMenuItem tuesday;
+    @FXML
+    private CheckMenuItem wednesday;
+    @FXML
+    private CheckMenuItem thursday;
+    @FXML
+    private CheckMenuItem friday;
+    @FXML
+    private MenuButton dayMenu;
+    
+    private String day = "";
+    
+    @FXML
+    private void mondayAction(ActionEvent event) {
+    	day = "Monday";
+    	dayMenu.setText("Monday");
+    }
+    @FXML
+    private void tuesdayAction(ActionEvent event) {
+    	day = "Tuesday";
+    	dayMenu.setText("Tuesday");
+    }
+    @FXML
+    private void wednesdayAction(ActionEvent event) {
+    	day = "Wednesday";
+    	dayMenu.setText("Wednesday");
+    }
+    @FXML
+    private void thursdayAction(ActionEvent event) {
+    	day = "Thursday";
+    	dayMenu.setText("Thursday");
+    }
+    @FXML
+    private void fridayAction(ActionEvent event) {
+    	day = "Friday";
+    	dayMenu.setText("Friday");
+    }
+    
+    /** Time Menu*/
+    @FXML
+    private CheckMenuItem zero, one, two, three, four, five, six, seven, 
+    eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, 
+    sixteen, seventeen, eighteen, nineteen, twenty, twentyone, twentytwo, twentythree, twentyfour;
+    @FXML
+    private MenuButton timeMenu;
+    
+    private int time;
+    
+    @FXML
+    private void zeroAction(ActionEvent event) {
+    	time = 0;
+    	timeMenu.setText("00");
+    }
+    @FXML
+    private void oneAction(ActionEvent event) {
+    	time = 1;
+    	timeMenu.setText("01");
+    }
+    @FXML
+    private void twoAction(ActionEvent event) {
+    	time = 2;
+    	timeMenu.setText("02");
+    }
+    @FXML
+    private void threeAction(ActionEvent event) {
+    	time = 3;
+    	timeMenu.setText("03");
+    }
+    @FXML
+    private void fourAction(ActionEvent event) {
+    	time = 4;
+    	timeMenu.setText("04");
+    }
+    @FXML
+    private void fiveAction(ActionEvent event) {
+    	time = 5;
+    	timeMenu.setText("05");;
+    }
+    @FXML
+    private void sixAction(ActionEvent event) {
+    	time = 6;
+    	timeMenu.setText("06");;
+    }
+    @FXML
+    private void sevenAction(ActionEvent event) {
+    	time = 7;
+    	timeMenu.setText("07");;
+    }
+    @FXML
+    private void eightAction(ActionEvent event) {
+    	time = 8;
+    	timeMenu.setText("08");;
+    }
+    @FXML
+    private void nineAction(ActionEvent event) {
+    	time = 9;
+    	timeMenu.setText("09");;
+    }
+    @FXML
+    private void tenAction(ActionEvent event) {
+    	time = 10;
+    	timeMenu.setText("10");;
+    }
+    @FXML
+    private void elevenAction(ActionEvent event) {
+    	time = 11;
+    	timeMenu.setText("11");;
+    }
+    @FXML
+    private void twelveAction(ActionEvent event) {
+    	time = 12;
+    	timeMenu.setText("12");;
+    }
+    @FXML
+    private void thirteenAction(ActionEvent event) {
+    	time = 13;
+    	timeMenu.setText("13");;
+    }
+    @FXML
+    private void fourteenAction(ActionEvent event) {
+    	time = 14;
+    	timeMenu.setText("14");;
+    }
+    @FXML
+    private void fifteenAction(ActionEvent event) {
+    	time = 15;
+    	timeMenu.setText("15");;
+    }
+    @FXML
+    private void sixteenAction(ActionEvent event) {
+    	time = 16;
+    	timeMenu.setText("16");;
+    }
+    @FXML
+    private void seventeenAction(ActionEvent event) {
+    	time = 17;
+    	timeMenu.setText("17");;
+    }
+    @FXML
+    private void eighteenAction(ActionEvent event) {
+    	time = 18;
+    	timeMenu.setText("18");;
+    }
+    @FXML
+    private void nineteenAction(ActionEvent event) {
+    	time = 19;
+    	timeMenu.setText("19");;
+    }
+    @FXML
+    private void twentyAction(ActionEvent event) {
+    	time = 20;
+    	timeMenu.setText("20");;
+    }
+    @FXML
+    private void twentyoneAction(ActionEvent event) {
+    	time = 21;
+    	timeMenu.setText("21");;
+    }
+    @FXML
+    private void twentytwoAction(ActionEvent event) {
+    	time = 22;
+    	timeMenu.setText("22");;
+    }
+    @FXML
+    private void twentythreeAction(ActionEvent event) {
+    	time = 23;
+    	timeMenu.setText("23");;
+    }
+    @FXML
+    private void twentyfourAction(ActionEvent event) {
+    	time = 24;
+    	timeMenu.setText("24");;
+    }
     
     /** TRANSPORT ROUTE FORM */
     
@@ -338,6 +524,7 @@ public class Controller implements Initializable {
     	System.out.println("Origin: " + selectedOrigin);
     	System.out.println("Destination: " + selectedDest);
     	String c = this.company.getText();
+    	System.out.println("Type: " + type);
     	String mw = this.maxweight.getText();
     	String mv = this.maxvolume.getText();
     	String wc = this.weightcost.getText();
@@ -351,24 +538,20 @@ public class Controller implements Initializable {
         System.out.println("Volume Cost: " + vc);
         System.out.println("Duration: " + d);
         System.out.println("Frequency: " + f);
-    	System.out.println("Priority: " + priority);
-    	System.out.println("Type: " + type);
-    	System.out.println("Time: " + this.date.getValue().toString());
+
+    	System.out.println("Day: " + day);
+    	System.out.println("Time: " + time);
     }
     
     /** PRICE UPDATE FORM */
     
     @FXML
-    private TextField weight;
-    @FXML
-    private TextField volume;
-    
-    @FXML
     private void priceUpdateButtonAction(ActionEvent event) {
     	System.out.println("Origin: " + selectedOrigin);
     	System.out.println("Destination: " + selectedDest);
-    	String wc = this.weight.getText();
-    	String vc = this.volume.getText();
+    	String wc = this.weightcost.getText();
+    	String vc = this.volumecost.getText();
+    	System.out.println("Priority: " + priority);
         System.out.println("Weight: " + wc);
         System.out.println("Volume: " + vc);
     }
@@ -383,6 +566,11 @@ public class Controller implements Initializable {
     private boolean hasPriorities = false;
     
     private String chosenPriority = "";
+    
+    @FXML
+    private TextField weight;
+    @FXML
+    private TextField volume;
     
     @FXML
     private void findPrioritiesButtonAction(ActionEvent event) {
