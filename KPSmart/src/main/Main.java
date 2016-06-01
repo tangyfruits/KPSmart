@@ -48,13 +48,24 @@ public class Main {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-//		for (User u : m.accounts) {
-//			System.out.println(u.getUsername() + u.getPassword() + u.isManager());
-//		}
+		// for (User u : m.accounts) {
+		// System.out.println(u.getUsername() + u.getPassword() +
+		// u.isManager());
+		// }
 	}
 
-	public void method() {
+	public boolean login(String username, String password) {
+		for (User u : accounts) {
+			if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
+				currentUser = u;
+				return true;
+			}
+		}
+		return false;
+	}
 
+	public void logout() {
+		currentUser = null;
 	}
 
 	public void addUserToList(User u) {
