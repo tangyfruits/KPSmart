@@ -5,13 +5,13 @@ import main.Location;
 public class Leg implements Event{
 	
 	// FIELDS
-	private final String eventType = "leg";
 	private Location origin;
 	private Location destination;
 	private String type;
 	private String company;
 	private double cost;
 	private double price;
+	private final String eventType = "leg";
 	
 	// CONSTRUCTOR
 	public Leg(Location origin, Location destination, String type, String company, double freightCost, double customerPrice) {
@@ -24,9 +24,7 @@ public class Leg implements Event{
 	}
 	
 	// METHODS
-	public String getEventType() {
-		return eventType;
-	}
+	// Getters
 	public Location getOrigin() {
 		return origin;
 	}
@@ -44,5 +42,8 @@ public class Leg implements Event{
 	}
 	public double getPrice() {
 		return price;
+	}
+	public String getEventType() {
+		return eventType;
 	}
 }

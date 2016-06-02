@@ -1,19 +1,21 @@
 package event;
 
+import main.Location;
+
 public class DiscontinueRoute implements Event {
 	
 	// FIELDS
-	private final String eventType = "discontinue";
+	private Location origin;
+	private Location destination;
 	private String company;
-	private String to;
-	private String from;
 	private String type;
+	private final String eventType = "discontinue";
 	
 	// CONSTRUCTOR
-	public DiscontinueRoute(String company, String to, String from, String type) {
+	public DiscontinueRoute(Location origin, Location destination, String company, String type) {
+		this.origin = origin;
+		this.destination = destination;
 		this.company = company;
-		this.to = to;
-		this.from = from;
 		this.type = type;
 	}
 	
@@ -22,11 +24,11 @@ public class DiscontinueRoute implements Event {
 	public String getCompany() {
 		return company;
 	}
-	public String getTo() {
-		return to;
+	public Location getOrigin() {
+		return origin;
 	}
-	public String getFrom() {
-		return from;
+	public Location getDestination() {
+		return destination;
 	}
 	public String getType() {
 		return type;

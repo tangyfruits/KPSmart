@@ -7,7 +7,6 @@ import main.Location;
 public class Route implements Event {
 	
 	// FIELDS
-	private final String eventType = "cost";
 	private Location origin;
 	private Location destination;
 	private String company;
@@ -22,6 +21,7 @@ public class Route implements Event {
 	private DayOfWeek day;
 	private int startTime;
 	private CustomerPrice price;
+	private final String eventType = "cost";
 	
 	// CONSTRUCTOR
 	public Route(Location origin, Location destination, String company, String type, 
@@ -45,7 +45,7 @@ public class Route implements Event {
 	}
 
 	// METHODS
-	// Core Route Functions
+	// Route Functionality
 	public boolean equals(Route r){
 		if(this.origin.equals(r.getOrigin())&& this.destination.equals(r.getDestination())
 				&& this.company.equals(r.getCompany())&& this.type.equals(r.getType())){
@@ -55,8 +55,6 @@ public class Route implements Event {
 			return false;
 		}
 	}
-	
-	
 	public double getCost(double weight, double volume){
 		return (this.volumeCost * volume + this.weightCost * weight);
 	}
@@ -74,6 +72,7 @@ public class Route implements Event {
 	public String getType() {
 		return type;
 	}
+	
 	public String getPriority() {
 		return priority;
 	}

@@ -130,8 +130,8 @@ public class LogWriter {
 	 * ------- FORMAT -------
 	   <mail>
 	 		<day>%s</day>
-	 		<from> TODO
-	 		<to> TODO
+	 		<to>%s</to>
+	 		<from>%s</from>
 	 		<legs>
 	 			<leg>
 	 				<to>%s</to>
@@ -156,7 +156,7 @@ public class LogWriter {
 	 * @param event
 	 * @throws IOException 
 	 */
-	public void writeDelivery(DeliveryRequest event) throws Exception {
+	public void writeDeliveryRequest(DeliveryRequest event) throws Exception {
 		
 		doc = docBuilder.parse(logFile);
 		Element events = doc.getDocumentElement();
@@ -164,46 +164,60 @@ public class LogWriter {
 		// Make Elements
         Element mail = doc.createElement("mail");
         Element day = doc.createElement("day");
+        Element to = doc.createElement("to");
+        Element from = doc.createElement("from");
         Element legs = doc.createElement("legs");
         Element weight = doc.createElement("weight");
         Element volume = doc.createElement("volume");
         Element priority = doc.createElement("priority");
         Element duration = doc.createElement("duration");
         
-        // Add text values to tags
-        day.appendChild(doc.createTextNode(event.getLogTime().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH)));
-        weight.appendChild(doc.createTextNode(Double.toString(event.getWeight())));
-        volume.appendChild(doc.createTextNode(Double.toString(event.getVolume())));
-        priority.appendChild(doc.createTextNode(event.getPriority()));
-        duration.appendChild(doc.createTextNode(Double.toString(event.getDuration())));
+        // Find Primary Origin and Final Destination
+        String origin = "";
+        String destination = "";
         
         // Make leg Elements
     	for (Leg legObject : event.getLegs()) {
     		Element leg = doc.createElement("leg");
-            Element to = doc.createElement("to");
-            Element from = doc.createElement("from");
+            Element legTo = doc.createElement("to");
+            Element legFrom = doc.createElement("from");
             Element company = doc.createElement("company");
             Element cost = doc.createElement("cost");
             Element price = doc.createElement("price");
             
-            to.appendChild(doc.createTextNode(legObject.getDestination().getName()));
-            from.appendChild(doc.createTextNode(legObject.getOrigin().getName()));
+            if (origin == "") {
+            	origin = legObject.getOrigin().getName();
+            }
+            destination = legObject.getDestination().getName();
+            
+            legTo.appendChild(doc.createTextNode(legObject.getDestination().getName()));
+            legFrom.appendChild(doc.createTextNode(legObject.getOrigin().getName()));
             company.appendChild(doc.createTextNode(legObject.getCompany()));
             cost.appendChild(doc.createTextNode(Double.toString(legObject.getCost())));
             price.appendChild(doc.createTextNode(Double.toString(legObject.getPrice())));
             
-            leg.appendChild(to);
-            leg.appendChild(from);
+            leg.appendChild(legTo);
+            leg.appendChild(legFrom);
             leg.appendChild(company);
             leg.appendChild(cost);
             leg.appendChild(price);
             legs.appendChild(leg);
     	}
         
+    	 // Add text values to tags
+        day.appendChild(doc.createTextNode(event.getLogTime().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH)));
+        to.appendChild(doc.createTextNode(destination));
+        from.appendChild(doc.createTextNode(origin));
+        weight.appendChild(doc.createTextNode(Double.toString(event.getWeight())));
+        volume.appendChild(doc.createTextNode(Double.toString(event.getVolume())));
+        priority.appendChild(doc.createTextNode(event.getPriority()));
+        duration.appendChild(doc.createTextNode(Double.toString(event.getDuration())));
+    	
         // Add tags together
         events.appendChild(mail);
         mail.appendChild(day);
-        
+        mail.appendChild(to);
+        mail.appendChild(from);
         mail.appendChild(legs);
         mail.appendChild(weight);
         mail.appendChild(volume);
@@ -385,21 +399,21 @@ public class LogWriter {
 	  
 	  	// Make Elements
 	  	Element discontinue = doc.createElement("discontinue");
-	  	Element company = doc.createElement("company");
 	  	Element to = doc.createElement("to");
 	  	Element from = doc.createElement("from");
+	  	Element company = doc.createElement("company");
 	  	Element type = doc.createElement("type");
 	  	
 	  	// Add text values to tags
+	  	to.appendChild(doc.createTextNode(event.getDestination().getName()));
+	  	from.appendChild(doc.createTextNode(event.getOrigin().getName()));
 	  	company.appendChild(doc.createTextNode(event.getCompany()));
-	  	to.appendChild(doc.createTextNode(event.getTo()));
-	  	from.appendChild(doc.createTextNode(event.getFrom()));
 	  	type.appendChild(doc.createTextNode(event.getType()));
 	  	
 	  	// add tags together
-	  	discontinue.appendChild(company);
 	  	discontinue.appendChild(to);
 	  	discontinue.appendChild(from);
+	  	discontinue.appendChild(company);
 	  	discontinue.appendChild(type);
 	  	events.appendChild(discontinue);
 	  	

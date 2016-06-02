@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class MailEventTest {
+public class DeliveryRequestTest {
 
 	@Test
 	public void testMailEvent() {

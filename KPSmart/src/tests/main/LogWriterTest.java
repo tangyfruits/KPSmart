@@ -3,6 +3,7 @@ package tests.main;
 import java.io.File;
 import java.io.FileWriter;
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -28,9 +29,8 @@ public class LogWriterTest {
 	static File file3 = new File(filename3);
 	static LogWriter log;
 	
-	// HELPER
+	// HELPERS
 	@BeforeClass
-	@AfterClass
 	public static void setup() throws Exception {
 		if (file1.isFile()) {
 			file1.delete();
@@ -44,10 +44,26 @@ public class LogWriterTest {
 			file3.delete();
 		}
 		
-		log = new LogWriter(filename3);
+		log = new LogWriter(file3);
+	}
+	@AfterClass
+	public static void tearDown() {
+		boolean kill3 = false;
+		
+		if (file1.isFile()) {
+			file1.delete();
+		}
+		
+		if (file2.isFile()) {
+			file2.delete();
+		}
+		if (file3.isFile() && kill3) {
+			file3.delete();
+		}
 	}
 	
 	// TESTS
+	// Gags
 	@Test
 	public void eXtRaSHiT() {
 		FileWriter lalala;
@@ -66,11 +82,11 @@ public class LogWriterTest {
 
 	}
 	
-	// Things that check the log file actually exists
+	// Log File Existence Checkers
 	@Test
 	public void testEnsureLogExists1() throws Exception {
 		LogWriter log;
-		log = new LogWriter(filename1);
+		log = new LogWriter(file1);
 		log.ensureLogExists();
 		assertTrue(file1.isFile());
 	}
@@ -91,23 +107,33 @@ public class LogWriterTest {
 	
 	// Writers
 	@Test
-	public void testWriteDelivery() throws Exception {
+	public void testWriteDeliveryRequest() throws Exception {
 		if (LOGS) {System.out.println("\n----------mail");}
-		ArrayList<LegEvent> legs = new ArrayList<LegEvent>();
-		legs.add(new LegEvent("new", "old", "Seas", "POst dot co", 40.0, 28.4));
-		MailEvent mail = new MailEvent("Wednesday", legs, 40.0, 20.0, "International Air", 37.2, 552.3, 30);
-		log.writeDelivery(mail);
+		Location from = new Location("Fresh");
+		Location to = new Location("Clean");
+		LocalDateTime time = LocalDateTime.of(2016, 1, 1, 0, 0);
+		ArrayList<Leg> legs = new ArrayList<Leg>();
+		
+		legs.add(new Leg(from, to, "Seas", "POst dot co", 40.0, 28.4));
+		DeliveryRequest mail = new DeliveryRequest(time, from, to, 40.0, 20.0, "International Air", 30, legs);
+		log.writeDeliveryRequest(mail);
 	}
 	@Test
 	public void testWriteRoute1() throws Exception {
 		if (LOGS) {System.out.println("\n----------cost1");}
-		CostEvent cost = new CostEvent("Wellington", "Christchurch", "NZ Post", "Sea", "Local Standard", 
-				4.00, 6.00, 400, 150, 6, 12,"Thursday");
+		Location from = new Location("Wellington");
+		Location to =  new Location("Christchurch");
+		CustomerPrice price = new CustomerPrice(from, to, "Low ass Priority", 20.0, 10.0);
+		
+		Route cost = new Route(from, to, "NZ Post", "Sea", "Local Standard", 
+							   4.00, 6.00, 400, 150,
+							   60, 12, DayOfWeek.THURSDAY, 12, price);
 		log.writeRoute(cost);
 	}
 	@Test
 	public void testWriteRoute2() throws Exception {
 		if (LOGS) {System.out.println("\n----------cost2");}
+		
 		CustomerPrice price = new CustomerPrice(new Location("place"), new Location("otherplace"), "Super Imp", 30.54, 20.0);
 		Route route = new Route(new Location("Auckland"), new Location("Dunedin"), "UPS", "Land", 
 				"Local Standard", 20.8, 56.2, 43,123,33, 2, DayOfWeek.TUESDAY, 20, price);
@@ -116,12 +142,14 @@ public class LogWriterTest {
 	@Test
 	public void testWriteCustomerPrice1() throws Exception {
 		if (LOGS) {System.out.println("\n----------price1");}
-		PriceEvent price = new PriceEvent("StartPlace", "EndPlace", "Stand LOcal brah", 3.0, 5.0);
+		
+		CustomerPrice price = new CustomerPrice(new Location("StartPlace"), new Location("EndPlace"), "Stand LOcal brah", 3.0, 5.0);
 		log.writeCustomerPrice(price);
 	}
 	@Test
 	public void testWriteCustomerPrice2() throws Exception {
 		if (LOGS) {System.out.println("\n----------price2");}
+		
 		CustomerPrice price = new CustomerPrice(new Location("place"), new Location("otherplace"), "Super Imp", 30.54, 20.0);
 		log.writeCustomerPrice(price);
 	}
@@ -130,5 +158,9 @@ public class LogWriterTest {
 		if (LOGS) {System.out.println("\n----------disc.");}
 		DiscontinueRoute disc = new DiscontinueRoute("NZ Post", "Wellington", "Christchurch", "Sea");
 		log.writeDiscontinue(disc);
+	}
+	
+	public void testClearFile() {
+		
 	}
 }

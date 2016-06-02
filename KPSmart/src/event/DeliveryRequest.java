@@ -16,7 +16,6 @@ public class DeliveryRequest implements Event{
 	private double volume;
 	private String priority;
 	private int duration;
-	
 	private final String eventType = "cost";
 	
 	// CONSTRUCTOR
@@ -33,6 +32,7 @@ public class DeliveryRequest implements Event{
 	}
 	
 	// METHODS
+	// Getters
 	public LocalDateTime getLogTime() {
 		return logTime;
 	}
@@ -57,7 +57,6 @@ public class DeliveryRequest implements Event{
 	public int getDuration() {
 		return duration;
 	}
-	
 	public String getEventType() {
 		return eventType;
 	}

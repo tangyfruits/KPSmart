@@ -259,14 +259,14 @@ public class LogDeliveryRequestTests {
 				.toPretty());
 		assertEquals("Air", req.getLegs().get(0).getType());
 		assertEquals("NZPost", req.getLegs().get(0).getCompany());
-		assertEquals(29, req.getLegs().get(0).getCustomerPrice(), 0);
-		assertEquals(4, req.getLegs().get(0).getFreightCost(), 0);
+		assertEquals(29, req.getLegs().get(0).getPrice(), 0);
+		assertEquals(4, req.getLegs().get(0).getCost(), 0);
 		assertEquals("Auckland", req.getLegs().get(1).getOrigin().toPretty());
 		assertEquals("Paris", req.getLegs().get(1).getDestination().toPretty());
 		assertEquals("Air", req.getLegs().get(1).getType());
 		assertEquals("UPS", req.getLegs().get(1).getCompany());
-		assertEquals(22, req.getLegs().get(1).getCustomerPrice(), 0);
-		assertEquals(22, req.getLegs().get(1).getFreightCost(), 0);
+		assertEquals(22, req.getLegs().get(1).getPrice(), 0);
+		assertEquals(22, req.getLegs().get(1).getCost(), 0);
 	}
 
 	// check details of delivery request once created

@@ -5,12 +5,12 @@ import main.*;
 public class CustomerPrice implements Event {
 	
 	// FIELDS
-	private final String eventType = "price";
 	private Location origin;
 	private Location destination;
 	private String priority;
 	private double weightCost;
 	private double volumeCost;
+	private final String eventType = "price";
 
 	// CONSTRUCTORS
 	public CustomerPrice(Location origin, Location destination,
@@ -24,12 +24,6 @@ public class CustomerPrice implements Event {
 	
 	// METHODS
 	// Getters
-	public double getWeightCost() {
-		return weightCost;
-	}
-	public double getVolumeCost() {
-		return volumeCost;
-	}
 	public Location getOrigin() {
 		return origin;
 	}
@@ -38,6 +32,12 @@ public class CustomerPrice implements Event {
 	}
 	public String getPriority() {
 		return priority;
+	}
+	public double getWeightCost() {
+		return weightCost;
+	}
+	public double getVolumeCost() {
+		return volumeCost;
 	}
 	public String getEventType() {
 		return eventType;
@@ -57,5 +57,4 @@ public class CustomerPrice implements Event {
 		return "CustomerPrice [origin=" + origin + ", destination=" + destination + ", priority=" + priority
 				+ ", weightCost=" + weightCost + ", volumeCost=" + volumeCost + "]";
 	}
-
 }
