@@ -233,7 +233,7 @@ public class LogDeliveryRequestTests {
 				"Paris", 15, 1);
 		// should have no requests so far
 		assertEquals(0, main.getDeliveryRequests().size());
-		main.logDeliveryRequest("Wellington", "Paris",
+		main.getDeliveryDetails("Wellington", "Paris",
 				15, 1, r.get(0));
 		// should add a request
 		assertEquals(1, main.getDeliveryRequests().size());
@@ -251,7 +251,7 @@ public class LogDeliveryRequestTests {
 				"Air", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Paris", 1, 1);
-		DeliveryRequest req = main.logDeliveryRequest("Wellington", "Paris", 1,
+		DeliveryRequest req = main.getDeliveryDetails("Wellington", "Paris", 1,
 				1, r.get(0));
 		// check Legs
 		assertEquals("Wellington", req.getLegs().get(0).getOrigin().toPretty());
@@ -283,7 +283,7 @@ public class LogDeliveryRequestTests {
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Paris", 1, 1);
 		int dur = r.get(0).getTotalDuration(LocalDateTime.now());
-		DeliveryRequest req = main.logDeliveryRequest("Wellington", "Paris", 1,
+		DeliveryRequest req = main.getDeliveryDetails("Wellington", "Paris", 1,
 				1, r.get(0));
 		assertNotNull(req.getLogTime());
 		assertEquals("Wellington", req.getOrigin().toPretty());
