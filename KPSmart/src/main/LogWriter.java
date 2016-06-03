@@ -143,7 +143,11 @@ public class LogWriter {
  	 			</leg>
  	 			<leg>
 	 				<to>%s</to>
-	 			<from>%s</from>
+	 				<from>%s</from>
+	 				<type>%s</type>
+	 				<company>%s</company>
+	 				<cost>%s</cost>
+	 				<price>%s</price>
  	 			</leg>
 	 		</legs>
 			<weight>%s</weight>
@@ -241,9 +245,9 @@ public class LogWriter {
 	 * 
 	 * ------- FORMAT -------
 	   <cost>
-		  <company>%s</company>
 		  <to>%s</to>
 		  <from>%s</from>
+		  <company>%s</company>
 		  <type>%s</type>
 		  <priority>%s</priority>
 		  <weightCost>%f</weightCost>
@@ -252,7 +256,7 @@ public class LogWriter {
 		  <maxVolume>%d</maxVolume>
 		  <duration>%d</duration>
 		  <frequency>%d</frequency>
-		  <day>Thursday</day>
+		  <day>%s</day>
 		</cost>
 	 * ----------------------
 	 * 
@@ -382,10 +386,10 @@ public class LogWriter {
 	 * 
 	 * ------- FORMAT -------
 	   <discontinue>
-  	 	  <company>NZ Post</company>
-  		  <to>Wellington</to>
-  		  <from>Christchurch</from>
-  		  <type>Sea</type>
+  	 	  <company>%s</company>
+  		  <to>%s</to>
+  		  <from>%s</from>
+  		  <type>%s</type>
 	   </discontinue>
 	 * ----------------------
 	 *

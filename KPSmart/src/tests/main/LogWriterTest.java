@@ -156,7 +156,7 @@ public class LogWriterTest {
 	@Test
 	public void testWriteDiscontinue() throws Exception {
 		if (LOGS) {System.out.println("\n----------disc.");}
-		DiscontinueRoute disc = new DiscontinueRoute("NZ Post", "Wellington", "Christchurch", "Sea");
+		DiscontinueRoute disc = new DiscontinueRoute(new Location("Christchurch"), new Location("Wellington"), "NZ Post", "Sea");
 		log.writeDiscontinue(disc);
 	}
 	

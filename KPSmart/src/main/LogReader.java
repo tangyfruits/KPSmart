@@ -4,6 +4,8 @@ import event.*;
 
 import java.io.File;
 import java.io.FileReader;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,45 +24,110 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-
 public class LogReader {
 	
+	// LOCAL CLASSES
+	class MailEvent implements Event {
+		public LocalDateTime logTime;
+		public String origin;
+		public String destination;
+		public ArrayList<Leg> legs;
+		public double weight;
+		public double volume;
+		public String priority;
+		public int duration;
+		public final String eventType = "cost";
+		public String getEventType() {
+			return eventType;
+		}
+	}
+	class LegEvent implements Event {
+		public String origin;
+		public String destination;
+		public String type;
+		public String company;
+		public double cost;
+		public double price;
+		public final String eventType = "leg";
+		public String getEventType() {
+			return eventType;
+		}
+	}
+	class CostEvent implements Event {
+		public String origin;
+		public String destination;
+		public String company;
+		public String type;
+		public String priority;
+		public double weightCost;
+		public double volumeCost;
+		public int maxWeight;
+		public int maxVolume;
+		public int duration;
+		public int frequency;
+		public DayOfWeek day;
+		public int startTime;
+		public CustomerPrice price;
+		public final String eventType = "cost";
+		public String getEventType() {
+			return eventType;
+		}
+	}
+	class PriceEvent implements Event {
+		public String origin;
+		public String destination;
+		public String priority;
+		public double weightCost;
+		public double volumeCost;
+		public final String eventType = "price";
+		public String getEventType() {
+			return eventType;
+		}
+	}
+	class DiscontinueEvent implements Event {
+		public String origin;
+		public String destination;
+		public String company;
+		public String type;
+		public final String eventType = "discontinue";
+		public String getEventType() {
+			return eventType;
+		}
+	}
+		
 	// FIELDS
 	// Tools
 	private Main main;
 	private XMLInputFactory inputFactory;
 	private XMLEventReader eventReader;
-	//private File logFile;
-	
 	// Current Events
-	private HashMap<String, String> currentEvent;
+	private Event currentEvent;
 	private MailEvent mail;
 	private LegEvent leg;
 	private CostEvent cost;
-	private HashMap<String, String> price;
-	private DiscontinueRoute discont;
-	
+	private PriceEvent price;
+	private DiscontinueEvent discont;
 	// Current Variables
 	private String currentVariable;
 	private boolean inLeg;
 	private String legVariable;
 	
+	// CONSTRUCTOR
 	// CONSRUCTORS
 	public LogReader(File logFile, Main mainClass) {
 		try {
 			// Set Tools
 			this.main = mainClass;
 			this.inputFactory = XMLInputFactory.newInstance();
-			
-			//this.logFile = logFile;
 	        this.eventReader = inputFactory.createXMLEventReader(new FileReader(logFile));
-
 		} catch (Exception e) {
 			System.out.println("Error in LogReader constructor");
 			e.printStackTrace();
 		}
 	}
 	
+	// METHODS
+	// Main Method
 	// METHODS
 	// Main Method
 	public void parseFile() throws Exception {
@@ -78,37 +145,37 @@ public class LogReader {
 			XMLEvent event = eventReader.nextEvent();
 			int xmlEvent = event.getEventType();
 
-            // OPENING TAG - 
+            // OPENING TAG
             if(xmlEvent == XMLStreamConstants.START_ELEMENT) {
             	String tagName = event.asStartElement().getName().getLocalPart();
             	   
             	if (currentEvent == null) {
-            		// <mail>, <price>, <cost>, <discontinue>
+            		// Lvl 1 tags: <mail>, <price>, <cost>, <discontinue>
             		setCurrentEvent(tagName);
             	} else if (currentVariable == "") {
-            		// <legs>, <to>, <from>, etc
+            		// Lvl 2 tags: <legs>, <to>, <from>, etc
             		currentVariable = tagName;
             	} else if (currentEvent.getEventType() == "mail" && currentVariable == "legs") {
             		if (tagName == "leg" && inLeg == false) {
-            			// <leg>
+            			// Lvl 3 tags: <leg>
             			setCurrentEvent(tagName);
                 		inLeg = true;  
 	            	} else if (legVariable == "") {
-	            		// ...<to>, <from>, etc
+	            		// Lvl 4 tags: ...<to>, <from>, etc
 	            		legVariable = tagName;
 	            	}
             	} else {
             		System.out.println("There has been an error!! (Opening Tag)");
             	}
             
-            // TEXT - DONE
+            // TEXT
             } else if (xmlEvent == XMLStreamConstants.CHARACTERS) {
             	String characters = event.asCharacters().getData();
             	setVariable(characters);
             
             // CLOSING TAG	
             } else if (xmlEvent == XMLStreamConstants.END_ELEMENT) {
-            	String endTagName = event.asEndElement().getName().getLocalPart();
+            	//String endTagName = event.asEndElement().getName().getLocalPart();
 
             	if (legVariable != "") {
             		legVariable = "";
@@ -127,6 +194,7 @@ public class LogReader {
 		}
 	}
 	
+	// Event Starter (step 1)
 	// Helpers
 	// Event Initialisers
 	private void setCurrentEvent(String xmlTagName) {
@@ -140,16 +208,17 @@ public class LogReader {
 			cost = new CostEvent();
      	   	currentEvent = cost;
 		} else if (xmlTagName.equalsIgnoreCase("price")) {
-			price = new HashMap();
+			price = new PriceEvent();
      	   	currentEvent = price;
 		} else if (xmlTagName.equalsIgnoreCase("discontinue")) {
-     	   	discont = new DiscontinueRoute();
+     	   	discont = new DiscontinueEvent();
 			currentEvent = discont;
 		} else {
 			System.out.println("Error setting the current event!");
 		}
 	}
 	
+	// Write Event Details (step 2)
 	// Variable Setters
 	private void setVariable(String data) {
 		if (currentEvent != null) {
@@ -174,32 +243,31 @@ public class LogReader {
 			System.out.println("Error in adding variable. Current Event doesn't exist");
 		}
 	}
-	
 	private void setMailVariable(String data) {
 		switch (currentVariable) {
 		case "day":
-			mail.setDay(data);
+			mail.logTime = data; // TODO How storing time thus how read it?
+			break;
+		case "to":
+			//mail
+			break;
+		case "from":
+			//mail
 			break;
 		case "legs":
-			mail.setLegList(new ArrayList<LegEvent>());
+			mail.legs = new ArrayList<Leg>();
 			break;
 		case "weight":
-			mail.setWeight(Double.parseDouble(data));
+			mail.weight = Double.parseDouble(data);
 			break;
 		case "volume":
-			mail.setVolume(Double.parseDouble(data));
+			mail.volume = Double.parseDouble(data);
 			break;
 		case "priority":
-			mail.setPriority(data);
-			break;
-		case "price":
-			mail.setPrice(Double.parseDouble(data));
-			break;
-		case "cost":
-			mail.setCost(Double.parseDouble(data));
+			mail.priority = data;
 			break;
 		case "duration":
-			mail.setDuration(Integer.parseInt(data));
+			mail.duration = Integer.parseInt(data);
 			break;
 		default:
 			System.out.println("Error. Invalid Variable recieved for MailEvent");
@@ -210,22 +278,22 @@ public class LogReader {
 		if (leg != null) {
 			switch(legVariable) {
 			case "to":
-				leg.setDestination(data);
+				leg.destination = data;
 				break;
 			case "from":
-				leg.setOrigin(data);
+				leg.origin = data;
 				break;
 			case "type":
-				leg.setType(data);
+				leg.type = data;
 				break;
 			case "company":
-				leg.setCompany(data);
+				leg.company = data;
 				break;
 			case "cost":
-				leg.setCost(Double.parseDouble(data));
+				leg.cost = Double.parseDouble(data);
 				break;
 			case "price":
-				leg.setPrice(Double.parseDouble(data));
+				leg.price = Double.parseDouble(data);
 				break;
 			default:
 				System.out.println("Error. Invalid Variable recieved for LegEvent");
@@ -238,40 +306,40 @@ public class LogReader {
 	private void setCostVariable(String data) {
 		switch (currentVariable) {
 		case "from":
-			cost.setOrigin(data);
+			cost.origin = data;
 			break;
 		case "to":
-			cost.setDestination(data);
+			cost.destination = data;
 			break;
 		case "company":
-			cost.setCompany(data);
+			cost.company = data;
 			break;
 		case "type":
-			cost.setType(data);
+			cost.type = data;
 			break;
 		case "priority":
-			cost.setPriority(data);
+			cost.priority = data;
 			break;
 		case "weightCost":
-			cost.setWeightCost(Double.parseDouble(data));
+			cost.weightCost = Double.parseDouble(data);
 			break;
 		case "volumeCost":
-			cost.setVolumeCost(Double.parseDouble(data));
+			cost.volumeCost = Double.parseDouble(data);
 			break;
 		case "maxWeight":
-			cost.setMaxWeight(Integer.parseInt(data));
+			cost.maxWeight = Integer.parseInt(data);
 			break;
 		case "maxVolume":
-			cost.setMaxVolume(Integer.parseInt(data));
+			cost.maxVolume = Integer.parseInt(data);
 			break;
 		case "duration":
-			cost.setDuration(Integer.parseInt(data));
+			cost.duration = Integer.parseInt(data);
 			break;
 		case "frequency":
-			cost.setFrequency(Integer.parseInt(data));
+			cost.frequency = Integer.parseInt(data);
 			break;
 		case "day":
-			cost.setDay(data);
+			cost.day = DayOfWeek.valueOf(data.toUpperCase());
 			break;
 		default:
 			System.out.println("Error. Invalid Variable recieved for CostEvent");
@@ -281,19 +349,19 @@ public class LogReader {
 	private void setPriceVariable(String data) {
 		switch (currentVariable) {
 		case "from":
-			price.setOrigin(data);
+			price.origin = data;
 			break;
 		case "to":
-			price.setDestination(data);
+			price.destination = data;
 			break;
 		case "priority":
-			price.setPriority(data);
+			price.priority = data;
 			break;
 		case "weightCost":
-			price.setWeightCost(Double.parseDouble(data));
+			price.weightCost = Double.parseDouble(data);
 			break;
 		case "volumeCost":
-			price.setVolumeCost(Double.parseDouble(data));
+			price.volumeCost = Double.parseDouble(data);
 			break;
 		default:
 			System.out.println("Error. Invalid Variable recieved for PriceEvent: "+currentVariable+" : "+data);
@@ -303,16 +371,16 @@ public class LogReader {
 	private void setDiscontinueVariable(String data) {
 		switch (currentVariable) {
 		case "from":
-			discont.setFrom(data);
+			discont.origin = data;
 			break;
 		case "to":
-			discont.setTo(data);
+			discont.destination = data;
 			break;
 		case "company":
-			discont.setCompany(data);
+			discont.company = data;
 			break;
 		case "type":
-			discont.setType(data);
+			discont.type = data;
 			break;
 		default:
 			System.out.println("Error. Invalid DiscontinueEvent var: "+currentVariable+" : "+data);
@@ -320,33 +388,54 @@ public class LogReader {
 		}
 	}	
 	
+	// Put Events into System (step 3)
 	// Event finishers
 	private void sendEvent() {
 		switch (currentEvent.getEventType()) {
 		case "cost":
 			System.out.println();
-			//main.logTransportCostUpdate();
+			main.logTransportCostUpdate(cost.origin, cost.destination, 
+					cost.company, cost.type, cost.weightCost, cost.volumeCost, 
+					cost.maxWeight, cost.maxVolume, cost.duration, cost.frequency, 
+					cost.day, cost.startTime);
 			cost = null;
 			break;
 		case "mail":
 			System.out.println();
-			//main.logDeliveryRequest();
+			main.logDeliveryRequest(mail.logTime, mail.origin, mail.destination, mail.legs,
+					mail.weight, mail.volume, mail.priority, mail.duration);
 			mail = null;
 			break;
 		case "price":
 			System.out.println();
-			//main.logCustomerPriceUpdate();
+			main.logCustomerPriceUpdate(price.origin, price.destination, 
+					price.priority, price.weightCost, price.volumeCost);
 			price = null;
 			break;
 		case "discontinue":
 			System.out.println();
-			//main.logRouteDiscontinued();
+			/*main.logRouteDiscontinued();*/
 			discont = null;
 			break;
+		default:
+			System.out.println("Shit's fuct yo.");
 		}
 	}
 	private void appendLeg() {
-		mail.addLeg(leg);
+		Location from = main.getLocation(leg.origin);
+		if (from == null) {
+			from = new Location(leg.origin);
+			main.addLocation(from);
+		}
+		Location to  = main.getLocation(leg.destination);
+		if (to == null) {
+			to = new Location(leg.destination);
+			main.addLocation(to);
+		}
+		
+		Leg legObject = new Leg(from, to, leg.type, leg.company, leg.cost, leg.price);
+		mail.legs.add(legObject);
+		leg = null;
 		currentEvent = mail;
 	}
 }

@@ -14,7 +14,8 @@ import event.Leg;
 import event.Route;
 
 public class Main {
-
+	
+	// FIELDS
 	private ArrayList<Location> locations;
 	private ArrayList<User> accounts;
 	private User currentUser;
@@ -24,6 +25,7 @@ public class Main {
 	private double totalExp;
 	private double totalRev;
 
+	// CONSTRUCTOR
 	public Main() {
 		locations = new ArrayList<Location>();
 		accounts = new ArrayList<User>();
@@ -39,6 +41,8 @@ public class Main {
 		// maven. Apache shiro is a really good framework for logins
 	}
 
+	// METHODS
+	// Route Finder
 	public ArrayList<RouteDisplay> getPossibleRoutes(String origin,
 			String destination, double weight, double volume) {
 
@@ -116,10 +120,12 @@ public class Main {
 		return out;
 
 	}
-
+	
+	// Loggers
+	/* Log Delivery Request */
 	public DeliveryRequest logDeliveryRequest(String origin,
 			String destination, double weight, double volume, RouteDisplay route) {
-
+	
 		// find the locations matching the given strings
 		Location originLoc = null;
 		Location destinationLoc = null;
@@ -137,7 +143,7 @@ public class Main {
 		int duration = route.getTotalDuration(LocalDateTime.now());
 
 		// translate route list into legs
-		List<Leg> legs = new ArrayList<>();
+		ArrayList<Leg> legs = new ArrayList<>();
 		for (Route r : route.getRoute()) {
 			double freightCost = weight * r.getWeightCost() + volume
 					* r.getVolumeCost();
@@ -162,8 +168,13 @@ public class Main {
 
 		return request;
 	}
-
-	public CustomerPrice logCustomerPriceUpdate(String origin,
+	public void logDeliveryRequest(LocalDateTime logTime, String origin, String destination, ArrayList<Leg> legs,
+			double weight, double volume, String priority, int duration) {
+		// TODO Here's where the logfile reader sends delivery request info
+		
+	}
+	/* Log Customer Price */
+ 	public CustomerPrice logCustomerPriceUpdate(String origin,
 			String destination, String priority, double weightCost,
 			double volumeCost) {
 
@@ -214,7 +225,7 @@ public class Main {
 		// TODO add event to log
 		
 	}
-
+	/* Log Transport Cost (Route) */
 	public void logTransportCostUpdate(String origin, String destination,
 			String company, String type, double weightCost,
 			double volumeCost, int maxWeight, int maxVolume, int duration,
@@ -326,7 +337,7 @@ public class Main {
 		}
 		return customerPrice;
 	}
-
+	/* Log Discontinuing Route */
 	public void discontinueTransportRoute(String origin, String destination,
 			String company, String type) {
 
@@ -368,20 +379,20 @@ public class Main {
 		return location;
 	}
 	
-	//Getters and Setters
-
+	// Getters
 	public List<DeliveryRequest> getDeliveryRequests() {
 		return deliveryRequests;
 	}	
 	public List<Location> getLocations() {
 		return locations;
 	}
-	private void addLocation(Location location) {
+	// Setters + Adders
+	public void addLocation(Location location) {
 		locations.add(location);
 	}
 	
-	//REPORT DISPLAYING
 	
+	//REPORT DISPLAYING
 	public void addTotalRev(double amount){
 		totalRev+=amount;
 	}
@@ -408,5 +419,6 @@ public class Main {
 		System.out.println("Total Events: "+events);
 		return events;
 	}
+
 	
 }
