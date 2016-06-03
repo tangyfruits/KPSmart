@@ -7,22 +7,11 @@ import java.io.FileReader;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.EndElement;
-import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 public class LogReader {
 	
@@ -67,7 +56,6 @@ public class LogReader {
 		public int frequency;
 		public DayOfWeek day;
 		public int startTime;
-		public CustomerPrice price;
 		public final String eventType = "cost";
 		public String getEventType() {
 			return eventType;
@@ -113,7 +101,6 @@ public class LogReader {
 	private String legVariable;
 	
 	// CONSTRUCTOR
-	// CONSRUCTORS
 	public LogReader(File logFile, Main mainClass) {
 		try {
 			// Set Tools
@@ -126,8 +113,6 @@ public class LogReader {
 		}
 	}
 	
-	// METHODS
-	// Main Method
 	// METHODS
 	// Main Method
 	public void parseFile() throws Exception {
@@ -195,8 +180,6 @@ public class LogReader {
 	}
 	
 	// Event Starter (step 1)
-	// Helpers
-	// Event Initialisers
 	private void setCurrentEvent(String xmlTagName) {
 		if (xmlTagName.equalsIgnoreCase("mail")) {
 			mail = new MailEvent();
@@ -219,7 +202,6 @@ public class LogReader {
 	}
 	
 	// Write Event Details (step 2)
-	// Variable Setters
 	private void setVariable(String data) {
 		if (currentEvent != null) {
 			switch (currentEvent.getEventType()) {
@@ -246,13 +228,13 @@ public class LogReader {
 	private void setMailVariable(String data) {
 		switch (currentVariable) {
 		case "day":
-			mail.logTime = data; // TODO How storing time thus how read it?
+			mail.logTime = LocalDateTime.parse(data); // TODO How storing time thus how read it?
 			break;
 		case "to":
-			//mail
+			mail.destination = data;
 			break;
 		case "from":
-			//mail
+			mail.origin = data;
 			break;
 		case "legs":
 			mail.legs = new ArrayList<Leg>();
@@ -341,6 +323,8 @@ public class LogReader {
 		case "day":
 			cost.day = DayOfWeek.valueOf(data.toUpperCase());
 			break;
+		case "hour":
+			cost.startTime = Integer.parseInt(data);
 		default:
 			System.out.println("Error. Invalid Variable recieved for CostEvent");
 			break;
@@ -389,7 +373,6 @@ public class LogReader {
 	}	
 	
 	// Put Events into System (step 3)
-	// Event finishers
 	private void sendEvent() {
 		switch (currentEvent.getEventType()) {
 		case "cost":

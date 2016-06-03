@@ -129,7 +129,7 @@ public class LogWriter {
 	 * 
 	 * ------- FORMAT -------
 	   <mail>
-	 		<day>%s</day>
+	 		<logged>%s</logged>
 	 		<to>%s</to>
 	 		<from>%s</from>
 	 		<legs>
@@ -138,22 +138,22 @@ public class LogWriter {
 	 				<from>%s</from>
 	 				<type>%s</type>
 	 				<company>%s</company>
-	 				<cost>%s</cost>
-	 				<price>%s</price>
+	 				<cost>%f</cost>
+	 				<price>%f</price>
  	 			</leg>
  	 			<leg>
 	 				<to>%s</to>
 	 				<from>%s</from>
 	 				<type>%s</type>
 	 				<company>%s</company>
-	 				<cost>%s</cost>
-	 				<price>%s</price>
+	 				<cost>%f</cost>
+	 				<price>%f</price>
  	 			</leg>
 	 		</legs>
-			<weight>%s</weight>
-	 		<volume>%s</volume>
+			<weight>%f</weight>
+	 		<volume>%f</volume>
 	 		<priority>%s</priority>
-	 		<duration>%s</duration>
+	 		<duration>%d</duration>
 	 	</mail>
 	 * ----------------------
 	 * 
@@ -167,7 +167,7 @@ public class LogWriter {
 		
 		// Make Elements
         Element mail = doc.createElement("mail");
-        Element day = doc.createElement("day");
+        Element logged = doc.createElement("logged");
         Element to = doc.createElement("to");
         Element from = doc.createElement("from");
         Element legs = doc.createElement("legs");
@@ -209,7 +209,7 @@ public class LogWriter {
     	}
         
     	 // Add text values to tags
-        day.appendChild(doc.createTextNode(event.getLogTime().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH)));
+    	logged.appendChild(doc.createTextNode(event.getLogTime().toString()));
         to.appendChild(doc.createTextNode(destination));
         from.appendChild(doc.createTextNode(origin));
         weight.appendChild(doc.createTextNode(Double.toString(event.getWeight())));
@@ -219,7 +219,7 @@ public class LogWriter {
     	
         // Add tags together
         events.appendChild(mail);
-        mail.appendChild(day);
+        mail.appendChild(logged);
         mail.appendChild(to);
         mail.appendChild(from);
         mail.appendChild(legs);
@@ -257,6 +257,7 @@ public class LogWriter {
 		  <duration>%d</duration>
 		  <frequency>%d</frequency>
 		  <day>%s</day>
+		  <hour>%d</hour>
 		</cost>
 	 * ----------------------
 	 * 
@@ -270,9 +271,9 @@ public class LogWriter {
 		
 		// Make Elements
         Element cost = doc.createElement("cost");
-        Element company = doc.createElement("company");
         Element to = doc.createElement("to");
         Element from = doc.createElement("from");
+        Element company = doc.createElement("company");
         Element type = doc.createElement("type");
         Element priority = doc.createElement("priority");
         Element weightCost = doc.createElement("weightCost");
@@ -282,11 +283,12 @@ public class LogWriter {
         Element duration = doc.createElement("duration");
         Element frequency = doc.createElement("frequency");
         Element day = doc.createElement("day");
+        Element hour = doc.createElement("hour");
         
         // Add text values to tags
-        company.appendChild(doc.createTextNode(event.getCompany()));
         to.appendChild(doc.createTextNode(event.getDestination().getName()));
         from.appendChild(doc.createTextNode(event.getOrigin().getName()));
+        company.appendChild(doc.createTextNode(event.getCompany()));
         type.appendChild(doc.createTextNode(event.getType()));
         priority.appendChild(doc.createTextNode(event.getPriority()));
         weightCost.appendChild(doc.createTextNode(Double.toString(event.getWeightCost())));
@@ -296,11 +298,12 @@ public class LogWriter {
         duration.appendChild(doc.createTextNode(Integer.toString(event.getDuration())));
         frequency.appendChild(doc.createTextNode(Integer.toString(event.getFrequency())));
         day.appendChild(doc.createTextNode(event.getDay().getDisplayName(TextStyle.FULL, Locale.ENGLISH)));
+        hour.appendChild(doc.createTextNode(Integer.toString(event.getStartTime())));
         
         // Add tags together
-        cost.appendChild(company);
         cost.appendChild(to);
         cost.appendChild(from);
+        cost.appendChild(company);
         cost.appendChild(type);
         cost.appendChild(priority);
         cost.appendChild(weightCost);
@@ -310,6 +313,7 @@ public class LogWriter {
         cost.appendChild(duration);
         cost.appendChild(frequency);
         cost.appendChild(day);
+        cost.appendChild(hour);
         events.appendChild(cost);
         
         // Write to XML file
