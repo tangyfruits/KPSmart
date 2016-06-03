@@ -52,12 +52,30 @@
         <tabs>
           <Tab style="-fx-background-color: E9D5B9; -fx-font-family: Gulim;" text="General Report">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="246.0" prefWidth="437.0" style="-fx-background-radius: 10; -fx-background-color: E9D5B9;" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="246.0" prefWidth="437.0" style="-fx-background-radius: 10; -fx-background-color: E9D5B9;">
+                     <children>
+                        <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="390.0" prefWidth="565.0" scaleShape="false" style="-fx-background-color: E9D5B9;">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="563.0" style="-fx-background-color: E9D5B9;" />
+                          </content>
+                        </ScrollPane>
+                     </children></AnchorPane>
             </content>
           </Tab>
           <Tab style="-fx-background-color: F2DFC4; -fx-font-family: Gulim;" text="Route Load">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: F2DFC4; -fx-background-radius: 10;" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: F2DFC4; -fx-background-radius: 10;">
+                     <children>
+                        <TableView layoutX="13.0" layoutY="15.0" prefHeight="386.0" prefWidth="572.0" style="-fx-background-color: FEF8EC;">
+                          <columns>
+                            <TableColumn prefWidth="107.0" text="Origin" />
+                            <TableColumn prefWidth="112.0" text="Destination" />
+                            <TableColumn prefWidth="114.0" text="Total Weight" />
+                            <TableColumn minWidth="5.0" prefWidth="101.67364501953125" text="Total Volume" />
+                            <TableColumn minWidth="7.0" prefWidth="135.3262939453125" text="Total No. of Items" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
             </content>
           </Tab>
             <Tab style="-fx-background-color: FAE7CC; -fx-font-family: Gulim;" text="Critical Routes">

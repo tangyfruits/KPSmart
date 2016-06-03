@@ -19,6 +19,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -225,7 +226,7 @@ public class Controller implements Initializable {
     
     @FXML
     private void selectOtherOrigin(ActionEvent event) {
-    	selectedOrigin = "Other";
+    	selectedOrigin = otherOriginText.getText();
     	originMenu.setText(otherOriginText.getText());
     }
     @FXML
@@ -267,7 +268,7 @@ public class Controller implements Initializable {
     private TextField otherDestText;
     @FXML
     private void selectOtherDest(ActionEvent event) {
-    	selectedDest = "Other";
+    	selectedDest = otherDestText.getText();
     	destinationMenu.setText(otherDestText.getText());
     }
     
@@ -615,4 +616,6 @@ public class Controller implements Initializable {
     	System.out.println("Origin: " + selectedOrigin);
     	System.out.println("Destination: " + selectedDest);
     }
+    
+    /** REPORTS PAGE */
 }
