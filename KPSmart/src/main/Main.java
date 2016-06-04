@@ -16,6 +16,7 @@ public class Main {
 	private User currentUser;
 	private HashMap<Tuple, ArrayList<Double>> amountOfMail;
 	private ArrayList<DeliveryRequest> deliveryRequests;
+	private HashMap<Tuple,ArrayList<Double>> critical;
 
 	private int events;
 	private double totalExp;
@@ -27,6 +28,7 @@ public class Main {
 		accounts = new ArrayList<User>();
 		deliveryRequests = new ArrayList<DeliveryRequest>();
 		amountOfMail = new HashMap<>();
+		critical = new HashMap<>();
 		// read from encrypted file and add them in!
 
 		// read from encrypted file,create User objects and add them in!

@@ -34,10 +34,17 @@ public class Tuple {
 
 	private String origin;
 	private String destination;
+	private String priority;
 
 	public Tuple(String o, String d) {
 		this.origin = o;
 		this.destination = d;
+	}
+	
+	public Tuple(String o, String d, String p){
+		this.origin = o;
+		this.destination = d;
+		this.priority = p;
 	}
 
 	public String getOrigin() {
@@ -47,6 +54,10 @@ public class Tuple {
 	public String getDestination() {
 		return destination;
 	}
+	
+	public String getPriority(){
+		return priority;
+	}
 
 	public void setOrigin(String origin) {
 		this.origin = origin;
@@ -54,5 +65,9 @@ public class Tuple {
 
 	public void setDestination(String destination) {
 		this.destination = destination;
+	}
+	
+	public void setPriority(String priority){
+		this.priority = priority;
 	}
 }
