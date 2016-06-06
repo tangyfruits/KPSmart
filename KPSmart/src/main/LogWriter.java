@@ -9,10 +9,13 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,10 +25,9 @@ import java.io.PrintWriter;
 public class LogWriter {
 	
 	// Console Logging for Debugging
-	private static boolean LOGS = false;
+	private static boolean LOGS = true;
 	
 	// VARIABLES
-	private String logFileName;
 	private File logFile;
 	private DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 	private DocumentBuilder docBuilder;
@@ -34,9 +36,8 @@ public class LogWriter {
 	private Transformer transformer;
 
 	// CONSTRUCTORS
-	public LogWriter(File logFile) throws Exception {
-		this.logFileName = logFile.getName();
-		this.logFile = logFile;
+	public LogWriter(File file) throws Exception {
+		this.logFile = file;
 		
 		docBuilder = docBuilderFactory.newDocumentBuilder();
         transformer = transformerFactory.newTransformer();
@@ -44,17 +45,41 @@ public class LogWriter {
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         ensureLogExists();
         //doc = docBuilder.parse(logFile);
+        
+        // Stop error writing to stderr. Errors are being caught. 
+        docBuilder.setErrorHandler(new ErrorHandler() {
+        	/**/
+        	@Override
+            public void warning(SAXParseException e) throws SAXException {
+        		System.out.println("some errors yo");
+        		//throw e;
+            }/**/
+        	
+        	/**/
+            @Override
+            public void fatalError(SAXParseException e) throws SAXException {
+            	System.out.println("some errors yo");
+            	//throw e;
+            }/**/
+            
+            /**/
+            @Override
+            public void error(SAXParseException e) throws SAXException {
+            	System.out.println("some errors yo");
+            	//throw e;
+            }/**/
+        });
 
 	}
-	public LogWriter(String logFileName) throws Exception {
-		this(new File(logFileName));
+	public LogWriter(String filename) throws Exception {
+		this(new File(filename));
 	}
 	
 	// METHODS
 	@SuppressWarnings("fallthrough")
 	public void ensureLogExists() throws Exception {
 		
-		if (LOGS) {System.out.println("ENSURE:           "+logFileName);}
+		if (LOGS) {System.out.println("ENSURE:           "+logFile.getName());}
 		
 		// Create Log File if it doesn't exist
 		if (!logFile.isFile()) {
@@ -75,9 +100,13 @@ public class LogWriter {
 			doc = docBuilder.parse(logFile);
 			if (LOGS) {System.out.println("   Parse: succ :)");}
 
-		} catch (SAXException e) {
-			//System.out.println(e.getMessage());
-			System.out.println("^^Ignore this error. It's cool. It's been handled. We just couldn't \nfigure out how to stop it logging in the console. We good. :)");
+		} catch (SAXParseException e) {
+			if (LOGS) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}
+			/*System.out.println("^^Ignore this error. It's cool. It's been handled. We just couldn't \n" +
+								"figure out how to stop it logging in the console. We good. :)");*/
 			doc = docBuilder.newDocument();
 			Element events = doc.createElement("events");
 			doc.appendChild(events);
@@ -109,6 +138,10 @@ public class LogWriter {
 	 			<leg>
 	 				<to>%s</to>
 	 				<from>%s</from>
+	 				<type>%s</type>
+	 				<company>%s</company>
+	 				<cost>%s</cost>
+	 				<price>%s</price>
  	 			</leg>
  	 			<leg>
 	 				<to>%s</to>
@@ -118,8 +151,6 @@ public class LogWriter {
 			<weight>%s</weight>
 	 		<volume>%s</volume>
 	 		<priority>%s</priority>
-	 		<price>%s</price>
-	 		<cost>%s</cost>
 	 		<duration>%s</duration>
 	 	</mail>
 	 * ----------------------
@@ -137,8 +168,7 @@ public class LogWriter {
         Element weight = doc.createElement("weight");
         Element volume = doc.createElement("volume");
         Element priority = doc.createElement("priority");
-        Element price = doc.createElement("price");
-        Element cost = doc.createElement("cost");
+        
         Element duration = doc.createElement("duration");
         
         // Make leg Elements
@@ -146,10 +176,21 @@ public class LogWriter {
     		Element leg = doc.createElement("leg");
             Element to = doc.createElement("to");
             Element from = doc.createElement("from");
-            to.appendChild(doc.createTextNode(legObject.getTo()));
-            from.appendChild(doc.createTextNode(legObject.getFrom()));
+            Element company = doc.createElement("company");
+            Element cost = doc.createElement("cost");
+            Element price = doc.createElement("price");
+            
+            to.appendChild(doc.createTextNode(legObject.getDestination()));
+            from.appendChild(doc.createTextNode(legObject.getOrigin()));
+            company.appendChild(doc.createTextNode(legObject.getCompany()));
+            cost.appendChild(doc.createTextNode(Double.toString(legObject.getCost())));
+            price.appendChild(doc.createTextNode(Double.toString(legObject.getPrice())));
+            
             leg.appendChild(to);
             leg.appendChild(from);
+            leg.appendChild(company);
+            leg.appendChild(cost);
+            leg.appendChild(price);
             legs.appendChild(leg);
     	}
         
@@ -158,8 +199,6 @@ public class LogWriter {
         weight.appendChild(doc.createTextNode(Double.toString(event.getWeight())));
         volume.appendChild(doc.createTextNode(Double.toString(event.getVolume())));
         priority.appendChild(doc.createTextNode(event.getPriority()));
-        price.appendChild(doc.createTextNode(Double.toString(event.getPrice())));
-        cost.appendChild(doc.createTextNode(Double.toString(event.getCost())));
         duration.appendChild(doc.createTextNode(Double.toString(event.getDuration())));
         
         // add tags together
@@ -169,10 +208,7 @@ public class LogWriter {
         mail.appendChild(weight);
         mail.appendChild(volume);
         mail.appendChild(priority);
-        mail.appendChild(price);
-        mail.appendChild(cost);
         mail.appendChild(duration);
-        
         
         //doc.normalizeDocument();
         
@@ -186,6 +222,10 @@ public class LogWriter {
 	        StreamResult consoleResult =  new StreamResult(System.out);
 	      	transformer.transform(source, consoleResult);
    	    }
+	}
+	public void writeDelivery(DeliveryRequest request) throws Exception {
+		MailEvent event = new MailEvent(request);
+		writeDelivery(event);
 	}
 	/**
 	 * Writes Cost Event to log file.
@@ -273,20 +313,7 @@ public class LogWriter {
       	}
 	}
 	public void writeRoute(Route route) throws Exception {
-		
-		CostEvent event = new CostEvent(route.getOrigin().getName(), 
-										route.getDestination().getName(), 
-										route.getCompany(), 
-										route.getType(), 
-										route.getPriority(), 
-										route.getWeightCost(), 
-										route.getVolumeCost(), 
-										route.getMaxWeight(), 
-										route.getMaxVolume(), 
-										route.getDuration(), 
-										route.getFrequency(), 
-										route.getDay());
-		
+		CostEvent event = new CostEvent(route);
 		writeRoute(event);
 	}
 	/**
@@ -411,7 +438,7 @@ public class LogWriter {
 	
 	
 	public void clearFile() throws FileNotFoundException {
-		PrintWriter pw = new PrintWriter(logFileName);
+		PrintWriter pw = new PrintWriter(logFile.getName());
 		pw.close();
 	}
 }
