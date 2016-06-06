@@ -46,4 +46,10 @@ public class Leg implements Event{
 	public String getEventType() {
 		return eventType;
 	}
+	
+	// Printer
+	public String toString() {
+		return origin.getName() + " --> " + destination.getName() + 
+				" (" + company + ". " + type + ")\n"; 
+	}
 }

@@ -215,7 +215,7 @@ public class LogWriter {
         weight.appendChild(doc.createTextNode(Double.toString(event.getWeight())));
         volume.appendChild(doc.createTextNode(Double.toString(event.getVolume())));
         priority.appendChild(doc.createTextNode(event.getPriority()));
-        duration.appendChild(doc.createTextNode(Double.toString(event.getDuration())));
+        duration.appendChild(doc.createTextNode(Integer.toString(event.getDuration())));
     	
         // Add tags together
         events.appendChild(mail);

@@ -46,6 +46,7 @@ public class LogWriterTest {
 		
 		log = new LogWriter(file3);
 	}
+	/*
 	@AfterClass
 	public static void tearDown() {
 		boolean kill3 = false;
@@ -61,6 +62,7 @@ public class LogWriterTest {
 			file3.delete();
 		}
 	}
+	/**/
 	
 	// TESTS
 	// Gags
