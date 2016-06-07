@@ -10,3 +10,4 @@ KPSmart/.settings/
 
 # LogFiles
 *.xml
+/bin/

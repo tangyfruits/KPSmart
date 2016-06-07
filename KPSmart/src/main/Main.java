@@ -20,9 +20,9 @@ public class Main {
 	private ArrayList<Location> locations;
 	private ArrayList<User> accounts;
 	private User currentUser;
-	private List<DeliveryRequest> deliveryRequests;
 	private HashMap<TuplePriority, ArrayList<Integer>> amountOfMailDeliveryTimes;
-
+	private HashMap<Tuple, ArrayList<Double>> amountOfMail;
+	private ArrayList<DeliveryRequest> deliveryRequests;
 
 	private int events;
 	private double totalExp;
@@ -30,10 +30,12 @@ public class Main {
 
 	// CONSTRUCTOR
 	public Main() {
+
 		locations = new ArrayList<Location>();
 		accounts = new ArrayList<User>();
 		deliveryRequests = new ArrayList<DeliveryRequest>();
 		amountOfMailDeliveryTimes = new HashMap<>();
+		amountOfMail = new HashMap<>();
 		// read from encrypted file and add them in!
 
 		// read from encrypted file,create User objects and add them in!
@@ -111,13 +113,55 @@ public class Main {
 
 	}
 
+	public void addToAmountOfMail(String origin, String destination, double weight, double volume) {
+		boolean success = false;
+		for (Tuple t : amountOfMail.keySet()) {
+			if (t.getOrigin().equals(origin) && t.getDestination().equals(destination)) {
+				ArrayList<Double> amountList = amountOfMail.get(t);
+				double i = amountList.get(0);
+				i = i + weight;
+				double j = amountList.get(1);
+				j = j + volume;
+				double k = amountList.get(2);
+				k++;
+				amountList.clear();
+				amountList.add(i);
+				amountList.add(j);
+				amountList.add(k);
+				amountOfMail.put(t, amountList);
+				success = true;
+			}
+		}
+		if (!success) {
+			Tuple t = new Tuple(origin, destination);
+			ArrayList<Double> weightAndVolume = new ArrayList<>();
+			weightAndVolume.add(weight);
+			weightAndVolume.add(volume);
+			weightAndVolume.add(1.0);
+			amountOfMail.put(t, weightAndVolume);
+		}
+		mailReportPrint();
+	}
+
+	private void mailReportPrint() {
+		for (Tuple t : amountOfMail.keySet()) {
+			ArrayList<Double> amountList = amountOfMail.get(t);
+			System.out.println(t.getOrigin() + " to " + t.getDestination() + ". Total Weight: " + amountList.get(0)
+					+ " Total Volume:" + amountList.get(1) + " Total Instances: " + amountList.get(2));
+		}
+	}
+
+	public HashMap<Tuple, ArrayList<Double>> getAmountOfMail() {
+		return amountOfMail;
+	}
+
 	/* Get delivery details ready */
 	public DeliveryRequest getDeliveryDetails(String origin,
 			String destination, double weight, double volume, RouteDisplay route) {
 
 		// get duration
 		int duration = route.getTotalDuration(LocalDateTime.now());
-
+	
 		// translate route list into legs
 		ArrayList<Leg> legs = new ArrayList<>();
 		for (Route r : route.getRoute()) {
@@ -141,9 +185,9 @@ public class Main {
 		Location destinationLoc = getLocation(destination);
 
 		// create Delivery request
-		DeliveryRequest request = new DeliveryRequest(logTime,
-				originLoc, destinationLoc, weight, volume, priority, duration,
-				legs);
+
+		DeliveryRequest request = new DeliveryRequest(LocalDateTime.now(), originLoc, destinationLoc, weight, volume,
+				priority, duration, legs);
 
 		// add to delivery events field
 		addToAverageDeliveryTimes(origin, destination, duration, priority);
@@ -157,8 +201,6 @@ public class Main {
 		return request;
 
 	}
-
-
 
 	public void addToAverageDeliveryTimes(String origin, String destination, int duration, String priority) {
 		boolean success = false;
@@ -385,6 +427,7 @@ public class Main {
 	}
 
 	// REPORT DISPLAYING
+
 	public void addTotalRev(double amount) {
 		totalRev += amount;
 	}
