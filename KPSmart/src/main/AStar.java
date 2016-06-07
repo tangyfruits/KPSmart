@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+import event.Route;
+
 
 public class AStar {
 	/*
@@ -26,7 +28,7 @@ public class AStar {
 	 * goal ) fringe.enqueue([neighbour, node, costToNeigh, estTotal])
 	 */
 
-	// VARIABLES
+	// FIELDS
 	private Location start;
 	private Location goal;
 	private ArrayList<Location> graph;

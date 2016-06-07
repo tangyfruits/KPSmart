@@ -7,9 +7,10 @@ import java.util.List;
 
 import main.Location;
 import main.Main;
-import main.Route;
 
 import org.junit.Test;
+
+import event.Route;
 
 /**
  * Will need to manually input customerPrices in console to run these. 
