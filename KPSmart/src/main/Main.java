@@ -16,7 +16,7 @@ public class Main {
 	private User currentUser;
 	private HashMap<Tuple, ArrayList<Double>> amountOfMail;
 	private ArrayList<DeliveryRequest> deliveryRequests;
-	private HashMap<Tuple,ArrayList<Double>> critical;
+	private HashMap<Tuple,ArrayList<Double>> criticalRoutes;
 
 	private int events;
 	private double totalExp;
@@ -28,7 +28,7 @@ public class Main {
 		accounts = new ArrayList<User>();
 		deliveryRequests = new ArrayList<DeliveryRequest>();
 		amountOfMail = new HashMap<>();
-		critical = new HashMap<>();
+		criticalRoutes = new HashMap<>();
 		// read from encrypted file and add them in!
 
 		// read from encrypted file,create User objects and add them in!
@@ -153,6 +153,14 @@ public class Main {
 
 	public HashMap<Tuple, ArrayList<Double>> getAmountOfMail() {
 		return amountOfMail;
+	}
+	
+	public void addToCriticalRoutes(String origin,String dest){
+		
+	}
+	
+	public HashMap<Tuple, ArrayList<Double>> getCriticalRoutes(){
+		return criticalRoutes;
 	}
 
 	public DeliveryRequest logDeliveryRequest(String origin, String destination, double weight, double volume,
