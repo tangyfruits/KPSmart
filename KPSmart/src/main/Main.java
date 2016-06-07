@@ -23,6 +23,7 @@ public class Main {
 		locations = new ArrayList<Location>();
 		accounts = new ArrayList<User>();
 		deliveryRequests = new ArrayList<DeliveryRequest>();
+		totalRev = 63;
 
 		// read from encrypted file and add them in!
 
