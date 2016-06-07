@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import event.CustomerPrice;
@@ -20,6 +21,8 @@ public class Main {
 	private ArrayList<User> accounts;
 	private User currentUser;
 	private List<DeliveryRequest> deliveryRequests;
+	private HashMap<TuplePriority, ArrayList<Integer>> amountOfMailDeliveryTimes;
+
 
 	private int events;
 	private double totalExp;
@@ -30,7 +33,7 @@ public class Main {
 		locations = new ArrayList<Location>();
 		accounts = new ArrayList<User>();
 		deliveryRequests = new ArrayList<DeliveryRequest>();
-
+		amountOfMailDeliveryTimes = new HashMap<>();
 		// read from encrypted file and add them in!
 
 		// read from encrypted file,create User objects and add them in!
@@ -43,8 +46,7 @@ public class Main {
 
 	// METHODS
 	// Route Finder
-	public ArrayList<RouteDisplay> getPossibleRoutes(String origin,
-			String destination, double weight, double volume) {
+	public ArrayList<RouteDisplay> getPossibleRoutes(String origin, String destination, double weight, double volume) {
 
 		// find the locations matching the given strings
 		Location originLoc = getLocation(origin);
@@ -52,8 +54,7 @@ public class Main {
 
 		// route selection
 		AStar astar = new AStar(locations, originLoc, destinationLoc);
-		ArrayList<ArrayList<Route>> routes = astar.twoListsOfRoutes(weight,
-				volume);
+		ArrayList<ArrayList<Route>> routes = astar.twoListsOfRoutes(weight, volume);
 
 		// set up list to pass to GUI
 		ArrayList<RouteDisplay> out = new ArrayList<>();
@@ -70,8 +71,7 @@ public class Main {
 			domesticCities.add("Christchurch");
 			domesticCities.add("Dunedin");
 
-			if (domesticCities.contains(origin)
-					&& domesticCities.contains(destination)) {
+			if (domesticCities.contains(origin) && domesticCities.contains(destination)) {
 				overallPriority = overallPriority + "Domestic ";
 			} else {
 				overallPriority = overallPriority + "International ";
@@ -89,8 +89,7 @@ public class Main {
 			// calculate customer price
 			double price = 0.0;
 			for (Route k : list) {
-				price += (weight * k.getPrice().getWeightCost() + volume
-						* k.getPrice().getVolumeCost());
+				price += (weight * k.getPrice().getWeightCost() + volume * k.getPrice().getVolumeCost());
 			}
 
 			RouteDisplay rDisp = new RouteDisplay(overallPriority, list, price);
@@ -122,12 +121,10 @@ public class Main {
 		// translate route list into legs
 		ArrayList<Leg> legs = new ArrayList<>();
 		for (Route r : route.getRoute()) {
-			double freightCost = weight * r.getWeightCost() + volume
-					* r.getVolumeCost();
-			double customerPrice = weight * r.getPrice().getWeightCost()
-					+ volume * r.getPrice().getVolumeCost();
-			legs.add(new Leg(r.getOrigin(), r.getDestination(), r.getType(), r
-					.getCompany(), freightCost, customerPrice));
+			double freightCost = weight * r.getWeightCost() + volume * r.getVolumeCost();
+			double customerPrice = weight * r.getPrice().getWeightCost() + volume * r.getPrice().getVolumeCost();
+			legs.add(new Leg(r.getOrigin(), r.getDestination(), r.getType(), r.getCompany(), freightCost,
+					customerPrice));
 		}
 		
 		return logDeliveryRequest(LocalDateTime.now(),origin,destination, legs, weight,volume,route.getPriority(),duration);
@@ -149,6 +146,7 @@ public class Main {
 				legs);
 
 		// add to delivery events field
+		addToAverageDeliveryTimes(origin, destination, duration, priority);
 		deliveryRequests.add(request);
 
 		addEvent();
@@ -160,9 +158,41 @@ public class Main {
 
 	}
 
+
+
+	public void addToAverageDeliveryTimes(String origin, String destination, int duration, String priority) {
+		boolean success = false;
+		for (TuplePriority t : amountOfMailDeliveryTimes.keySet()) {
+			if (t.getOrigin().equals(origin) && t.getDestination().equals(destination)) {
+				ArrayList<Integer> totalAndCount = amountOfMailDeliveryTimes.get(t);
+				totalAndCount.set(0, totalAndCount.get(0) + duration);
+				totalAndCount.set(1, totalAndCount.get(1) + 1);
+				amountOfMailDeliveryTimes.put(t, totalAndCount);
+				success = true;
+			}
+		}
+		if (!success) {
+			TuplePriority t = new TuplePriority(origin, destination, priority);
+			ArrayList<Integer> totalAndCount = new ArrayList<>();
+			totalAndCount.add(duration);
+			totalAndCount.add(1);
+			amountOfMailDeliveryTimes.put(t, totalAndCount);
+		}
+	}
+
+	public Integer averageDeliveryTime(String origin, String destination, String priority) {
+		for (TuplePriority t : amountOfMailDeliveryTimes.keySet()) {
+			if (t.getOrigin().equals(origin) && t.getDestination().equals(destination)
+					&& t.getPriority().equals(priority)) {
+				ArrayList<Integer> totalAndCount = amountOfMailDeliveryTimes.get(t);
+				return totalAndCount.get(0) / totalAndCount.get(1);
+			}
+		}
+		return -1;
+	}
+
 	/* Log Customer Price */
-	public CustomerPrice logCustomerPriceUpdate(String origin,
-			String destination, String priority, double weightCost,
+	public CustomerPrice logCustomerPriceUpdate(String origin, String destination, String priority, double weightCost,
 			double volumeCost) {
 
 		// find the locations matching the given strings, if they are already in
@@ -183,8 +213,7 @@ public class Main {
 		// check if customer price already exists, if so, update it
 		for (int i = 0; i < originLoc.getPrices().size(); i++) {
 			CustomerPrice c = originLoc.getPrices().get(i);
-			if (c.getDestination().equals(destinationLoc)
-					&& c.getPriority().equals(priority)) {
+			if (c.getDestination().equals(destinationLoc) && c.getPriority().equals(priority)) {
 				c.setVolumeCost(volumeCost);
 				c.setWeightCost(weightCost);
 				return c;
@@ -195,8 +224,7 @@ public class Main {
 
 		// if it doesn't exist, create it, add it to the relevant Location
 		CustomerPrice price;
-		price = new CustomerPrice(originLoc, destinationLoc, priority,
-				weightCost, volumeCost);
+		price = new CustomerPrice(originLoc, destinationLoc, priority, weightCost, volumeCost);
 		originLoc.addPrice(price);
 
 		addEvent();
@@ -206,9 +234,8 @@ public class Main {
 	}
 
 	/* Log Transport Cost (Route) */
-	public void logTransportCostUpdate(String origin, String destination,
-			String company, String type, double weightCost, double volumeCost,
-			int maxWeight, int maxVolume, int duration, int frequency,
+	public void logTransportCostUpdate(String origin, String destination, String company, String type,
+			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, int frequency,
 			DayOfWeek day, int startTime) {
 
 		// find the Locations matching the given strings, if they are already in
@@ -236,15 +263,13 @@ public class Main {
 
 		// get customer price matching the route
 		CustomerPrice price = null;
-		price = getCustomerPrice(originLoc, destinationLoc, origin,
-				destination, priority);
+		price = getCustomerPrice(originLoc, destinationLoc, origin, destination, priority);
 
 		// check if route already exists, if it does, update it
 		Boolean routeExists = false;
 		for (int k = 0; k < originLoc.getRoutes().size(); k++) {
 			Route r = originLoc.getRoutes().get(k);
-			if (r.getDestination().equals(destinationLoc)
-					&& r.getCompany().equals(company)
+			if (r.getDestination().equals(destinationLoc) && r.getCompany().equals(company)
 					&& r.getType().equals(type)) {
 				r.setWeightCost(weightCost);
 				r.setVolumeCost(volumeCost);
@@ -260,9 +285,8 @@ public class Main {
 
 		if (!routeExists) {
 			// if it doesn't always exist, create route and add to graph
-			Route route = new Route(originLoc, destinationLoc, company, type,
-					priority, weightCost, volumeCost, maxWeight, maxVolume,
-					duration, frequency, day, startTime, price);
+			Route route = new Route(originLoc, destinationLoc, company, type, priority, weightCost, volumeCost,
+					maxWeight, maxVolume, duration, frequency, day, startTime, price);
 			originLoc.addRoute(route);
 		}
 
@@ -270,19 +294,15 @@ public class Main {
 		addEvent();
 	}
 
-	public CustomerPrice getCustomerPrice(Location originLoc,
-			Location destinationLoc, String origin, String destination,
-			String priority) {
-		
+	public CustomerPrice getCustomerPrice(Location originLoc, Location destinationLoc, String origin,
+			String destination, String priority) {
 		// check if there's already a price for the (origin, destination,
 		// priority)
 		CustomerPrice customerPrice = null;
 		for (int k = 0; k < originLoc.getPrices().size(); k++) {
 
-			if (originLoc.getPrices().get(k).getDestination()
-					.equals(destinationLoc)
-					&& originLoc.getPrices().get(k).getPriority()
-							.equals(priority)) {
+			if (originLoc.getPrices().get(k).getDestination().equals(destinationLoc)
+					&& originLoc.getPrices().get(k).getPriority().equals(priority)) {
 				customerPrice = originLoc.getPrices().get(k);
 			}
 		}
@@ -292,8 +312,7 @@ public class Main {
 
 			double custWeightCost = -1;
 			double custVolCost = -1;
-			BufferedReader input = new BufferedReader(new InputStreamReader(
-					System.in));
+			BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 			System.out.print("Enter weightCost");
 			try {
 				custWeightCost = Double.parseDouble(input.readLine());
@@ -305,23 +324,20 @@ public class Main {
 			} catch (IOException e) {
 			}
 
-			logCustomerPriceUpdate(origin, destination, priority,
-					custWeightCost, custVolCost);
+			logCustomerPriceUpdate(origin, destination, priority, custWeightCost, custVolCost);
 		}
 		return customerPrice;
 	}
 
 	/* Log Discontinuing Route */
-	public void discontinueTransportRoute(String origin, String destination,
-			String company, String type) {
+	public void discontinueTransportRoute(String origin, String destination, String company, String type) {
 
 		Location originLoc = getLocation(origin);
 
 		Route toCancel = null;
 		// find the matching route out of origin
 		for (Route r : originLoc.getRoutes()) {
-			if (r.getCompany().equals(company)
-					&& r.getDestination().getName().equals(destination)
+			if (r.getCompany().equals(company) && r.getDestination().getName().equals(destination)
 					&& r.getType().equals(type)) {
 				toCancel = r;
 			}
@@ -336,6 +352,7 @@ public class Main {
 
 	}
 
+	// Getters
 	public Location getLocation(String name) {
 		Location location = null;
 		for (Location loc : locations) {
@@ -346,9 +363,15 @@ public class Main {
 		return location;
 	}
 
-	// Getters
 	public List<DeliveryRequest> getDeliveryRequests() {
 		return deliveryRequests;
+	}
+
+	/**
+	 * @return the amountOfMailDeliveryTimes
+	 */
+	public HashMap<TuplePriority, ArrayList<Integer>> getAmountOfMailDeliveryTimes() {
+		return amountOfMailDeliveryTimes;
 	}
 
 	public List<Location> getLocations() {
@@ -356,6 +379,7 @@ public class Main {
 	}
 
 	// Setters + Adders
+
 	public void addLocation(Location location) {
 		locations.add(location);
 	}
