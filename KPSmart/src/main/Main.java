@@ -16,7 +16,7 @@ public class Main {
 	private User currentUser;
 	private HashMap<Tuple, ArrayList<Double>> amountOfMail;
 	private ArrayList<DeliveryRequest> deliveryRequests;
-	private HashMap<Tuple,ArrayList<Double>> criticalRoutes;
+	public HashMap<Tuple,ArrayList<Double>> criticalRoutes;
 
 	private int events;
 	private double totalExp;
@@ -379,12 +379,12 @@ public class Main {
 			double custWeightCost = -1;
 			double custVolCost = -1;
 			BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-			System.out.print("Enter weightCost");
+			System.out.print("Enter weightCost: $");
 			try {
 				custWeightCost = Double.parseDouble(input.readLine());
 			} catch (IOException e) {
 			}
-			System.out.print("Enter volumeCost");
+			System.out.print("Enter volumeCost: $");
 			try {
 				custVolCost = Double.parseDouble(input.readLine());
 			} catch (IOException e) {
