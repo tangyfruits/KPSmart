@@ -155,8 +155,46 @@ public class Main {
 		return amountOfMail;
 	}
 	
-	public void addToCriticalRoutes(String origin,String dest){
+	public void addToCriticalRoutes(String origin,String dest, String prior,double weight,double volume){
+		Tuple odp = new Tuple(origin, dest, prior);
+		ArrayList<Double> costPrice = new ArrayList<>();
 		
+		Location originLoc = null;
+		Location destinationLoc = null;
+		CustomerPrice price = null;
+		for (int i = 0; i < locations.size(); i++) {
+			if (locations.get(i).getName().equals(origin)) {
+				originLoc = locations.get(i);
+			}
+			if (locations.get(i).getName().equals(dest)) {
+				destinationLoc = locations.get(i);
+			}
+		}
+		
+		if (originLoc == null) {
+			originLoc = new Location(origin);
+			addLocation(originLoc);
+		}
+		if (destinationLoc == null) {
+			destinationLoc = new Location(dest);
+			addLocation(destinationLoc);
+		}
+		
+		price = getCustomerPrice(originLoc, destinationLoc, origin, dest, prior);
+		double cp = price.getWeightCost()*weight;//DO THEY PAY VOL OR WEIGHT
+		double rp = 0.0;
+		
+		for (Route r: originLoc.getRoutes()){
+			if (r.getOrigin().equals(originLoc)&&r.getDestination().equals(destinationLoc)){//is the same route
+				rp = r.getWeightCost();//find trans cost
+			}
+		}
+		costPrice.add(cp); //1st element: price
+		costPrice.add(rp); //2nd element: cost
+		
+		if (rp>cp){	
+			criticalRoutes.put(odp, costPrice);
+		}
 	}
 	
 	public HashMap<Tuple, ArrayList<Double>> getCriticalRoutes(){
