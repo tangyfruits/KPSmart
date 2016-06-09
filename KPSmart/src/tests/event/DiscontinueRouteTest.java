@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class DiscontinueEventTest {
+public class DiscontinueRouteTest {
 
 	@Test
 	public void testDiscontinueEvent() {

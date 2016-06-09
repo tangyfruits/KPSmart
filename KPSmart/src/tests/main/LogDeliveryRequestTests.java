@@ -4,11 +4,13 @@ import static org.junit.Assert.*;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-import main.DeliveryRequest;
+
 import main.Main;
-import main.Route;
 import main.RouteDisplay;
 import org.junit.Test;
+
+import event.DeliveryRequest;
+import event.Route;
 
 /**
  * 
@@ -231,7 +233,7 @@ public class LogDeliveryRequestTests {
 				"Paris", 15, 1);
 		// should have no requests so far
 		assertEquals(0, main.getDeliveryRequests().size());
-		main.logDeliveryRequest("Wellington", "Paris",
+		main.getDeliveryDetails("Wellington", "Paris",
 				15, 1, r.get(0));
 		// should add a request
 		assertEquals(1, main.getDeliveryRequests().size());
@@ -249,7 +251,7 @@ public class LogDeliveryRequestTests {
 				"Air", 1, 3, 50, 50, 12, 18, DayOfWeek.MONDAY, 15);
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Paris", 1, 1);
-		DeliveryRequest req = main.logDeliveryRequest("Wellington", "Paris", 1,
+		DeliveryRequest req = main.getDeliveryDetails("Wellington", "Paris", 1,
 				1, r.get(0));
 		// check Legs
 		assertEquals("Wellington", req.getLegs().get(0).getOrigin().toPretty());
@@ -257,14 +259,14 @@ public class LogDeliveryRequestTests {
 				.toPretty());
 		assertEquals("Air", req.getLegs().get(0).getType());
 		assertEquals("NZPost", req.getLegs().get(0).getCompany());
-		assertEquals(29, req.getLegs().get(0).getCustomerPrice(), 0);
-		assertEquals(4, req.getLegs().get(0).getFreightCost(), 0);
+		assertEquals(29, req.getLegs().get(0).getPrice(), 0);
+		assertEquals(4, req.getLegs().get(0).getCost(), 0);
 		assertEquals("Auckland", req.getLegs().get(1).getOrigin().toPretty());
 		assertEquals("Paris", req.getLegs().get(1).getDestination().toPretty());
 		assertEquals("Air", req.getLegs().get(1).getType());
 		assertEquals("UPS", req.getLegs().get(1).getCompany());
-		assertEquals(22, req.getLegs().get(1).getCustomerPrice(), 0);
-		assertEquals(22, req.getLegs().get(1).getFreightCost(), 0);
+		assertEquals(22, req.getLegs().get(1).getPrice(), 0);
+		assertEquals(22, req.getLegs().get(1).getCost(), 0);
 	}
 
 	// check details of delivery request once created
@@ -281,7 +283,7 @@ public class LogDeliveryRequestTests {
 		ArrayList<RouteDisplay> r = main.getPossibleRoutes("Wellington",
 				"Paris", 1, 1);
 		int dur = r.get(0).getTotalDuration(LocalDateTime.now());
-		DeliveryRequest req = main.logDeliveryRequest("Wellington", "Paris", 1,
+		DeliveryRequest req = main.getDeliveryDetails("Wellington", "Paris", 1,
 				1, r.get(0));
 		assertNotNull(req.getLogTime());
 		assertEquals("Wellington", req.getOrigin().toPretty());

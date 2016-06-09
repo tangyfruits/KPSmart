@@ -1,9 +1,12 @@
-package main;
+package event;
 
 import java.time.DayOfWeek;
 
-public class Route {
-	// VARIABLES
+import main.Location;
+
+public class Route implements Event {
+	
+	// FIELDS
 	private Location origin;
 	private Location destination;
 	private String company;
@@ -18,6 +21,7 @@ public class Route {
 	private DayOfWeek day;
 	private int startTime;
 	private CustomerPrice price;
+	private final String eventType = "cost";
 	
 	// CONSTRUCTOR
 	public Route(Location origin, Location destination, String company, String type, 
@@ -41,6 +45,20 @@ public class Route {
 	}
 
 	// METHODS
+	// Route Functionality
+	public boolean equals(Route r){
+		if(this.origin.equals(r.getOrigin())&& this.destination.equals(r.getDestination())
+				&& this.company.equals(r.getCompany())&& this.type.equals(r.getType())){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	public double getCost(double weight, double volume){
+		return (this.volumeCost * volume + this.weightCost * weight);
+	}
+	
 	// Getters
 	public Location getOrigin() {
 		return origin;
@@ -54,6 +72,7 @@ public class Route {
 	public String getType() {
 		return type;
 	}
+	
 	public String getPriority() {
 		return priority;
 	}
@@ -78,11 +97,20 @@ public class Route {
 	public DayOfWeek getDay() {
 		return day;
 	}
+	public int getStartTime() {
+		return startTime;
+	}
 	public CustomerPrice getPrice() {
 		return price;
 	}
+	public String getEventType() {
+		return eventType;
+	}
 	
 	// Setters
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
 	public void setWeightCost(double weightCost) {
 		this.weightCost = weightCost;
 	}	
@@ -104,40 +132,19 @@ public class Route {
 	public void setDay(DayOfWeek day) {
 		this.day = day;
 	}
-	public int getStartTime() {
-		return startTime;
-	}
-
 	public void setStartTime(int startTime) {
 		this.startTime = startTime;
 	}
-
 	public void setPrice(CustomerPrice price) {
 		this.price = price;
 	}
-	public void setPriority(String priority) {
-		this.priority = priority;
-	}
 	
-	// Other (Stuff for Route Selection?)
-	public double getCost(double weight, double volume){
-		return (this.volumeCost * volume + this.weightCost * weight);
-	}
-	
+	// Printers
 	public String toString(){
 		return ("R ORIGIN: "+getOrigin().toString()+" R DEST: "+getDestination().toString());
 	}
 	public String toPretty() { // (like toString but prettier)
 		return getOrigin().toPretty() + " ---> " + getDestination().toPretty();
 	}
-	
-	public boolean equals(Route r){
-		if(this.origin.equals(r.getOrigin())&& this.destination.equals(r.getDestination())
-				&& this.company.equals(r.getCompany())&& this.type.equals(r.getType())){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
+
 }
