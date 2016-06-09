@@ -663,6 +663,8 @@ public class Controller implements Initializable {
 	private Text text1, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11, text12, text13, text14,
 			text15, text16, text17, text18, text19, text20, text21, text22, text23, text24, text25, text26, text27,
 			text28, text29, text30, text31, text32, text33, text34;
+	@FXML
+	private Label logtype;
 
 	@FXML
 	private void readLogEvent(ActionEvent event) {
@@ -673,6 +675,7 @@ public class Controller implements Initializable {
 		}
 		
 		// if(CustomerPrice)
+//		logtype.setText("Customer Price");
 //		text1.setText("User: ");
 //		text19.setText("Login Time: ");
 //		text5.setText("Origin: ");
@@ -689,6 +692,7 @@ public class Controller implements Initializable {
 //		text32.setText("v");
 		
 		// else if(DeliveryRequest)
+//		logtype.setText("Delivery Request");
 //		text1.setText("User: ");
 //		text19.setText("Login Time: ");
 //		text3.setText("Origin: ");
@@ -707,6 +711,7 @@ public class Controller implements Initializable {
 //		text26.setText("e");
 		
 		// else if(DiscontinueRoute)
+//		logtype.setText("Discontinue Route");
 //		text1.setText("User: ");
 //		text19.setText("Login Time: ");
 //		text5.setText("Origin: ");
@@ -721,37 +726,38 @@ public class Controller implements Initializable {
 //		text28.setText("t");
 
 		// else if(Route)
-		text1.setText("User: ");
-		text19.setText("Login Time: ");
-		text3.setText("Origin: ");
-		text4.setText("o");
-		text5.setText("Company: ");
-		text6.setText("c");
-		text7.setText("Type: ");
-		text8.setText("t");
-		text9.setText("Priority: ");
-		text10.setText("p");
-		text11.setText("Weight Cost: ");
-		text12.setText("wc");
-		text13.setText("Volume Cost: ");
-		text14.setText("vc");
-		text15.setText("Max Weight: ");
-		text16.setText("mw");
-		text17.setText("Max Volume: ");
-		text18.setText("mv");
-		text21.setText("Destination: ");
-		text22.setText("d");
-		text23.setText("Duration: ");
-		text24.setText("dur");
-		text25.setText("Frequency: ");
-		text26.setText("f");
-		text27.setText("Day: ");
-		text28.setText("day");
-		text29.setText("Start Time: ");
-		text30.setText("st");
-		text31.setText("Price: ");
-		text32.setText("$");
-		text33.setText("Event Type: ");
-		text34.setText("et");
+//		logtype.setText("Route");
+//		text1.setText("User: ");
+//		text19.setText("Login Time: ");
+//		text3.setText("Origin: ");
+//		text4.setText("o");
+//		text5.setText("Company: ");
+//		text6.setText("c");
+//		text7.setText("Type: ");
+//		text8.setText("t");
+//		text9.setText("Priority: ");
+//		text10.setText("p");
+//		text11.setText("Weight Cost: ");
+//		text12.setText("wc");
+//		text13.setText("Volume Cost: ");
+//		text14.setText("vc");
+//		text15.setText("Max Weight: ");
+//		text16.setText("mw");
+//		text17.setText("Max Volume: ");
+//		text18.setText("mv");
+//		text21.setText("Destination: ");
+//		text22.setText("d");
+//		text23.setText("Duration: ");
+//		text24.setText("dur");
+//		text25.setText("Frequency: ");
+//		text26.setText("f");
+//		text27.setText("Day: ");
+//		text28.setText("day");
+//		text29.setText("Start Time: ");
+//		text30.setText("st");
+//		text31.setText("Price: ");
+//		text32.setText("$");
+//		text33.setText("Event Type: ");
+//		text34.setText("et");
 	}
 }
