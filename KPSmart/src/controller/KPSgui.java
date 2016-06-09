@@ -17,7 +17,7 @@ public class KPSgui extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {		
-		Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/views/readlog.fxml"));
 		primaryStage.setTitle("KPSmart");
 		Scene scene = new Scene(root, 700, 600);
 		primaryStage.setScene(scene);

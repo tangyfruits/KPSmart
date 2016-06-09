@@ -66,30 +66,6 @@ public class Controller implements Initializable {
 		stage.show();
 		loggedin = false;
 	}
-	
-
-	/** REPORTS MENU ITEM */
-
-	@FXML
-	MenuButton reportsmenu;
-
-	@FXML
-	private void generalReportsAction(ActionEvent event) throws IOException {
-		Stage stage = (Stage) reportsmenu.getScene().getWindow();
-		Parent root = FXMLLoader.load(getClass().getResource("/views/generalreports.fxml"));/* Exception */
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-	}
-
-	@FXML
-	private void routeLoadMenuAction(ActionEvent event) throws IOException {
-		Stage stage = (Stage) reportsmenu.getScene().getWindow();
-		Parent root = FXMLLoader.load(getClass().getResource("/views/routeload.fxml"));/* Exception */
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-	}
 
 	/** LOG EVENT MENU ITEM */
 
@@ -360,7 +336,7 @@ public class Controller implements Initializable {
 
 	@FXML
 	private CheckMenuItem monday, tuesday, wednesday, thursday, friday;
-	
+
 	@FXML
 	private MenuButton dayMenu;
 
@@ -661,21 +637,121 @@ public class Controller implements Initializable {
 	private Text expenditure, revenue, eventcount;
 	@FXML
 	private TabPane reportsTab;
-	
+
 	@FXML
 	private Button getReports;
 	@FXML
 	private Button routeLoad;
-	
+
 	@FXML
 	private void getReportsAction(ActionEvent event) {
 		expenditure.setText(String.valueOf(main.getTotalExp()));
 		revenue.setText(String.valueOf(main.getTotalRev()));
 		eventcount.setText(String.valueOf(main.getTotalEvents()));
 	}
-	
+
 	@FXML
 	private void routeLoadAction(ActionEvent event) {
+
+	}
+
+	private boolean firstview = true;
+
+	@FXML
+	private Button previous, next, readLog;
+	@FXML
+	private Text text1, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11, text12, text13, text14,
+			text15, text16, text17, text18, text19, text20, text21, text22, text23, text24, text25, text26, text27,
+			text28, text29, text30, text31, text32, text33, text34;
+
+	@FXML
+	private void readLogEvent(ActionEvent event) {
+		if (firstview) {
+			readLog.setVisible(false);
+			firstview = false;
+			// readLogEvent(event);
+		}
 		
+		// if(CustomerPrice)
+//		text1.setText("User: ");
+//		text19.setText("Login Time: ");
+//		text5.setText("Origin: ");
+//		text6.setText("o");
+//		text23.setText("Destination: ");
+//		text24.setText("d");
+//		text9.setText("Priority: ");
+//		text10.setText("p");
+//		text13.setText("Event Type: ");
+//		text14.setText("e");
+//		text27.setText("Weight Cost: ");
+//		text28.setText("w");
+//		text31.setText("Volume Cost: ");
+//		text32.setText("v");
+		
+		// else if(DeliveryRequest)
+//		text1.setText("User: ");
+//		text19.setText("Login Time: ");
+//		text3.setText("Origin: ");
+//		text4.setText("o");
+//		text5.setText("Weight: ");
+//		text6.setText("w");
+//		text7.setText("Volume: ");
+//		text8.setText("v");
+//		text9.setText("Priority: ");
+//		text10.setText("p");
+//		text21.setText("Destination: ");
+//		text22.setText("d");
+//		text23.setText("Duration: ");
+//		text24.setText("du");
+//		text25.setText("Event Type: ");
+//		text26.setText("e");
+		
+		// else if(DiscontinueRoute)
+//		text1.setText("User: ");
+//		text19.setText("Login Time: ");
+//		text5.setText("Origin: ");
+//		text6.setText("o");
+//		text23.setText("Destination: ");
+//		text24.setText("d");
+//		text9.setText("Company: ");
+//		text10.setText("c");
+//		text13.setText("Event Type: ");
+//		text14.setText("e");
+//		text27.setText("Type: ");
+//		text28.setText("t");
+
+		// else if(Route)
+		text1.setText("User: ");
+		text19.setText("Login Time: ");
+		text3.setText("Origin: ");
+		text4.setText("o");
+		text5.setText("Company: ");
+		text6.setText("c");
+		text7.setText("Type: ");
+		text8.setText("t");
+		text9.setText("Priority: ");
+		text10.setText("p");
+		text11.setText("Weight Cost: ");
+		text12.setText("wc");
+		text13.setText("Volume Cost: ");
+		text14.setText("vc");
+		text15.setText("Max Weight: ");
+		text16.setText("mw");
+		text17.setText("Max Volume: ");
+		text18.setText("mv");
+		text21.setText("Destination: ");
+		text22.setText("d");
+		text23.setText("Duration: ");
+		text24.setText("dur");
+		text25.setText("Frequency: ");
+		text26.setText("f");
+		text27.setText("Day: ");
+		text28.setText("day");
+		text29.setText("Start Time: ");
+		text30.setText("st");
+		text31.setText("Price: ");
+		text32.setText("$");
+		text33.setText("Event Type: ");
+		text34.setText("et");
 	}
 }
