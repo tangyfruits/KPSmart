@@ -1,36 +1,46 @@
 package controller;
 
-import javafx.fxml.Initializable;
-
-import java.awt.MenuItem;
 import java.io.IOException;
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.CustomerPrice;
+import main.DeliveryRequest;
+import main.Main;
+import main.RouteDisplay;
 
 
 public class Controller implements Initializable {
 	
 	private boolean loggedin = false;
+	private Main main;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+        main = new Main();
+        main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 12, 12);
+        main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air", 4, 4, 15, 15, 12, 24, DayOfWeek.THURSDAY, 12);
+        main.logCustomerPriceUpdate("Wellington", "Auckland", "Standard", 2, 5);
+        main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Standard",2 , 1, 15, 15, 12, 24, DayOfWeek.THURSDAY, 12);
     }
     
     /** NAV BAR BUTTONS 
@@ -70,7 +80,7 @@ public class Controller implements Initializable {
     /** LOG EVENT MENU ITEM */
     
     @FXML MenuButton logeventmenu ;
-    
+
     @FXML
     private void deliveryRequestAction(ActionEvent event) throws IOException{
     	System.out.println("Delivery Request");
@@ -358,27 +368,27 @@ public class Controller implements Initializable {
     
     @FXML
     private void mondayAction(ActionEvent event) {
-    	day = "Monday";
+    	day = "MONDAY";
     	dayMenu.setText("Monday");
     }
     @FXML
     private void tuesdayAction(ActionEvent event) {
-    	day = "Tuesday";
+    	day = "TUESDAY";
     	dayMenu.setText("Tuesday");
     }
     @FXML
     private void wednesdayAction(ActionEvent event) {
-    	day = "Wednesday";
+    	day = "WEDNESDAY";
     	dayMenu.setText("Wednesday");
     }
     @FXML
     private void thursdayAction(ActionEvent event) {
-    	day = "Thursday";
+    	day = "THURSDAY";
     	dayMenu.setText("Thursday");
     }
     @FXML
     private void fridayAction(ActionEvent event) {
-    	day = "Friday";
+    	day = "FRIDAY";
     	dayMenu.setText("Friday");
     }
     
@@ -518,89 +528,174 @@ public class Controller implements Initializable {
     	timeMenu.setText("24");;
     }
     
+    @FXML 
+    private Button submit;
+    
+    private BooleanProperty completed = new SimpleBooleanProperty(false);
+    
+    @FXML 
+    private Text confirmation;  
+    
     /** TRANSPORT ROUTE FORM */
     
     @FXML
     private void transportRouteButtonAction(ActionEvent event) {
-    	System.out.println("Origin: " + selectedOrigin);
-    	System.out.println("Destination: " + selectedDest);
-    	String c = this.company.getText();
-    	System.out.println("Type: " + type);
     	String mw = this.maxweight.getText();
     	String mv = this.maxvolume.getText();
     	String wc = this.weightcost.getText();
     	String vc = this.volumecost.getText();
     	String d = this.duration.getText();
     	String f = this.frequency.getText();
-        System.out.println("Company: " + c);
-        System.out.println("Max Weight: " + mw);
-        System.out.println("Max Volume: " + mv);
-        System.out.println("Weight Cost: " + wc);
-        System.out.println("Volume Cost: " + vc);
-        System.out.println("Duration: " + d);
-        System.out.println("Frequency: " + f);
-
-    	System.out.println("Day: " + day);
-    	System.out.println("Time: " + time);
+    	
+    	//TODO set transport cost update to return object and check it isn't null
+    	
+    	main.logTransportCostUpdate(selectedOrigin, selectedDest, company.getText(), type, Double.parseDouble(wc), Double.parseDouble(vc), Integer.parseInt(mw), Integer.parseInt(mv), Integer.parseInt(d), Integer.parseInt(f), DayOfWeek.valueOf(day), time);
+        System.out.println(main.getTotalEvents());
+        
+        confirmation.visibleProperty().bind(completed);
+    	completed.set(true);
+    	originMenu.setDisable(true);
+    	destinationMenu.setDisable(true);
+    	weightcost.setDisable(true);
+    	volumecost.setDisable(true);
+    	maxweight.setDisable(true);
+    	maxvolume.setDisable(true);
+    	duration.setDisable(true);
+    	frequency.setDisable(true);
+    	typemenu.setDisable(true);
+    	dayMenu.setDisable(true);
+    	timeMenu.setDisable(true);
+    	submit.setDisable(true);
+    	company.setDisable(true);
     }
     
     /** PRICE UPDATE FORM */
     
     @FXML
     private void priceUpdateButtonAction(ActionEvent event) {
-    	System.out.println("Origin: " + selectedOrigin);
-    	System.out.println("Destination: " + selectedDest);
     	String wc = this.weightcost.getText();
     	String vc = this.volumecost.getText();
-    	System.out.println("Priority: " + priority);
-        System.out.println("Weight: " + wc);
-        System.out.println("Volume: " + vc);
+        
+        CustomerPrice price = main.logCustomerPriceUpdate(selectedOrigin, selectedDest, priority, Double.parseDouble(wc), Double.parseDouble(vc));
+        
+        if(price !=null){
+        	confirmation.visibleProperty().bind(completed);
+        	completed.set(true);
+        	originMenu.setDisable(true);
+        	destinationMenu.setDisable(true);
+        	weightcost.setDisable(true);
+        	volumecost.setDisable(true);
+        	prioritymenu.setDisable(true);
+        	submit.setDisable(true);
+        }
+        
+        System.out.println(main.getTotalEvents());
+
     }
     
     /** DELIVERY REQUEST FORM */
+    
+    @FXML
+    private Button reselect;
+    
+    @FXML
+    private Button findPriorities;
     
     @FXML
     private RadioButton firstChoice;
     @FXML
     private RadioButton secondChoice;
     
-    private boolean hasPriorities = false;
+    private BooleanProperty hasPriorities = new SimpleBooleanProperty(false);
     
-    private String chosenPriority = "";
+    private RouteDisplay chosenPriority = null;
+    
+    private ArrayList<RouteDisplay> routes;
     
     @FXML
     private TextField weight;
     @FXML
     private TextField volume;
+      
+    @FXML
+    private Text noRoutes;
     
+    private BooleanProperty routeless = new SimpleBooleanProperty(false);
+        
     @FXML
     private void findPrioritiesButtonAction(ActionEvent event) {
-    	System.out.println("Origin: " + selectedOrigin);
-    	System.out.println("Destination: " + selectedDest);
     	String w = this.weight.getText();
     	String v = this.volume.getText();
-    	System.out.println("Weight: " + w);
-        System.out.println("Volume: " + v);
-        firstChoice.setText("First Priority Choice");
-        secondChoice.setText("Second Priority Choice");
-        hasPriorities = true;
+        firstChoice.setSelected(false);
+        secondChoice.setSelected(false);
+        routes = main.getPossibleRoutes(selectedOrigin, selectedDest, Double.parseDouble(w), Double.parseDouble(v));
+        
+        if (routes.size()>0) {
+			submit.visibleProperty().bind(hasPriorities);
+			reselect.visibleProperty().bind(hasPriorities);
+			firstChoice.setText(routes.get(0).getPriority() + ": $"
+					+ routes.get(0).getPrice());
+			firstChoice.visibleProperty().bind(hasPriorities);
+			if (routes.size() == 2) {
+				secondChoice.setText(routes.get(1).getPriority() + ": $"
+						+ routes.get(1).getPrice());
+				secondChoice.visibleProperty().bind(hasPriorities);
+			}
+			hasPriorities.set(true);
+		}
+        else {
+        	noRoutes.visibleProperty().bind(routeless);
+        	reselect.visibleProperty().bind(routeless);
+        	routeless.set(true);
+        }
+		originMenu.setDisable(true);
+    	destinationMenu.setDisable(true);
+    	weight.setDisable(true);
+    	volume.setDisable(true);
+    	findPriorities.setDisable(true);
     }
     
     @FXML
     private void deliveryRequestButtonAction(ActionEvent event) {
-    	if(hasPriorities){
-    		System.out.println("Priority: " + chosenPriority);
+    	if(!(chosenPriority==null)){
+    		System.out.println("Priority: " + chosenPriority.getPriority());
+        	DeliveryRequest req = main.logDeliveryRequest(selectedOrigin,selectedDest, Double.parseDouble(this.weight.getText()), Double.parseDouble(this.volume.getText()), chosenPriority);
+        	
+        	System.out.println(req.toString());
+        	System.out.println(main.getTotalEvents());
+        	chosenPriority = null;
+        	routes = null;
+        	confirmation.visibleProperty().bind(completed);
+        	
+        	if(req!=null){
+        		completed.set(true);
+        		reselect.setDisable(true);
+        		firstChoice.setDisable(true);
+        		secondChoice.setDisable(true);
+        		submit.setDisable(true);
+        	}
     	}
     }
     
     @FXML
+    private void reselectButtonAction(ActionEvent event) {
+    	originMenu.setDisable(false);
+    	destinationMenu.setDisable(false);
+    	weight.setDisable(false);
+    	volume.setDisable(false);
+    	findPriorities.setDisable(false);
+    	routeless.set(false);
+    	hasPriorities.set(false);
+    }
+    
+    @FXML
     private void firstChoiceAction(ActionEvent event) {
-    	chosenPriority = "First Priority Choice";
+    	chosenPriority = routes.get(0);
     }
     
     @FXML
     private void secondChoiceAction(ActionEvent event) {
-    	chosenPriority = "Second Priority Choice";
+    	chosenPriority = routes.get(1);
     }
     
     /** DISCONTINUE TRANSPORT */
