@@ -382,7 +382,7 @@ public class Controller implements Initializable {
     }
     @FXML
     private void thursdayAction(ActionEvent event) {
-    	day = "THUSDAY";
+    	day = "THURSDAY";
     	dayMenu.setText("Thursday");
     }
     @FXML
@@ -588,31 +588,44 @@ public class Controller implements Initializable {
     private Text confirmation;
     
     @FXML
+    private Text noRoutes;
+    
+    private BooleanProperty routeless = new SimpleBooleanProperty(false);
+    
+    private BooleanProperty completed = new SimpleBooleanProperty(false);
+    
+    @FXML
     private void findPrioritiesButtonAction(ActionEvent event) {
-    	System.out.println("Origin: " + selectedOrigin);
-    	System.out.println("Destination: " + selectedDest);
     	String w = this.weight.getText();
     	String v = this.volume.getText();
-    	System.out.println("Weight: " + w);
-        System.out.println("Volume: " + v);
         firstChoice.setSelected(false);
         secondChoice.setSelected(false);
         routes = main.getPossibleRoutes(selectedOrigin, selectedDest, Double.parseDouble(w), Double.parseDouble(v));
-        submit.visibleProperty().bind(hasPriorities);
-        reselect.visibleProperty().bind(hasPriorities);
-        firstChoice.setText(routes.get(0).getPriority() +": $" + routes.get(0).getPrice());
-        firstChoice.visibleProperty().bind(hasPriorities);
-        if(routes.size()==2){
-	        secondChoice.setText(routes.get(1).getPriority() +": $" + routes.get(1).getPrice());
-	        secondChoice.visibleProperty().bind(hasPriorities);
-        }
-        hasPriorities.set(true);
         
-        originMenu.setDisable(true);
+        if (routes.size()>0) {
+			submit.visibleProperty().bind(hasPriorities);
+			reselect.visibleProperty().bind(hasPriorities);
+			firstChoice.setText(routes.get(0).getPriority() + ": $"
+					+ routes.get(0).getPrice());
+			firstChoice.visibleProperty().bind(hasPriorities);
+			if (routes.size() == 2) {
+				secondChoice.setText(routes.get(1).getPriority() + ": $"
+						+ routes.get(1).getPrice());
+				secondChoice.visibleProperty().bind(hasPriorities);
+			}
+			hasPriorities.set(true);
+		}
+        else {
+        	noRoutes.visibleProperty().bind(routeless);
+        	reselect.visibleProperty().bind(routeless);
+        	routeless.set(true);
+        }
+		originMenu.setDisable(true);
     	destinationMenu.setDisable(true);
     	weight.setDisable(true);
     	volume.setDisable(true);
     	findPriorities.setDisable(true);
+    	
     	
     	//TODO if there are no routes
 
@@ -626,11 +639,18 @@ public class Controller implements Initializable {
         	
         	System.out.println(req.toString());
         	System.out.println(main.getTotalEvents());
-        	hasPriorities.set(false);
+//        	hasPriorities.set(false);
         	chosenPriority = null;
         	routes = null;
+        	confirmation.visibleProperty().bind(completed);
         	
-        	//TODO Confirmation Page
+        	if(req!=null){
+        		completed.set(true);
+        		reselect.setDisable(true);
+        		firstChoice.setDisable(true);
+        		secondChoice.setDisable(true);
+        		submit.setDisable(true);
+        	}
     	}
     }
     
@@ -641,6 +661,8 @@ public class Controller implements Initializable {
     	weight.setDisable(false);
     	volume.setDisable(false);
     	findPriorities.setDisable(false);
+    	routeless.set(false);
+    	hasPriorities.set(false);
     }
     
     @FXML
