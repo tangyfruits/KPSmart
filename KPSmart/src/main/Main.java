@@ -1,6 +1,7 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.DayOfWeek;
@@ -23,6 +24,8 @@ public class Main {
 	private HashMap<TuplePriority, ArrayList<Integer>> amountOfMailDeliveryTimes;
 	private HashMap<Tuple, ArrayList<Double>> amountOfMail;
 	private ArrayList<DeliveryRequest> deliveryRequests;
+	
+	private LogWriter writer;
 
 	private int events;
 	private double totalExp;
@@ -36,6 +39,15 @@ public class Main {
 		deliveryRequests = new ArrayList<DeliveryRequest>();
 		amountOfMailDeliveryTimes = new HashMap<>();
 		amountOfMail = new HashMap<>();
+		
+		
+		//TODO fix file!!
+		try {
+			writer = new LogWriter(new File("abc.xml"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		// read from encrypted file and add them in!
 
 		// read from encrypted file,create User objects and add them in!
@@ -193,11 +205,25 @@ public class Main {
 		addToAverageDeliveryTimes(origin, destination, duration, priority);
 		deliveryRequests.add(request);
 
+		//log in file and add to reports
+		try {
+			writer.writeDeliveryRequest(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//get total cost and rev
+		double cost = 0;
+		double price = 0;
+		for(Leg l: legs){
+			cost += l.getCost();
+			price += l.getPrice();
+		}
+		
+		addTotalExp(cost);
+		addTotalRev(price);
 		addEvent();
-
-		// TODO log in file
-		// TODO add to reports: revenue, expenditure
-
+		
 		return request;
 
 	}
@@ -258,9 +284,16 @@ public class Main {
 			if (c.getDestination().equals(destinationLoc) && c.getPriority().equals(priority)) {
 				c.setVolumeCost(volumeCost);
 				c.setWeightCost(weightCost);
+
+				//log in file and add to reports
+				addEvent();
+				try {
+					writer.writeCustomerPrice(c);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 				return c;
-				// TODO add event to log
-				// TODO add 1 to total events
 			}
 		}
 
@@ -269,14 +302,19 @@ public class Main {
 		price = new CustomerPrice(originLoc, destinationLoc, priority, weightCost, volumeCost);
 		originLoc.addPrice(price);
 
+		//log in file and add to reports
 		addEvent();
+		try {
+			writer.writeCustomerPrice(price);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return price;
-		// TODO add event to log
-
 	}
 
 	/* Log Transport Cost (Route) */
-	public void logTransportCostUpdate(String origin, String destination, String company, String type,
+	public Route logTransportCostUpdate(String origin, String destination, String company, String type,
 			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, int frequency,
 			DayOfWeek day, int startTime) {
 
@@ -325,15 +363,25 @@ public class Main {
 			}
 		}
 
+		Route route = null;
 		if (!routeExists) {
 			// if it doesn't always exist, create route and add to graph
-			Route route = new Route(originLoc, destinationLoc, company, type, priority, weightCost, volumeCost,
+			route = new Route(originLoc, destinationLoc, company, type, priority, weightCost, volumeCost,
 					maxWeight, maxVolume, duration, frequency, day, startTime, price);
 			originLoc.addRoute(route);
 		}
 
-		// TODO add event to logfile
+
+		//log in file and add to reports
 		addEvent();
+		try {
+			writer.writeRoute(route);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return route;
+		
 	}
 
 	public CustomerPrice getCustomerPrice(Location originLoc, Location destinationLoc, String origin,
