@@ -23,8 +23,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.CustomerPrice;
-import main.DeliveryRequest;
+import event.CustomerPrice;
+import event.DeliveryRequest;
 import main.Main;
 import main.RouteDisplay;
 
@@ -659,7 +659,7 @@ public class Controller implements Initializable {
     private void deliveryRequestButtonAction(ActionEvent event) {
     	if(!(chosenPriority==null)){
     		System.out.println("Priority: " + chosenPriority.getPriority());
-        	DeliveryRequest req = main.logDeliveryRequest(selectedOrigin,selectedDest, Double.parseDouble(this.weight.getText()), Double.parseDouble(this.volume.getText()), chosenPriority);
+        	DeliveryRequest req = main.getDeliveryDetails(selectedOrigin,selectedDest, Double.parseDouble(this.weight.getText()), Double.parseDouble(this.volume.getText()), chosenPriority);
         	
         	System.out.println(req.toString());
         	System.out.println(main.getTotalEvents());
