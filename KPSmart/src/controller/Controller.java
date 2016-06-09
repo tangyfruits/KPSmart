@@ -547,10 +547,26 @@ public class Controller implements Initializable {
     	String d = this.duration.getText();
     	String f = this.frequency.getText();
     	
+    	//TODO set transport cost update to return object and check it isn't null
+    	
     	main.logTransportCostUpdate(selectedOrigin, selectedDest, company.getText(), type, Double.parseDouble(wc), Double.parseDouble(vc), Integer.parseInt(mw), Integer.parseInt(mv), Integer.parseInt(d), Integer.parseInt(f), DayOfWeek.valueOf(day), time);
         System.out.println(main.getTotalEvents());
-
-        //TODO confirmation page
+        
+        confirmation.visibleProperty().bind(completed);
+    	completed.set(true);
+    	originMenu.setDisable(true);
+    	destinationMenu.setDisable(true);
+    	weightcost.setDisable(true);
+    	volumecost.setDisable(true);
+    	maxweight.setDisable(true);
+    	maxvolume.setDisable(true);
+    	duration.setDisable(true);
+    	frequency.setDisable(true);
+    	typemenu.setDisable(true);
+    	dayMenu.setDisable(true);
+    	timeMenu.setDisable(true);
+    	submit.setDisable(true);
+    	company.setDisable(true);
     }
     
     /** PRICE UPDATE FORM */
