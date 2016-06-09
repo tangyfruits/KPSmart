@@ -23,6 +23,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.CustomerPrice;
 import main.DeliveryRequest;
 import main.Main;
 import main.RouteDisplay;
@@ -527,6 +528,14 @@ public class Controller implements Initializable {
     	timeMenu.setText("24");;
     }
     
+    @FXML 
+    private Button submit;
+    
+    private BooleanProperty completed = new SimpleBooleanProperty(false);
+    
+    @FXML 
+    private Text confirmation;  
+    
     /** TRANSPORT ROUTE FORM */
     
     @FXML
@@ -551,16 +560,24 @@ public class Controller implements Initializable {
     	String wc = this.weightcost.getText();
     	String vc = this.volumecost.getText();
         
-        main.logCustomerPriceUpdate(selectedOrigin, selectedDest, priority, Double.parseDouble(wc), Double.parseDouble(vc));
+        CustomerPrice price = main.logCustomerPriceUpdate(selectedOrigin, selectedDest, priority, Double.parseDouble(wc), Double.parseDouble(vc));
+        
+        if(price !=null){
+        	confirmation.visibleProperty().bind(completed);
+        	completed.set(true);
+        	originMenu.setDisable(true);
+        	destinationMenu.setDisable(true);
+        	weightcost.setDisable(true);
+        	volumecost.setDisable(true);
+        	prioritymenu.setDisable(true);
+        	submit.setDisable(true);
+        }
         
         System.out.println(main.getTotalEvents());
-        
-        //TODO confirmation page
+
     }
     
     /** DELIVERY REQUEST FORM */
-    @FXML 
-    private Button submit;
     
     @FXML
     private Button reselect;
@@ -583,17 +600,12 @@ public class Controller implements Initializable {
     private TextField weight;
     @FXML
     private TextField volume;
-    
-    @FXML 
-    private Text confirmation;
-    
+      
     @FXML
     private Text noRoutes;
     
     private BooleanProperty routeless = new SimpleBooleanProperty(false);
-    
-    private BooleanProperty completed = new SimpleBooleanProperty(false);
-    
+        
     @FXML
     private void findPrioritiesButtonAction(ActionEvent event) {
     	String w = this.weight.getText();
@@ -625,10 +637,6 @@ public class Controller implements Initializable {
     	weight.setDisable(true);
     	volume.setDisable(true);
     	findPriorities.setDisable(true);
-    	
-    	
-    	//TODO if there are no routes
-
     }
     
     @FXML
@@ -639,7 +647,6 @@ public class Controller implements Initializable {
         	
         	System.out.println(req.toString());
         	System.out.println(main.getTotalEvents());
-//        	hasPriorities.set(false);
         	chosenPriority = null;
         	routes = null;
         	confirmation.visibleProperty().bind(completed);
