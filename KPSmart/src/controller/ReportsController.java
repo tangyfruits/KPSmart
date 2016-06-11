@@ -2,22 +2,27 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Main;
+import main.Tuple;
 
 
 public class ReportsController implements Initializable {
@@ -30,7 +35,7 @@ public class ReportsController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {}
-	    
+	   	
     /** NAV BAR BUTTONS 
      * @throws IOException */
     
@@ -51,7 +56,7 @@ public class ReportsController implements Initializable {
     @FXML
     private void reportButtonAction(ActionEvent event) throws IOException{
     	FXMLLoader reports = new FXMLLoader(getClass().getResource("/views/reports.fxml"));
-    	reports.setController(new HistoryController(main));
+    	reports.setController(new ReportsController(main));
     	Parent reportsGUI = reports.load();
     	
     	
@@ -148,6 +153,21 @@ public class ReportsController implements Initializable {
 	private Text expenditure, revenue, eventcount;
 	@FXML
 	private TabPane reportsTab;
+	
+	@FXML
+	private TableView<RouteLoadRow> table;
+	@FXML
+	private TableColumn<Tuple,String> origin;
+	@FXML
+	private TableColumn<Tuple,String> dest;
+	@FXML
+	private TableColumn<Tuple,String> totalWeight;
+	@FXML
+	private TableColumn<Tuple,String> totalVolume;
+	@FXML
+	private TableColumn<Tuple,String> totalCount;
+		
+	private ArrayList<RouteLoadRow> report;
 
 	@FXML
 	private Button getReports;
@@ -161,9 +181,23 @@ public class ReportsController implements Initializable {
 		eventcount.setText(String.valueOf(main.getTotalEvents()));
 	}
 
+
 	@FXML
 	private void routeLoadAction(ActionEvent event) {
-
+	    HashMap<Tuple, ArrayList<Double>> temp = main.getAmountOfMail();
+	    report = new ArrayList<RouteLoadRow>();
+	    for(Tuple t: temp.keySet()){
+	    	RouteLoadRow row = new RouteLoadRow(t.getOrigin(), t.getDestination(), Double.toString(temp.get(t).get(0)), Double.toString(temp.get(t).get(1)), Double.toString(temp.get(t).get(2)));
+	    	report.add(row);
+	    }
+	    
+	    
+	    origin.setCellValueFactory(new PropertyValueFactory<Tuple,String>("origin"));
+	    dest.setCellValueFactory(new PropertyValueFactory<Tuple,String>("destination"));
+	    totalWeight.setCellValueFactory(new PropertyValueFactory<Tuple,String>("totalWeight"));
+	    totalVolume.setCellValueFactory(new PropertyValueFactory<Tuple,String>("totalVolume"));
+	    totalCount.setCellValueFactory(new PropertyValueFactory<Tuple,String>("totalCount"));
+	    table.getItems().setAll(report);
 	}
 
 	
