@@ -191,6 +191,7 @@ public class Main {
 
 		// add to delivery events field
 		addToAverageDeliveryTimes(origin, destination, duration, priority);
+		addToAmountOfMail(origin, destination, weight, volume);
 		deliveryRequests.add(request);
 
 		addEvent();

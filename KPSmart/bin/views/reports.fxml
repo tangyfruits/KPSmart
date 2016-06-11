@@ -97,11 +97,6 @@
                               </Text>
                            </children>
                         </GridPane>
-                        <Button id="submit" fx:id="getReports" layoutX="258.0" layoutY="301.0" mnemonicParsing="false" onAction="#getReportsAction" style="-fx-background-color: F2DFC4;" text="Get Reports">
-                           <font>
-                              <Font name="Gulim" size="15.0" />
-                           </font>
-                        </Button>
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -109,11 +104,6 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: F2DFC4; -fx-background-radius: 10;">
                      <children>
-                        <Button id="submit" fx:id="routeLoad" layoutX="242.0" layoutY="380.0" mnemonicParsing="false" onAction="#routeLoadAction" style="-fx-background-color: E9D5B9;" text="Route Load">
-                        	<font>
-                              <Font name="Gulim" size="15.0" />
-                           </font>
-                        </Button>
                         <ScrollPane layoutX="16.0" layoutY="14.0" prefHeight="355.0" prefWidth="565.0" style="-fx-background-color: F2DFC4;">
                            <content>
                               <TableView fx:id="table" prefHeight="355.0" prefWidth="565.0" style="-fx-background-color: F2DFC4; -fx-background: F2DFC4;">

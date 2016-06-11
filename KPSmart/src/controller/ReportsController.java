@@ -35,7 +35,14 @@ public class ReportsController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {}
-	   	
+	 
+	public void initData(){
+		expenditure.setText(Double.toString(main.getTotalExp()));
+		revenue.setText(Double.toString(main.getTotalRev()));
+		eventcount.setText(Double.toString(main.getTotalEvents()));
+		routeLoadAction();
+	}
+	
     /** NAV BAR BUTTONS 
      * @throws IOException */
     
@@ -63,6 +70,8 @@ public class ReportsController implements Initializable {
     	Stage stage = (Stage) logeventmenu.getScene().getWindow();
     	Scene scene = new Scene(reportsGUI);
       	stage.setScene(scene);
+      	ReportsController cont = reports.getController();
+    	cont.initData();
     	stage.show();
     }
     
@@ -169,21 +178,21 @@ public class ReportsController implements Initializable {
 		
 	private ArrayList<RouteLoadRow> report;
 
-	@FXML
-	private Button getReports;
+//	@FXML
+//	private Button getReports;
 	@FXML
 	private Button routeLoad;
 
-	@FXML
-	private void getReportsAction(ActionEvent event) {
-		expenditure.setText(String.valueOf(main.getTotalExp()));
-		revenue.setText(String.valueOf(main.getTotalRev()));
-		eventcount.setText(String.valueOf(main.getTotalEvents()));
-	}
+//	@FXML
+//	private void getReportsAction(ActionEvent event) {
+//		expenditure.setText(String.valueOf(main.getTotalExp()));
+//		revenue.setText(String.valueOf(main.getTotalRev()));
+//		eventcount.setText(String.valueOf(main.getTotalEvents()));
+//	}
 
 
 	@FXML
-	private void routeLoadAction(ActionEvent event) {
+	private void routeLoadAction() {
 	    HashMap<Tuple, ArrayList<Double>> temp = main.getAmountOfMail();
 	    report = new ArrayList<RouteLoadRow>();
 	    for(Tuple t: temp.keySet()){
