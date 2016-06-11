@@ -3,6 +3,7 @@ package main;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.DayOfWeek;
@@ -27,16 +28,17 @@ public class Main {
 	private int events;
 	private double totalExp;
 	private double totalRev;
+	File file;
 
-//	// CONSTRUCTOR
-//	public Main() {
-//	}
+	// // CONSTRUCTOR
+	// public Main() {
+	// }
 
 	public Main() {
 		locations = new ArrayList<Location>();
 		accounts = new ArrayList<User>();
 		deliveryRequests = new ArrayList<DeliveryRequest>();
-		File file = new File("accounts.txt");
+		file = new File("accounts.txt");
 		try {
 			Scanner sc = new Scanner(file);
 			while (sc.hasNextLine()) {
@@ -69,6 +71,33 @@ public class Main {
 		}
 		return false;
 	}
+
+	public boolean edit(String password) {
+		boolean b = false;
+		for (User u : accounts) {
+			if (u.getUsername().equals(currentUser.getUsername())
+					&& u.getPassword().equals(currentUser.getPassword())) {
+				u.setPassword(password);
+				b = true;
+			}
+		}
+		currentUser.setPassword(password);
+		try {
+			file.delete();
+			file.createNewFile();
+			FileWriter writer = new FileWriter("accounts.txt", true);
+			for (User u : accounts) {
+				writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
+			}
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return b;
+
+	}
+	
 
 	public void logout() {
 		currentUser = null;
@@ -159,8 +188,8 @@ public class Main {
 	}
 
 	/* Get delivery details ready */
-	public DeliveryRequest getDeliveryDetails(String origin,
-			String destination, double weight, double volume, RouteDisplay route) {
+	public DeliveryRequest getDeliveryDetails(String origin, String destination, double weight, double volume,
+			RouteDisplay route) {
 
 		// get duration
 		int duration = route.getTotalDuration(LocalDateTime.now());
@@ -173,16 +202,16 @@ public class Main {
 			legs.add(new Leg(r.getOrigin(), r.getDestination(), r.getType(), r.getCompany(), freightCost,
 					customerPrice));
 		}
-		
-		return logDeliveryRequest(LocalDateTime.now(),origin,destination, legs, weight,volume,route.getPriority(),duration);
+
+		return logDeliveryRequest(LocalDateTime.now(), origin, destination, legs, weight, volume, route.getPriority(),
+				duration);
 	}
-	
+
 	// Loggers
 	/* Log Delivery Request */
-	public DeliveryRequest logDeliveryRequest(LocalDateTime logTime, String origin,
-			String destination, ArrayList<Leg> legs, double weight,
-			double volume, String priority, int duration) {
-		
+	public DeliveryRequest logDeliveryRequest(LocalDateTime logTime, String origin, String destination,
+			ArrayList<Leg> legs, double weight, double volume, String priority, int duration) {
+
 		// find the locations matching the given strings
 		Location originLoc = getLocation(origin);
 		Location destinationLoc = getLocation(destination);
@@ -204,15 +233,14 @@ public class Main {
 	}
 
 	/* Log Customer Price */
-	public CustomerPrice logCustomerPriceUpdate(String origin,
-			String destination, String priority, double weightCost,
+	public CustomerPrice logCustomerPriceUpdate(String origin, String destination, String priority, double weightCost,
 			double volumeCost) {
 
 		// find the locations matching the given strings, if they are already in
 		// the graph
 		Location originLoc = getLocation(origin);
 		Location destinationLoc = getLocation(destination);
-	
+
 		// if locations don't exist yet, add them to the graph
 		if (originLoc == null) {
 			originLoc = new Location(origin);
@@ -255,7 +283,7 @@ public class Main {
 		// the graph
 		Location originLoc = getLocation(origin);
 		Location destinationLoc = getLocation(destination);
-		
+
 		// if Locations don't exist yet, add them to the graph
 		if (originLoc == null) {
 			originLoc = new Location(origin);
@@ -276,8 +304,7 @@ public class Main {
 
 		// get customer price matching the route
 		CustomerPrice price = null;
-		price = getCustomerPrice(originLoc, destinationLoc, origin,
-				destination, priority);
+		price = getCustomerPrice(originLoc, destinationLoc, origin, destination, priority);
 
 		// check if route already exists, if it does, update it
 		Boolean routeExists = false;
@@ -367,7 +394,7 @@ public class Main {
 
 	}
 
-	// Getters 
+	// Getters
 
 	public Location getLocation(String name) {
 		Location location = null;
