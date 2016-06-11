@@ -6,6 +6,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -27,7 +28,7 @@ import java.util.Locale;
 public class LogWriter {
 	
 	// Console Logging for Debugging
-	private static boolean LOGS = true;
+	private static boolean LOGS = false;
 	
 	// FIELDS
 	private File logFile;
@@ -38,42 +39,38 @@ public class LogWriter {
 	private Transformer transformer;
 
 	// CONSTRUCTORS
-	public LogWriter(File file) throws Exception {
+	public LogWriter(File file) {
 		this.logFile = file;
-		
-		docBuilder = docBuilderFactory.newDocumentBuilder();
-        transformer = transformerFactory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+		try {
+			docBuilder = docBuilderFactory.newDocumentBuilder();
+	        docBuilder.setErrorHandler(new ErrorHandler() {
+	            @Override
+	            public void fatalError(SAXParseException e) throws SAXException {
+	            	//System.out.println("some errors yo fresh");
+	            	throw e;
+	            }
+	            @Override
+	            public void error(SAXParseException e) throws SAXException {
+	            	throw e;
+	            }
+				@Override
+				public void warning(SAXParseException e) throws SAXException {
+					throw e;
+				}
+	        });
+	        
+	        transformer = transformerFactory.newTransformer();
+	        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+	        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+		} catch(Exception e) {
+			System.out.println("Error constructing the LogWriter");
+			e.printStackTrace();
+		}
         ensureLogExists();
-        
-        // TODO Stop error writing to stderr. Errors are being caught. 
-        docBuilder.setErrorHandler(new ErrorHandler() {
-        	/**/
-        	@Override
-            public void warning(SAXParseException e) throws SAXException {
-        		System.out.println("some errors yo");
-        		//throw e;
-            }/**/
-        	
-        	/**/
-            @Override
-            public void fatalError(SAXParseException e) throws SAXException {
-            	System.out.println("some errors yo");
-            	//throw e;
-            }/**/
-            
-            /**/
-            @Override
-            public void error(SAXParseException e) throws SAXException {
-            	System.out.println("some errors yo");
-            	//throw e;
-            }/**/
-        });
 	}
 	
 	// METHODS
-	public void ensureLogExists() throws Exception {
+	public void ensureLogExists() {
 		
 		if (LOGS) {System.out.println("ENSURE:           "+logFile.getName());}
 		
@@ -96,29 +93,40 @@ public class LogWriter {
 			doc = docBuilder.parse(logFile);
 			if (LOGS) {System.out.println("   Parse: succ :)");}
 
-		} catch (SAXParseException e) {
+		} catch (SAXException e) {
 			if (LOGS) {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
 			}
 			/*System.out.println("^^Ignore this error. It's cool. It's been handled. We just couldn't \n" +
 								"figure out how to stop it logging in the console. We good. :)");*/
+			// Create new Document
 			doc = docBuilder.newDocument();
 			Element events = doc.createElement("events");
 			doc.appendChild(events);
 			
 			DOMSource    source = new DOMSource(doc);
 	        StreamResult output = new StreamResult(logFile);
-	      	transformer.transform(source, output);
+	      	try {
+				transformer.transform(source, output);
+			} catch (TransformerException e1) {
+				e1.printStackTrace();
+			}
 
 	      	if (LOGS) {System.out.println("   Parse: failed. new doc made");}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 		// Console Logging for Testing
 		if (LOGS) {
 			DOMSource    source = new DOMSource(doc);
 			StreamResult consoleResult =  new StreamResult(System.out);
-	      	transformer.transform(source, consoleResult);
+	      	try {
+				transformer.transform(source, consoleResult);
+			} catch (TransformerException e) {
+				e.printStackTrace();
+			}
 	      	System.out.println("---------------");
 		}
 	}
