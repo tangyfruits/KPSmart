@@ -49,7 +49,6 @@ public class Main {
 				if (manager.equals("true")) {
 					b = true;
 				}
-				System.out.println(manager);
 				accounts.add(new User(username, password, b));
 			}
 			sc.close();
@@ -86,18 +85,46 @@ public class Main {
 			file.delete();
 			file.createNewFile();
 			FileWriter writer = new FileWriter("accounts.txt", true);
-			for (User u : accounts) {
+			for (int i = 0; i < accounts.size() - 1; i++) {
+				User u = accounts.get(i);
 				writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
 			}
+			User u = accounts.get(accounts.size() - 1);
+			writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()));
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return b;
+	}
+
+	public boolean delete() {
+		for (User u : accounts) {
+			if (u.getUsername().equals(currentUser.getUsername())
+					&& u.getPassword().equals(currentUser.getPassword())) {
+				accounts.remove(u);
+				logout();
+				return true;
+			}
+		}
+		return false;
 
 	}
-	
+
+	public void add(User u) {
+		try {
+			FileWriter writer = new FileWriter("accounts.txt", true);
+			writer.write("\n" + u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()));
+			writer.flush();
+			writer.close();
+			accounts.add(u);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 
 	public void logout() {
 		currentUser = null;
