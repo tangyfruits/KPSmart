@@ -51,7 +51,7 @@ public class ReportsController implements Initializable {
     @FXML
     private void reportButtonAction(ActionEvent event) throws IOException{
     	FXMLLoader reports = new FXMLLoader(getClass().getResource("/views/reports.fxml"));
-    	reports.setController(new HistoryController(main));
+    	reports.setController(new ReportsController(main));
     	Parent reportsGUI = reports.load();
     	
     	
