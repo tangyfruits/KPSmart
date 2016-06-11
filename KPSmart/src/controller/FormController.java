@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import event.CustomerPrice;
 import event.DeliveryRequest;
+import event.Route;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -556,26 +557,26 @@ public class FormController implements Initializable {
     	String d = this.duration.getText();
     	String f = this.frequency.getText();
     	
-    	//TODO set transport cost update to return object and check it isn't null
-    	
-    	main.logTransportCostUpdate(selectedOrigin, selectedDest, company.getText(), type, Double.parseDouble(wc), Double.parseDouble(vc), Integer.parseInt(mw), Integer.parseInt(mv), Integer.parseInt(d), Integer.parseInt(f), DayOfWeek.valueOf(day), time);
+    	Route r = main.logTransportCostUpdate(selectedOrigin, selectedDest, company.getText(), type, Double.parseDouble(wc), Double.parseDouble(vc), Integer.parseInt(mw), Integer.parseInt(mv), Integer.parseInt(d), Integer.parseInt(f), DayOfWeek.valueOf(day), time, false);
         System.out.println(main.getTotalEvents());
         
-        confirmation.visibleProperty().bind(completed);
-    	completed.set(true);
-    	originMenu.setDisable(true);
-    	destinationMenu.setDisable(true);
-    	weightcost.setDisable(true);
-    	volumecost.setDisable(true);
-    	maxweight.setDisable(true);
-    	maxvolume.setDisable(true);
-    	duration.setDisable(true);
-    	frequency.setDisable(true);
-    	typemenu.setDisable(true);
-    	dayMenu.setDisable(true);
-    	timeMenu.setDisable(true);
-    	submit.setDisable(true);
-    	company.setDisable(true);
+        if (r!=null) {
+			confirmation.visibleProperty().bind(completed);
+			completed.set(true);
+			originMenu.setDisable(true);
+			destinationMenu.setDisable(true);
+			weightcost.setDisable(true);
+			volumecost.setDisable(true);
+			maxweight.setDisable(true);
+			maxvolume.setDisable(true);
+			duration.setDisable(true);
+			frequency.setDisable(true);
+			typemenu.setDisable(true);
+			dayMenu.setDisable(true);
+			timeMenu.setDisable(true);
+			submit.setDisable(true);
+			company.setDisable(true);
+		}
     }
     
     /** PRICE UPDATE FORM */
@@ -585,7 +586,7 @@ public class FormController implements Initializable {
     	String wc = this.weightcost.getText();
     	String vc = this.volumecost.getText();
         
-        CustomerPrice price = main.logCustomerPriceUpdate(selectedOrigin, selectedDest, priority, Double.parseDouble(wc), Double.parseDouble(vc));
+        CustomerPrice price = main.logCustomerPriceUpdate(selectedOrigin, selectedDest, priority, Double.parseDouble(wc), Double.parseDouble(vc), false);
         
         if(price !=null){
         	confirmation.visibleProperty().bind(completed);
