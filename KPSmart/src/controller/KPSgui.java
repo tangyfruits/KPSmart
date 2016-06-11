@@ -1,10 +1,5 @@
 package controller;
 
-//import javafx.scene.control.Button;
-//import javafx.scene.layout.StackPane;
-//import javafx.event.ActionEvent;
-//import javafx.event.EventHandler;
-
 import java.time.DayOfWeek;
 
 import main.Main;
@@ -13,8 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-
 
 public class KPSgui extends Application {
 	

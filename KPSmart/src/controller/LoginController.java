@@ -18,7 +18,6 @@ import main.Main;
 
 public class LoginController implements Initializable {
 	
-	private boolean loggedin = false;
 	private Main main;
 	
 	
@@ -40,7 +39,6 @@ public class LoginController implements Initializable {
     @FXML
     private void logInButtonAction(ActionEvent event) throws IOException {
     	
-    	this.loggedin = true;
     	String id = this.idnumber.getText();
     	String pass = this.password.getText();
         System.out.println("ID number: " + id);

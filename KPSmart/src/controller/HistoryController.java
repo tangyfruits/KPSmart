@@ -19,7 +19,6 @@ import main.Main;
 
 public class HistoryController implements Initializable {
 	
-	private boolean loggedin = false;
 	private Main main;
 
 	public HistoryController(Main main){

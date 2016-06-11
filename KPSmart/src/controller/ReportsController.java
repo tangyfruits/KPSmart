@@ -22,7 +22,6 @@ import main.Main;
 
 public class ReportsController implements Initializable {
 	
-	private boolean loggedin = false;
 	private Main main;
 
 	public ReportsController(Main main){

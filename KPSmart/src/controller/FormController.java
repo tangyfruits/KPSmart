@@ -29,7 +29,6 @@ import main.RouteDisplay;
 
 public class FormController implements Initializable {
 	
-	private boolean loggedin = false;
 	private Main main;
 	
 	
