@@ -12,6 +12,7 @@ import java.util.List;
 
 import event.CustomerPrice;
 import event.DeliveryRequest;
+import event.DiscontinueRoute;
 import event.Leg;
 import event.Route;
 
@@ -26,6 +27,7 @@ public class Main {
 	private ArrayList<DeliveryRequest> deliveryRequests;
 	
 	private LogWriter writer;
+	private File file;
 
 	private int events;
 	private double totalExp;
@@ -41,9 +43,9 @@ public class Main {
 		amountOfMail = new HashMap<>();
 		
 		
-		//TODO fix file!!
+		//TODO fix file - will be listed in config file with user accounts etc!!
 		try {
-			writer = new LogWriter(new File("abc.xml"));
+			writer = new LogWriter(file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,7 +54,7 @@ public class Main {
 
 		// read from encrypted file,create User objects and add them in!
 		// if ( accounts.containsValue("String") &&
-		// accounts.get("String").equalsss("password);
+		// accounts.get("String").equals("password);
 		// currentUser = new User();
 		// want to look into apache shiro tbh but everyone will have to install
 		// maven. Apache shiro is a really good framework for logins
@@ -183,14 +185,14 @@ public class Main {
 					customerPrice));
 		}
 		
-		return logDeliveryRequest(LocalDateTime.now(),origin,destination, legs, weight,volume,route.getPriority(),duration);
+		return logDeliveryRequest(LocalDateTime.now(),origin,destination, legs, weight,volume,route.getPriority(),duration, false);
 	}
 	
 	// Loggers
 	/* Log Delivery Request */
 	public DeliveryRequest logDeliveryRequest(LocalDateTime logTime, String origin,
 			String destination, ArrayList<Leg> legs, double weight,
-			double volume, String priority, int duration) {
+			double volume, String priority, int duration, boolean initial) {
 		
 		// find the locations matching the given strings
 		Location originLoc = getLocation(origin);
@@ -205,13 +207,14 @@ public class Main {
 		addToAverageDeliveryTimes(origin, destination, duration, priority);
 		deliveryRequests.add(request);
 
-		//log in file and add to reports
-		try {
-			writer.writeDeliveryRequest(request);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (!initial) {
+			//log in file and add to reports
+			try {
+				writer.writeDeliveryRequest(request);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		
 		//get total cost and rev
 		double cost = 0;
 		double price = 0;
@@ -261,7 +264,7 @@ public class Main {
 
 	/* Log Customer Price */
 	public CustomerPrice logCustomerPriceUpdate(String origin, String destination, String priority, double weightCost,
-			double volumeCost) {
+			double volumeCost, boolean initial) {
 
 		// find the locations matching the given strings, if they are already in
 		// the graph
@@ -287,12 +290,13 @@ public class Main {
 
 				//log in file and add to reports
 				addEvent();
-				try {
-					writer.writeCustomerPrice(c);
-				} catch (Exception e) {
-					e.printStackTrace();
+				if (!initial) {
+					try {
+						writer.writeCustomerPrice(c);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
-				
 				return c;
 			}
 		}
@@ -316,7 +320,7 @@ public class Main {
 	/* Log Transport Cost (Route) */
 	public Route logTransportCostUpdate(String origin, String destination, String company, String type,
 			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, int frequency,
-			DayOfWeek day, int startTime) {
+			DayOfWeek day, int startTime, boolean initial) {
 
 		// find the Locations matching the given strings, if they are already in
 		// the graph
@@ -374,12 +378,13 @@ public class Main {
 
 		//log in file and add to reports
 		addEvent();
-		try {
-			writer.writeRoute(route);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (!initial) {
+			try {
+				writer.writeRoute(route);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		
 		return route;
 		
 	}
@@ -414,15 +419,16 @@ public class Main {
 			} catch (IOException e) {
 			}
 
-			logCustomerPriceUpdate(origin, destination, priority, custWeightCost, custVolCost);
+			logCustomerPriceUpdate(origin, destination, priority, custWeightCost, custVolCost, false);
 		}
 		return customerPrice;
 	}
 
 	/* Log Discontinuing Route */
-	public void discontinueTransportRoute(String origin, String destination, String company, String type) {
+	public void discontinueTransportRoute(String origin, String destination, String company, String type, boolean initial) {
 
 		Location originLoc = getLocation(origin);
+		Location destinationLoc = getLocation(destination);
 
 		Route toCancel = null;
 		// find the matching route out of origin
@@ -432,9 +438,17 @@ public class Main {
 				toCancel = r;
 			}
 		}
+		
+		DiscontinueRoute disconRoute = new DiscontinueRoute(originLoc, destinationLoc, company, type);
 		if (toCancel != null) {
 			originLoc.removeRoute(toCancel);
-			// TODO log in file
+			if (!initial) {
+				try {
+					writer.writeDiscontinue(disconRoute);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 			addEvent();
 		} else {
 			// TODO display error

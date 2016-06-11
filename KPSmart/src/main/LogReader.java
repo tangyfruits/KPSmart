@@ -483,7 +483,7 @@ public class LogReader {
 			main.logTransportCostUpdate(cost.origin, cost.destination, 
 					cost.company, cost.type, cost.weightCost, cost.volumeCost, 
 					cost.maxWeight, cost.maxVolume, cost.duration, cost.frequency, 
-					cost.day, cost.startTime);
+					cost.day, cost.startTime, true);
 			/**/
 			cost = null;
 			break;
@@ -492,7 +492,7 @@ public class LogReader {
 			
 			/*
 			main.logDeliveryRequest(mail.logTime, mail.origin, mail.destination, mail.legs,
-					mail.weight, mail.volume, mail.priority, mail.duration);
+					mail.weight, mail.volume, mail.priority, mail.duration, true);
 			/**/
 			mail = null;
 			break;
@@ -501,7 +501,7 @@ public class LogReader {
 			
 			/*
 			main.logCustomerPriceUpdate(price.origin, price.destination, 
-					price.priority, price.weightCost, price.volumeCost);
+					price.priority, price.weightCost, price.volumeCost, true);
 			/**/
 			price = null;
 			break;
@@ -510,7 +510,7 @@ public class LogReader {
 			
 			/*
 			main.logRouteDiscontinued(discont.origin, discont.destination, 
-					discont.company, discont.type);
+					discont.company, discont.type, true);
 			/**/
 			discont = null;
 			break;
