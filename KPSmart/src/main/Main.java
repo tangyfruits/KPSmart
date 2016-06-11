@@ -45,7 +45,7 @@ public class Main {
 		
 		//TODO fix file - will be listed in config file with user accounts etc!!
 		try {
-			writer = new LogWriter(file);
+			writer = new LogWriter(new File("abc.xml"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -207,14 +207,14 @@ public class Main {
 		addToAverageDeliveryTimes(origin, destination, duration, priority);
 		deliveryRequests.add(request);
 
-		if (!initial) {
-			//log in file and add to reports
-			try {
-				writer.writeDeliveryRequest(request);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		if (!initial) {
+//			//log in file and add to reports
+//			try {
+//				writer.writeDeliveryRequest(request);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 		//get total cost and rev
 		double cost = 0;
 		double price = 0;
@@ -290,13 +290,13 @@ public class Main {
 
 				//log in file and add to reports
 				addEvent();
-				if (!initial) {
-					try {
-						writer.writeCustomerPrice(c);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
+//				if (!initial) {
+//					try {
+//						writer.writeCustomerPrice(c);
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				}
 				return c;
 			}
 		}
@@ -308,11 +308,13 @@ public class Main {
 
 		//log in file and add to reports
 		addEvent();
-		try {
-			writer.writeCustomerPrice(price);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		if (!initial) {
+//			try {
+//				writer.writeCustomerPrice(price);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 		
 		return price;
 	}
@@ -378,13 +380,13 @@ public class Main {
 
 		//log in file and add to reports
 		addEvent();
-		if (!initial) {
-			try {
-				writer.writeRoute(route);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		if (!initial) {
+//			try {
+//				writer.writeRoute(route);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return route;
 		
 	}
@@ -442,13 +444,13 @@ public class Main {
 		DiscontinueRoute disconRoute = new DiscontinueRoute(originLoc, destinationLoc, company, type);
 		if (toCancel != null) {
 			originLoc.removeRoute(toCancel);
-			if (!initial) {
-				try {
-					writer.writeDiscontinue(disconRoute);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+//			if (!initial) {
+//				try {
+//					writer.writeDiscontinue(disconRoute);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
 			addEvent();
 		} else {
 			// TODO display error
