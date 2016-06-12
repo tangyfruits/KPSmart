@@ -99,7 +99,7 @@
             </Text>
          </children>
       </GridPane>
-      <Button id="submit" fx:id="submit" layoutX="323.0" layoutY="386.0" mnemonicParsing="false" onAction="#discTransportButtonAction" style="-fx-background-color: E9D5B9;" text="Submit">
+      <Button id="submit" fx:id="submit" layoutX="323.0" layoutY="500.0" mnemonicParsing="false" onAction="#discTransportButtonAction" style="-fx-background-color: E9D5B9;" text="Submit">
          <font>
             <Font name="Gulim" size="15.0" />
          </font>
@@ -109,6 +109,11 @@
             <Font name="Gulim" size="15.0" />
          </font>
       </Button>
+      <ScrollPane layoutX="197.0" layoutY="275.0" prefViewportHeight="200.0" prefViewportWidth="317.0">
+         <content>
+            <VBox fx:id="discRoutes" layoutX="197.0" layoutY="275.0" prefHeight="200.0" prefWidth="317.0" />
+         </content>
+      </ScrollPane>
    </children>
    <stylesheets>
 	<URL value="@kps.css" />
