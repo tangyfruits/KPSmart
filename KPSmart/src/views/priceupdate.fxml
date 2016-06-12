@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import java.util.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: FFF3E0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: FFF3E0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="KPSmart" textFill="#655a5a">
          <font>
@@ -63,39 +63,11 @@
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
-               <items>
-                  <CheckMenuItem fx:id="AucklandDest" mnemonicParsing="false" onAction="#selectAucklandDest" text="Auckland" />
-                  <CheckMenuItem fx:id="HamiltonDest" mnemonicParsing="false" onAction="#selectHamiltonDest" text="Hamilton" />
-                  <CheckMenuItem fx:id="RotoruaDest" mnemonicParsing="false" onAction="#selectRotoruaDest" text="Rotorua" />
-                  <CheckMenuItem fx:id="PalmerstonDest" mnemonicParsing="false" onAction="#selectPalmerstonDest" text="Palmerston North" />
-                  <CheckMenuItem fx:id="WellingtonDest" mnemonicParsing="false" onAction="#selectWellingtonDest" text="Wellington" />
-                  <CheckMenuItem fx:id="ChristchurchDest" mnemonicParsing="false" onAction="#selectChristchurchDest" text="ChristChurch" />
-                  <CheckMenuItem fx:id="DunedinDest" mnemonicParsing="false" onAction="#selectDunedinDest" text="Dunedin" />
-                  <CheckMenuItem fx:id="OtherDest" mnemonicParsing="false" onAction="#selectOtherDest" text="Other">
-                     <graphic>
-                        <TextField fx:id="otherDestText" />
-                     </graphic>
-                  </CheckMenuItem>   
-               </items>
             </MenuButton>
             <MenuButton fx:id="originMenu" layoutX="130.0" layoutY="108.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: E9D5B9;" text="Choose location" GridPane.columnIndex="1">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
-               <items>
-                  <CheckMenuItem fx:id="AucklandOrigin" mnemonicParsing="false" onAction="#selectAucklandOrigin" text="Auckland" />
-                  <CheckMenuItem fx:id="HamiltonOrigin" mnemonicParsing="false" onAction="#selectHamiltonOrigin" text="Hamilton" />
-                  <CheckMenuItem fx:id="RotoruaOrigin" mnemonicParsing="false" onAction="#selectRotoruaOrigin" text="Rotorua" />
-                  <CheckMenuItem fx:id="PalmerstonOrigin" mnemonicParsing="false" onAction="#selectPalmerstonOrigin" text="Palmerston North" />
-                  <CheckMenuItem fx:id="WellingtonOrigin" mnemonicParsing="false" onAction="#selectWellingtonOrigin" text="Wellington" />
-                  <CheckMenuItem fx:id="ChristchurchOrigin" mnemonicParsing="false" onAction="#selectChristchurchOrigin" text="Christchurch" />
-                  <CheckMenuItem fx:id="DunedinOrigin" mnemonicParsing="false" onAction="#selectDunedinOrigin" text="Dunedin" />
-                  <CheckMenuItem fx:id="OtherOrigin" mnemonicParsing="false" onAction="#selectOtherOrigin" text="Other">
-                     <graphic>
-                        <TextField fx:id="otherOriginText" />
-                     </graphic>
-                  </CheckMenuItem>               
-               </items>
             </MenuButton>
             <Text layoutX="79.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Origin:" wrappingWidth="41.3583984375">
                <font>
