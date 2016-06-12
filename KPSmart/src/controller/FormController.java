@@ -15,6 +15,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -32,6 +34,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.Location;
 import main.Main;
 import main.RouteDisplay;
 
@@ -49,6 +52,56 @@ public class FormController implements Initializable {
 
 	}
 
+	private ArrayList<Location> locs;
+	@FXML
+	private MenuButton originMenu;
+	@FXML
+	private MenuButton destinationMenu;
+
+	private String selectedOrigin = "";
+	private String selectedDest = "";
+	
+	public void initDropdown(){
+		locs = main.getLocations();
+		EventHandler<ActionEvent> originAction = setSelectedOrigin();
+		EventHandler<ActionEvent> destAction = setSelectedDest();
+				
+		for(Location l:locs){
+			MenuItem i = new CheckMenuItem(l.getName());
+			i.setUserData(l.getName());
+			i.setOnAction(originAction);
+			originMenu.getItems().add(i);
+			MenuItem k = new CheckMenuItem(l.getName());
+			k.setOnAction(destAction);
+			destinationMenu.getItems().add(k);
+		}		
+	}
+	
+	private EventHandler<ActionEvent> setSelectedOrigin() {
+        return new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent event) {
+                MenuItem mItem = (MenuItem) event.getSource();
+                String loc = mItem.getText();
+               System.out.println(loc);
+               selectedOrigin = loc;
+               originMenu.setText(loc);            
+            }
+        };
+    }
+	
+	private EventHandler<ActionEvent> setSelectedDest() {
+        return new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent event) {
+                MenuItem mItem = (MenuItem) event.getSource();
+                String loc = mItem.getText();
+               System.out.println(loc);
+               selectedDest = loc;
+               destinationMenu.setText(loc);            
+            }
+        };
+	}
 	/**
 	 * NAV BAR BUTTONS
 	 * 
@@ -113,6 +166,10 @@ public class FormController implements Initializable {
 
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
 		Scene scene = new Scene(deliveryGUI);
+		
+		FormController controller = delivery.getController();
+		controller.initDropdown();
+		
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -131,6 +188,8 @@ public class FormController implements Initializable {
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
 		Scene scene = new Scene(discontinueGUI);
 		stage.setScene(scene);
+		FormController controller = discontinue.getController();
+		controller.initDropdown();
 		stage.show();
 	}
 
@@ -147,6 +206,8 @@ public class FormController implements Initializable {
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
 		Scene scene = new Scene(routeGUI);
 		stage.setScene(scene);
+		FormController controller = route.getController();
+		controller.initDropdown();
 		stage.show();
 	}
 
@@ -163,158 +224,11 @@ public class FormController implements Initializable {
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
 		Scene scene = new Scene(priceGUI);
 		stage.setScene(scene);
+		FormController controller = price.getController();
+		controller.initDropdown();
 		stage.show();
 	}
 
-	/** Origin and Destination **/
-
-	@FXML
-	private ArrayList<CheckMenuItem> destination;
-	@FXML
-	private ArrayList<CheckMenuItem> origin;
-
-	@FXML
-	private CheckMenuItem AucklandDest;
-	@FXML
-	private CheckMenuItem HamiltonDest;
-	@FXML
-	private CheckMenuItem RotoruaDest;
-	@FXML
-	private CheckMenuItem PalmerstonDest;
-	@FXML
-	private CheckMenuItem WellingtonDest;
-	@FXML
-	private CheckMenuItem ChristchurchDest;
-	@FXML
-	private CheckMenuItem DunedinDest;
-	@FXML
-	private CheckMenuItem OtherDest;
-	@FXML
-	private CheckMenuItem AucklandOrigin;
-	@FXML
-	private CheckMenuItem HamiltonOrigin;
-	@FXML
-	private CheckMenuItem RotoruaOrigin;
-	@FXML
-	private CheckMenuItem PalmerstonOrigin;
-	@FXML
-	private CheckMenuItem WellingtonOrigin;
-	@FXML
-	private CheckMenuItem ChristchurchOrigin;
-	@FXML
-	private CheckMenuItem DunedinOrigin;
-	@FXML
-	private CheckMenuItem OtherOrigin;
-
-	@FXML
-	private MenuButton originMenu;
-	@FXML
-	private MenuButton destinationMenu;
-
-	private String selectedOrigin = "";
-	private String selectedDest = "";
-
-	@FXML
-	private void selectAucklandOrigin(ActionEvent event) {
-		selectedOrigin = "Auckland";
-		originMenu.setText("Auckland");
-	}
-
-	@FXML
-	private void selectHamiltonOrigin(ActionEvent event) {
-		selectedOrigin = "Hamilton";
-		originMenu.setText("Hamilton");
-	}
-
-	@FXML
-	private void selectRotoruaOrigin(ActionEvent event) {
-		selectedOrigin = "Rotorua";
-		originMenu.setText("Rotorua");
-	}
-
-	@FXML
-	private void selectPalmerstonOrigin(ActionEvent event) {
-		selectedOrigin = "Palmerston North";
-		originMenu.setText("Palmerston North");
-	}
-
-	@FXML
-	private void selectWellingtonOrigin(ActionEvent event) {
-		selectedOrigin = "Wellington";
-		originMenu.setText("Wellington");
-	}
-
-	@FXML
-	private void selectChristchurchOrigin(ActionEvent event) {
-		selectedOrigin = "Christchurch";
-		originMenu.setText("Christchurch");
-	}
-
-	@FXML
-	private void selectDunedinOrigin(ActionEvent event) {
-		selectedOrigin = "Dunedin";
-		originMenu.setText("Dunedin");
-	}
-
-	@FXML
-	private TextField otherOriginText;
-
-	@FXML
-	private void selectOtherOrigin(ActionEvent event) {
-		selectedOrigin = otherOriginText.getText();
-		originMenu.setText(otherOriginText.getText());
-	}
-
-	@FXML
-	private void selectAucklandDest(ActionEvent event) {
-		selectedDest = "Auckland";
-		destinationMenu.setText("Auckland");
-	}
-
-	@FXML
-	private void selectHamiltonDest(ActionEvent event) {
-		selectedDest = "Hamilton";
-		destinationMenu.setText("Hamilton");
-	}
-
-	@FXML
-	private void selectRotoruaDest(ActionEvent event) {
-		selectedDest = "Rotorua";
-		destinationMenu.setText("Rotorua");
-	}
-
-	@FXML
-	private void selectPalmerstonDest(ActionEvent event) {
-		selectedDest = "Palmerston North";
-		destinationMenu.setText("Palmerston North");
-	}
-
-	@FXML
-	private void selectWellingtonDest(ActionEvent event) {
-		selectedDest = "Wellington";
-		destinationMenu.setText("Wellington");
-	}
-
-	@FXML
-	private void selectChristchurchDest(ActionEvent event) {
-		selectedDest = "Christchurch";
-		destinationMenu.setText("Christchurch");
-	}
-
-	@FXML
-	private void selectDunedinDest(ActionEvent event) {
-		selectedDest = "Dunedin";
-		destinationMenu.setText("Dunedin");
-	}
-
-	@FXML
-	private TextField otherDestText;
-
-	@FXML
-	private void selectOtherDest(ActionEvent event) {
-		selectedDest = otherDestText.getText();
-		destinationMenu.setText(otherDestText.getText());
-	}
 
 	/** Priority Menu */
 
