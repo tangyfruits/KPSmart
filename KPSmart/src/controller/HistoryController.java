@@ -55,6 +55,8 @@ public class HistoryController implements Initializable {
     	Stage stage = (Stage) logeventmenu.getScene().getWindow();
     	Scene scene = new Scene(reportsGUI);
       	stage.setScene(scene);
+      	ReportsController cont = reports.getController();
+    	cont.initData();
     	stage.show();
     }
     

@@ -205,6 +205,7 @@ public class Main {
 
 		// add to delivery events field
 		addToAverageDeliveryTimes(origin, destination, duration, priority);
+		addToAmountOfMail(origin, destination, weight, volume);
 		deliveryRequests.add(request);
 
 //		if (!initial) {
@@ -427,7 +428,7 @@ public class Main {
 	}
 
 	/* Log Discontinuing Route */
-	public void discontinueTransportRoute(String origin, String destination, String company, String type, boolean initial) {
+	public DiscontinueRoute discontinueTransportRoute(String origin, String destination, String company, String type, boolean initial) {
 
 		Location originLoc = getLocation(origin);
 		Location destinationLoc = getLocation(destination);
@@ -452,10 +453,12 @@ public class Main {
 //				}
 //			}
 			addEvent();
+			return disconRoute;
 		} else {
 			// TODO display error
+			return null;
 		}
-
+		
 	}
 
 	// Getters

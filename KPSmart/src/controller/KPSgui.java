@@ -17,10 +17,10 @@ public class KPSgui extends Application {
 	public void start(Stage primaryStage) throws Exception {		
 
 		main = new Main();
-        main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 12, 12);
-        main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air", 4, 4, 15, 15, 12, 24, DayOfWeek.THURSDAY, 12);
-        main.logCustomerPriceUpdate("Wellington", "Auckland", "Standard", 2, 5);
-        main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Standard",2 , 1, 15, 15, 12, 24, DayOfWeek.THURSDAY, 12);
+        main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 12, 12, false);
+        main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air", 4, 4, 15, 15, 12, 24, DayOfWeek.THURSDAY, 12, false);
+        main.logCustomerPriceUpdate("Wellington", "Auckland", "Standard", 2, 5, false);
+        main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Standard",2 , 1, 15, 15, 12, 24, DayOfWeek.THURSDAY, 12, false);
 		
 		FXMLLoader login = new FXMLLoader(getClass().getResource("/views/login.fxml"));
 		login.setController(new LoginController(main));
