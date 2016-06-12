@@ -461,6 +461,18 @@ public class Main {
 		
 	}
 
+	public ArrayList<Route> getRoutes(String origin, String destination){
+		Location originLoc = getLocation(origin);
+		
+		ArrayList<Route> disconRoutes = new ArrayList<>();
+		for(Route r:originLoc.getRoutes()){
+			if(r.getDestination().getName().equals(destination)){
+				disconRoutes.add(r);
+			}
+		}
+		return disconRoutes;
+	}
+	
 	// Getters
 	public Location getLocation(String name) {
 		Location location = null;
