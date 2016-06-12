@@ -99,21 +99,31 @@
             </Text>
          </children>
       </GridPane>
-      <Button id="submit" fx:id="submit" layoutX="323.0" layoutY="500.0" mnemonicParsing="false" onAction="#discTransportButtonAction" style="-fx-background-color: E9D5B9;" text="Submit">
+      <Button id="submit" fx:id="submit" layoutX="323.0" layoutY="500.0" mnemonicParsing="false" onAction="#discTransportButtonAction" style="-fx-background-color: E9D5B9; visibility: false;" text="Submit">
          <font>
             <Font name="Gulim" size="15.0" />
          </font>
       </Button>
-      <Button id="submit" fx:id="findroutes" layoutX="305.0" layoutY="230.0" mnemonicParsing="false" onAction="#findRoutesButtonAction" style="-fx-background-color: E9D5B9;" text="Find Routes">
+      <Button id="submit" fx:id="findroutes" layoutX="298.0" layoutY="176.0" mnemonicParsing="false" onAction="#findRoutesButtonAction" style="-fx-background-color: E9D5B9;" text="Find Routes">
          <font>
             <Font name="Gulim" size="15.0" />
          </font>
       </Button>
-      <ScrollPane layoutX="197.0" layoutY="275.0" prefViewportHeight="200.0" prefViewportWidth="317.0">
+      <ScrollPane fx:id="scrollpane" layoutX="197.0" layoutY="262.0" prefHeight="215.0" prefViewportHeight="200.0" prefViewportWidth="317.0" prefWidth="319.0" style="visibility: false;">
          <content>
-            <VBox fx:id="discRoutes" layoutX="197.0" layoutY="275.0" prefHeight="200.0" prefWidth="317.0" />
+            <VBox fx:id="discRoutes" layoutX="197.0" layoutY="275.0" prefHeight="200.0" prefWidth="317.0" style="-fx-background-color: FFF3E0; visibility: false;" />
          </content>
       </ScrollPane>
+      <Button id="submit" fx:id="changeSelection" layoutX="278.0" layoutY="219.0" mnemonicParsing="false" onAction="#reSelect" style="-fx-background-color: E9D5B9; visibility: false;" text="Change Selection">
+         <font>
+            <Font name="Gulim" size="15.0" />
+         </font>
+      </Button>
+      <Text fx:id="confirmation" fill="#509a55" layoutX="175.0" layoutY="563.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: false;" text="Thanks. Your request has been processed!">
+         <font>
+            <Font name="Gulim" size="18.0" />
+         </font>
+      </Text>
    </children>
    <stylesheets>
 	<URL value="@kps.css" />

@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import event.CustomerPrice;
 import event.DeliveryRequest;
+import event.DiscontinueRoute;
 import event.Route;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -24,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
@@ -791,6 +793,17 @@ public class FormController implements Initializable {
 	}
 
 	/** DISCONTINUE TRANSPORT */
+	
+	@FXML
+	private Button changeSelection;
+	
+	@FXML
+	private Button findroutes;
+	
+	@FXML
+	private ScrollPane scrollpane;
+	
+	private BooleanProperty hasRoutes = new SimpleBooleanProperty(false);
 
 	@FXML
 	private VBox discRoutes;
@@ -808,9 +821,6 @@ public class FormController implements Initializable {
 					@Override
 					public void changed(ObservableValue<? extends Toggle> ov,
 							Toggle t, Toggle t1) {
-						System.out.println(t1.getUserData());
-						System.out.println(group.selectedToggleProperty()
-								.toString());
 						selectedRoute = (Route) t1.getUserData();
 					}
 				});
@@ -822,11 +832,46 @@ public class FormController implements Initializable {
 			discRoutes.getChildren().add(b);
 		}
 		discRoutes.setSpacing(5);
+		
+		changeSelection.visibleProperty().bind(hasRoutes);
+		discRoutes.visibleProperty().bind(hasRoutes);
+		submit.visibleProperty().bind(hasRoutes);
+		scrollpane.visibleProperty().bind(hasRoutes);
+		hasRoutes.set(true);
+		
+		originMenu.setDisable(true);
+		destinationMenu.setDisable(true);
+		findroutes.setDisable(true);
+		
+	}
+	
+	@FXML
+	private void reSelect(ActionEvent event){
+		originMenu.setDisable(false);
+		destinationMenu.setDisable(false);
+		findroutes.setDisable(false);
+		hasRoutes.set(false);
+		discRoutes.getChildren().clear();
 	}
 
 	@FXML
 	private void discTransportButtonAction(ActionEvent event) {
-		main.discontinueTransportRoute(selectedOrigin, selectedDest, selectedRoute.getCompany(), selectedRoute.getType(), false);
+		if (selectedRoute!=null) {
+			DiscontinueRoute route = main.discontinueTransportRoute(
+					selectedOrigin, selectedDest, selectedRoute.getCompany(),
+					selectedRoute.getType(), false);
+			if (route != null) {
+				changeSelection.setDisable(true);
+				for (Node r : discRoutes.getChildren()) {
+					r.setDisable(true);
+				}
+				submit.setDisable(true);
+				confirmation.visibleProperty().bind(completed);
+				completed.set(true);
+			}
+		}
+		
+		
 	}
 
 }
