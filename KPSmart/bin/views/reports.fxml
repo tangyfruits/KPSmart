@@ -112,7 +112,7 @@
                                   <TableColumn fx:id="dest" prefWidth="111.0135498046875" style="-fx-background-color: E9D5B9;" text="Destination" />
                                     <TableColumn fx:id="totalWeight" prefWidth="104.98641967773438" style="-fx-background-color: E9D5B9;" text="Total Weight" />
                                     <TableColumn fx:id="totalVolume" minWidth="8.45361328125" prefWidth="105.68927001953125" style="-fx-background-color: E9D5B9;" text="Total Volume" />
-                                    <TableColumn fx:id="totalCount" prefWidth="126.040771484375" style="-fx-background-color: E9D5B9;" text="Total No. of Items" />
+                                    <TableColumn fx:id="totalCount" prefWidth="126.040771484375" style="-fx-background-color: E9D5B9;" text="Total Items" />
                                 </columns>
                               </TableView>
                            </content>

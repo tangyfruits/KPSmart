@@ -178,19 +178,6 @@ public class ReportsController implements Initializable {
 		
 	private ArrayList<RouteLoadRow> report;
 
-//	@FXML
-//	private Button getReports;
-	@FXML
-	private Button routeLoad;
-
-//	@FXML
-//	private void getReportsAction(ActionEvent event) {
-//		expenditure.setText(String.valueOf(main.getTotalExp()));
-//		revenue.setText(String.valueOf(main.getTotalRev()));
-//		eventcount.setText(String.valueOf(main.getTotalEvents()));
-//	}
-
-
 	@FXML
 	private void routeLoadAction() {
 	    HashMap<Tuple, ArrayList<Double>> temp = main.getAmountOfMail();
@@ -199,8 +186,7 @@ public class ReportsController implements Initializable {
 	    	RouteLoadRow row = new RouteLoadRow(t.getOrigin(), t.getDestination(), Double.toString(temp.get(t).get(0)), Double.toString(temp.get(t).get(1)), Double.toString(temp.get(t).get(2)));
 	    	report.add(row);
 	    }
-	    
-	    
+	   
 	    origin.setCellValueFactory(new PropertyValueFactory<Tuple,String>("origin"));
 	    dest.setCellValueFactory(new PropertyValueFactory<Tuple,String>("destination"));
 	    totalWeight.setCellValueFactory(new PropertyValueFactory<Tuple,String>("totalWeight"));
