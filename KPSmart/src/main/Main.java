@@ -495,7 +495,7 @@ public class Main {
 		return amountOfMailDeliveryTimes;
 	}
 
-	public List<Location> getLocations() {
+	public ArrayList<Location> getLocations() {
 		return locations;
 	}
 

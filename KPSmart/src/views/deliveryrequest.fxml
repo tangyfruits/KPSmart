@@ -63,29 +63,11 @@
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
-               <items>
-                  <CheckMenuItem fx:id="AucklandDest" mnemonicParsing="false" onAction="#selectAucklandDest" text="Auckland" />
-                  <CheckMenuItem fx:id="HamiltonDest" mnemonicParsing="false" onAction="#selectHamiltonDest" text="Hamilton" />
-                  <CheckMenuItem fx:id="RotoruaDest" mnemonicParsing="false" onAction="#selectRotoruaDest" text="Rotorua" />
-                  <CheckMenuItem fx:id="PalmerstonDest" mnemonicParsing="false" onAction="#selectPalmerstonDest" text="Palmerston North" />
-                  <CheckMenuItem fx:id="WellingtonDest" mnemonicParsing="false" onAction="#selectWellingtonDest" text="Wellington" />
-                  <CheckMenuItem fx:id="ChristchurchDest" mnemonicParsing="false" onAction="#selectChristchurchDest" text="ChristChurch" />
-                  <CheckMenuItem fx:id="DunedinDest" mnemonicParsing="false" onAction="#selectDunedinDest" text="Dunedin" />
-               </items>
             </MenuButton>
             <MenuButton fx:id="originMenu" layoutX="130.0" layoutY="108.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" style="-fx-background-color: E9D5B9;" text="Choose location" GridPane.columnIndex="1">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
-               <items>
-                  <CheckMenuItem fx:id="AucklandOrigin" mnemonicParsing="false" onAction="#selectAucklandOrigin" text="Auckland" />
-                  <CheckMenuItem fx:id="HamiltonOrigin" mnemonicParsing="false" onAction="#selectHamiltonOrigin" text="Hamilton" />
-                  <CheckMenuItem fx:id="RotoruaOrigin" mnemonicParsing="false" onAction="#selectRotoruaOrigin" text="Rotorua" />
-                  <CheckMenuItem fx:id="PalmerstonOrigin" mnemonicParsing="false" onAction="#selectPalmerstonOrigin" text="Palmerston North" />
-                  <CheckMenuItem fx:id="WellingtonOrigin" mnemonicParsing="false" onAction="#selectWellingtonOrigin" text="Wellington" />
-                  <CheckMenuItem fx:id="ChristchurchOrigin" mnemonicParsing="false" onAction="#selectChristchurchOrigin" text="Christchurch" />
-                  <CheckMenuItem fx:id="DunedinOrigin" mnemonicParsing="false" onAction="#selectDunedinOrigin" text="Dunedin" />
-               </items>
             </MenuButton>
             <Text layoutX="79.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Origin:" wrappingWidth="41.3583984375">
                <font>
@@ -142,12 +124,12 @@
             <RowConstraints maxHeight="20.0" minHeight="8.0" prefHeight="19.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <RadioButton fx:id="secondChoice" layoutX="269.0" layoutY="499.0" mnemonicParsing="false" onAction="#secondChoiceAction" style="visibility: false;" GridPane.rowIndex="1">
+            <RadioButton fx:id="firstChoice" layoutX="263.0" layoutY="476.0" mnemonicParsing="false" onAction="#firstChoiceAction" style="visibility: false;">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="firstChoice" layoutX="263.0" layoutY="476.0" mnemonicParsing="false" onAction="#firstChoiceAction" style="visibility: false;">
+            <RadioButton fx:id="secondChoice" mnemonicParsing="false" onAction="#secondChoiceAction" style="visibility: false;" GridPane.rowIndex="1">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>

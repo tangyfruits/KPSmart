@@ -88,72 +88,79 @@ public class ReportsController implements Initializable {
     	stage.show();
     }
     
-    /** LOG EVENT MENU ITEM */
-    
-    @FXML MenuButton logeventmenu ;
+	/** LOG EVENT MENU ITEM */
 
-    @FXML
-    private void deliveryRequestAction(ActionEvent event) throws IOException{
-    	System.out.println("Delivery Request");
-    	
-    	FXMLLoader delivery = new FXMLLoader(getClass().getResource("/views/deliveryrequest.fxml"));
-    	delivery.setController(new FormController(main));
-    	Parent deliveryGUI = delivery.load();
-    	
-    	
-    	Stage stage = (Stage) logeventmenu.getScene().getWindow();
-    	Scene scene = new Scene(deliveryGUI);
-      	stage.setScene(scene);
-    	stage.show();
-    }
-    
-    @FXML
-    private void discontinueTransportAction(ActionEvent event) throws IOException{
-    	System.out.println("Discontinue Transport");
-    	logeventmenu.setText("Discontinue Transport");
+	@FXML
+	MenuButton logeventmenu;
 
-    	FXMLLoader discontinue = new FXMLLoader(getClass().getResource("/views/discontinuetransport.fxml"));
-    	discontinue.setController(new FormController(main));
-    	Parent discontinueGUI = discontinue.load();
-    	
-    	
-    	Stage stage = (Stage) logeventmenu.getScene().getWindow();
-    	Scene scene = new Scene(discontinueGUI);
-      	stage.setScene(scene);
-    	stage.show();
-    }
-    
-    @FXML
-    private void transportRouteAction(ActionEvent event) throws IOException{
-    	System.out.println("Transport Route");
-    	logeventmenu.setText("Transport Route");
-    	
-    	FXMLLoader route = new FXMLLoader(getClass().getResource("/views/transportroute.fxml"));
-    	route.setController(new FormController(main));
-    	Parent routeGUI = route.load();
-    	
-    	
-    	Stage stage = (Stage) logeventmenu.getScene().getWindow();
-    	Scene scene = new Scene(routeGUI);
-      	stage.setScene(scene);
-    	stage.show();
-    }
-    
-    @FXML
-    private void priceUpdateAction(ActionEvent event) throws IOException {
-    	System.out.println("Customer Price Update");
-    	logeventmenu.setText("Customer Price Update");
-    	
-    	FXMLLoader price = new FXMLLoader(getClass().getResource("/views/priceupdate.fxml"));
-    	price.setController(new FormController(main));
-    	Parent priceGUI = price.load();
-    	
-    	
-    	Stage stage = (Stage) logeventmenu.getScene().getWindow();
-    	Scene scene = new Scene(priceGUI);
-      	stage.setScene(scene);
-    	stage.show();
-    }
+	@FXML
+	private void deliveryRequestAction(ActionEvent event) throws IOException {
+		FXMLLoader delivery = new FXMLLoader(getClass().getResource(
+				"/views/deliveryrequest.fxml"));
+		delivery.setController(new FormController(main));
+		Parent deliveryGUI = delivery.load();
+
+		Stage stage = (Stage) logeventmenu.getScene().getWindow();
+		Scene scene = new Scene(deliveryGUI);
+		
+		FormController controller = delivery.getController();
+		controller.initDropdown();
+		
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	@FXML
+	private void discontinueTransportAction(ActionEvent event)
+			throws IOException {
+		logeventmenu.setText("Discontinue Transport");
+
+		FXMLLoader discontinue = new FXMLLoader(getClass().getResource(
+				"/views/discontinuetransport.fxml"));
+		discontinue.setController(new FormController(main));
+		Parent discontinueGUI = discontinue.load();
+
+		Stage stage = (Stage) logeventmenu.getScene().getWindow();
+		Scene scene = new Scene(discontinueGUI);
+		stage.setScene(scene);
+		FormController controller = discontinue.getController();
+		controller.initDropdown();
+		stage.show();
+	}
+
+	@FXML
+	private void transportRouteAction(ActionEvent event) throws IOException {
+		logeventmenu.setText("Transport Route");
+
+		FXMLLoader route = new FXMLLoader(getClass().getResource(
+				"/views/transportroute.fxml"));
+		route.setController(new FormController(main));
+		Parent routeGUI = route.load();
+
+		Stage stage = (Stage) logeventmenu.getScene().getWindow();
+		Scene scene = new Scene(routeGUI);
+		stage.setScene(scene);
+		FormController controller = route.getController();
+		controller.initDropdownWithOther();
+		stage.show();
+	}
+
+	@FXML
+	private void priceUpdateAction(ActionEvent event) throws IOException {
+		logeventmenu.setText("Customer Price Update");
+
+		FXMLLoader price = new FXMLLoader(getClass().getResource(
+				"/views/priceupdate.fxml"));
+		price.setController(new FormController(main));
+		Parent priceGUI = price.load();
+
+		Stage stage = (Stage) logeventmenu.getScene().getWindow();
+		Scene scene = new Scene(priceGUI);
+		stage.setScene(scene);
+		FormController controller = price.getController();
+		controller.initDropdownWithOther();
+		stage.show();
+	}
  
 	/** REPORTS PAGE */
 	@FXML
