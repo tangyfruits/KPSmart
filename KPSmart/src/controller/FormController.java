@@ -294,7 +294,7 @@ public class FormController implements Initializable {
 		Scene scene = new Scene(priceGUI);
 		stage.setScene(scene);
 		FormController controller = price.getController();
-		controller.initDropdown();
+		controller.initDropdownWithOther();
 		stage.show();
 	}
 
@@ -616,8 +616,6 @@ public class FormController implements Initializable {
 		String d = this.duration.getText();
 		String f = this.frequency.getText();
 		
-		System.out.println(otherOrigin.getText());
-		
 		if(selectedOrigin.equals("Other")){
 			selectedOrigin = this.otherOrigin.getText();
 		}
@@ -649,6 +647,8 @@ public class FormController implements Initializable {
 			timeMenu.setDisable(true);
 			submit.setDisable(true);
 			company.setDisable(true);
+			otherDest.setDisable(true);
+			otherOrigin.setDisable(true);
 		}
 	}
 
@@ -658,6 +658,14 @@ public class FormController implements Initializable {
 	private void priceUpdateButtonAction(ActionEvent event) {
 		String wc = this.weightcost.getText();
 		String vc = this.volumecost.getText();
+		
+		if(selectedOrigin.equals("Other")){
+			selectedOrigin = this.otherOrigin.getText();
+		}
+
+		if(selectedDest.equals("Other")){
+			selectedDest = otherDest.getText();
+		}
 
 		CustomerPrice price = main.logCustomerPriceUpdate(selectedOrigin,
 				selectedDest, priority, Double.parseDouble(wc),
@@ -672,6 +680,8 @@ public class FormController implements Initializable {
 			volumecost.setDisable(true);
 			prioritymenu.setDisable(true);
 			submit.setDisable(true);
+			otherDest.setDisable(true);
+			otherOrigin.setDisable(true);
 		}
 
 		System.out.println(main.getTotalEvents());

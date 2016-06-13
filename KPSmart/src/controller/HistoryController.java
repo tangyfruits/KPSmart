@@ -112,7 +112,7 @@ public class HistoryController implements Initializable {
 		Scene scene = new Scene(discontinueGUI);
 		stage.setScene(scene);
 		FormController controller = discontinue.getController();
-		controller.initDropdownWithOther();
+		controller.initDropdown();
 		stage.show();
 	}
 
@@ -130,7 +130,7 @@ public class HistoryController implements Initializable {
 		Scene scene = new Scene(routeGUI);
 		stage.setScene(scene);
 		FormController controller = route.getController();
-		controller.initDropdown();
+		controller.initDropdownWithOther();
 		stage.show();
 	}
 
@@ -148,7 +148,7 @@ public class HistoryController implements Initializable {
 		Scene scene = new Scene(priceGUI);
 		stage.setScene(scene);
 		FormController controller = price.getController();
-		controller.initDropdown();
+		controller.initDropdownWithOther();
 		stage.show();
 	}
     

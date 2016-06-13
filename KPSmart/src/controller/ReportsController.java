@@ -163,7 +163,7 @@ public class ReportsController implements Initializable {
 		Scene scene = new Scene(priceGUI);
 		stage.setScene(scene);
 		FormController controller = price.getController();
-		controller.initDropdown();
+		controller.initDropdownWithOther();
 		stage.show();
 	}
  
