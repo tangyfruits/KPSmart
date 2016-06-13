@@ -2,6 +2,8 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.DayOfWeek;
@@ -9,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 import event.CustomerPrice;
 import event.DeliveryRequest;
@@ -33,12 +36,36 @@ public class Main {
 	private double totalExp;
 	private double totalRev;
 
-	// CONSTRUCTOR
+	// // CONSTRUCTOR
+	// public Main() {
+	// }
+
 	public Main() {
 
 		locations = new ArrayList<Location>();
 		accounts = new ArrayList<User>();
 		deliveryRequests = new ArrayList<DeliveryRequest>();
+		file = new File("accounts.txt");
+		try {
+			Scanner sc = new Scanner(file);
+			while (sc.hasNextLine()) {
+				String username = sc.next();
+				String password = sc.next();
+				String manager = sc.next();
+				boolean b = false;
+				if (manager.equals("true")) {
+					b = true;
+				}
+				accounts.add(new User(username, password, b));
+			}
+			sc.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		// for (User u : m.accounts) {
+		// System.out.println(u.getUsername() + u.getPassword() +
+		// u.isManager());
+		// }
 		amountOfMailDeliveryTimes = new HashMap<>();
 		amountOfMail = new HashMap<>();
 		
@@ -58,6 +85,91 @@ public class Main {
 		// currentUser = new User();
 		// want to look into apache shiro tbh but everyone will have to install
 		// maven. Apache shiro is a really good framework for logins
+	}
+
+	public boolean login(String username, String password) {
+		for (User u : accounts) {
+			if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
+				currentUser = u;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean edit(String password) {
+		boolean b = false;
+		for (User u : accounts) {
+			if (u.getUsername().equals(currentUser.getUsername())
+					&& u.getPassword().equals(currentUser.getPassword())) {
+				u.setPassword(password);
+				b = true;
+			}
+		}
+		currentUser.setPassword(password);
+		try {
+			file.delete();
+			file.createNewFile();
+			FileWriter writer = new FileWriter("accounts.txt", true);
+			for (int i = 0; i < accounts.size() - 1; i++) {
+				User u = accounts.get(i);
+				writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
+			}
+			User u = accounts.get(accounts.size() - 1);
+			writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()));
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+
+	public boolean delete() {
+		for (User u : accounts) {
+			if (u.getUsername().equals(currentUser.getUsername())
+					&& u.getPassword().equals(currentUser.getPassword())) {
+				accounts.remove(u);
+				logout();
+				return true;
+			}
+		}
+		return false;
+
+	}
+
+	public void add(User u) {
+		try {
+			FileWriter writer = new FileWriter("accounts.txt", true);
+			writer.write("\n" + u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()));
+			writer.flush();
+			writer.close();
+			accounts.add(u);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void logout() {
+		currentUser = null;
+	}
+
+	public void addUserToList(User u) {
+		accounts.add(u);
+	}
+
+	public User getCurrentUser() {
+		return currentUser;
+	}
+
+	public void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser;
+	}
+
+	public ArrayList<User> getAccounts() {
+		return accounts;
 	}
 
 	// METHODS
@@ -170,8 +282,8 @@ public class Main {
 	}
 
 	/* Get delivery details ready */
-	public DeliveryRequest getDeliveryDetails(String origin,
-			String destination, double weight, double volume, RouteDisplay route) {
+	public DeliveryRequest getDeliveryDetails(String origin, String destination, double weight, double volume,
+			RouteDisplay route) {
 
 		// get duration
 		int duration = route.getTotalDuration(LocalDateTime.now());
@@ -184,10 +296,10 @@ public class Main {
 			legs.add(new Leg(r.getOrigin(), r.getDestination(), r.getType(), r.getCompany(), freightCost,
 					customerPrice));
 		}
-		
+
 		return logDeliveryRequest(LocalDateTime.now(),origin,destination, legs, weight,volume,route.getPriority(),duration, false);
 	}
-	
+
 	// Loggers
 	/* Log Delivery Request */
 	public DeliveryRequest logDeliveryRequest(LocalDateTime logTime, String origin,
@@ -199,7 +311,6 @@ public class Main {
 		Location destinationLoc = getLocation(destination);
 
 		// create Delivery request
-
 		DeliveryRequest request = new DeliveryRequest(LocalDateTime.now(), originLoc, destinationLoc, weight, volume,
 				priority, duration, legs);
 
@@ -271,7 +382,7 @@ public class Main {
 		// the graph
 		Location originLoc = getLocation(origin);
 		Location destinationLoc = getLocation(destination);
-	
+
 		// if locations don't exist yet, add them to the graph
 		if (originLoc == null) {
 			originLoc = new Location(origin);
@@ -329,7 +440,7 @@ public class Main {
 		// the graph
 		Location originLoc = getLocation(origin);
 		Location destinationLoc = getLocation(destination);
-		
+
 		// if Locations don't exist yet, add them to the graph
 		if (originLoc == null) {
 			originLoc = new Location(origin);
@@ -421,7 +532,6 @@ public class Main {
 				custVolCost = Double.parseDouble(input.readLine());
 			} catch (IOException e) {
 			}
-
 			logCustomerPriceUpdate(origin, destination, priority, custWeightCost, custVolCost, false);
 		}
 		return customerPrice;

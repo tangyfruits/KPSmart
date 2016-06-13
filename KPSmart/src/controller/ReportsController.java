@@ -77,6 +77,7 @@ public class ReportsController implements Initializable {
     
     @FXML
     private void logoutButtonAction(ActionEvent event) throws IOException{
+    	main.logout();
     	FXMLLoader login = new FXMLLoader(getClass().getResource("/views/login.fxml"));
     	login.setController(new LoginController(main));
     	Parent loginGUI = login.load();
