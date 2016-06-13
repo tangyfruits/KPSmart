@@ -124,12 +124,12 @@
             <RowConstraints maxHeight="20.0" minHeight="8.0" prefHeight="19.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <RadioButton fx:id="secondChoice" layoutX="269.0" layoutY="499.0" mnemonicParsing="false" onAction="#secondChoiceAction" style="visibility: false;" GridPane.rowIndex="1">
+            <RadioButton fx:id="firstChoice" layoutX="263.0" layoutY="476.0" mnemonicParsing="false" onAction="#firstChoiceAction" style="visibility: false;">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="firstChoice" layoutX="263.0" layoutY="476.0" mnemonicParsing="false" onAction="#firstChoiceAction" style="visibility: false;">
+            <RadioButton fx:id="secondChoice" mnemonicParsing="false" onAction="#secondChoiceAction" style="visibility: false;" GridPane.rowIndex="1">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>

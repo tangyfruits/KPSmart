@@ -95,8 +95,6 @@ public class ReportsController implements Initializable {
 
 	@FXML
 	private void deliveryRequestAction(ActionEvent event) throws IOException {
-		System.out.println("Delivery Request");
-
 		FXMLLoader delivery = new FXMLLoader(getClass().getResource(
 				"/views/deliveryrequest.fxml"));
 		delivery.setController(new FormController(main));
@@ -115,7 +113,6 @@ public class ReportsController implements Initializable {
 	@FXML
 	private void discontinueTransportAction(ActionEvent event)
 			throws IOException {
-		System.out.println("Discontinue Transport");
 		logeventmenu.setText("Discontinue Transport");
 
 		FXMLLoader discontinue = new FXMLLoader(getClass().getResource(
@@ -133,7 +130,6 @@ public class ReportsController implements Initializable {
 
 	@FXML
 	private void transportRouteAction(ActionEvent event) throws IOException {
-		System.out.println("Transport Route");
 		logeventmenu.setText("Transport Route");
 
 		FXMLLoader route = new FXMLLoader(getClass().getResource(
@@ -151,7 +147,6 @@ public class ReportsController implements Initializable {
 
 	@FXML
 	private void priceUpdateAction(ActionEvent event) throws IOException {
-		System.out.println("Customer Price Update");
 		logeventmenu.setText("Customer Price Update");
 
 		FXMLLoader price = new FXMLLoader(getClass().getResource(

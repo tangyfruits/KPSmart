@@ -121,7 +121,6 @@ public class FormController implements Initializable {
             public void handle(ActionEvent event) {
                 MenuItem mItem = (MenuItem) event.getSource();
                 String loc = mItem.getText();
-               System.out.println(loc);
                selectedOrigin = loc;
                originMenu.setText(loc);    
                hasOtherOrigin.set(false);
@@ -135,7 +134,6 @@ public class FormController implements Initializable {
             public void handle(ActionEvent event) {
                 MenuItem mItem = (MenuItem) event.getSource();
                 String loc = mItem.getText();
-                System.out.println(loc);
                 destinationMenu.setText(loc);  
                 selectedDest = loc;
                 hasOtherDest.set(true);
@@ -148,7 +146,6 @@ public class FormController implements Initializable {
             public void handle(ActionEvent event) {
                 MenuItem mItem = (MenuItem) event.getSource();
                 String loc = mItem.getText();
-                System.out.println(loc);
                 originMenu.setText(loc);    
                 hasOtherOrigin.set(true);
                 selectedOrigin = loc;
@@ -163,10 +160,9 @@ public class FormController implements Initializable {
             public void handle(ActionEvent event) {
                 MenuItem mItem = (MenuItem) event.getSource();
                 String loc = mItem.getText();
-               System.out.println(loc);
-               selectedDest = loc;
-               destinationMenu.setText(loc);   
-               hasOtherDest.set(false);
+                selectedDest = loc;
+	            destinationMenu.setText(loc);   
+	            hasOtherDest.set(false);
             }
         };
 	}
@@ -226,8 +222,6 @@ public class FormController implements Initializable {
 
 	@FXML
 	private void deliveryRequestAction(ActionEvent event) throws IOException {
-		System.out.println("Delivery Request");
-
 		FXMLLoader delivery = new FXMLLoader(getClass().getResource(
 				"/views/deliveryrequest.fxml"));
 		delivery.setController(new FormController(main));
@@ -246,7 +240,6 @@ public class FormController implements Initializable {
 	@FXML
 	private void discontinueTransportAction(ActionEvent event)
 			throws IOException {
-		System.out.println("Discontinue Transport");
 		logeventmenu.setText("Discontinue Transport");
 
 		FXMLLoader discontinue = new FXMLLoader(getClass().getResource(
@@ -264,7 +257,6 @@ public class FormController implements Initializable {
 
 	@FXML
 	private void transportRouteAction(ActionEvent event) throws IOException {
-		System.out.println("Transport Route");
 		logeventmenu.setText("Transport Route");
 
 		FXMLLoader route = new FXMLLoader(getClass().getResource(
@@ -282,7 +274,6 @@ public class FormController implements Initializable {
 
 	@FXML
 	private void priceUpdateAction(ActionEvent event) throws IOException {
-		System.out.println("Customer Price Update");
 		logeventmenu.setText("Customer Price Update");
 
 		FXMLLoader price = new FXMLLoader(getClass().getResource(
@@ -629,7 +620,6 @@ public class FormController implements Initializable {
 				Double.parseDouble(vc), Integer.parseInt(mw),
 				Integer.parseInt(mv), Integer.parseInt(d), Integer.parseInt(f),
 				DayOfWeek.valueOf(day), time, false);
-		System.out.println(main.getTotalEvents());
 
 		if (r != null) {
 			confirmation.visibleProperty().bind(completed);
@@ -683,9 +673,6 @@ public class FormController implements Initializable {
 			otherDest.setDisable(true);
 			otherOrigin.setDisable(true);
 		}
-
-		System.out.println(main.getTotalEvents());
-
 	}
 
 	/** DELIVERY REQUEST FORM */
@@ -753,13 +740,10 @@ public class FormController implements Initializable {
 	@FXML
 	private void deliveryRequestButtonAction(ActionEvent event) {
 		if (!(chosenPriority == null)) {
-			System.out.println("Priority: " + chosenPriority.getPriority());
 			DeliveryRequest req = main.getDeliveryDetails(selectedOrigin,
 					selectedDest, Double.parseDouble(this.weight.getText()),
 					Double.parseDouble(this.volume.getText()), chosenPriority);
 
-			System.out.println(req.toString());
-			System.out.println(main.getTotalEvents());
 			chosenPriority = null;
 			routes = null;
 			confirmation.visibleProperty().bind(completed);
