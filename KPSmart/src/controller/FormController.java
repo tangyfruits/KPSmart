@@ -136,9 +136,9 @@ public class FormController implements Initializable {
                 MenuItem mItem = (MenuItem) event.getSource();
                 String loc = mItem.getText();
                 System.out.println(loc);
-                destinationMenu.setText(loc);    
+                destinationMenu.setText(loc);  
+                selectedDest = loc;
                 hasOtherDest.set(true);
-                //todo set up other text box
             }
         };
 	}
@@ -151,7 +151,7 @@ public class FormController implements Initializable {
                 System.out.println(loc);
                 originMenu.setText(loc);    
                 hasOtherOrigin.set(true);
-                //todo set up other text box
+                selectedOrigin = loc;
             }
         };
 	}
@@ -616,26 +616,16 @@ public class FormController implements Initializable {
 		String d = this.duration.getText();
 		String f = this.frequency.getText();
 		
-		String origin;
+		System.out.println(otherOrigin.getText());
+		
 		if(selectedOrigin.equals("Other")){
-			origin = this.otherOrigin.getText();
+			selectedOrigin = this.otherOrigin.getText();
 		}
-		else {
-			origin = selectedOrigin;
-		}
-		
-		System.out.println("Origin: " + origin);
-		
-		String dest;
+
 		if(selectedDest.equals("Other")){
-			dest = otherDest.getText();
+			selectedDest = otherDest.getText();
 		}
-		else {
-			dest = selectedDest;
-		}
-
-		System.out.println("Dest: " + dest);
-
+		
 		Route r = main.logTransportCostUpdate(selectedOrigin, selectedDest,
 				company.getText(), type, Double.parseDouble(wc),
 				Double.parseDouble(vc), Integer.parseInt(mw),
