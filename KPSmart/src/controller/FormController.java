@@ -61,20 +61,58 @@ public class FormController implements Initializable {
 	private String selectedOrigin = "";
 	private String selectedDest = "";
 	
+	@FXML
+	private TextField otherOrigin;
+	@FXML
+	private TextField otherDest;
+	
+	private BooleanProperty hasOtherOrigin = new SimpleBooleanProperty(false);
+	private BooleanProperty hasOtherDest = new SimpleBooleanProperty(false);
+
 	public void initDropdown(){
 		locs = main.getLocations();
 		EventHandler<ActionEvent> originAction = setSelectedOrigin();
 		EventHandler<ActionEvent> destAction = setSelectedDest();
-				
+			
 		for(Location l:locs){
-			MenuItem i = new CheckMenuItem(l.getName());
+			MenuItem i = new MenuItem(l.getName());
 			i.setUserData(l.getName());
 			i.setOnAction(originAction);
 			originMenu.getItems().add(i);
-			MenuItem k = new CheckMenuItem(l.getName());
+			MenuItem k = new MenuItem(l.getName());
 			k.setOnAction(destAction);
 			destinationMenu.getItems().add(k);
-		}		
+		}	
+	}
+	
+	public void initDropdownWithOther(){
+		otherOrigin.visibleProperty().bind(hasOtherOrigin);
+		otherDest.visibleProperty().bind(hasOtherDest);
+		locs = main.getLocations();
+		EventHandler<ActionEvent> originAction = setSelectedOrigin();
+		EventHandler<ActionEvent> destAction = setSelectedDest();
+		EventHandler<ActionEvent> otherOriginAction = setOtherOrigin();
+		EventHandler<ActionEvent> otherDestAction = setOtherDest();
+				
+		for(Location l:locs){
+			MenuItem i = new MenuItem(l.getName());
+			i.setUserData(l.getName());
+			i.setOnAction(originAction);
+			originMenu.getItems().add(i);
+			MenuItem k = new MenuItem(l.getName());
+			k.setOnAction(destAction);
+			destinationMenu.getItems().add(k);
+		}	
+		
+		MenuItem otherOrigin = new MenuItem("Other");
+		otherOrigin.setUserData("Other");
+		otherOrigin.setOnAction(otherOriginAction);
+		originMenu.getItems().add(otherOrigin);
+		
+		MenuItem otherDest = new MenuItem("Other");
+		otherDest.setUserData("Other");
+		otherDest.setOnAction(otherDestAction);
+		destinationMenu.getItems().add(otherDest);
 	}
 	
 	private EventHandler<ActionEvent> setSelectedOrigin() {
@@ -85,12 +123,41 @@ public class FormController implements Initializable {
                 String loc = mItem.getText();
                System.out.println(loc);
                selectedOrigin = loc;
-               originMenu.setText(loc);            
+               originMenu.setText(loc);    
+               hasOtherOrigin.set(false);
             }
         };
     }
 	
+	private EventHandler<ActionEvent> setOtherDest() {
+		return new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent event) {
+                MenuItem mItem = (MenuItem) event.getSource();
+                String loc = mItem.getText();
+                System.out.println(loc);
+                destinationMenu.setText(loc);    
+                hasOtherDest.set(true);
+                //todo set up other text box
+            }
+        };
+	}
+	private EventHandler<ActionEvent> setOtherOrigin() {
+		return new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent event) {
+                MenuItem mItem = (MenuItem) event.getSource();
+                String loc = mItem.getText();
+                System.out.println(loc);
+                originMenu.setText(loc);    
+                hasOtherOrigin.set(true);
+                //todo set up other text box
+            }
+        };
+	}
+	
 	private EventHandler<ActionEvent> setSelectedDest() {
+
         return new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent event) {
@@ -98,10 +165,12 @@ public class FormController implements Initializable {
                 String loc = mItem.getText();
                System.out.println(loc);
                selectedDest = loc;
-               destinationMenu.setText(loc);            
+               destinationMenu.setText(loc);   
+               hasOtherDest.set(false);
             }
         };
 	}
+	
 	/**
 	 * NAV BAR BUTTONS
 	 * 
@@ -207,7 +276,7 @@ public class FormController implements Initializable {
 		Scene scene = new Scene(routeGUI);
 		stage.setScene(scene);
 		FormController controller = route.getController();
-		controller.initDropdown();
+		controller.initDropdownWithOther();
 		stage.show();
 	}
 
@@ -546,6 +615,26 @@ public class FormController implements Initializable {
 		String vc = this.volumecost.getText();
 		String d = this.duration.getText();
 		String f = this.frequency.getText();
+		
+		String origin;
+		if(selectedOrigin.equals("Other")){
+			origin = this.otherOrigin.getText();
+		}
+		else {
+			origin = selectedOrigin;
+		}
+		
+		System.out.println("Origin: " + origin);
+		
+		String dest;
+		if(selectedDest.equals("Other")){
+			dest = otherDest.getText();
+		}
+		else {
+			dest = selectedDest;
+		}
+
+		System.out.println("Dest: " + dest);
 
 		Route r = main.logTransportCostUpdate(selectedOrigin, selectedDest,
 				company.getText(), type, Double.parseDouble(wc),

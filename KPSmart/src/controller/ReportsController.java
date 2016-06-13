@@ -145,7 +145,7 @@ public class ReportsController implements Initializable {
 		Scene scene = new Scene(routeGUI);
 		stage.setScene(scene);
 		FormController controller = route.getController();
-		controller.initDropdown();
+		controller.initDropdownWithOther();
 		stage.show();
 	}
 

@@ -112,7 +112,7 @@ public class HistoryController implements Initializable {
 		Scene scene = new Scene(discontinueGUI);
 		stage.setScene(scene);
 		FormController controller = discontinue.getController();
-		controller.initDropdown();
+		controller.initDropdownWithOther();
 		stage.show();
 	}
 
