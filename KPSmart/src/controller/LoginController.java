@@ -61,7 +61,10 @@ public class LoginController implements Initializable {
 			stage.show();
 		}
 		else{
-		b.set(true);
+			idnumber.clear();
+			password.clear();
+			idnumber.requestFocus();
+			b.set(true);
 		}
 		
 	}

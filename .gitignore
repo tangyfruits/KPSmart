@@ -8,6 +8,5 @@ KPSmart/bin/
 KPSmart/.settings/
 .settings
 
-# LogFiles
-*.xml
-/bin/
+# NOT Ignoring LogFiles
+#*.xml

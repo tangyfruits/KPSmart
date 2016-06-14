@@ -14,7 +14,7 @@ public class LogReaderTest {
 	
 	// FIELDS
 	private static final Main main = new Main();
-	private static File logfile = new File("test_input.xml");
+	private static File logfile = new File("KPSmart/src/tests/test_input.xml");
 	private static LogReader reader;
 	
 	// CONSTRUCTOR
