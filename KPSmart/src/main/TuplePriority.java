@@ -1,17 +1,34 @@
 package main;
 
+/**
+ * This is a simple class to represent a Tuple that has an origin, destination
+ * and priority.
+ * 
+ * @author Donald Tang
+ */
+
 public class TuplePriority {
 	String origin;
 	String destination;
 	String priority;
 
-	public TuplePriority(String o, String d, String p) {
-		this.origin = o;
-		this.destination = d;
-		this.priority = p;
+	/**
+	 * Constructor
+	 * 
+	 * @param origin
+	 * @param destination
+	 * @param priority
+	 */
+
+	public TuplePriority(String origin, String destination, String priority) {
+		this.origin = origin;
+		this.destination = destination;
+		this.priority = priority;
 	}
 
 	/**
+	 * Getter
+	 * 
 	 * @return the origin
 	 */
 	public String getOrigin() {
@@ -19,38 +36,45 @@ public class TuplePriority {
 	}
 
 	/**
+	 * Setter
+	 * 
 	 * @param origin
-	 *            the origin to set
 	 */
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}
 
 	/**
-	 * @return the destination
+	 * Getter
+	 * 
+	 * @return destination
 	 */
 	public String getDestination() {
 		return destination;
 	}
 
 	/**
+	 * Setter
+	 * 
 	 * @param destination
-	 *            the destination to set
 	 */
 	public void setDestination(String destination) {
 		this.destination = destination;
 	}
 
 	/**
-	 * @return the priority
+	 * Getter
+	 * 
+	 * @return priority
 	 */
 	public String getPriority() {
 		return priority;
 	}
 
 	/**
+	 * Setter
+	 * 
 	 * @param priority
-	 *            the priority to set
 	 */
 	public void setPriority(String priority) {
 		this.priority = priority;
