@@ -1,6 +1,5 @@
-donald password123 true
-shelley password123 false
-peter password123 true
 kaszandra password123 false
 priyanka password123 true
-David password123 true
+donald password123 true
+peter password123 true
+shelley password123 true
