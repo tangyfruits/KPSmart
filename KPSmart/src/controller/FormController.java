@@ -417,7 +417,7 @@ public class FormController implements Initializable {
 	@FXML
 	private MenuButton timeMenu;
 
-	private int time;
+	private int time = -1;
 
 	@FXML
 	private void zeroAction(ActionEvent event) {
@@ -597,10 +597,51 @@ public class FormController implements Initializable {
 	@FXML
 	private Text confirmation;
 
+	@FXML
+	private Text error;
+	
+	private BooleanProperty hasError = new SimpleBooleanProperty(false);
+	
+	private boolean isDouble(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+	
 	/** TRANSPORT ROUTE FORM */
 
+	private void validateRoute(String mw, String mv, String wc, String vc, String d, String f){
+		if(selectedOrigin.isEmpty() || selectedOrigin.equals("Other") || selectedDest.isEmpty() || selectedDest.equals("Other") || 
+				type.isEmpty() || company.getText().isEmpty() || mw.isEmpty() || !isDouble(mw) || mv.isEmpty() || !isDouble(mv) || 
+				wc.isEmpty() || !isDouble(wc) || vc.isEmpty() || !isDouble(vc) || d.isEmpty() || !isDouble(d) || f.isEmpty() ||
+				!isDouble(f) || day.isEmpty() || time == -1
+				){
+			hasError.set(true);
+			System.out.println(selectedOrigin);
+			System.out.println(selectedDest);
+			System.out.println(type);
+			System.out.println(company.getText());
+			System.out.println(mw);
+			System.out.println(mv);
+			System.out.println(wc);
+			System.out.println(vc);
+			System.out.println(d);
+			System.out.println(f);
+			System.out.println(day);
+			System.out.println(time);
+		}
+		else{
+			hasError.set(false);
+		}
+	}
+	
 	@FXML
 	private void transportRouteButtonAction(ActionEvent event) {
+		error.visibleProperty().bind(hasError);
+		
 		String mw = this.maxweight.getText();
 		String mv = this.maxvolume.getText();
 		String wc = this.weightcost.getText();
@@ -608,73 +649,101 @@ public class FormController implements Initializable {
 		String d = this.duration.getText();
 		String f = this.frequency.getText();
 		
-		if(selectedOrigin.equals("Other")){
+		if(selectedOrigin.equals("Other") || selectedOrigin.isEmpty()){
 			selectedOrigin = this.otherOrigin.getText();
 		}
 
-		if(selectedDest.equals("Other")){
+		if(selectedDest.equals("Other") || selectedDest.isEmpty()){
 			selectedDest = otherDest.getText();
 		}
 		
-		Route r = main.logTransportCostUpdate(selectedOrigin, selectedDest,
-				company.getText(), type, Double.parseDouble(wc),
-				Double.parseDouble(vc), Integer.parseInt(mw),
-				Integer.parseInt(mv), Integer.parseInt(d), Integer.parseInt(f),
-				DayOfWeek.valueOf(day), time, false);
-
-		if (r != null) {
-			confirmation.visibleProperty().bind(completed);
-			completed.set(true);
-			originMenu.setDisable(true);
-			destinationMenu.setDisable(true);
-			weightcost.setDisable(true);
-			volumecost.setDisable(true);
-			maxweight.setDisable(true);
-			maxvolume.setDisable(true);
-			duration.setDisable(true);
-			frequency.setDisable(true);
-			typemenu.setDisable(true);
-			dayMenu.setDisable(true);
-			timeMenu.setDisable(true);
-			submit.setDisable(true);
-			company.setDisable(true);
-			otherDest.setDisable(true);
-			otherOrigin.setDisable(true);
+		validateRoute(mw, mv, wc, vc, d, f);
+		
+		if (!hasError.get()) {
+			Route r = main.logTransportCostUpdate(selectedOrigin, selectedDest,
+					company.getText(), type, Double.parseDouble(wc),
+					Double.parseDouble(vc), Integer.parseInt(mw),
+					Integer.parseInt(mv), Integer.parseInt(d),
+					Integer.parseInt(f), DayOfWeek.valueOf(day), time, false);
+			if (r != null) {
+				confirmation.visibleProperty().bind(completed);
+				completed.set(true);
+				originMenu.setDisable(true);
+				destinationMenu.setDisable(true);
+				weightcost.setDisable(true);
+				volumecost.setDisable(true);
+				maxweight.setDisable(true);
+				maxvolume.setDisable(true);
+				duration.setDisable(true);
+				frequency.setDisable(true);
+				typemenu.setDisable(true);
+				dayMenu.setDisable(true);
+				timeMenu.setDisable(true);
+				submit.setDisable(true);
+				company.setDisable(true);
+				otherDest.setDisable(true);
+				otherOrigin.setDisable(true);
+				hasError.set(false);
+			}
 		}
 	}
 
 	/** PRICE UPDATE FORM */
 
+	public void validatePrice(String wc, String vc){
+		if(selectedOrigin.isEmpty() || selectedOrigin.equals("Other") || selectedDest.isEmpty() || selectedDest.equals("Other") || 
+				wc.isEmpty() || !isDouble(wc) || vc.isEmpty() || !isDouble(vc) || priority.isEmpty()){
+			hasError.set(true);
+			System.out.println("error");
+			System.out.println("Origin: " +selectedOrigin);
+			System.out.println("Dest: " +selectedDest);
+			
+		}
+		else{
+			hasError.set(false);
+			System.out.println("All G");
+		}		
+	}
+	
 	@FXML
 	private void priceUpdateButtonAction(ActionEvent event) {
+		error.visibleProperty().bind(hasError);
+		
 		String wc = this.weightcost.getText();
 		String vc = this.volumecost.getText();
-		
-		if(selectedOrigin.equals("Other")){
+						
+		if(selectedOrigin.equals("Other") || selectedOrigin.isEmpty()){
 			selectedOrigin = this.otherOrigin.getText();
+			
 		}
-
-		if(selectedDest.equals("Other")){
+		if(selectedDest.equals("Other") || selectedDest.isEmpty()){
 			selectedDest = otherDest.getText();
 		}
+		
+		System.out.println("Origin: "+ selectedOrigin);
+		
+		validatePrice(wc, vc);
 
-		CustomerPrice price = main.logCustomerPriceUpdate(selectedOrigin,
-				selectedDest, priority, Double.parseDouble(wc),
-				Double.parseDouble(vc), false);
-
-		if (price != null) {
-			confirmation.visibleProperty().bind(completed);
-			completed.set(true);
-			originMenu.setDisable(true);
-			destinationMenu.setDisable(true);
-			weightcost.setDisable(true);
-			volumecost.setDisable(true);
-			prioritymenu.setDisable(true);
-			submit.setDisable(true);
-			otherDest.setDisable(true);
-			otherOrigin.setDisable(true);
+		if (!hasError.get()) {
+			CustomerPrice price = main.logCustomerPriceUpdate(selectedOrigin,
+					selectedDest, priority, Double.parseDouble(wc),
+					Double.parseDouble(vc), false);
+			if (price != null) {
+				confirmation.visibleProperty().bind(completed);
+				completed.set(true);
+				originMenu.setDisable(true);
+				destinationMenu.setDisable(true);
+				weightcost.setDisable(true);
+				volumecost.setDisable(true);
+				prioritymenu.setDisable(true);
+				submit.setDisable(true);
+				otherDest.setDisable(true);
+				otherOrigin.setDisable(true);
+				hasError.set(false);
+			}
 		}
 	}
+	
 
 	/** DELIVERY REQUEST FORM */
 
@@ -705,37 +774,53 @@ public class FormController implements Initializable {
 
 	private BooleanProperty routeless = new SimpleBooleanProperty(false);
 
+	
+	private void validateDelivery(String w, String v){
+		if(selectedOrigin.isEmpty() || selectedOrigin.equals("Other") || selectedDest.isEmpty() || selectedDest.equals("Other") ||
+				w.isEmpty() || !isDouble(w) || v.isEmpty() || !isDouble(v)){
+			hasError.set(true);
+		}
+		else{
+			hasError.set(false);
+		}
+	}
 	@FXML
 	private void findPrioritiesButtonAction(ActionEvent event) {
+		error.visibleProperty().bind(hasError);
+		
 		String w = this.weight.getText();
 		String v = this.volume.getText();
 		firstChoice.setSelected(false);
 		secondChoice.setSelected(false);
-		routes = main.getPossibleRoutes(selectedOrigin, selectedDest,
-				Double.parseDouble(w), Double.parseDouble(v));
-
-		if (routes.size() > 0) {
-			submit.visibleProperty().bind(hasPriorities);
-			reselect.visibleProperty().bind(hasPriorities);
-			firstChoice.setText(routes.get(0).getPriority() + ": $"
-					+ routes.get(0).getPrice());
-			firstChoice.visibleProperty().bind(hasPriorities);
-			if (routes.size() == 2) {
-				secondChoice.setText(routes.get(1).getPriority() + ": $"
-						+ routes.get(1).getPrice());
-				secondChoice.visibleProperty().bind(hasPriorities);
+		
+		validateDelivery(w, v);
+		
+		if (!hasError.get()) {
+			routes = main.getPossibleRoutes(selectedOrigin, selectedDest,
+					Double.parseDouble(w), Double.parseDouble(v));
+			if (routes.size() > 0) {
+				submit.visibleProperty().bind(hasPriorities);
+				reselect.visibleProperty().bind(hasPriorities);
+				firstChoice.setText(routes.get(0).getPriority() + ": $"
+						+ routes.get(0).getPrice());
+				firstChoice.visibleProperty().bind(hasPriorities);
+				if (routes.size() == 2) {
+					secondChoice.setText(routes.get(1).getPriority() + ": $"
+							+ routes.get(1).getPrice());
+					secondChoice.visibleProperty().bind(hasPriorities);
+				}
+				hasPriorities.set(true);
+			} else {
+				noRoutes.visibleProperty().bind(routeless);
+				reselect.visibleProperty().bind(routeless);
+				routeless.set(true);
 			}
-			hasPriorities.set(true);
-		} else {
-			noRoutes.visibleProperty().bind(routeless);
-			reselect.visibleProperty().bind(routeless);
-			routeless.set(true);
+			originMenu.setDisable(true);
+			destinationMenu.setDisable(true);
+			weight.setDisable(true);
+			volume.setDisable(true);
+			findPriorities.setDisable(true);
 		}
-		originMenu.setDisable(true);
-		destinationMenu.setDisable(true);
-		weight.setDisable(true);
-		volume.setDisable(true);
-		findPriorities.setDisable(true);
 	}
 
 	@FXML
@@ -798,39 +883,54 @@ public class FormController implements Initializable {
 
 	private ArrayList<Route> disconRoutes;
 	
+	private void validateDiscontinue(){
+		if(selectedOrigin.isEmpty() || selectedOrigin.equals("Other") || selectedDest.isEmpty() || selectedDest.equals("Other")){
+			hasError.set(true);
+		}
+		else{
+			hasError.set(false);
+		}
+	}
+	
+	
 	private Route selectedRoute;
+	
 
 	@FXML
 	private void findRoutesButtonAction(ActionEvent event) {
-		disconRoutes = main.getRoutes(selectedOrigin, selectedDest);
-		final ToggleGroup group = new ToggleGroup();
-		group.selectedToggleProperty().addListener(
-				new ChangeListener<Toggle>() {
-					@Override
-					public void changed(ObservableValue<? extends Toggle> ov,
-							Toggle t, Toggle t1) {
-						selectedRoute = (Route) t1.getUserData();
-					}
-				});
-		for (Route r : disconRoutes) {
-			RadioButton b = new RadioButton(r.getCompany() + ": "
-					+ r.getPriority());
-			b.setUserData(r);
-			b.setToggleGroup(group);
-			discRoutes.getChildren().add(b);
+		error.visibleProperty().bind(hasError);
+		
+		validateDiscontinue();
+		if(!hasError.get()){
+			disconRoutes = main.getRoutes(selectedOrigin, selectedDest);
+			final ToggleGroup group = new ToggleGroup();
+			group.selectedToggleProperty().addListener(
+					new ChangeListener<Toggle>() {
+						@Override
+						public void changed(ObservableValue<? extends Toggle> ov,
+								Toggle t, Toggle t1) {
+							selectedRoute = (Route) t1.getUserData();
+						}
+					});
+			for (Route r : disconRoutes) {
+				RadioButton b = new RadioButton(r.getCompany() + ": "
+						+ r.getPriority());
+				b.setUserData(r);
+				b.setToggleGroup(group);
+				discRoutes.getChildren().add(b);
+			}
+			discRoutes.setSpacing(5);
+			
+			changeSelection.visibleProperty().bind(hasRoutes);
+			discRoutes.visibleProperty().bind(hasRoutes);
+			submit.visibleProperty().bind(hasRoutes);
+			scrollpane.visibleProperty().bind(hasRoutes);
+			hasRoutes.set(true);
+			
+			originMenu.setDisable(true);
+			destinationMenu.setDisable(true);
+			findroutes.setDisable(true);
 		}
-		discRoutes.setSpacing(5);
-		
-		changeSelection.visibleProperty().bind(hasRoutes);
-		discRoutes.visibleProperty().bind(hasRoutes);
-		submit.visibleProperty().bind(hasRoutes);
-		scrollpane.visibleProperty().bind(hasRoutes);
-		hasRoutes.set(true);
-		
-		originMenu.setDisable(true);
-		destinationMenu.setDisable(true);
-		findroutes.setDisable(true);
-		
 	}
 	
 	@FXML
