@@ -38,6 +38,10 @@
     -fx-background-color: #655a5a;
 }
 
+#scroll .thumb{
+	-fx-background-color: transparent;
+}
+
 .scroll-pane {
   -fx-background-color: transparent;
 }
