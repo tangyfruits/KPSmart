@@ -15,6 +15,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -32,6 +34,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.Location;
 import main.Main;
 import main.RouteDisplay;
 
@@ -49,6 +52,121 @@ public class FormController implements Initializable {
 
 	}
 
+	private ArrayList<Location> locs;
+	@FXML
+	private MenuButton originMenu;
+	@FXML
+	private MenuButton destinationMenu;
+
+	private String selectedOrigin = "";
+	private String selectedDest = "";
+	
+	@FXML
+	private TextField otherOrigin;
+	@FXML
+	private TextField otherDest;
+	
+	private BooleanProperty hasOtherOrigin = new SimpleBooleanProperty(false);
+	private BooleanProperty hasOtherDest = new SimpleBooleanProperty(false);
+
+	public void initDropdown(){
+		locs = main.getLocations();
+		EventHandler<ActionEvent> originAction = setSelectedOrigin();
+		EventHandler<ActionEvent> destAction = setSelectedDest();
+			
+		for(Location l:locs){
+			MenuItem i = new MenuItem(l.getName());
+			i.setUserData(l.getName());
+			i.setOnAction(originAction);
+			originMenu.getItems().add(i);
+			MenuItem k = new MenuItem(l.getName());
+			k.setOnAction(destAction);
+			destinationMenu.getItems().add(k);
+		}	
+	}
+	
+	public void initDropdownWithOther(){
+		otherOrigin.visibleProperty().bind(hasOtherOrigin);
+		otherDest.visibleProperty().bind(hasOtherDest);
+		locs = main.getLocations();
+		EventHandler<ActionEvent> originAction = setSelectedOrigin();
+		EventHandler<ActionEvent> destAction = setSelectedDest();
+		EventHandler<ActionEvent> otherOriginAction = setOtherOrigin();
+		EventHandler<ActionEvent> otherDestAction = setOtherDest();
+				
+		for(Location l:locs){
+			MenuItem i = new MenuItem(l.getName());
+			i.setUserData(l.getName());
+			i.setOnAction(originAction);
+			originMenu.getItems().add(i);
+			MenuItem k = new MenuItem(l.getName());
+			k.setOnAction(destAction);
+			destinationMenu.getItems().add(k);
+		}	
+		
+		MenuItem otherOrigin = new MenuItem("Other");
+		otherOrigin.setUserData("Other");
+		otherOrigin.setOnAction(otherOriginAction);
+		originMenu.getItems().add(otherOrigin);
+		
+		MenuItem otherDest = new MenuItem("Other");
+		otherDest.setUserData("Other");
+		otherDest.setOnAction(otherDestAction);
+		destinationMenu.getItems().add(otherDest);
+	}
+	
+	private EventHandler<ActionEvent> setSelectedOrigin() {
+        return new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent event) {
+                MenuItem mItem = (MenuItem) event.getSource();
+                String loc = mItem.getText();
+               selectedOrigin = loc;
+               originMenu.setText(loc);    
+               hasOtherOrigin.set(false);
+            }
+        };
+    }
+	
+	private EventHandler<ActionEvent> setOtherDest() {
+		return new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent event) {
+                MenuItem mItem = (MenuItem) event.getSource();
+                String loc = mItem.getText();
+                destinationMenu.setText(loc);  
+                selectedDest = loc;
+                hasOtherDest.set(true);
+            }
+        };
+	}
+	private EventHandler<ActionEvent> setOtherOrigin() {
+		return new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent event) {
+                MenuItem mItem = (MenuItem) event.getSource();
+                String loc = mItem.getText();
+                originMenu.setText(loc);    
+                hasOtherOrigin.set(true);
+                selectedOrigin = loc;
+            }
+        };
+	}
+	
+	private EventHandler<ActionEvent> setSelectedDest() {
+
+        return new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent event) {
+                MenuItem mItem = (MenuItem) event.getSource();
+                String loc = mItem.getText();
+                selectedDest = loc;
+	            destinationMenu.setText(loc);   
+	            hasOtherDest.set(false);
+            }
+        };
+	}
+	
 	/**
 	 * NAV BAR BUTTONS
 	 * 
@@ -86,6 +204,7 @@ public class FormController implements Initializable {
 
 	@FXML
 	private void logoutButtonAction(ActionEvent event) throws IOException {
+    	main.logout();
 		FXMLLoader login = new FXMLLoader(getClass().getResource(
 				"/views/login.fxml"));
 		login.setController(new LoginController(main));
@@ -104,8 +223,6 @@ public class FormController implements Initializable {
 
 	@FXML
 	private void deliveryRequestAction(ActionEvent event) throws IOException {
-		System.out.println("Delivery Request");
-
 		FXMLLoader delivery = new FXMLLoader(getClass().getResource(
 				"/views/deliveryrequest.fxml"));
 		delivery.setController(new FormController(main));
@@ -113,6 +230,10 @@ public class FormController implements Initializable {
 
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
 		Scene scene = new Scene(deliveryGUI);
+		
+		FormController controller = delivery.getController();
+		controller.initDropdown();
+		
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -120,7 +241,6 @@ public class FormController implements Initializable {
 	@FXML
 	private void discontinueTransportAction(ActionEvent event)
 			throws IOException {
-		System.out.println("Discontinue Transport");
 		logeventmenu.setText("Discontinue Transport");
 
 		FXMLLoader discontinue = new FXMLLoader(getClass().getResource(
@@ -131,12 +251,13 @@ public class FormController implements Initializable {
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
 		Scene scene = new Scene(discontinueGUI);
 		stage.setScene(scene);
+		FormController controller = discontinue.getController();
+		controller.initDropdown();
 		stage.show();
 	}
 
 	@FXML
 	private void transportRouteAction(ActionEvent event) throws IOException {
-		System.out.println("Transport Route");
 		logeventmenu.setText("Transport Route");
 
 		FXMLLoader route = new FXMLLoader(getClass().getResource(
@@ -147,12 +268,13 @@ public class FormController implements Initializable {
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
 		Scene scene = new Scene(routeGUI);
 		stage.setScene(scene);
+		FormController controller = route.getController();
+		controller.initDropdownWithOther();
 		stage.show();
 	}
 
 	@FXML
 	private void priceUpdateAction(ActionEvent event) throws IOException {
-		System.out.println("Customer Price Update");
 		logeventmenu.setText("Customer Price Update");
 
 		FXMLLoader price = new FXMLLoader(getClass().getResource(
@@ -163,158 +285,11 @@ public class FormController implements Initializable {
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
 		Scene scene = new Scene(priceGUI);
 		stage.setScene(scene);
+		FormController controller = price.getController();
+		controller.initDropdownWithOther();
 		stage.show();
 	}
 
-	/** Origin and Destination **/
-
-	@FXML
-	private ArrayList<CheckMenuItem> destination;
-	@FXML
-	private ArrayList<CheckMenuItem> origin;
-
-	@FXML
-	private CheckMenuItem AucklandDest;
-	@FXML
-	private CheckMenuItem HamiltonDest;
-	@FXML
-	private CheckMenuItem RotoruaDest;
-	@FXML
-	private CheckMenuItem PalmerstonDest;
-	@FXML
-	private CheckMenuItem WellingtonDest;
-	@FXML
-	private CheckMenuItem ChristchurchDest;
-	@FXML
-	private CheckMenuItem DunedinDest;
-	@FXML
-	private CheckMenuItem OtherDest;
-	@FXML
-	private CheckMenuItem AucklandOrigin;
-	@FXML
-	private CheckMenuItem HamiltonOrigin;
-	@FXML
-	private CheckMenuItem RotoruaOrigin;
-	@FXML
-	private CheckMenuItem PalmerstonOrigin;
-	@FXML
-	private CheckMenuItem WellingtonOrigin;
-	@FXML
-	private CheckMenuItem ChristchurchOrigin;
-	@FXML
-	private CheckMenuItem DunedinOrigin;
-	@FXML
-	private CheckMenuItem OtherOrigin;
-
-	@FXML
-	private MenuButton originMenu;
-	@FXML
-	private MenuButton destinationMenu;
-
-	private String selectedOrigin = "";
-	private String selectedDest = "";
-
-	@FXML
-	private void selectAucklandOrigin(ActionEvent event) {
-		selectedOrigin = "Auckland";
-		originMenu.setText("Auckland");
-	}
-
-	@FXML
-	private void selectHamiltonOrigin(ActionEvent event) {
-		selectedOrigin = "Hamilton";
-		originMenu.setText("Hamilton");
-	}
-
-	@FXML
-	private void selectRotoruaOrigin(ActionEvent event) {
-		selectedOrigin = "Rotorua";
-		originMenu.setText("Rotorua");
-	}
-
-	@FXML
-	private void selectPalmerstonOrigin(ActionEvent event) {
-		selectedOrigin = "Palmerston North";
-		originMenu.setText("Palmerston North");
-	}
-
-	@FXML
-	private void selectWellingtonOrigin(ActionEvent event) {
-		selectedOrigin = "Wellington";
-		originMenu.setText("Wellington");
-	}
-
-	@FXML
-	private void selectChristchurchOrigin(ActionEvent event) {
-		selectedOrigin = "Christchurch";
-		originMenu.setText("Christchurch");
-	}
-
-	@FXML
-	private void selectDunedinOrigin(ActionEvent event) {
-		selectedOrigin = "Dunedin";
-		originMenu.setText("Dunedin");
-	}
-
-	@FXML
-	private TextField otherOriginText;
-
-	@FXML
-	private void selectOtherOrigin(ActionEvent event) {
-		selectedOrigin = otherOriginText.getText();
-		originMenu.setText(otherOriginText.getText());
-	}
-
-	@FXML
-	private void selectAucklandDest(ActionEvent event) {
-		selectedDest = "Auckland";
-		destinationMenu.setText("Auckland");
-	}
-
-	@FXML
-	private void selectHamiltonDest(ActionEvent event) {
-		selectedDest = "Hamilton";
-		destinationMenu.setText("Hamilton");
-	}
-
-	@FXML
-	private void selectRotoruaDest(ActionEvent event) {
-		selectedDest = "Rotorua";
-		destinationMenu.setText("Rotorua");
-	}
-
-	@FXML
-	private void selectPalmerstonDest(ActionEvent event) {
-		selectedDest = "Palmerston North";
-		destinationMenu.setText("Palmerston North");
-	}
-
-	@FXML
-	private void selectWellingtonDest(ActionEvent event) {
-		selectedDest = "Wellington";
-		destinationMenu.setText("Wellington");
-	}
-
-	@FXML
-	private void selectChristchurchDest(ActionEvent event) {
-		selectedDest = "Christchurch";
-		destinationMenu.setText("Christchurch");
-	}
-
-	@FXML
-	private void selectDunedinDest(ActionEvent event) {
-		selectedDest = "Dunedin";
-		destinationMenu.setText("Dunedin");
-	}
-
-	@FXML
-	private TextField otherDestText;
-
-	@FXML
-	private void selectOtherDest(ActionEvent event) {
-		selectedDest = otherDestText.getText();
-		destinationMenu.setText(otherDestText.getText());
-	}
 
 	/** Priority Menu */
 
@@ -632,13 +607,20 @@ public class FormController implements Initializable {
 		String vc = this.volumecost.getText();
 		String d = this.duration.getText();
 		String f = this.frequency.getText();
+		
+		if(selectedOrigin.equals("Other")){
+			selectedOrigin = this.otherOrigin.getText();
+		}
 
+		if(selectedDest.equals("Other")){
+			selectedDest = otherDest.getText();
+		}
+		
 		Route r = main.logTransportCostUpdate(selectedOrigin, selectedDest,
 				company.getText(), type, Double.parseDouble(wc),
 				Double.parseDouble(vc), Integer.parseInt(mw),
 				Integer.parseInt(mv), Integer.parseInt(d), Integer.parseInt(f),
 				DayOfWeek.valueOf(day), time, false);
-		System.out.println(main.getTotalEvents());
 
 		if (r != null) {
 			confirmation.visibleProperty().bind(completed);
@@ -656,6 +638,8 @@ public class FormController implements Initializable {
 			timeMenu.setDisable(true);
 			submit.setDisable(true);
 			company.setDisable(true);
+			otherDest.setDisable(true);
+			otherOrigin.setDisable(true);
 		}
 	}
 
@@ -665,6 +649,14 @@ public class FormController implements Initializable {
 	private void priceUpdateButtonAction(ActionEvent event) {
 		String wc = this.weightcost.getText();
 		String vc = this.volumecost.getText();
+		
+		if(selectedOrigin.equals("Other")){
+			selectedOrigin = this.otherOrigin.getText();
+		}
+
+		if(selectedDest.equals("Other")){
+			selectedDest = otherDest.getText();
+		}
 
 		CustomerPrice price = main.logCustomerPriceUpdate(selectedOrigin,
 				selectedDest, priority, Double.parseDouble(wc),
@@ -679,10 +671,9 @@ public class FormController implements Initializable {
 			volumecost.setDisable(true);
 			prioritymenu.setDisable(true);
 			submit.setDisable(true);
+			otherDest.setDisable(true);
+			otherOrigin.setDisable(true);
 		}
-
-		System.out.println(main.getTotalEvents());
-
 	}
 
 	/** DELIVERY REQUEST FORM */
@@ -750,13 +741,10 @@ public class FormController implements Initializable {
 	@FXML
 	private void deliveryRequestButtonAction(ActionEvent event) {
 		if (!(chosenPriority == null)) {
-			System.out.println("Priority: " + chosenPriority.getPriority());
 			DeliveryRequest req = main.getDeliveryDetails(selectedOrigin,
 					selectedDest, Double.parseDouble(this.weight.getText()),
 					Double.parseDouble(this.volume.getText()), chosenPriority);
 
-			System.out.println(req.toString());
-			System.out.println(main.getTotalEvents());
 			chosenPriority = null;
 			routes = null;
 			confirmation.visibleProperty().bind(completed);

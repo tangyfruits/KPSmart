@@ -107,6 +107,7 @@
                         <ScrollPane layoutX="16.0" layoutY="14.0" prefHeight="379.0" prefWidth="565.0" style="-fx-background-color: F2DFC4;">
                            <content>
                               <TableView fx:id="table" prefHeight="381.0" prefWidth="548.0" style="-fx-background-color: F2DFC4; -fx-background: F2DFC4;">
+
                                 <columns>
                                   <TableColumn fx:id="origin" prefWidth="100.01358795166016" style="-fx-background-color: E9D5B9;" text="Origin" />
                                   <TableColumn fx:id="dest" prefWidth="111.0135498046875" style="-fx-background-color: E9D5B9;" text="Destination" />

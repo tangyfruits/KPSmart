@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<events>
+  <discontinue>
+    <to>Wellington</to>
+    <from>Christchurch</from>
+    <company>NZ Post</company>
+    <type>Sea</type>
+  </discontinue>
+<mail>
+    <logged>2016-01-01T00:00</logged>
+    <to>Clean</to>
+    <from>Fresh</from>
+    <legs>
+      <leg>
+        <to>Clean</to>
+        <from>Fresh</from>
+        <company>POst dot co</company>
+        <cost>40.0</cost>
+        <price>28.4</price>
+      </leg>
+    </legs>
+    <weight>40.0</weight>
+    <volume>20.0</volume>
+    <priority>International Air</priority>
+    <duration>30</duration>
+  </mail>
+<price>
+    <to>EndPlace</to>
+    <from>StartPlace</from>
+    <priority>Stand LOcal brah</priority>
+    <weightCost>3.0</weightCost>
+    <volumeCost>5.0</volumeCost>
+  </price>
+<price>
+    <to>otherplace</to>
+    <from>place</from>
+    <priority>Super Imp</priority>
+    <weightCost>30.54</weightCost>
+    <volumeCost>20.0</volumeCost>
+  </price>
+<cost>
+    <to>Christchurch</to>
+    <from>Wellington</from>
+    <company>NZ Post</company>
+    <type>Sea</type>
+    <priority>Local Standard</priority>
+    <weightCost>4.0</weightCost>
+    <volumeCost>6.0</volumeCost>
+    <maxWeight>400</maxWeight>
+    <maxVolume>150</maxVolume>
+    <duration>60</duration>
+    <frequency>12</frequency>
+    <day>Thursday</day>
+    <hour>12</hour>
+  </cost>
+<cost>
+    <to>Dunedin</to>
+    <from>Auckland</from>
+    <company>UPS</company>
+    <type>Land</type>
+    <priority>Local Standard</priority>
+    <weightCost>20.8</weightCost>
+    <volumeCost>56.2</volumeCost>
+    <maxWeight>43</maxWeight>
+    <maxVolume>123</maxVolume>
+    <duration>33</duration>
+    <frequency>2</frequency>
+    <day>Tuesday</day>
+    <hour>20</hour>
+  </cost>
+</events>
