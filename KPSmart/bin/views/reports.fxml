@@ -105,9 +105,15 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: F2DFC4; -fx-background-radius: 10;">
                      <children>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                         <ScrollPane layoutX="16.0" layoutY="14.0" prefHeight="379.0" prefWidth="565.0" style="-fx-background-color: F2DFC4;">
                            <content>
                               <TableView fx:id="table" prefHeight="381.0" prefWidth="548.0" style="-fx-background-color: F2DFC4; -fx-background: F2DFC4;">
+=======
+                        <ScrollPane layoutX="16.0" layoutY="14.0" prefHeight="355.0" prefWidth="565.0" style="-fx-background-color: F2DFC4;">
+                           <content>
+                              <TableView fx:id="table" prefHeight="355.0" prefWidth="565.0" style="-fx-background-color: F2DFC4; -fx-background: F2DFC4;">
+>>>>>>> Stashed changes
 =======
                         <ScrollPane layoutX="16.0" layoutY="14.0" prefHeight="355.0" prefWidth="565.0" style="-fx-background-color: F2DFC4;">
                            <content>

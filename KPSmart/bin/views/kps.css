@@ -7,6 +7,7 @@
     -fx-font-family: "Gulim";
 }
 
+<<<<<<< Updated upstream
 .button { 
 	-fx-focus-color: transparent; 
 	-fx-faint-focus-color: transparent;
@@ -15,6 +16,16 @@
 .root { 
 	-fx-focus-color: transparent; 
 	-fx-faint-focus-color: transparent;
+=======
+.root { 
+	-fx-focus-color: transparent;
+     -fx-faint-focus-color: transparent; 
+}
+
+.button:focused{
+     -fx-focus-color: transparent;
+     -fx-faint-focus-color: transparent;
+>>>>>>> Stashed changes
 }
 
 #login, #submit{
@@ -35,17 +46,22 @@
 }
 
 .menu-item:focused {
+<<<<<<< Updated upstream
     -fx-background-color: #655a5a;
 }
 
 #scroll .thumb{
 	-fx-background-color: transparent;
+=======
+ -fx-background-color: #655a5a;
+>>>>>>> Stashed changes
 }
 
 .scroll-pane {
   -fx-background-color: transparent;
 }
 
+<<<<<<< Updated upstream
 .scroll-bar:vertical {
   -fx-background-color: transparent;
 }
@@ -76,3 +92,28 @@
 .scroll-bar:horizontal .thumb{
 	-fx-background-color: transparent;
 }
+=======
+.scroll-bar .increment-button {
+  visibility: hidden;
+}
+
+.scroll-bar .decrement-button {
+  visibility: hidden;
+}
+
+.scroll-bar:vertical .scroll-bar:horizontal {
+  -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .track-background {
+  visibility: hidden;
+}
+
+.scroll-bar:vertical .track {
+  visibility: hidden;
+}
+
+.hide-thumb .scroll-bar:vertical .thumb {
+  -fx-background-color: transparent;
+}
+>>>>>>> Stashed changes
