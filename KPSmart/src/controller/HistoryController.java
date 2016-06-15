@@ -16,13 +16,20 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Main;
+import main.LogStepper;
 
 public class HistoryController implements Initializable {
 	
 	private Main main;
-
-	public HistoryController(Main main){
+	private LogStepper stepper;
+	
+	
+	public HistoryController(Main main) {
 		this.main = main;
+	}
+	public HistoryController(Main main, LogStepper stepper){
+		this.main = main;
+		this.stepper = stepper;
 	}
 	
 	@Override
