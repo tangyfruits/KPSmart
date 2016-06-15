@@ -22,11 +22,9 @@ public class LogWriterTest {
 	private static boolean LOGS = true;
 	
 	// VARIABLES
-	static String filename1 = "test_1.xml";
-	static String filename3 = "logfile.xml";
-	static File file1 = new File(filename1);
-	static File file2 = new File("test_2.xml");
-	static File file3 = new File(filename3);
+	static File file1 = new File("KPSmart/src/tests/test_1.xml");
+	static File file2 = new File("KPSmart/src/tests/test_2.xml");
+	static File file3 = new File("KPSmart/src/tests/logfile.xml");
 	static LogWriter log;
 	
 	// HELPERS
@@ -46,7 +44,7 @@ public class LogWriterTest {
 		
 		log = new LogWriter(file3);
 	}
-	/*
+	
 	@AfterClass
 	public static void tearDown() {
 		boolean kill3 = false;
@@ -62,28 +60,9 @@ public class LogWriterTest {
 			file3.delete();
 		}
 	}
-	/**/
+	
 	
 	// TESTS
-	// Gags
-	@Test
-	public void eXtRaSHiT() {
-		FileWriter lalala;
-		try {
-			lalala = new FileWriter("test_sheeit.xml", true);
-			lalala.write("\nMANG FUCK THIS SHIIIIT");
-			lalala.write("SERILSUY WAT THE FUK\n");
-			lalala.write("SUC-FUCKIN-CESS BOOOOOY! UGH!\n");
-			lalala.write("https://www.youtube.com/watch?v=66EBzbzzObY\n");
-			lalala.write("wate that doesn't work anymore\n");
-			lalala.write("https://soundcloud.com/chancetherapper/smoke-break-feat-future\n");
-			lalala.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-	
 	// Log File Existence Checkers
 	@Test
 	public void testEnsureLogExists1() throws Exception {

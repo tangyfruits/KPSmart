@@ -449,7 +449,6 @@ public class LogReader {
 	}	
 	
 	// Put Events into System (step 4)
-	
 	private void appendLeg() {
 		// Get the leg objects from the main class (or make new ones)
 		/*
@@ -473,7 +472,6 @@ public class LogReader {
 		leg = null;
 		currentEvent = mail;
 	}
-	
 	private void sendEvent() {
 		switch (currentEvent.getEventType()) {
 		case "cost":

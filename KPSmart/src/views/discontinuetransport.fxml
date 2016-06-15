@@ -91,9 +91,9 @@
             <Font name="Gulim" size="15.0" />
          </font>
       </Button>
-      <ScrollPane fx:id="scrollpane" layoutX="197.0" layoutY="262.0" prefHeight="215.0" prefViewportHeight="200.0" prefViewportWidth="317.0" prefWidth="319.0" style="visibility: false;">
+       <ScrollPane id="scroll" fx:id="scrollpane" layoutX="275.0" layoutY="279.0" prefHeight="179.0" prefViewportHeight="200.0" prefViewportWidth="317.0" prefWidth="207.0" style="visibility: false; -fx-background-color: transparent;">
          <content>
-            <VBox fx:id="discRoutes" layoutX="197.0" layoutY="275.0" prefHeight="200.0" prefWidth="317.0" style="-fx-background-color: FFF3E0; visibility: false;" />
+            <VBox id="routes" fx:id="discRoutes" layoutX="197.0" layoutY="275.0" prefHeight="180.0" prefWidth="208.0" style="-fx-background-color: FFF3E0; visibility: false;" />
          </content>
       </ScrollPane>
       <Button id="submit" fx:id="changeSelection" layoutX="278.0" layoutY="219.0" mnemonicParsing="false" onAction="#reSelect" style="-fx-background-color: E9D5B9; visibility: false;" text="Change Selection">
@@ -102,6 +102,11 @@
          </font>
       </Button>
       <Text fx:id="confirmation" fill="#509a55" layoutX="175.0" layoutY="563.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: false;" text="Thanks. Your request has been processed!">
+         <font>
+            <Font name="Gulim" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="error" fill="#eb0909" layoutX="249.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: false;" text="Please complete all fields" textAlignment="CENTER">
          <font>
             <Font name="Gulim" size="18.0" />
          </font>

@@ -38,7 +38,7 @@
         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
-    <Button fx:id="login" layoutX="309.0" layoutY="309.0" mnemonicParsing="false" onAction="#logInButtonAction" style="-fx-background-color: E9D5B9;" text="Log In">
+    <Button fx:id="login" layoutX="309.0" layoutY="309.0" mnemonicParsing="false" defaultButton="true" onAction="#logInButtonAction" style="-fx-background-color: E9D5B9;" text="Log In">
       <font>
         <Font size="15.0" />
       </font>
