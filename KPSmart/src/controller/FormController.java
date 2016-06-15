@@ -819,14 +819,36 @@ public class FormController implements Initializable {
 	private BooleanProperty routeless = new SimpleBooleanProperty(false);
 
 	private void validateDelivery(String w, String v) {
-		if (selectedOrigin.isEmpty() || selectedOrigin.equals("Other")
-				|| selectedDest.isEmpty() || selectedDest.equals("Other")
+		if (selectedOrigin.isEmpty() || selectedDest.isEmpty()
 				|| w.isEmpty() || !isDouble(w) || v.isEmpty() || !isDouble(v)) {
-			hasError.set(true);
+			if (selectedOrigin.isEmpty()) {
+				hasError.set(true);
+				originMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				originMenu.setStyle("-fx-background-color:  E9D5B9");
+			}
+			if (selectedDest.isEmpty()) {
+				hasError.set(true);
+				destinationMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				destinationMenu.setStyle("-fx-background-color: E9D5B9");
+			}
+			if (w.isEmpty() || !isDouble(w)) {
+				hasError.set(true);
+				 weight.setStyle("-fx-control-inner-background: #ffff99");
+			} else {
+				 weight.setStyle("-fx-control-inner-background: white");
+			}if (v.isEmpty() || !isDouble(v)) {
+				hasError.set(true);
+				 volume.setStyle("-fx-control-inner-background: #ffff99");
+			} else {
+				 volume.setStyle("-fx-control-inner-background: white");
+			}
 		} else {
 			hasError.set(false);
 		}
 	}
+	
 
 	@FXML
 	private void findPrioritiesButtonAction(ActionEvent event) {
@@ -928,9 +950,21 @@ public class FormController implements Initializable {
 	private ArrayList<Route> disconRoutes;
 
 	private void validateDiscontinue() {
-		if (selectedOrigin.isEmpty() || selectedOrigin.equals("Other")
-				|| selectedDest.isEmpty() || selectedDest.equals("Other")) {
-			hasError.set(true);
+		if (selectedOrigin.isEmpty() || selectedDest.isEmpty()) {
+			
+			if (selectedOrigin.isEmpty()) {
+				hasError.set(true);
+				originMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				originMenu.setStyle("-fx-background-color:  E9D5B9");
+			}
+			if (selectedDest.isEmpty()) {
+				hasError.set(true);
+				destinationMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				destinationMenu.setStyle("-fx-background-color: E9D5B9");
+
+			}
 		} else {
 			hasError.set(false);
 		}
