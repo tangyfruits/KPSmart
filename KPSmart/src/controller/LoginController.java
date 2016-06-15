@@ -47,8 +47,6 @@ public class LoginController implements Initializable {
 		loginerror.visibleProperty().bind(b);
 		String id = this.idnumber.getText();
 		String pass = this.password.getText();
-		System.out.println("ID number: " + id);
-		System.out.println("Password: " + pass);
 		if (main.login(id, pass)) {
 			FXMLLoader kpsgui = new FXMLLoader(getClass().getResource("/views/kpsgui.fxml"));
 			kpsgui.setController(new ReportsController(main));
