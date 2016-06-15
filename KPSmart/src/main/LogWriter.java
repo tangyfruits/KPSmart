@@ -43,10 +43,9 @@ public class LogWriter {
 		this.logFile = file;
 		try {
 			docBuilder = docBuilderFactory.newDocumentBuilder();
-	        docBuilder.setErrorHandler(new ErrorHandler() {
+			docBuilder.setErrorHandler(new ErrorHandler() {
 	            @Override
 	            public void fatalError(SAXParseException e) throws SAXException {
-	            	//System.out.println("some errors yo fresh");
 	            	throw e;
 	            }
 	            @Override
@@ -58,7 +57,6 @@ public class LogWriter {
 					throw e;
 				}
 	        });
-	        
 	        transformer = transformerFactory.newTransformer();
 	        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 	        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
@@ -79,6 +77,17 @@ public class LogWriter {
 			try {
 				if (LOGS) {System.out.println("   File: created.");}
 				logFile.createNewFile();
+				doc = docBuilder.newDocument();
+				Element events = doc.createElement("events");
+				doc.appendChild(events);
+				
+				DOMSource    source = new DOMSource(doc);
+		        StreamResult output = new StreamResult(logFile);
+		      	try {
+					transformer.transform(source, output);
+				} catch (TransformerException e1) {
+					e1.printStackTrace();
+				}
 			} catch (IOException e) {
 				//e.printStackTrace();
 				if (LOGS) {System.out.print("Error creating log file in LogWriter");}
@@ -98,8 +107,7 @@ public class LogWriter {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
 			}
-			/*System.out.println("^^Ignore this error. It's cool. It's been handled. We just couldn't \n" +
-								"figure out how to stop it logging in the console. We good. :)");*/
+
 			// Create new Document
 			doc = docBuilder.newDocument();
 			Element events = doc.createElement("events");

@@ -29,8 +29,9 @@ public class Main {
 	private HashMap<Tuple, ArrayList<Double>> amountOfMail;
 	private ArrayList<DeliveryRequest> deliveryRequests;
 
+	private File configFile;
+	private File logFile;
 	private LogWriter writer;
-	private File file;
 
 	private int events;
 	private double totalExp;
@@ -39,52 +40,95 @@ public class Main {
 	
 	// CONSTRUCTOR
 	public Main() {
-
+		// Core Logic
 		locations = new ArrayList<Location>();
-		accounts = new ArrayList<User>();
 		deliveryRequests = new ArrayList<DeliveryRequest>();
-		file = new File("accounts.txt");
-		try {
-			Scanner sc = new Scanner(file);
-			while (sc.hasNextLine()) {
-				String username = sc.next();
-				String password = sc.next();
-				String manager = sc.next();
-				boolean b = false;
-				if (manager.equals("true")) {
-					b = true;
-				}
-				accounts.add(new User(username, password, b));
-			}
-			sc.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		// for (User u : m.accounts) {
-		// System.out.println(u.getUsername() + u.getPassword() +
-		// u.isManager());
-		// }
+		accounts = new ArrayList<User>();
+		configFile = new File(".config");
+		// Reports
 		amountOfMailDeliveryTimes = new HashMap<>();
 		amountOfMail = new HashMap<>();
-
-		// TODO fix file - will be listed in config file with user accounts
-		// etc!!
-		try {
-			writer = new LogWriter(new File("abc.xml"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// read from encrypted file and add them in!
-
-		// read from encrypted file,create User objects and add them in!
-		// if ( accounts.containsValue("String") &&
-		// accounts.get("String").equals("password);
-		// currentUser = new User();
-		// want to look into apache shiro tbh but everyone will have to install
-		// maven. Apache shiro is a really good framework for logins
+		loadFromConfig();
+		writer = new LogWriter(logFile);
 	}
-
+	
+	private void loadFromConfig() {
+		
+		// .config Exists -  read it
+		if (configFile.isFile()) {
+			try {
+				Scanner sc = new Scanner(configFile);
+				
+				// Read logfile name
+				if (sc.hasNextLine()) {
+					String firstline = sc.nextLine().trim();
+					if (firstline.endsWith(".xml")) {
+						logFile = new File(firstline);
+					} else {
+						System.out.println("bap");
+						try {
+							String file = "";
+							while (sc.hasNextLine()) {
+								String line = sc.nextLine();
+								file += line;
+							}
+							sc.close();
+							FileWriter fw = new FileWriter(configFile);
+							logFile = new File("logfile.xml");
+							fw.write(logFile.getName() + "\n");
+							fw.write(file);
+							fw.flush();
+							fw.close();
+							sc = new Scanner(configFile);
+							sc.nextLine();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				
+				// Read Users
+				int lineNo = 1;
+				while (sc.hasNextLine()) {
+					try {
+						lineNo++;
+						String scanLine = sc.nextLine();
+						String[] line = scanLine.split(" ");
+						if (line.length == 3) {
+							String username = line[0];
+							String password = line[1];
+							String manager = line[2];
+							boolean b = false;
+							if (manager.equals("true")) {
+								b = true;
+							}
+							accounts.add(new User(username, password, b));
+						} else {
+							System.out.println("Read weird line: \""+scanLine+"\"");
+						}
+					} catch (Exception e) {
+						System.out.println("Error reading config file line "+lineNo);
+					}
+				}
+				sc.close();
+			
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		}
+		// .config does NOT exist - Make new file
+		else {
+			try {
+				configFile.createNewFile();
+				FileWriter fw = new FileWriter(configFile);
+				logFile = new File("logfile.xml");
+				fw.write(logFile.getName()+"\n");
+				fw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	// USER ACCOUNT METHODS
 	public boolean login(String username, String password) {
@@ -97,74 +141,68 @@ public class Main {
 		return false;
 	}
 	public boolean edit(String password) {
-		boolean b = false;
+		boolean edited = false;
 		for (User u : accounts) {
-			if (u.getUsername().equals(currentUser.getUsername())
-					&& u.getPassword().equals(currentUser.getPassword())) {
+			if (u.getUsername().equals(currentUser.getUsername()) && 
+				u.getPassword().equals(currentUser.getPassword())) {
 				u.setPassword(password);
-				b = true;
+				edited = true;
 			}
 		}
 		currentUser.setPassword(password);
 		try {
-			file.delete();
-			file.createNewFile();
-			FileWriter writer = new FileWriter("accounts.txt", true);
-			for (int i = 0; i < accounts.size() - 1; i++) {
+			configFile.delete();
+			configFile.createNewFile();
+			FileWriter fw = new FileWriter(configFile, true);
+			fw.write(logFile.getName()+"\n");
+			for (int i = 0; i < accounts.size(); i++) {
 				User u = accounts.get(i);
-				writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
+				fw.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
 			}
-			User u = accounts.get(accounts.size() - 1);
-			writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()));
-			writer.flush();
-			writer.close();
+			fw.flush();
+			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return b;
+		return edited;
 	}
 	public boolean delete() {
-		boolean b = false;
-		System.out.println(accounts.size());
+		boolean removed = false;
 		for (User u : accounts) {
-			if (u.getUsername().equals(currentUser.getUsername())
-					&& u.getPassword().equals(currentUser.getPassword())) {
+			if (u.getUsername().equals(currentUser.getUsername()) && 
+				u.getPassword().equals(currentUser.getPassword())) {
 				accounts.remove(u);
 				logout();
-				b = true;
+				removed = true;
 				break;
 			}
 		}
 		try {
-			file.delete();
-			file.createNewFile();
-			FileWriter writer = new FileWriter("accounts.txt", true);
-			for (int i = 0; i < accounts.size() - 1; i++) {
+			configFile.delete();
+			configFile.createNewFile();
+			FileWriter fw = new FileWriter(configFile, true);
+			fw.write(logFile.getName()+"\n");
+			for (int i = 0; i < accounts.size(); i++) {
 				User u = accounts.get(i);
-				writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
+				fw.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
 			}
-			User u = accounts.get(accounts.size() - 1);
-			writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()));
-			writer.flush();
-			writer.close();
+			fw.flush();
+			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return b;
-
+		return removed;
 	}
 	public void add(User u) {
 		try {
-			FileWriter writer = new FileWriter("accounts.txt", true);
-			writer.write("\n" + u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()));
+			FileWriter writer = new FileWriter(configFile, true);
+			writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
 			writer.flush();
 			writer.close();
 			accounts.add(u);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 	public void logout() {
 		currentUser = null;
