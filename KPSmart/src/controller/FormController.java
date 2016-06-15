@@ -33,6 +33,7 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.Location;
 import main.Main;
@@ -572,11 +573,13 @@ public class FormController implements Initializable {
 
 			}	
 			if(day.isEmpty()){
+				hasError.set(true);
 				dayMenu.setStyle("-fx-background-color: #ffff99");
 			}else{
 				dayMenu.setStyle("-fx-background-color: E9D5B9");
 			}
 			if(time == -1){
+				hasError.set(true);
 				timeMenu.setStyle("-fx-background-color: #ffff99");
 			}else{
 				timeMenu.setStyle("-fx-background-color: E9D5B9");
@@ -586,8 +589,9 @@ public class FormController implements Initializable {
 		}
 	}
 
+	private Stage modal;
 	@FXML
-	private void transportRouteButtonAction(ActionEvent event) {
+	private void transportRouteButtonAction(ActionEvent event) throws IOException {
 		error.visibleProperty().bind(hasError);
 
 		String mw = this.maxweight.getText();
@@ -613,6 +617,20 @@ public class FormController implements Initializable {
 					Double.parseDouble(vc), Integer.parseInt(mw),
 					Integer.parseInt(mv), Integer.parseInt(d),
 					Integer.parseInt(f), DayOfWeek.valueOf(day), time, false);
+			if (r.getPrice() == null) {
+
+				FXMLLoader popup = new FXMLLoader(getClass().getResource(
+						"/views/popup.fxml"));
+				popup.setController(new PopUpController(main, selectedOrigin,
+						selectedDest, priority, r, this));
+				Parent popupGUI = popup.load();
+				modal = new Stage();
+				modal.setScene(new Scene(popupGUI));
+				modal.setTitle("My modal window");
+				modal.initModality(Modality.APPLICATION_MODAL);
+				modal.initOwner(submit.getScene().getWindow());
+				modal.showAndWait();
+			}
 			if (r != null) {
 				confirmation.visibleProperty().bind(completed);
 				completed.set(true);
@@ -634,6 +652,10 @@ public class FormController implements Initializable {
 				hasError.set(false);
 			}
 		}
+	}
+	
+	public void closeModal(){
+		modal.close();
 	}
 
 	/** PRICE UPDATE FORM */

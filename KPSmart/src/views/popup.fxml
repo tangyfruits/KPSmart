@@ -46,7 +46,7 @@
             <Font name="Gulim" size="15.0" />
          </font>
       </Button>
-      <Button id="submit" layoutX="160.0" layoutY="176.0" mnemonicParsing="false" style="-fx-background-color: E9D5B9;" text="Submit">
+      <Button id="submit" layoutX="160.0" layoutY="176.0" mnemonicParsing="false" onAction="#doPopUpShit" style="-fx-background-color: E9D5B9;" text="Submit">
          <font>
             <Font name="Gulim" size="15.0" />
          </font>

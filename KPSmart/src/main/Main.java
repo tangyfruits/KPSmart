@@ -472,21 +472,7 @@ public class Main {
 		// if there's no customer price, request one
 		// TODO replace console input with GUI
 		if (customerPrice == null) {
-
-			double custWeightCost = -1;
-			double custVolCost = -1;
-			BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-			System.out.print("Enter weightCost");
-			try {
-				custWeightCost = Double.parseDouble(input.readLine());
-			} catch (IOException e) {
-			}
-			System.out.print("Enter volumeCost");
-			try {
-				custVolCost = Double.parseDouble(input.readLine());
-			} catch (IOException e) {
-			}
-			logCustomerPriceUpdate(origin, destination, priority, custWeightCost, custVolCost, false);
+			return null;
 		}
 		return customerPrice;
 	}
