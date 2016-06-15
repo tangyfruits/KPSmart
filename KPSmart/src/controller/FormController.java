@@ -60,21 +60,21 @@ public class FormController implements Initializable {
 
 	private String selectedOrigin = "";
 	private String selectedDest = "";
-	
+
 	@FXML
 	private TextField otherOrigin;
 	@FXML
 	private TextField otherDest;
-	
+
 	private BooleanProperty hasOtherOrigin = new SimpleBooleanProperty(false);
 	private BooleanProperty hasOtherDest = new SimpleBooleanProperty(false);
 
-	public void initDropdown(){
+	public void initDropdown() {
 		locs = main.getLocations();
 		EventHandler<ActionEvent> originAction = setSelectedOrigin();
 		EventHandler<ActionEvent> destAction = setSelectedDest();
-			
-		for(Location l:locs){
+
+		for (Location l : locs) {
 			MenuItem i = new MenuItem(l.getName());
 			i.setUserData(l.getName());
 			i.setOnAction(originAction);
@@ -82,10 +82,10 @@ public class FormController implements Initializable {
 			MenuItem k = new MenuItem(l.getName());
 			k.setOnAction(destAction);
 			destinationMenu.getItems().add(k);
-		}	
+		}
 	}
-	
-	public void initDropdownWithOther(){
+
+	public void initDropdownWithOther() {
 		otherOrigin.visibleProperty().bind(hasOtherOrigin);
 		otherDest.visibleProperty().bind(hasOtherDest);
 		locs = main.getLocations();
@@ -93,8 +93,8 @@ public class FormController implements Initializable {
 		EventHandler<ActionEvent> destAction = setSelectedDest();
 		EventHandler<ActionEvent> otherOriginAction = setOtherOrigin();
 		EventHandler<ActionEvent> otherDestAction = setOtherDest();
-				
-		for(Location l:locs){
+
+		for (Location l : locs) {
 			MenuItem i = new MenuItem(l.getName());
 			i.setUserData(l.getName());
 			i.setOnAction(originAction);
@@ -102,71 +102,72 @@ public class FormController implements Initializable {
 			MenuItem k = new MenuItem(l.getName());
 			k.setOnAction(destAction);
 			destinationMenu.getItems().add(k);
-		}	
-		
+		}
+
 		MenuItem otherOrigin = new MenuItem("Other");
 		otherOrigin.setUserData("Other");
 		otherOrigin.setOnAction(otherOriginAction);
 		originMenu.getItems().add(otherOrigin);
-		
+
 		MenuItem otherDest = new MenuItem("Other");
 		otherDest.setUserData("Other");
 		otherDest.setOnAction(otherDestAction);
 		destinationMenu.getItems().add(otherDest);
 	}
-	
-	private EventHandler<ActionEvent> setSelectedOrigin() {
-        return new EventHandler<ActionEvent>() {
 
-            public void handle(ActionEvent event) {
-                MenuItem mItem = (MenuItem) event.getSource();
-                String loc = mItem.getText();
-               selectedOrigin = loc;
-               originMenu.setText(loc);    
-               hasOtherOrigin.set(false);
-            }
-        };
-    }
-	
+	private EventHandler<ActionEvent> setSelectedOrigin() {
+		return new EventHandler<ActionEvent>() {
+
+			public void handle(ActionEvent event) {
+				MenuItem mItem = (MenuItem) event.getSource();
+				String loc = mItem.getText();
+				selectedOrigin = loc;
+				originMenu.setText(loc);
+				hasOtherOrigin.set(false);
+			}
+		};
+	}
+
 	private EventHandler<ActionEvent> setOtherDest() {
 		return new EventHandler<ActionEvent>() {
 
-            public void handle(ActionEvent event) {
-                MenuItem mItem = (MenuItem) event.getSource();
-                String loc = mItem.getText();
-                destinationMenu.setText(loc);  
-                selectedDest = loc;
-                hasOtherDest.set(true);
-            }
-        };
+			public void handle(ActionEvent event) {
+				MenuItem mItem = (MenuItem) event.getSource();
+				String loc = mItem.getText();
+				destinationMenu.setText(loc);
+				selectedDest = loc;
+				hasOtherDest.set(true);
+			}
+		};
 	}
+
 	private EventHandler<ActionEvent> setOtherOrigin() {
 		return new EventHandler<ActionEvent>() {
 
-            public void handle(ActionEvent event) {
-                MenuItem mItem = (MenuItem) event.getSource();
-                String loc = mItem.getText();
-                originMenu.setText(loc);    
-                hasOtherOrigin.set(true);
-                selectedOrigin = loc;
-            }
-        };
+			public void handle(ActionEvent event) {
+				MenuItem mItem = (MenuItem) event.getSource();
+				String loc = mItem.getText();
+				originMenu.setText(loc);
+				hasOtherOrigin.set(true);
+				selectedOrigin = loc;
+			}
+		};
 	}
-	
+
 	private EventHandler<ActionEvent> setSelectedDest() {
 
-        return new EventHandler<ActionEvent>() {
+		return new EventHandler<ActionEvent>() {
 
-            public void handle(ActionEvent event) {
-                MenuItem mItem = (MenuItem) event.getSource();
-                String loc = mItem.getText();
-                selectedDest = loc;
-	            destinationMenu.setText(loc);   
-	            hasOtherDest.set(false);
-            }
-        };
+			public void handle(ActionEvent event) {
+				MenuItem mItem = (MenuItem) event.getSource();
+				String loc = mItem.getText();
+				selectedDest = loc;
+				destinationMenu.setText(loc);
+				hasOtherDest.set(false);
+			}
+		};
 	}
-	
+
 	/**
 	 * NAV BAR BUTTONS
 	 * 
@@ -204,7 +205,7 @@ public class FormController implements Initializable {
 
 	@FXML
 	private void logoutButtonAction(ActionEvent event) throws IOException {
-    	main.logout();
+		main.logout();
 		FXMLLoader login = new FXMLLoader(getClass().getResource(
 				"/views/login.fxml"));
 		login.setController(new LoginController(main));
@@ -230,10 +231,10 @@ public class FormController implements Initializable {
 
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
 		Scene scene = new Scene(deliveryGUI);
-		
+
 		FormController controller = delivery.getController();
 		controller.initDropdown();
-		
+
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -289,7 +290,6 @@ public class FormController implements Initializable {
 		controller.initDropdownWithOther();
 		stage.show();
 	}
-
 
 	/** Priority Menu */
 
@@ -599,26 +599,29 @@ public class FormController implements Initializable {
 
 	@FXML
 	private Text error;
-	
+
 	private BooleanProperty hasError = new SimpleBooleanProperty(false);
-	
+
 	private boolean isDouble(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-	
+		try {
+			Double.parseDouble(str);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
 	/** TRANSPORT ROUTE FORM */
 
-	private void validateRoute(String mw, String mv, String wc, String vc, String d, String f){
-		if(selectedOrigin.isEmpty() || selectedOrigin.equals("Other") || selectedDest.isEmpty() || selectedDest.equals("Other") || 
-				type.isEmpty() || company.getText().isEmpty() || mw.isEmpty() || !isDouble(mw) || mv.isEmpty() || !isDouble(mv) || 
-				wc.isEmpty() || !isDouble(wc) || vc.isEmpty() || !isDouble(vc) || d.isEmpty() || !isDouble(d) || f.isEmpty() ||
-				!isDouble(f) || day.isEmpty() || time == -1
-				){
+	private void validateRoute(String mw, String mv, String wc, String vc,
+			String d, String f) {
+		if (selectedOrigin.isEmpty() || selectedOrigin.equals("Other")
+				|| selectedDest.isEmpty() || selectedDest.equals("Other")
+				|| type.isEmpty() || company.getText().isEmpty()
+				|| mw.isEmpty() || !isDouble(mw) || mv.isEmpty()
+				|| !isDouble(mv) || wc.isEmpty() || !isDouble(wc)
+				|| vc.isEmpty() || !isDouble(vc) || d.isEmpty() || !isDouble(d)
+				|| f.isEmpty() || !isDouble(f) || day.isEmpty() || time == -1) {
 			hasError.set(true);
 			System.out.println(selectedOrigin);
 			System.out.println(selectedDest);
@@ -632,33 +635,32 @@ public class FormController implements Initializable {
 			System.out.println(f);
 			System.out.println(day);
 			System.out.println(time);
-		}
-		else{
+		} else {
 			hasError.set(false);
 		}
 	}
-	
+
 	@FXML
 	private void transportRouteButtonAction(ActionEvent event) {
 		error.visibleProperty().bind(hasError);
-		
+
 		String mw = this.maxweight.getText();
 		String mv = this.maxvolume.getText();
 		String wc = this.weightcost.getText();
 		String vc = this.volumecost.getText();
 		String d = this.duration.getText();
 		String f = this.frequency.getText();
-		
-		if(selectedOrigin.equals("Other") || selectedOrigin.isEmpty()){
+
+		if (selectedOrigin.equals("Other") || selectedOrigin.isEmpty()) {
 			selectedOrigin = this.otherOrigin.getText();
 		}
 
-		if(selectedDest.equals("Other") || selectedDest.isEmpty()){
+		if (selectedDest.equals("Other") || selectedDest.isEmpty()) {
 			selectedDest = otherDest.getText();
 		}
-		
+
 		validateRoute(mw, mv, wc, vc, d, f);
-		
+
 		if (!hasError.get()) {
 			Route r = main.logTransportCostUpdate(selectedOrigin, selectedDest,
 					company.getText(), type, Double.parseDouble(wc),
@@ -690,38 +692,81 @@ public class FormController implements Initializable {
 
 	/** PRICE UPDATE FORM */
 
-	public void validatePrice(String wc, String vc){
-		if(selectedOrigin.isEmpty() || selectedOrigin.equals("Other") || selectedDest.isEmpty() || selectedDest.equals("Other") || 
-				wc.isEmpty() || !isDouble(wc) || vc.isEmpty() || !isDouble(vc) || priority.isEmpty()){
-			hasError.set(true);
-			System.out.println("error");
-			System.out.println("Origin: " +selectedOrigin);
-			System.out.println("Dest: " +selectedDest);
+	public void validatePrice(String wc, String vc) {
+		if (selectedOrigin.isEmpty() || selectedOrigin.equals("Other")
+				|| selectedDest.isEmpty() || selectedDest.equals("Other")
+				|| wc.isEmpty() || !isDouble(wc) || vc.isEmpty()
+				|| !isDouble(vc) || priority.isEmpty()) {
 			
-		}
-		else{
+			if (selectedOrigin.isEmpty() && !originMenu.getText().equals("Other")) {
+				hasError.set(true);
+				originMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				originMenu.setStyle("-fx-background-color:  E9D5B9");
+			}
+			if (selectedOrigin.isEmpty() && originMenu.getText().equals("Other")) {
+				hasError.set(true);
+				otherOrigin.setStyle("-fx-control-inner-background: #ffff99");
+			} else{
+				otherOrigin.setStyle("-fx-control-inner-background: white");
+			}
+			if (selectedDest.isEmpty() && !destinationMenu.getText().equals("Other")) {
+				hasError.set(true);
+				destinationMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				destinationMenu.setStyle("-fx-background-color: E9D5B9");
+
+			}
+			if (selectedDest.isEmpty() && destinationMenu.getText().equals("Other")) {
+				hasError.set(true);
+				otherDest.setStyle("-fx-control-inner-background: #ffff99");
+
+			} else{
+				otherDest.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (wc.isEmpty() || !isDouble(wc)) {
+				hasError.set(true);
+				weightcost.setStyle("-fx-control-inner-background: #ffff99");
+			} else{
+				weightcost.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (vc.isEmpty() || !isDouble(vc)) {
+				hasError.set(true);
+				 volumecost.setStyle("-fx-control-inner-background: #ffff99");
+			} else {
+				 volumecost.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (priority.isEmpty()) {
+				hasError.set(true);
+				prioritymenu.setStyle("-fx-background-color:  #ffff99");
+
+			} else {
+				prioritymenu.setStyle("-fx-background-color:  E9D5B9");
+
+			}				
+		} else {
 			hasError.set(false);
-			System.out.println("All G");
-		}		
+		}
 	}
-	
+
 	@FXML
 	private void priceUpdateButtonAction(ActionEvent event) {
 		error.visibleProperty().bind(hasError);
-		
+
 		String wc = this.weightcost.getText();
 		String vc = this.volumecost.getText();
-						
-		if(selectedOrigin.equals("Other") || selectedOrigin.isEmpty()){
+
+		if (selectedOrigin.equals("Other") || selectedOrigin.isEmpty()) {
 			selectedOrigin = this.otherOrigin.getText();
-			
+
 		}
-		if(selectedDest.equals("Other") || selectedDest.isEmpty()){
+		if (selectedDest.equals("Other") || selectedDest.isEmpty()) {
 			selectedDest = otherDest.getText();
 		}
-		
-		System.out.println("Origin: "+ selectedOrigin);
-		
+
 		validatePrice(wc, vc);
 
 		if (!hasError.get()) {
@@ -743,7 +788,6 @@ public class FormController implements Initializable {
 			}
 		}
 	}
-	
 
 	/** DELIVERY REQUEST FORM */
 
@@ -774,27 +818,27 @@ public class FormController implements Initializable {
 
 	private BooleanProperty routeless = new SimpleBooleanProperty(false);
 
-	
-	private void validateDelivery(String w, String v){
-		if(selectedOrigin.isEmpty() || selectedOrigin.equals("Other") || selectedDest.isEmpty() || selectedDest.equals("Other") ||
-				w.isEmpty() || !isDouble(w) || v.isEmpty() || !isDouble(v)){
+	private void validateDelivery(String w, String v) {
+		if (selectedOrigin.isEmpty() || selectedOrigin.equals("Other")
+				|| selectedDest.isEmpty() || selectedDest.equals("Other")
+				|| w.isEmpty() || !isDouble(w) || v.isEmpty() || !isDouble(v)) {
 			hasError.set(true);
-		}
-		else{
+		} else {
 			hasError.set(false);
 		}
 	}
+
 	@FXML
 	private void findPrioritiesButtonAction(ActionEvent event) {
 		error.visibleProperty().bind(hasError);
-		
+
 		String w = this.weight.getText();
 		String v = this.volume.getText();
 		firstChoice.setSelected(false);
 		secondChoice.setSelected(false);
-		
+
 		validateDelivery(w, v);
-		
+
 		if (!hasError.get()) {
 			routes = main.getPossibleRoutes(selectedOrigin, selectedDest,
 					Double.parseDouble(w), Double.parseDouble(v));
@@ -866,49 +910,48 @@ public class FormController implements Initializable {
 	}
 
 	/** DISCONTINUE TRANSPORT */
-	
+
 	@FXML
 	private Button changeSelection;
-	
+
 	@FXML
 	private Button findroutes;
-	
+
 	@FXML
 	private ScrollPane scrollpane;
-	
+
 	private BooleanProperty hasRoutes = new SimpleBooleanProperty(false);
 
 	@FXML
 	private VBox discRoutes;
 
 	private ArrayList<Route> disconRoutes;
-	
-	private void validateDiscontinue(){
-		if(selectedOrigin.isEmpty() || selectedOrigin.equals("Other") || selectedDest.isEmpty() || selectedDest.equals("Other")){
+
+	private void validateDiscontinue() {
+		if (selectedOrigin.isEmpty() || selectedOrigin.equals("Other")
+				|| selectedDest.isEmpty() || selectedDest.equals("Other")) {
 			hasError.set(true);
-		}
-		else{
+		} else {
 			hasError.set(false);
 		}
 	}
-	
-	
+
 	private Route selectedRoute;
-	
 
 	@FXML
 	private void findRoutesButtonAction(ActionEvent event) {
 		error.visibleProperty().bind(hasError);
-		
+
 		validateDiscontinue();
-		if(!hasError.get()){
+		if (!hasError.get()) {
 			disconRoutes = main.getRoutes(selectedOrigin, selectedDest);
 			final ToggleGroup group = new ToggleGroup();
 			group.selectedToggleProperty().addListener(
 					new ChangeListener<Toggle>() {
 						@Override
-						public void changed(ObservableValue<? extends Toggle> ov,
-								Toggle t, Toggle t1) {
+						public void changed(
+								ObservableValue<? extends Toggle> ov, Toggle t,
+								Toggle t1) {
 							selectedRoute = (Route) t1.getUserData();
 						}
 					});
@@ -920,21 +963,21 @@ public class FormController implements Initializable {
 				discRoutes.getChildren().add(b);
 			}
 			discRoutes.setSpacing(5);
-			
+
 			changeSelection.visibleProperty().bind(hasRoutes);
 			discRoutes.visibleProperty().bind(hasRoutes);
 			submit.visibleProperty().bind(hasRoutes);
 			scrollpane.visibleProperty().bind(hasRoutes);
 			hasRoutes.set(true);
-			
+
 			originMenu.setDisable(true);
 			destinationMenu.setDisable(true);
 			findroutes.setDisable(true);
 		}
 	}
-	
+
 	@FXML
-	private void reSelect(ActionEvent event){
+	private void reSelect(ActionEvent event) {
 		originMenu.setDisable(false);
 		destinationMenu.setDisable(false);
 		findroutes.setDisable(false);
@@ -944,7 +987,7 @@ public class FormController implements Initializable {
 
 	@FXML
 	private void discTransportButtonAction(ActionEvent event) {
-		if (selectedRoute!=null) {
+		if (selectedRoute != null) {
 			DiscontinueRoute route = main.discontinueTransportRoute(
 					selectedOrigin, selectedDest, selectedRoute.getCompany(),
 					selectedRoute.getType(), false);
@@ -958,8 +1001,7 @@ public class FormController implements Initializable {
 				completed.set(true);
 			}
 		}
-		
-		
+
 	}
 
 }
