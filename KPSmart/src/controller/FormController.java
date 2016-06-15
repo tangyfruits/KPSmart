@@ -60,21 +60,21 @@ public class FormController implements Initializable {
 
 	private String selectedOrigin = "";
 	private String selectedDest = "";
-	
+
 	@FXML
 	private TextField otherOrigin;
 	@FXML
 	private TextField otherDest;
-	
+
 	private BooleanProperty hasOtherOrigin = new SimpleBooleanProperty(false);
 	private BooleanProperty hasOtherDest = new SimpleBooleanProperty(false);
 
-	public void initDropdown(){
+	public void initDropdown() {
 		locs = main.getLocations();
 		EventHandler<ActionEvent> originAction = setSelectedOrigin();
 		EventHandler<ActionEvent> destAction = setSelectedDest();
-			
-		for(Location l:locs){
+
+		for (Location l : locs) {
 			MenuItem i = new MenuItem(l.getName());
 			i.setUserData(l.getName());
 			i.setOnAction(originAction);
@@ -82,10 +82,10 @@ public class FormController implements Initializable {
 			MenuItem k = new MenuItem(l.getName());
 			k.setOnAction(destAction);
 			destinationMenu.getItems().add(k);
-		}	
+		}
 	}
-	
-	public void initDropdownWithOther(){
+
+	public void initDropdownWithOther() {
 		otherOrigin.visibleProperty().bind(hasOtherOrigin);
 		otherDest.visibleProperty().bind(hasOtherDest);
 		locs = main.getLocations();
@@ -93,8 +93,8 @@ public class FormController implements Initializable {
 		EventHandler<ActionEvent> destAction = setSelectedDest();
 		EventHandler<ActionEvent> otherOriginAction = setOtherOrigin();
 		EventHandler<ActionEvent> otherDestAction = setOtherDest();
-				
-		for(Location l:locs){
+
+		for (Location l : locs) {
 			MenuItem i = new MenuItem(l.getName());
 			i.setUserData(l.getName());
 			i.setOnAction(originAction);
@@ -102,71 +102,72 @@ public class FormController implements Initializable {
 			MenuItem k = new MenuItem(l.getName());
 			k.setOnAction(destAction);
 			destinationMenu.getItems().add(k);
-		}	
-		
+		}
+
 		MenuItem otherOrigin = new MenuItem("Other");
 		otherOrigin.setUserData("Other");
 		otherOrigin.setOnAction(otherOriginAction);
 		originMenu.getItems().add(otherOrigin);
-		
+
 		MenuItem otherDest = new MenuItem("Other");
 		otherDest.setUserData("Other");
 		otherDest.setOnAction(otherDestAction);
 		destinationMenu.getItems().add(otherDest);
 	}
-	
-	private EventHandler<ActionEvent> setSelectedOrigin() {
-        return new EventHandler<ActionEvent>() {
 
-            public void handle(ActionEvent event) {
-                MenuItem mItem = (MenuItem) event.getSource();
-                String loc = mItem.getText();
-               selectedOrigin = loc;
-               originMenu.setText(loc);    
-               hasOtherOrigin.set(false);
-            }
-        };
-    }
-	
+	private EventHandler<ActionEvent> setSelectedOrigin() {
+		return new EventHandler<ActionEvent>() {
+
+			public void handle(ActionEvent event) {
+				MenuItem mItem = (MenuItem) event.getSource();
+				String loc = mItem.getText();
+				selectedOrigin = loc;
+				originMenu.setText(loc);
+				hasOtherOrigin.set(false);
+			}
+		};
+	}
+
 	private EventHandler<ActionEvent> setOtherDest() {
 		return new EventHandler<ActionEvent>() {
 
-            public void handle(ActionEvent event) {
-                MenuItem mItem = (MenuItem) event.getSource();
-                String loc = mItem.getText();
-                destinationMenu.setText(loc);  
-                selectedDest = loc;
-                hasOtherDest.set(true);
-            }
-        };
+			public void handle(ActionEvent event) {
+				MenuItem mItem = (MenuItem) event.getSource();
+				String loc = mItem.getText();
+				destinationMenu.setText(loc);
+				selectedDest = loc;
+				hasOtherDest.set(true);
+			}
+		};
 	}
+
 	private EventHandler<ActionEvent> setOtherOrigin() {
 		return new EventHandler<ActionEvent>() {
 
-            public void handle(ActionEvent event) {
-                MenuItem mItem = (MenuItem) event.getSource();
-                String loc = mItem.getText();
-                originMenu.setText(loc);    
-                hasOtherOrigin.set(true);
-                selectedOrigin = loc;
-            }
-        };
+			public void handle(ActionEvent event) {
+				MenuItem mItem = (MenuItem) event.getSource();
+				String loc = mItem.getText();
+				originMenu.setText(loc);
+				hasOtherOrigin.set(true);
+				selectedOrigin = loc;
+			}
+		};
 	}
-	
+
 	private EventHandler<ActionEvent> setSelectedDest() {
 
-        return new EventHandler<ActionEvent>() {
+		return new EventHandler<ActionEvent>() {
 
-            public void handle(ActionEvent event) {
-                MenuItem mItem = (MenuItem) event.getSource();
-                String loc = mItem.getText();
-                selectedDest = loc;
-	            destinationMenu.setText(loc);   
-	            hasOtherDest.set(false);
-            }
-        };
+			public void handle(ActionEvent event) {
+				MenuItem mItem = (MenuItem) event.getSource();
+				String loc = mItem.getText();
+				selectedDest = loc;
+				destinationMenu.setText(loc);
+				hasOtherDest.set(false);
+			}
+		};
 	}
-	
+
 	/**
 	 * NAV BAR BUTTONS
 	 * 
@@ -204,7 +205,7 @@ public class FormController implements Initializable {
 
 	@FXML
 	private void logoutButtonAction(ActionEvent event) throws IOException {
-    	main.logout();
+		main.logout();
 		FXMLLoader login = new FXMLLoader(getClass().getResource(
 				"/views/login.fxml"));
 		login.setController(new LoginController(main));
@@ -230,10 +231,10 @@ public class FormController implements Initializable {
 
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
 		Scene scene = new Scene(deliveryGUI);
-		
+
 		FormController controller = delivery.getController();
 		controller.initDropdown();
-		
+
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -270,6 +271,7 @@ public class FormController implements Initializable {
 		stage.setScene(scene);
 		FormController controller = route.getController();
 		controller.initDropdownWithOther();
+		controller.timeMenu();
 		stage.show();
 	}
 
@@ -289,7 +291,6 @@ public class FormController implements Initializable {
 		controller.initDropdownWithOther();
 		stage.show();
 	}
-
 
 	/** Priority Menu */
 
@@ -409,184 +410,51 @@ public class FormController implements Initializable {
 	}
 
 	/** Time Menu */
-	@FXML
-	private CheckMenuItem zero, one, two, three, four, five, six, seven, eight,
-			nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen,
-			seventeen, eighteen, nineteen, twenty, twentyone, twentytwo,
-			twentythree, twentyfour;
+	
 	@FXML
 	private MenuButton timeMenu;
 
-	private int time;
+	private int time = -1;
 
-	@FXML
-	private void zeroAction(ActionEvent event) {
-		time = 0;
-		timeMenu.setText("00");
+	public void timeMenu() {
+		EventHandler<ActionEvent> timeAction = setTime();
+
+		MenuItem a = new MenuItem("12am");
+		a.setUserData(0);
+		a.setOnAction(timeAction);
+		timeMenu.getItems().add(a);
+
+		for (int i = 1; i < 12; i++) {
+			MenuItem m = new MenuItem(i + "am");
+			m.setUserData(i);
+			m.setOnAction(timeAction);
+			timeMenu.getItems().add(m);
+		}
+
+		MenuItem b = new MenuItem("12pm");
+		b.setUserData(12);
+		b.setOnAction(timeAction);
+		timeMenu.getItems().add(b);
+
+		for (int i = 1; i < 12; i++) {
+			MenuItem m = new MenuItem(i + "pm");
+			m.setUserData(i + 12);
+			m.setOnAction(timeAction);
+			timeMenu.getItems().add(m);
+		}
 	}
+	
+	private EventHandler<ActionEvent> setTime() {
+		return new EventHandler<ActionEvent>() {
 
-	@FXML
-	private void oneAction(ActionEvent event) {
-		time = 1;
-		timeMenu.setText("01");
-	}
-
-	@FXML
-	private void twoAction(ActionEvent event) {
-		time = 2;
-		timeMenu.setText("02");
-	}
-
-	@FXML
-	private void threeAction(ActionEvent event) {
-		time = 3;
-		timeMenu.setText("03");
-	}
-
-	@FXML
-	private void fourAction(ActionEvent event) {
-		time = 4;
-		timeMenu.setText("04");
-	}
-
-	@FXML
-	private void fiveAction(ActionEvent event) {
-		time = 5;
-		timeMenu.setText("05");
-		;
-	}
-
-	@FXML
-	private void sixAction(ActionEvent event) {
-		time = 6;
-		timeMenu.setText("06");
-		;
-	}
-
-	@FXML
-	private void sevenAction(ActionEvent event) {
-		time = 7;
-		timeMenu.setText("07");
-		;
-	}
-
-	@FXML
-	private void eightAction(ActionEvent event) {
-		time = 8;
-		timeMenu.setText("08");
-		;
-	}
-
-	@FXML
-	private void nineAction(ActionEvent event) {
-		time = 9;
-		timeMenu.setText("09");
-		;
-	}
-
-	@FXML
-	private void tenAction(ActionEvent event) {
-		time = 10;
-		timeMenu.setText("10");
-		;
-	}
-
-	@FXML
-	private void elevenAction(ActionEvent event) {
-		time = 11;
-		timeMenu.setText("11");
-		;
-	}
-
-	@FXML
-	private void twelveAction(ActionEvent event) {
-		time = 12;
-		timeMenu.setText("12");
-		;
-	}
-
-	@FXML
-	private void thirteenAction(ActionEvent event) {
-		time = 13;
-		timeMenu.setText("13");
-		;
-	}
-
-	@FXML
-	private void fourteenAction(ActionEvent event) {
-		time = 14;
-		timeMenu.setText("14");
-		;
-	}
-
-	@FXML
-	private void fifteenAction(ActionEvent event) {
-		time = 15;
-		timeMenu.setText("15");
-		;
-	}
-
-	@FXML
-	private void sixteenAction(ActionEvent event) {
-		time = 16;
-		timeMenu.setText("16");
-		;
-	}
-
-	@FXML
-	private void seventeenAction(ActionEvent event) {
-		time = 17;
-		timeMenu.setText("17");
-		;
-	}
-
-	@FXML
-	private void eighteenAction(ActionEvent event) {
-		time = 18;
-		timeMenu.setText("18");
-		;
-	}
-
-	@FXML
-	private void nineteenAction(ActionEvent event) {
-		time = 19;
-		timeMenu.setText("19");
-		;
-	}
-
-	@FXML
-	private void twentyAction(ActionEvent event) {
-		time = 20;
-		timeMenu.setText("20");
-		;
-	}
-
-	@FXML
-	private void twentyoneAction(ActionEvent event) {
-		time = 21;
-		timeMenu.setText("21");
-		;
-	}
-
-	@FXML
-	private void twentytwoAction(ActionEvent event) {
-		time = 22;
-		timeMenu.setText("22");
-		;
-	}
-
-	@FXML
-	private void twentythreeAction(ActionEvent event) {
-		time = 23;
-		timeMenu.setText("23");
-		;
-	}
-
-	@FXML
-	private void twentyfourAction(ActionEvent event) {
-		time = 24;
-		timeMenu.setText("24");
-		;
+			public void handle(ActionEvent event) {
+				MenuItem mItem = (MenuItem) event.getSource();
+				String t = mItem.getText();
+				time = (int) mItem.getUserData();
+				timeMenu.setText(t);
+				System.out.println(mItem.getUserData().toString());
+			}
+		};
 	}
 
 	@FXML
@@ -597,82 +465,273 @@ public class FormController implements Initializable {
 	@FXML
 	private Text confirmation;
 
+	@FXML
+	private Text error;
+
+	private BooleanProperty hasError = new SimpleBooleanProperty(false);
+
+	private boolean isDouble(String str) {
+		try {
+			Double.parseDouble(str);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
 	/** TRANSPORT ROUTE FORM */
+
+	private void validateRoute(String mw, String mv, String wc, String vc,
+			String d, String f) {
+		if (selectedOrigin.isEmpty() || selectedOrigin.equals("Other")
+				|| selectedDest.isEmpty() || selectedDest.equals("Other")
+				|| type.isEmpty() || company.getText().isEmpty()
+				|| mw.isEmpty() || !isDouble(mw) || mv.isEmpty()
+				|| !isDouble(mv) || wc.isEmpty() || !isDouble(wc)
+				|| vc.isEmpty() || !isDouble(vc) || d.isEmpty() || !isDouble(d)
+				|| f.isEmpty() || !isDouble(f) || day.isEmpty() || time == -1) {
+
+			if (selectedOrigin.isEmpty() && !originMenu.getText().equals("Other")) {
+				hasError.set(true);
+				originMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				originMenu.setStyle("-fx-background-color:  E9D5B9");
+			}
+			if (selectedOrigin.isEmpty() && originMenu.getText().equals("Other")) {
+				hasError.set(true);
+				otherOrigin.setStyle("-fx-control-inner-background: #ffff99");
+			} else{
+				otherOrigin.setStyle("-fx-control-inner-background: white");
+			}
+			if (selectedDest.isEmpty() && !destinationMenu.getText().equals("Other")) {
+				hasError.set(true);
+				destinationMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				destinationMenu.setStyle("-fx-background-color: E9D5B9");
+
+			}
+			if (selectedDest.isEmpty() && destinationMenu.getText().equals("Other")) {
+				hasError.set(true);
+				otherDest.setStyle("-fx-control-inner-background: #ffff99");
+
+			} else{
+				otherDest.setStyle("-fx-control-inner-background: white");
+
+			}
+			if(type.isEmpty()){
+				typemenu.setStyle("-fx-background-color: #ffff99");
+			}else{
+				typemenu.setStyle("-fx-background-color: E9D5B9");
+			}
+			if(company.getText().isEmpty()){
+				company.setStyle("-fx-control-inner-background: #ffff99");
+			} else{
+				company.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (mw.isEmpty() || !isDouble(mw)) {
+				hasError.set(true);
+				maxweight.setStyle("-fx-control-inner-background: #ffff99");
+			} else{
+				maxweight.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (mv.isEmpty() || !isDouble(mv)) {
+				hasError.set(true);
+				 maxvolume.setStyle("-fx-control-inner-background: #ffff99");
+			} else {
+				 maxvolume.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (wc.isEmpty() || !isDouble(wc)) {
+				hasError.set(true);
+				weightcost.setStyle("-fx-control-inner-background: #ffff99");
+			} else{
+				weightcost.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (vc.isEmpty() || !isDouble(vc)) {
+				hasError.set(true);
+				 volumecost.setStyle("-fx-control-inner-background: #ffff99");
+			} else {
+				 volumecost.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (f.isEmpty() || !isDouble(f)) {
+				hasError.set(true);
+				frequency.setStyle("-fx-control-inner-background: #ffff99");
+			} else{
+				frequency.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (d.isEmpty() || !isDouble(d)) {
+				hasError.set(true);
+				 duration.setStyle("-fx-control-inner-background: #ffff99");
+			} else {
+				 duration.setStyle("-fx-control-inner-background: white");
+
+			}	
+			if(day.isEmpty()){
+				dayMenu.setStyle("-fx-background-color: #ffff99");
+			}else{
+				dayMenu.setStyle("-fx-background-color: E9D5B9");
+			}
+			if(time == -1){
+				timeMenu.setStyle("-fx-background-color: #ffff99");
+			}else{
+				timeMenu.setStyle("-fx-background-color: E9D5B9");
+			}
+		} else {
+			hasError.set(false);
+		}
+	}
 
 	@FXML
 	private void transportRouteButtonAction(ActionEvent event) {
+		error.visibleProperty().bind(hasError);
+
 		String mw = this.maxweight.getText();
 		String mv = this.maxvolume.getText();
 		String wc = this.weightcost.getText();
 		String vc = this.volumecost.getText();
 		String d = this.duration.getText();
 		String f = this.frequency.getText();
-		
-		if(selectedOrigin.equals("Other")){
+
+		if (selectedOrigin.equals("Other") || selectedOrigin.isEmpty()) {
 			selectedOrigin = this.otherOrigin.getText();
 		}
 
-		if(selectedDest.equals("Other")){
+		if (selectedDest.equals("Other") || selectedDest.isEmpty()) {
 			selectedDest = otherDest.getText();
 		}
-		
-		Route r = main.logTransportCostUpdate(selectedOrigin, selectedDest,
-				company.getText(), type, Double.parseDouble(wc),
-				Double.parseDouble(vc), Integer.parseInt(mw),
-				Integer.parseInt(mv), Integer.parseInt(d), Integer.parseInt(f),
-				DayOfWeek.valueOf(day), time, false);
 
-		if (r != null) {
-			confirmation.visibleProperty().bind(completed);
-			completed.set(true);
-			originMenu.setDisable(true);
-			destinationMenu.setDisable(true);
-			weightcost.setDisable(true);
-			volumecost.setDisable(true);
-			maxweight.setDisable(true);
-			maxvolume.setDisable(true);
-			duration.setDisable(true);
-			frequency.setDisable(true);
-			typemenu.setDisable(true);
-			dayMenu.setDisable(true);
-			timeMenu.setDisable(true);
-			submit.setDisable(true);
-			company.setDisable(true);
-			otherDest.setDisable(true);
-			otherOrigin.setDisable(true);
+		validateRoute(mw, mv, wc, vc, d, f);
+
+		if (!hasError.get()) {
+			Route r = main.logTransportCostUpdate(selectedOrigin, selectedDest,
+					company.getText(), type, Double.parseDouble(wc),
+					Double.parseDouble(vc), Integer.parseInt(mw),
+					Integer.parseInt(mv), Integer.parseInt(d),
+					Integer.parseInt(f), DayOfWeek.valueOf(day), time, false);
+			if (r != null) {
+				confirmation.visibleProperty().bind(completed);
+				completed.set(true);
+				originMenu.setDisable(true);
+				destinationMenu.setDisable(true);
+				weightcost.setDisable(true);
+				volumecost.setDisable(true);
+				maxweight.setDisable(true);
+				maxvolume.setDisable(true);
+				duration.setDisable(true);
+				frequency.setDisable(true);
+				typemenu.setDisable(true);
+				dayMenu.setDisable(true);
+				timeMenu.setDisable(true);
+				submit.setDisable(true);
+				company.setDisable(true);
+				otherDest.setDisable(true);
+				otherOrigin.setDisable(true);
+				hasError.set(false);
+			}
 		}
 	}
 
 	/** PRICE UPDATE FORM */
 
+	public void validatePrice(String wc, String vc) {
+		if (selectedOrigin.isEmpty() || selectedOrigin.equals("Other")
+				|| selectedDest.isEmpty() || selectedDest.equals("Other")
+				|| wc.isEmpty() || !isDouble(wc) || vc.isEmpty()
+				|| !isDouble(vc) || priority.isEmpty()) {
+			
+			if (selectedOrigin.isEmpty() && !originMenu.getText().equals("Other")) {
+				hasError.set(true);
+				originMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				originMenu.setStyle("-fx-background-color:  E9D5B9");
+			}
+			if (selectedOrigin.isEmpty() && originMenu.getText().equals("Other")) {
+				hasError.set(true);
+				otherOrigin.setStyle("-fx-control-inner-background: #ffff99");
+			} else{
+				otherOrigin.setStyle("-fx-control-inner-background: white");
+			}
+			if (selectedDest.isEmpty() && !destinationMenu.getText().equals("Other")) {
+				hasError.set(true);
+				destinationMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				destinationMenu.setStyle("-fx-background-color: E9D5B9");
+
+			}
+			if (selectedDest.isEmpty() && destinationMenu.getText().equals("Other")) {
+				hasError.set(true);
+				otherDest.setStyle("-fx-control-inner-background: #ffff99");
+
+			} else{
+				otherDest.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (wc.isEmpty() || !isDouble(wc)) {
+				hasError.set(true);
+				weightcost.setStyle("-fx-control-inner-background: #ffff99");
+			} else{
+				weightcost.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (vc.isEmpty() || !isDouble(vc)) {
+				hasError.set(true);
+				 volumecost.setStyle("-fx-control-inner-background: #ffff99");
+			} else {
+				 volumecost.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (priority.isEmpty()) {
+				hasError.set(true);
+				prioritymenu.setStyle("-fx-background-color:  #ffff99");
+
+			} else {
+				prioritymenu.setStyle("-fx-background-color:  E9D5B9");
+
+			}				
+		} else {
+			hasError.set(false);
+		}
+	}
+
 	@FXML
 	private void priceUpdateButtonAction(ActionEvent event) {
+		error.visibleProperty().bind(hasError);
+
 		String wc = this.weightcost.getText();
 		String vc = this.volumecost.getText();
-		
-		if(selectedOrigin.equals("Other")){
-			selectedOrigin = this.otherOrigin.getText();
-		}
 
-		if(selectedDest.equals("Other")){
+		if (selectedOrigin.equals("Other") || selectedOrigin.isEmpty()) {
+			selectedOrigin = this.otherOrigin.getText();
+
+		}
+		if (selectedDest.equals("Other") || selectedDest.isEmpty()) {
 			selectedDest = otherDest.getText();
 		}
 
-		CustomerPrice price = main.logCustomerPriceUpdate(selectedOrigin,
-				selectedDest, priority, Double.parseDouble(wc),
-				Double.parseDouble(vc), false);
+		validatePrice(wc, vc);
 
-		if (price != null) {
-			confirmation.visibleProperty().bind(completed);
-			completed.set(true);
-			originMenu.setDisable(true);
-			destinationMenu.setDisable(true);
-			weightcost.setDisable(true);
-			volumecost.setDisable(true);
-			prioritymenu.setDisable(true);
-			submit.setDisable(true);
-			otherDest.setDisable(true);
-			otherOrigin.setDisable(true);
+		if (!hasError.get()) {
+			CustomerPrice price = main.logCustomerPriceUpdate(selectedOrigin,
+					selectedDest, priority, Double.parseDouble(wc),
+					Double.parseDouble(vc), false);
+			if (price != null) {
+				confirmation.visibleProperty().bind(completed);
+				completed.set(true);
+				originMenu.setDisable(true);
+				destinationMenu.setDisable(true);
+				weightcost.setDisable(true);
+				volumecost.setDisable(true);
+				prioritymenu.setDisable(true);
+				submit.setDisable(true);
+				otherDest.setDisable(true);
+				otherOrigin.setDisable(true);
+				hasError.set(false);
+			}
 		}
 	}
 
@@ -705,37 +764,75 @@ public class FormController implements Initializable {
 
 	private BooleanProperty routeless = new SimpleBooleanProperty(false);
 
+	private void validateDelivery(String w, String v) {
+		if (selectedOrigin.isEmpty() || selectedDest.isEmpty()
+				|| w.isEmpty() || !isDouble(w) || v.isEmpty() || !isDouble(v)) {
+			if (selectedOrigin.isEmpty()) {
+				hasError.set(true);
+				originMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				originMenu.setStyle("-fx-background-color:  E9D5B9");
+			}
+			if (selectedDest.isEmpty()) {
+				hasError.set(true);
+				destinationMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				destinationMenu.setStyle("-fx-background-color: E9D5B9");
+			}
+			if (w.isEmpty() || !isDouble(w)) {
+				hasError.set(true);
+				 weight.setStyle("-fx-control-inner-background: #ffff99");
+			} else {
+				 weight.setStyle("-fx-control-inner-background: white");
+			}if (v.isEmpty() || !isDouble(v)) {
+				hasError.set(true);
+				 volume.setStyle("-fx-control-inner-background: #ffff99");
+			} else {
+				 volume.setStyle("-fx-control-inner-background: white");
+			}
+		} else {
+			hasError.set(false);
+		}
+	}
+	
+
 	@FXML
 	private void findPrioritiesButtonAction(ActionEvent event) {
+		error.visibleProperty().bind(hasError);
+
 		String w = this.weight.getText();
 		String v = this.volume.getText();
 		firstChoice.setSelected(false);
 		secondChoice.setSelected(false);
-		routes = main.getPossibleRoutes(selectedOrigin, selectedDest,
-				Double.parseDouble(w), Double.parseDouble(v));
 
-		if (routes.size() > 0) {
-			submit.visibleProperty().bind(hasPriorities);
-			reselect.visibleProperty().bind(hasPriorities);
-			firstChoice.setText(routes.get(0).getPriority() + ": $"
-					+ routes.get(0).getPrice());
-			firstChoice.visibleProperty().bind(hasPriorities);
-			if (routes.size() == 2) {
-				secondChoice.setText(routes.get(1).getPriority() + ": $"
-						+ routes.get(1).getPrice());
-				secondChoice.visibleProperty().bind(hasPriorities);
+		validateDelivery(w, v);
+
+		if (!hasError.get()) {
+			routes = main.getPossibleRoutes(selectedOrigin, selectedDest,
+					Double.parseDouble(w), Double.parseDouble(v));
+			if (routes.size() > 0) {
+				submit.visibleProperty().bind(hasPriorities);
+				reselect.visibleProperty().bind(hasPriorities);
+				firstChoice.setText(routes.get(0).getPriority() + ": $"
+						+ routes.get(0).getPrice());
+				firstChoice.visibleProperty().bind(hasPriorities);
+				if (routes.size() == 2) {
+					secondChoice.setText(routes.get(1).getPriority() + ": $"
+							+ routes.get(1).getPrice());
+					secondChoice.visibleProperty().bind(hasPriorities);
+				}
+				hasPriorities.set(true);
+			} else {
+				noRoutes.visibleProperty().bind(routeless);
+				reselect.visibleProperty().bind(routeless);
+				routeless.set(true);
 			}
-			hasPriorities.set(true);
-		} else {
-			noRoutes.visibleProperty().bind(routeless);
-			reselect.visibleProperty().bind(routeless);
-			routeless.set(true);
+			originMenu.setDisable(true);
+			destinationMenu.setDisable(true);
+			weight.setDisable(true);
+			volume.setDisable(true);
+			findPriorities.setDisable(true);
 		}
-		originMenu.setDisable(true);
-		destinationMenu.setDisable(true);
-		weight.setDisable(true);
-		volume.setDisable(true);
-		findPriorities.setDisable(true);
 	}
 
 	@FXML
@@ -781,60 +878,86 @@ public class FormController implements Initializable {
 	}
 
 	/** DISCONTINUE TRANSPORT */
-	
+
 	@FXML
 	private Button changeSelection;
-	
+
 	@FXML
 	private Button findroutes;
-	
+
 	@FXML
 	private ScrollPane scrollpane;
-	
+
 	private BooleanProperty hasRoutes = new SimpleBooleanProperty(false);
 
 	@FXML
 	private VBox discRoutes;
 
 	private ArrayList<Route> disconRoutes;
-	
+
+	private void validateDiscontinue() {
+		if (selectedOrigin.isEmpty() || selectedDest.isEmpty()) {
+			
+			if (selectedOrigin.isEmpty()) {
+				hasError.set(true);
+				originMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				originMenu.setStyle("-fx-background-color:  E9D5B9");
+			}
+			if (selectedDest.isEmpty()) {
+				hasError.set(true);
+				destinationMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				destinationMenu.setStyle("-fx-background-color: E9D5B9");
+
+			}
+		} else {
+			hasError.set(false);
+		}
+	}
+
 	private Route selectedRoute;
 
 	@FXML
 	private void findRoutesButtonAction(ActionEvent event) {
-		disconRoutes = main.getRoutes(selectedOrigin, selectedDest);
-		final ToggleGroup group = new ToggleGroup();
-		group.selectedToggleProperty().addListener(
-				new ChangeListener<Toggle>() {
-					@Override
-					public void changed(ObservableValue<? extends Toggle> ov,
-							Toggle t, Toggle t1) {
-						selectedRoute = (Route) t1.getUserData();
-					}
-				});
-		for (Route r : disconRoutes) {
-			RadioButton b = new RadioButton(r.getCompany() + ": "
-					+ r.getPriority());
-			b.setUserData(r);
-			b.setToggleGroup(group);
-			discRoutes.getChildren().add(b);
+		error.visibleProperty().bind(hasError);
+
+		validateDiscontinue();
+		if (!hasError.get()) {
+			disconRoutes = main.getRoutes(selectedOrigin, selectedDest);
+			final ToggleGroup group = new ToggleGroup();
+			group.selectedToggleProperty().addListener(
+					new ChangeListener<Toggle>() {
+						@Override
+						public void changed(
+								ObservableValue<? extends Toggle> ov, Toggle t,
+								Toggle t1) {
+							selectedRoute = (Route) t1.getUserData();
+						}
+					});
+			for (Route r : disconRoutes) {
+				RadioButton b = new RadioButton(r.getCompany() + ": "
+						+ r.getPriority());
+				b.setUserData(r);
+				b.setToggleGroup(group);
+				discRoutes.getChildren().add(b);
+			}
+			discRoutes.setSpacing(5);
+
+			changeSelection.visibleProperty().bind(hasRoutes);
+			discRoutes.visibleProperty().bind(hasRoutes);
+			submit.visibleProperty().bind(hasRoutes);
+			scrollpane.visibleProperty().bind(hasRoutes);
+			hasRoutes.set(true);
+
+			originMenu.setDisable(true);
+			destinationMenu.setDisable(true);
+			findroutes.setDisable(true);
 		}
-		discRoutes.setSpacing(5);
-		
-		changeSelection.visibleProperty().bind(hasRoutes);
-		discRoutes.visibleProperty().bind(hasRoutes);
-		submit.visibleProperty().bind(hasRoutes);
-		scrollpane.visibleProperty().bind(hasRoutes);
-		hasRoutes.set(true);
-		
-		originMenu.setDisable(true);
-		destinationMenu.setDisable(true);
-		findroutes.setDisable(true);
-		
 	}
-	
+
 	@FXML
-	private void reSelect(ActionEvent event){
+	private void reSelect(ActionEvent event) {
 		originMenu.setDisable(false);
 		destinationMenu.setDisable(false);
 		findroutes.setDisable(false);
@@ -844,7 +967,7 @@ public class FormController implements Initializable {
 
 	@FXML
 	private void discTransportButtonAction(ActionEvent event) {
-		if (selectedRoute!=null) {
+		if (selectedRoute != null) {
 			DiscontinueRoute route = main.discontinueTransportRoute(
 					selectedOrigin, selectedDest, selectedRoute.getCompany(),
 					selectedRoute.getType(), false);
@@ -858,8 +981,7 @@ public class FormController implements Initializable {
 				completed.set(true);
 			}
 		}
-		
-		
+
 	}
 
 }

@@ -106,6 +106,11 @@
             <Font name="Gulim" size="18.0" />
          </font>
       </Text>
+      <Text fx:id="error" fill="#eb0909" layoutX="249.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: false;" text="Please complete all fields" textAlignment="CENTER">
+         <font>
+            <Font name="Gulim" size="18.0" />
+         </font>
+      </Text>
    </children>
    <stylesheets>
 	<URL value="@kps.css" />

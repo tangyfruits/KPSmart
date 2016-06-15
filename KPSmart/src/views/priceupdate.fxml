@@ -132,6 +132,11 @@
       </Text>
       <TextField fx:id="otherOrigin" layoutX="131.0" layoutY="172.0" prefHeight="27.0" prefWidth="188.0" />
       <TextField fx:id="otherDest" layoutX="434.0" layoutY="172.0" prefHeight="27.0" prefWidth="188.0" />
+      <Text fx:id="error" fill="#eb0909" layoutX="276.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: false;" text="Please complete all fields" textAlignment="CENTER">
+         <font>
+            <Font name="Gulim" size="18.0" />
+         </font>
+      </Text>
    </children>
    <stylesheets>
 	<URL value="@kps.css" />
