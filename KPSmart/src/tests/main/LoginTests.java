@@ -93,7 +93,7 @@ public class LoginTests {
 	public void testEditUser_01() {
 		Main m = new Main();
 		m.login("shelley", "password123");
-		m.edit("password987");
+		m.editPassword("password987");
 		assertTrue(m.getCurrentUser().getPassword().equals("password987"));
 	}
 
@@ -101,7 +101,7 @@ public class LoginTests {
 	public void testEditUser_02() {
 		Main m = new Main();
 		m.login("shelley", "password987");
-		m.edit("password987");
+		m.editPassword("password987");
 		assertTrue(m.getCurrentUser().getPassword().equals("password987"));
 	}
 
@@ -109,7 +109,7 @@ public class LoginTests {
 	public void testEditUser_03() {
 		Main m = new Main();
 		m.login("shelley", "password987");
-		m.edit("password123");
+		m.editPassword("password123");
 		assertTrue(m.getCurrentUser().getPassword().equals("password123"));
 	}
 

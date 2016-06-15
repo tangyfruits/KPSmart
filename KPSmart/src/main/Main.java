@@ -140,7 +140,7 @@ public class Main {
 		}
 		return false;
 	}
-	public boolean edit(String password) {
+	public boolean editPassword(String password) {
 		boolean edited = false;
 		for (User u : accounts) {
 			if (u.getUsername().equals(currentUser.getUsername()) && 
@@ -150,6 +150,32 @@ public class Main {
 			}
 		}
 		currentUser.setPassword(password);
+		try {
+			configFile.delete();
+			configFile.createNewFile();
+			FileWriter fw = new FileWriter(configFile, true);
+			fw.write(logFile.getName()+"\n");
+			for (int i = 0; i < accounts.size(); i++) {
+				User u = accounts.get(i);
+				fw.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
+			}
+			fw.flush();
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return edited;
+	}
+	public boolean editManager(boolean manager ) {
+		boolean edited = false;
+		for (User u : accounts) {
+			if (u.getUsername().equals(currentUser.getUsername()) && 
+				u.getPassword().equals(currentUser.getPassword())) {
+				u.setManager(manager);
+				edited = true;
+			}
+		}
+		currentUser.setManager(manager);
 		try {
 			configFile.delete();
 			configFile.createNewFile();
@@ -193,16 +219,34 @@ public class Main {
 		}
 		return removed;
 	}
-	public void add(User u) {
+	public void add(User user) {
+		boolean b = false;
+		for (User u : accounts){
+			if(u.getUsername().equals(user.getUsername())){
+				b=true;
+			}
+		}
+		if(!b){
 		try {
 			FileWriter writer = new FileWriter(configFile, true);
-			writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
+			writer.write(user.getUsername() + " " + user.getPassword() + " " + Boolean.toString(user.isManager()) + "\n");
 			writer.flush();
 			writer.close();
-			accounts.add(u);
+			accounts.add(user);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	}
+	
+	public User findUser(String username){
+		for (User u : accounts) {
+			if (u.getUsername().equals(username)){
+				return u;
+			}
+	}
+		return null;
 	}
 	public void logout() {
 		currentUser = null;
