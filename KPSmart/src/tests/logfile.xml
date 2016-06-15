@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<events>
-  <discontinue>
+<events><discontinue>
     <to>Wellington</to>
     <from>Christchurch</from>
     <company>NZ Post</company>
     <type>Sea</type>
-  </discontinue>
-<mail>
+  </discontinue><mail>
     <logged>2016-01-01T00:00</logged>
     <to>Clean</to>
     <from>Fresh</from>
@@ -23,22 +21,19 @@
     <volume>20.0</volume>
     <priority>International Air</priority>
     <duration>30</duration>
-  </mail>
-<price>
+  </mail><price>
     <to>EndPlace</to>
     <from>StartPlace</from>
     <priority>Stand LOcal brah</priority>
     <weightCost>3.0</weightCost>
     <volumeCost>5.0</volumeCost>
-  </price>
-<price>
+  </price><price>
     <to>otherplace</to>
     <from>place</from>
     <priority>Super Imp</priority>
     <weightCost>30.54</weightCost>
     <volumeCost>20.0</volumeCost>
-  </price>
-<cost>
+  </price><cost>
     <to>Christchurch</to>
     <from>Wellington</from>
     <company>NZ Post</company>
@@ -52,8 +47,7 @@
     <frequency>12</frequency>
     <day>Thursday</day>
     <hour>12</hour>
-  </cost>
-<cost>
+  </cost><cost>
     <to>Dunedin</to>
     <from>Auckland</from>
     <company>UPS</company>
@@ -67,5 +61,4 @@
     <frequency>2</frequency>
     <day>Tuesday</day>
     <hour>20</hour>
-  </cost>
-</events>
+  </cost></events>

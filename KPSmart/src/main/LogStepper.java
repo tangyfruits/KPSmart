@@ -2,6 +2,7 @@ package main;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -21,7 +22,7 @@ public class LogStepper {
 	DocumentBuilder db;
 	Document doc;
 	File logfile;
-	NodeList events;
+	ArrayList<Node> events;
 	int position;
 	
 	// CONSTRUCTOR
@@ -32,8 +33,15 @@ public class LogStepper {
 			doc = db.parse(logfile);
 			Element parent = doc.getDocumentElement();
 			
-			events = parent.getChildNodes();
-			position = events.getLength() - 1;
+			NodeList temp = parent.getChildNodes();
+			events = new ArrayList<>();
+			
+			for(int i = 0;i<temp.getLength();i++){
+				if(temp.item(i).getNodeType()!=Node.TEXT_NODE){
+					events.add(temp.item(i));
+				}
+			}
+			position = events.size() - 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,24 +55,62 @@ public class LogStepper {
 		try {
 			doc = db.parse(logfile);
 			Element parent = doc.getDocumentElement();
-			events = parent.getChildNodes();
-			position = events.getLength() - 1;
+			NodeList temp = parent.getChildNodes();
+			System.out.println("Temp:"+temp.getLength());
+			events = new ArrayList<>();
+			
+			for(int i = 0;i<temp.getLength();i++){
+				if(temp.item(i).getNodeType()!=Node.TEXT_NODE){
+					events.add(temp.item(i));
+				}
+			}
+			position = events.size() - 1;
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		Element parent = doc.getDocumentElement();
-		events = parent.getChildNodes();
-		position = events.getLength() - 1;
+		NodeList temp = parent.getChildNodes();
+		System.out.println("Temp:"+temp.getLength());
+		events = new ArrayList<>();
+		
+		for(int i = 0;i<temp.getLength();i++){
+			if(temp.item(i).getNodeType()!=Node.TEXT_NODE){
+				events.add(temp.item(i));
+			}
+		}
+		position = events.size() - 1;
 	}
 	
 	// Event getters and checkers
 	public HashMap<String, String> latestEvent() {
 		HashMap<String, String> event = null;
-		position = events.getLength() - 1;
+		position = events.size() - 1;
+		Element e;
 		if (position >= 0) {
-			event = nodeToHashMap(events.item(position));
+			if (events.get(position).getNodeType() == Node.ELEMENT_NODE) {                    
+			    e = (Element)events.get(position);
+			    event = nodeToHashMap(e);
+			}			
+			else{
+				System.out.println("Not an Element!");
+			}
+		}
+		return event;
+	}
+	public HashMap<String, String> firstEvent() {
+		HashMap<String, String> event = null;
+		position = 0;
+		Element e;
+		if (position >= 0) {
+			if (events.get(position).getNodeType() == Node.ELEMENT_NODE) {                    
+			    e = (Element)events.get(position);
+			    event = nodeToHashMap(e);
+			}			
+			else{
+				System.out.println("Not an Element!");
+			}
 		}
 		return event;
 	}
@@ -72,7 +118,14 @@ public class LogStepper {
 		HashMap<String, String> event = null;
 		if (isPrev()) {
 			position--;
-			event = nodeToHashMap(events.item(position));
+			Element e;
+			if (events.get(position).getNodeType() == Node.ELEMENT_NODE) {                        
+			    e = (Element)events.get(position);
+			    event = nodeToHashMap(e);
+			}			
+			else{
+				System.out.println("Not an Element!");
+			}
 		}
 		return event;
 	}
@@ -80,13 +133,20 @@ public class LogStepper {
 		HashMap<String, String> event = null;
 		if (isNext()) {
 			position++;
-			event = nodeToHashMap(events.item(position));
+			Element e;
+			if (events.get(position).getNodeType() == Node.ELEMENT_NODE) {                        
+			    e = (Element)events.get(position);
+			    event = nodeToHashMap(e);
+			}			
+			else{
+				System.out.println("Not an Element!");
+			}
 		}
 		return event;
 	}
 	public boolean isNext() {
 		boolean next = true;
-		if (position >= events.getLength() - 1) {
+		if (position >= events.size() - 1) {
 			return false;
 		}
 		return next;
@@ -100,16 +160,18 @@ public class LogStepper {
 	}
 	
 	// Local utility method
-	private HashMap<String, String> nodeToHashMap(Node node) {
-		Element event = (Element) node;
+	private HashMap<String, String> nodeToHashMap(Element node) {
+		Element event = node;
 		HashMap<String, String> map = new HashMap<String,String>();
 		
 		switch (node.getNodeName()) {		
 		case "mail":
-			map.put("type", "mail");
+			map.put("eventType", "mail");
 			map.put("logged",      event.getElementsByTagName("logged").item(0).getTextContent());
 			map.put("destination", event.getElementsByTagName("to").item(0).getTextContent());
 			map.put("origin",      event.getElementsByTagName("from").item(0).getTextContent());
+			
+			map.put("legnum", Integer.toString(event.getElementsByTagName("leg").getLength()));
 			
 			NodeList legs = event.getElementsByTagName("leg");
 			for (int i = 0; i < legs.getLength(); i++) {
@@ -130,7 +192,7 @@ public class LogStepper {
 			break;
 		
 		case "cost":
-			map.put("type", "cost");
+			map.put("eventType", "cost");
 			map.put("to", 		  event.getElementsByTagName("to").item(0).getTextContent());
 			map.put("from", 	  event.getElementsByTagName("from").item(0).getTextContent());
 			map.put("company", 	  event.getElementsByTagName("company").item(0).getTextContent());
@@ -147,17 +209,16 @@ public class LogStepper {
 			break;
 		
 		case "price":
-			map.put("type", "price");
+			map.put("eventType", "price");
 			map.put("to", 		  event.getElementsByTagName("to").item(0).getTextContent());
 			map.put("from", 	  event.getElementsByTagName("from").item(0).getTextContent());
-			map.put("type", 	  event.getElementsByTagName("type").item(0).getTextContent());
 			map.put("priority",   event.getElementsByTagName("priority").item(0).getTextContent());
 			map.put("weightCost", event.getElementsByTagName("weightCost").item(0).getTextContent());
 			map.put("volumeCost", event.getElementsByTagName("volumeCost").item(0).getTextContent());
 			break;
 		
 		case "discontinue":
-			map.put("type", "discontinue");
+			map.put("eventType", "discontinue");
 			map.put("company", event.getElementsByTagName("company").item(0).getTextContent());
 			map.put("to", 	   event.getElementsByTagName("to").item(0).getTextContent());
 			map.put("from",    event.getElementsByTagName("from").item(0).getTextContent());

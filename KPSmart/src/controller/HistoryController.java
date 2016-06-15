@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -14,18 +15,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.Main;
 import main.LogStepper;
+import main.Main;
 
 public class HistoryController implements Initializable {
 
 	private Main main;
 	private LogStepper stepper;
+	
+	private HashMap<String,String> map;
 	
 	@FXML
 	private VBox box;
@@ -33,7 +34,7 @@ public class HistoryController implements Initializable {
 
 	public HistoryController(Main main) {
 		this.main = main;
-		stepper = new LogStepper(main.getFile());
+		stepper = new LogStepper(new File("KPSmart/src/tests/test_input.xml"));
 	}
 
 	@Override
@@ -41,41 +42,8 @@ public class HistoryController implements Initializable {
 	}
 
 	public void initData() {
-//		HashMap<String, String> item = stepper.latestEvent();
-//		switch (item.get("type")) {
-//		case "mail":
-//			displayMail(item);
-//			break;
-//		case "cost":
-//			displayCost(item);
-//			break;
-//		case "price":
-//			displayPrice(item);
-//			break;
-//		case "discontinue":
-//			displayDiscontinue(item);
-//			break;
-//		default:
-//
-//			break;
-//		}
-		HashMap<String,String> map = new HashMap<>();
-		map.put("type", "cost");
-		map.put("to", 		  "Wellington");
-		map.put("from", 	  "Auckland");
-		map.put("company", 	  "UPS");
-		map.put("type", 	  "Air");
-		map.put("priority",   "Domestic Air");
-		map.put("weightCost", "3.5");
-		map.put("volumeCost", "2.8");
-		map.put("maxWeight",  "15");
-		map.put("maxVolume",  "15");
-		map.put("duration",   "12");
-		map.put("frequency",  "14");
-		map.put("day", 		  "Thursday");
-		map.put("hour", 	  "12");
-		
-		displayDiscontinue(map);
+		HashMap<String, String> item = stepper.latestEvent();
+		display(item);
 	}
 
 	/**
@@ -202,113 +170,140 @@ public class HistoryController implements Initializable {
 		stage.show();
 	}
 
-	private boolean firstview = true;
-
+	/*
+	 * Elements
+	 */
+	
 	@FXML
-	private Button previous, next, readLog;
-	@FXML
-	private Text text1, text2, text3, text4, text5, text6, text7, text8, text9,
-			text10, text11, text12, text13, text14, text15, text16, text17,
-			text18, text19, text20, text21, text22, text23, text24, text25,
-			text26, text27, text28, text29, text30, text31, text32, text33,
-			text34;
+	private Button previous, next, first, last;
+	
 	@FXML
 	private Label logtype;
-
+	
 	@FXML
-	private void readLogEvent(ActionEvent event) {
-		if (firstview) {
-			readLog.setVisible(false);
-			firstview = false;
-			// readLogEvent(event);
+	private void displayFirst(){
+		display(stepper.firstEvent());
+	}
+	
+	@FXML
+	private void displayLast(){
+		display(stepper.latestEvent());
+	}
+	
+	@FXML
+	private void displayNext(){
+		if (stepper.isNext()) {
+			display(stepper.nextEvent());
 		}
 	}
+	
+	@FXML
+	private void displayPrevious(){
+		if (stepper.isPrev()) {
+			display(stepper.prevEvent());
+		}
+	}
+	
+	/*
+	 * Display of different event types
+	 */
+	
 
+	public void display(HashMap<String,String> item){
+		box.getChildren().clear();
+		switch (item.get("eventType")) {
+		case "mail":
+			displayMail(item);
+			break;
+		case "cost":
+			displayCost(item);
+			break;
+		case "price":
+			displayPrice(item);
+			break;
+		case "discontinue":
+			displayDiscontinue(item);
+			break;
+		default:
+			System.out.println("Something fucked up");
+			break;
+		}
+	}
+	
 	public void displayMail(HashMap<String, String> item) {
-//		logtype.setText("Transport Cost");
-//		Text a = new Text("To: " + item.get("to"));
-//		a.setFont(Font.font ("Gulim", 18));
-//		box.getChildren().add(a);
-//		a = new Text("From: " + item.get("from"));
-//		a.setFont(Font.font ("Gulim", 18));
-//		box.getChildren().add(a);		
-//		a = new Text("Comapny: " + item.get("company"));
-//		a.setFont(Font.font ("Gulim", 18));
-//		box.getChildren().add(a);
-//		a = new Text("Type: " + item.get("type"));
-//		a.setFont(Font.font ("Gulim", 18));
-//		box.getChildren().add(a);
-//		a = new Text("Priority: " + item.get("priority"));
-//		a.setFont(Font.font ("Gulim", 18));
-//		box.getChildren().add(a);
-//		a = new Text("Weight Cost: " + item.get("weightCost"));
-//		a.setFont(Font.font ("Gulim", 18));
-//		box.getChildren().add(a);
-//		a = new Text("Volume Cost: " + item.get("volumeCost"));
-//		a.setFont(Font.font ("Gulim", 18));
-//		box.getChildren().add(a);
-//		a = new Text("Max Weight: " + item.get("maxWeight"));
-//		a.setFont(Font.font ("Gulim", 18));
-//		box.getChildren().add(a);
-//		a = new Text("Max Volume: " + item.get("maxVolume"));
-//		a.setFont(Font.font ("Gulim", 18));
-//		box.getChildren().add(a);
-//		a = new Text("Duration: " + item.get("duration"));
-//		a.setFont(Font.font ("Gulim", 18));
-//		box.getChildren().add(a);
-//		a = new Text("Frequency: " + item.get("frequency"));
-//		a.setFont(Font.font ("Gulim", 18));
-//		box.getChildren().add(a);
-//		a = new Text("Day: " + item.get("day"));
-//		a.setFont(Font.font ("Gulim", 18));
-//		box.getChildren().add(a);
-//		a = new Text("Hour: " + item.get("hour"));
-//		a.setFont(Font.font ("Gulim", 18));
-//		box.getChildren().add(a);
-//				
-//		box.setSpacing(5);
+		logtype.setText("Transport Cost");
+		Text a = new Text("Origin: " + item.get("origin"));
+		box.getChildren().add(a);	
+		a = new Text("Destination: " + item.get("destination"));
+		box.getChildren().add(a);
+		a = new Text("Logged: " + item.get("logged"));
+		box.getChildren().add(a);
+		a = new Text("Weight: " + item.get("weight"));
+		box.getChildren().add(a);
+		a = new Text("Volume: " + item.get("volume"));
+		box.getChildren().add(a);
+		a = new Text("Priority: " + item.get("priority"));
+		box.getChildren().add(a);
+		a = new Text("Duration: " + item.get("duration"));
+		box.getChildren().add(a);
+		a = new Text(" ");
+		box.getChildren().add(a);
+		
+		a = new Text("Legs:");
+		box.getChildren().add(a);
+		
+		for(int i =0; i<Integer.parseInt(item.get("legnum")); i++){
+			int leg = i;
+			a = new Text("	To: " + item.get("leg " +leg +" to"));
+			box.getChildren().add(a);
+			a = new Text("	From: " + item.get("leg " +leg +" from"));
+			box.getChildren().add(a);
+			a = new Text("	Type: " + item.get("leg " +leg +" type"));
+			box.getChildren().add(a);
+			a = new Text("	Company: " + item.get("leg " +leg +" company"));
+			box.getChildren().add(a);
+			a = new Text("	Cost: " + item.get("leg " +leg +" cost"));
+			box.getChildren().add(a);
+			a = new Text("	Price: " + item.get("leg " +leg +" price"));
+			box.getChildren().add(a);
+			if (Integer.parseInt(item.get("legnum"))-1!=leg) {
+				a = new Text("	- - - - - -  ");
+				box.getChildren().add(a);
+			}
+		}
+		
+		
+				
+		box.setSpacing(5);
 	}
 
 	public void displayCost(HashMap<String, String> item) {
 		logtype.setText("Transport Cost");
 		Text a = new Text("To: " + item.get("to"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("From: " + item.get("from"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);		
 		a = new Text("Comapny: " + item.get("company"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("Type: " + item.get("type"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("Priority: " + item.get("priority"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("Weight Cost: " + item.get("weightCost"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("Volume Cost: " + item.get("volumeCost"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("Max Weight: " + item.get("maxWeight"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("Max Volume: " + item.get("maxVolume"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("Duration: " + item.get("duration"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("Frequency: " + item.get("frequency"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("Day: " + item.get("day"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("Hour: " + item.get("hour"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 				
 		box.setSpacing(5);
@@ -317,22 +312,16 @@ public class HistoryController implements Initializable {
 	public void displayPrice(HashMap<String, String> item) {
 		logtype.setText("Customer Price");
 		Text a = new Text("To: " + item.get("to"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("From: " + item.get("from"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);		
 		a = new Text("Type: " + item.get("type"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("Priority: " + item.get("priority"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("Weight Cost: " + item.get("weightCost"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("Volume Cost: " + item.get("volumeCost"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 						
 		box.setSpacing(5);
@@ -342,16 +331,12 @@ public class HistoryController implements Initializable {
 	public void displayDiscontinue(HashMap<String, String> item) {
 		logtype.setText("Discontinue Route");
 		Text a = new Text("To: " + item.get("to"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("From: " + item.get("from"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);		
 		a = new Text("Type: " + item.get("type"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 		a = new Text("Comapny: " + item.get("company"));
-		a.setFont(Font.font ("Gulim", 18));
 		box.getChildren().add(a);
 						
 		box.setSpacing(5);
