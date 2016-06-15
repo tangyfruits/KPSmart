@@ -23,7 +23,6 @@ public class HistoryController implements Initializable {
 	private Main main;
 	private LogStepper stepper;
 	
-	
 	public HistoryController(Main main) {
 		this.main = main;
 	}
@@ -33,11 +32,12 @@ public class HistoryController implements Initializable {
 	}
 	
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {}
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+	}
 	    
     /** NAV BAR BUTTONS 
      * @throws IOException */
-    
     @FXML
     private void historyButtonAction(ActionEvent event) throws IOException{
    	
@@ -51,7 +51,6 @@ public class HistoryController implements Initializable {
       	stage.setScene(scene);
     	stage.show();
     }
-    
     @FXML
     private void reportButtonAction(ActionEvent event) throws IOException{
     	FXMLLoader reports = new FXMLLoader(getClass().getResource("/views/reports.fxml"));
@@ -66,7 +65,6 @@ public class HistoryController implements Initializable {
     	cont.initData();
     	stage.show();
     }
-    
     @FXML
     private void logoutButtonAction(ActionEvent event) throws IOException{
     	main.logout();
@@ -82,10 +80,8 @@ public class HistoryController implements Initializable {
     }
     
 	/** LOG EVENT MENU ITEM */
-
 	@FXML
 	MenuButton logeventmenu;
-
 	@FXML
 	private void deliveryRequestAction(ActionEvent event) throws IOException {
 		FXMLLoader delivery = new FXMLLoader(getClass().getResource(
@@ -102,7 +98,6 @@ public class HistoryController implements Initializable {
 		stage.setScene(scene);
 		stage.show();
 	}
-
 	@FXML
 	private void discontinueTransportAction(ActionEvent event)
 			throws IOException {
@@ -120,7 +115,6 @@ public class HistoryController implements Initializable {
 		controller.initDropdown();
 		stage.show();
 	}
-
 	@FXML
 	private void transportRouteAction(ActionEvent event) throws IOException {
 		logeventmenu.setText("Transport Route");
@@ -138,7 +132,6 @@ public class HistoryController implements Initializable {
 		controller.timeMenu();
 		stage.show();
 	}
-
 	@FXML
 	private void priceUpdateAction(ActionEvent event) throws IOException {
 		logeventmenu.setText("Customer Price Update");

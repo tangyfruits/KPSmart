@@ -379,7 +379,6 @@ public class Main {
 		}
 		return location;
 	}
-	
 	// Routes
 	public ArrayList<RouteDisplay> getPossibleRoutes(String origin, String destination, double weight, double volume) {
 
@@ -455,7 +454,6 @@ public class Main {
 		}
 		return disconRoutes;
 	}
-	
 	// Customer Prices
 	public CustomerPrice getCustomerPrice(Location originLoc, Location destinationLoc, String origin,
 			String destination, String priority) {
@@ -490,7 +488,6 @@ public class Main {
 		}
 		return customerPrice;
 	}
-	
 	// Delivery Requests
 	public List<DeliveryRequest> getDeliveryRequests() {
 		return deliveryRequests;
@@ -512,6 +509,7 @@ public class Main {
 
 		return logDeliveryRequest(LocalDateTime.now(),origin,destination, legs, weight,volume,route.getPriority(),duration, false);
 	}
+
 	
 	// SETTERS + Adders
 	public void addLocation(Location location) {
