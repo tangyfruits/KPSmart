@@ -622,19 +622,97 @@ public class FormController implements Initializable {
 				|| !isDouble(mv) || wc.isEmpty() || !isDouble(wc)
 				|| vc.isEmpty() || !isDouble(vc) || d.isEmpty() || !isDouble(d)
 				|| f.isEmpty() || !isDouble(f) || day.isEmpty() || time == -1) {
-			hasError.set(true);
-			System.out.println(selectedOrigin);
-			System.out.println(selectedDest);
-			System.out.println(type);
-			System.out.println(company.getText());
-			System.out.println(mw);
-			System.out.println(mv);
-			System.out.println(wc);
-			System.out.println(vc);
-			System.out.println(d);
-			System.out.println(f);
-			System.out.println(day);
-			System.out.println(time);
+
+			if (selectedOrigin.isEmpty() && !originMenu.getText().equals("Other")) {
+				hasError.set(true);
+				originMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				originMenu.setStyle("-fx-background-color:  E9D5B9");
+			}
+			if (selectedOrigin.isEmpty() && originMenu.getText().equals("Other")) {
+				hasError.set(true);
+				otherOrigin.setStyle("-fx-control-inner-background: #ffff99");
+			} else{
+				otherOrigin.setStyle("-fx-control-inner-background: white");
+			}
+			if (selectedDest.isEmpty() && !destinationMenu.getText().equals("Other")) {
+				hasError.set(true);
+				destinationMenu.setStyle("-fx-background-color: #ffff99");
+			} else{
+				destinationMenu.setStyle("-fx-background-color: E9D5B9");
+
+			}
+			if (selectedDest.isEmpty() && destinationMenu.getText().equals("Other")) {
+				hasError.set(true);
+				otherDest.setStyle("-fx-control-inner-background: #ffff99");
+
+			} else{
+				otherDest.setStyle("-fx-control-inner-background: white");
+
+			}
+			if(type.isEmpty()){
+				typemenu.setStyle("-fx-background-color: #ffff99");
+			}else{
+				typemenu.setStyle("-fx-background-color: E9D5B9");
+			}
+			if(company.getText().isEmpty()){
+				company.setStyle("-fx-control-inner-background: #ffff99");
+			} else{
+				company.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (mw.isEmpty() || !isDouble(mw)) {
+				hasError.set(true);
+				maxweight.setStyle("-fx-control-inner-background: #ffff99");
+			} else{
+				maxweight.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (mv.isEmpty() || !isDouble(mv)) {
+				hasError.set(true);
+				 maxvolume.setStyle("-fx-control-inner-background: #ffff99");
+			} else {
+				 maxvolume.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (wc.isEmpty() || !isDouble(wc)) {
+				hasError.set(true);
+				weightcost.setStyle("-fx-control-inner-background: #ffff99");
+			} else{
+				weightcost.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (vc.isEmpty() || !isDouble(vc)) {
+				hasError.set(true);
+				 volumecost.setStyle("-fx-control-inner-background: #ffff99");
+			} else {
+				 volumecost.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (f.isEmpty() || !isDouble(f)) {
+				hasError.set(true);
+				frequency.setStyle("-fx-control-inner-background: #ffff99");
+			} else{
+				frequency.setStyle("-fx-control-inner-background: white");
+
+			}
+			if (d.isEmpty() || !isDouble(d)) {
+				hasError.set(true);
+				 duration.setStyle("-fx-control-inner-background: #ffff99");
+			} else {
+				 duration.setStyle("-fx-control-inner-background: white");
+
+			}	
+			if(day.isEmpty()){
+				dayMenu.setStyle("-fx-background-color: #ffff99");
+			}else{
+				dayMenu.setStyle("-fx-background-color: E9D5B9");
+			}
+			if(time == -1){
+				timeMenu.setStyle("-fx-background-color: #ffff99");
+			}else{
+				timeMenu.setStyle("-fx-background-color: E9D5B9");
+			}
 		} else {
 			hasError.set(false);
 		}
