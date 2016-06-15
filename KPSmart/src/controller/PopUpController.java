@@ -41,7 +41,7 @@ public class PopUpController implements Initializable {
 	private TextField volumePrice;
 	
 	@FXML
-	private void doPopUpShit(){
+	private void popUpSubmit(){
 		String w = weightPrice.getText();
 		String v = volumePrice.getText();
 		
