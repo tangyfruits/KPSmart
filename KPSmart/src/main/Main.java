@@ -181,7 +181,7 @@ public class Main {
 		}
 		
 		price = getCustomerPrice(originLoc, destinationLoc, origin, dest, prior);
-		double cp = price.getWeightCost()*weight;//DO THEY PAY VOL OR WEIGHT
+		double cp = price.getWeightCost()*weight + price.getVolumeCost()*volume;
 		double rp = 0.0;
 		
 		for (Route r: originLoc.getRoutes()){
