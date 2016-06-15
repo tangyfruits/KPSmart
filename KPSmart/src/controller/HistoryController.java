@@ -128,6 +128,7 @@ public class HistoryController implements Initializable {
 		stage.setScene(scene);
 		FormController controller = route.getController();
 		controller.initDropdownWithOther();
+		controller.timeMenu();
 		stage.show();
 	}
 

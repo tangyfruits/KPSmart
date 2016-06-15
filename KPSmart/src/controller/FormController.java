@@ -271,6 +271,7 @@ public class FormController implements Initializable {
 		stage.setScene(scene);
 		FormController controller = route.getController();
 		controller.initDropdownWithOther();
+		controller.timeMenu();
 		stage.show();
 	}
 
@@ -409,184 +410,51 @@ public class FormController implements Initializable {
 	}
 
 	/** Time Menu */
-	@FXML
-	private CheckMenuItem zero, one, two, three, four, five, six, seven, eight,
-			nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen,
-			seventeen, eighteen, nineteen, twenty, twentyone, twentytwo,
-			twentythree, twentyfour;
+	
 	@FXML
 	private MenuButton timeMenu;
 
 	private int time = -1;
 
-	@FXML
-	private void zeroAction(ActionEvent event) {
-		time = 0;
-		timeMenu.setText("00");
-	}
+	public void timeMenu() {
+		EventHandler<ActionEvent> timeAction = setTime();
 
-	@FXML
-	private void oneAction(ActionEvent event) {
-		time = 1;
-		timeMenu.setText("01");
-	}
+		MenuItem a = new MenuItem("12am");
+		a.setUserData(0);
+		a.setOnAction(timeAction);
+		timeMenu.getItems().add(a);
 
-	@FXML
-	private void twoAction(ActionEvent event) {
-		time = 2;
-		timeMenu.setText("02");
-	}
+		for (int i = 1; i < 12; i++) {
+			MenuItem m = new MenuItem(i + "am");
+			m.setUserData(i);
+			m.setOnAction(timeAction);
+			timeMenu.getItems().add(m);
+		}
 
-	@FXML
-	private void threeAction(ActionEvent event) {
-		time = 3;
-		timeMenu.setText("03");
-	}
+		MenuItem b = new MenuItem("12pm");
+		b.setUserData(12);
+		b.setOnAction(timeAction);
+		timeMenu.getItems().add(b);
 
-	@FXML
-	private void fourAction(ActionEvent event) {
-		time = 4;
-		timeMenu.setText("04");
+		for (int i = 1; i < 12; i++) {
+			MenuItem m = new MenuItem(i + "pm");
+			m.setUserData(i + 12);
+			m.setOnAction(timeAction);
+			timeMenu.getItems().add(m);
+		}
 	}
+	
+	private EventHandler<ActionEvent> setTime() {
+		return new EventHandler<ActionEvent>() {
 
-	@FXML
-	private void fiveAction(ActionEvent event) {
-		time = 5;
-		timeMenu.setText("05");
-		;
-	}
-
-	@FXML
-	private void sixAction(ActionEvent event) {
-		time = 6;
-		timeMenu.setText("06");
-		;
-	}
-
-	@FXML
-	private void sevenAction(ActionEvent event) {
-		time = 7;
-		timeMenu.setText("07");
-		;
-	}
-
-	@FXML
-	private void eightAction(ActionEvent event) {
-		time = 8;
-		timeMenu.setText("08");
-		;
-	}
-
-	@FXML
-	private void nineAction(ActionEvent event) {
-		time = 9;
-		timeMenu.setText("09");
-		;
-	}
-
-	@FXML
-	private void tenAction(ActionEvent event) {
-		time = 10;
-		timeMenu.setText("10");
-		;
-	}
-
-	@FXML
-	private void elevenAction(ActionEvent event) {
-		time = 11;
-		timeMenu.setText("11");
-		;
-	}
-
-	@FXML
-	private void twelveAction(ActionEvent event) {
-		time = 12;
-		timeMenu.setText("12");
-		;
-	}
-
-	@FXML
-	private void thirteenAction(ActionEvent event) {
-		time = 13;
-		timeMenu.setText("13");
-		;
-	}
-
-	@FXML
-	private void fourteenAction(ActionEvent event) {
-		time = 14;
-		timeMenu.setText("14");
-		;
-	}
-
-	@FXML
-	private void fifteenAction(ActionEvent event) {
-		time = 15;
-		timeMenu.setText("15");
-		;
-	}
-
-	@FXML
-	private void sixteenAction(ActionEvent event) {
-		time = 16;
-		timeMenu.setText("16");
-		;
-	}
-
-	@FXML
-	private void seventeenAction(ActionEvent event) {
-		time = 17;
-		timeMenu.setText("17");
-		;
-	}
-
-	@FXML
-	private void eighteenAction(ActionEvent event) {
-		time = 18;
-		timeMenu.setText("18");
-		;
-	}
-
-	@FXML
-	private void nineteenAction(ActionEvent event) {
-		time = 19;
-		timeMenu.setText("19");
-		;
-	}
-
-	@FXML
-	private void twentyAction(ActionEvent event) {
-		time = 20;
-		timeMenu.setText("20");
-		;
-	}
-
-	@FXML
-	private void twentyoneAction(ActionEvent event) {
-		time = 21;
-		timeMenu.setText("21");
-		;
-	}
-
-	@FXML
-	private void twentytwoAction(ActionEvent event) {
-		time = 22;
-		timeMenu.setText("22");
-		;
-	}
-
-	@FXML
-	private void twentythreeAction(ActionEvent event) {
-		time = 23;
-		timeMenu.setText("23");
-		;
-	}
-
-	@FXML
-	private void twentyfourAction(ActionEvent event) {
-		time = 24;
-		timeMenu.setText("24");
-		;
+			public void handle(ActionEvent event) {
+				MenuItem mItem = (MenuItem) event.getSource();
+				String t = mItem.getText();
+				time = (int) mItem.getUserData();
+				timeMenu.setText(t);
+				System.out.println(mItem.getUserData().toString());
+			}
+		};
 	}
 
 	@FXML

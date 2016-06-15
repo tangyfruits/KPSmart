@@ -167,33 +167,6 @@
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
-               <items>
-                  <CheckMenuItem fx:id="zero" mnemonicParsing="false" onAction="#zeroAction" text="00" />
-                  <CheckMenuItem fx:id="one" mnemonicParsing="false" onAction="#oneAction" text="01" />
-                  <CheckMenuItem fx:id="two" mnemonicParsing="false" onAction="#twoAction" text="02" />
-                  <CheckMenuItem fx:id="three" mnemonicParsing="false" onAction="#threeAction" text="03" />
-                  <CheckMenuItem fx:id="four" mnemonicParsing="false" onAction="#fourAction" text="04" />
-                  <CheckMenuItem fx:id="five" mnemonicParsing="false" onAction="#fiveAction" text="05" />
-                  <CheckMenuItem fx:id="six" mnemonicParsing="false" onAction="#sixAction" text="06" />
-                  <CheckMenuItem fx:id="seven" mnemonicParsing="false" onAction="#sevenAction" text="07" />
-                  <CheckMenuItem fx:id="eight" mnemonicParsing="false" onAction="#eightAction" text="08" />
-                  <CheckMenuItem fx:id="nine" mnemonicParsing="false" onAction="#nineAction" text="09" />
-                  <CheckMenuItem fx:id="ten" mnemonicParsing="false" onAction="#tenAction" text="10" />
-                  <CheckMenuItem fx:id="eleven" mnemonicParsing="false" onAction="#elevenAction" text="11" />
-                  <CheckMenuItem fx:id="twelve" mnemonicParsing="false" onAction="#twelveAction" text="12" />
-                  <CheckMenuItem fx:id="thirteen" mnemonicParsing="false" onAction="#thirteenAction" text="13" />
-                  <CheckMenuItem fx:id="fourteen" mnemonicParsing="false" onAction="#fourteenAction" text="14" />
-                  <CheckMenuItem fx:id="fifteen" mnemonicParsing="false" onAction="#fifteenAction" text="15" />
-                  <CheckMenuItem fx:id="sixteen" mnemonicParsing="false" onAction="#sixteenAction" text="16" />
-                  <CheckMenuItem fx:id="seventeen" mnemonicParsing="false" onAction="#seventeenAction" text="17" />
-                  <CheckMenuItem fx:id="eighteen" mnemonicParsing="false" onAction="#eighteenAction" text="18" />
-                  <CheckMenuItem fx:id="nineteen" mnemonicParsing="false" onAction="#nineteenAction" text="19" />
-                  <CheckMenuItem fx:id="twenty" mnemonicParsing="false" onAction="#twentyAction" text="20" />
-                  <CheckMenuItem fx:id="twentyone" mnemonicParsing="false" onAction="#twentyoneAction" text="21" />
-                  <CheckMenuItem fx:id="twentytwo" mnemonicParsing="false" onAction="#twentytwoAction" text="22" />
-                  <CheckMenuItem fx:id="twentythree" mnemonicParsing="false" onAction="#twentythreeAction" text="23" />
-                  <CheckMenuItem fx:id="twentyfour" mnemonicParsing="false" onAction="#twentyfourAction" text="24" />
-               </items>
             </MenuButton>
             <TextField fx:id="weightcost" layoutX="451.0" layoutY="406.0" prefHeight="23.0" prefWidth="188.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <Text layoutX="355.0" layoutY="392.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Company:" GridPane.columnIndex="2">
