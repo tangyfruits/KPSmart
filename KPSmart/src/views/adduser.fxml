@@ -68,10 +68,10 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <PasswordField layoutX="162.0" layoutY="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <PasswordField fx:id="password" layoutX="162.0" layoutY="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Text layoutX="92.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username: " />
             <Text layoutX="92.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password: " GridPane.rowIndex="1" />
-            <TextField layoutX="162.0" layoutY="156.0" GridPane.columnIndex="1" />
+            <TextField fx:id="username" layoutX="162.0" layoutY="156.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <GridPane hgap="20.0" layoutX="190.0" layoutY="237.0" prefHeight="18.0" prefWidth="240.0">
@@ -89,7 +89,7 @@
             <RadioButton layoutX="345.0" layoutY="238.0" mnemonicParsing="false" text="No" GridPane.columnIndex="2" />
          </children>
       </GridPane>
-      <Button id="submit" layoutX="300.0" layoutY="282.0" mnemonicParsing="false" style="-fx-background-color: E9D5B9;" text="Add User" />
+      <Button id="submit" fx:id="addUserButton" layoutX="300.0" layoutY="282.0" mnemonicParsing="false" onAction="#addUserButtonAction" style="-fx-background-color: E9D5B9;" text="Add User" />
    </children>
    <stylesheets>
 	<URL value="@kps.css" />
