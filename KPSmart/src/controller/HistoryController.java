@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +33,6 @@ public class HistoryController implements Initializable {
 	@FXML
 	private VBox box;
 	
-
 	public HistoryController(Main main) {
 		this.main = main;
 		stepper = new LogStepper(new File("KPSmart/src/tests/test_input.xml"));
@@ -177,6 +178,10 @@ public class HistoryController implements Initializable {
 	@FXML
 	private Button previous, next, first, last;
 	
+	private BooleanProperty hasNext = new SimpleBooleanProperty(false);
+	private BooleanProperty hasPrev = new SimpleBooleanProperty(false);
+
+	
 	@FXML
 	private Label logtype;
 	
@@ -210,6 +215,22 @@ public class HistoryController implements Initializable {
 	
 
 	public void display(HashMap<String,String> item){
+		next.disableProperty().bind(hasNext);
+		last.disableProperty().bind(hasNext);
+		previous.disableProperty().bind(hasPrev);
+		first.disableProperty().bind(hasPrev);
+		if(stepper.isNext()){
+			hasNext.set(false);
+		}
+		else{
+			hasNext.set(true);
+		}
+		if(stepper.isPrev()){
+			hasPrev.set(false);
+		}
+		else{
+			hasPrev.set(true);
+		}
 		box.getChildren().clear();
 		switch (item.get("eventType")) {
 		case "mail":
