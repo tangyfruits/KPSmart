@@ -39,65 +39,105 @@ public class HistoryController implements Initializable {
 	}
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-	}
+	public void initialize(URL arg0, ResourceBundle arg1) {	}
 
 	public void initData() {
 		HashMap<String, String> item = stepper.latestEvent();
 		display(item);
 	}
+	    
+    /** NAV BAR BUTTONS 
+     * @throws IOException */
+    
+    @FXML
+    private void historyButtonAction(ActionEvent event) throws IOException{
+   	
+    	FXMLLoader history = new FXMLLoader(getClass().getResource("/views/readlog.fxml"));
+    	history.setController(new HistoryController(main));
+    	Parent historyGUI = history.load();
+    	
+    	
+    	Stage stage = (Stage) logeventmenu.getScene().getWindow();
+    	Scene scene = new Scene(historyGUI);
+      	stage.setScene(scene);
+    	stage.show();
+    }
+    
+    @FXML
+    private void reportButtonAction(ActionEvent event) throws IOException{
+    	FXMLLoader reports = new FXMLLoader(getClass().getResource("/views/reports.fxml"));
+    	reports.setController(new ReportsController(main));
+    	Parent reportsGUI = reports.load();
+    	
+    	
+    	Stage stage = (Stage) logeventmenu.getScene().getWindow();
+    	Scene scene = new Scene(reportsGUI);
+      	stage.setScene(scene);
+      	ReportsController cont = reports.getController();
+    	cont.initData();
+    	stage.show();
+    }
+    
+    @FXML
+    private void logoutButtonAction(ActionEvent event) throws IOException{
+    	main.logout();
+    	FXMLLoader login = new FXMLLoader(getClass().getResource("/views/login.fxml"));
+    	login.setController(new LoginController(main));
+    	Parent loginGUI = login.load();
+    	
+    	
+    	Stage stage = (Stage) logeventmenu.getScene().getWindow();
+    	Scene scene = new Scene(loginGUI);
+      	stage.setScene(scene);
+    	stage.show();
+    }
+	/** ACCOUNTS MENU ITEM */
 
-	/**
-	 * NAV BAR BUTTONS
-	 * 
-	 * @throws IOException
-	 */
 	@FXML
-	private void historyButtonAction(ActionEvent event) throws IOException {
+	MenuButton accounts;
 
-		FXMLLoader history = new FXMLLoader(getClass().getResource(
-				"/views/readlog.fxml"));
-		history.setController(new HistoryController(main));
-		Parent historyGUI = history.load();
+	@FXML
+	private void addUserAction(ActionEvent event) throws IOException {
+		FXMLLoader addUser = new FXMLLoader(getClass().getResource(
+				"/views/adduser.fxml"));
+		addUser.setController(new AccountsController(main));
+		Parent addUserGUI = addUser.load();
 
-		Stage stage = (Stage) logeventmenu.getScene().getWindow();
-		Scene scene = new Scene(historyGUI);
+		Stage stage = (Stage) accounts.getScene().getWindow();
+		Scene scene = new Scene(addUserGUI);
 		stage.setScene(scene);
-		HistoryController cont = history.getController();
-      	cont.initData();
 		stage.show();
 	}
 
 	@FXML
-	private void reportButtonAction(ActionEvent event) throws IOException {
-		FXMLLoader reports = new FXMLLoader(getClass().getResource(
-				"/views/reports.fxml"));
-		reports.setController(new ReportsController(main));
-		Parent reportsGUI = reports.load();
+	private void editUserAction(ActionEvent event)
+			throws IOException {
+		FXMLLoader editUser = new FXMLLoader(getClass().getResource(
+				"/views/edituser.fxml"));
+		editUser.setController(new AccountsController(main));
+		Parent editUserGUI = editUser.load();
 
-		Stage stage = (Stage) logeventmenu.getScene().getWindow();
-		Scene scene = new Scene(reportsGUI);
+		Stage stage = (Stage) accounts.getScene().getWindow();
+		Scene scene = new Scene(editUserGUI);
 		stage.setScene(scene);
-		ReportsController cont = reports.getController();
-		cont.initData();
 		stage.show();
 	}
 
 	@FXML
-	private void logoutButtonAction(ActionEvent event) throws IOException {
-		main.logout();
-		FXMLLoader login = new FXMLLoader(getClass().getResource(
-				"/views/login.fxml"));
-		login.setController(new LoginController(main));
-		Parent loginGUI = login.load();
+	private void changePassAction(ActionEvent event) throws IOException {
+		FXMLLoader changePass = new FXMLLoader(getClass().getResource(
+				"/views/changepass.fxml"));
+		changePass.setController(new AccountsController(main));
+		Parent changePassGUI = changePass.load();
 
-		Stage stage = (Stage) logeventmenu.getScene().getWindow();
-		Scene scene = new Scene(loginGUI);
+		Stage stage = (Stage) accounts.getScene().getWindow();
+		Scene scene = new Scene(changePassGUI);
 		stage.setScene(scene);
 		stage.show();
 	}
-
+    
 	/** LOG EVENT MENU ITEM */
+
 	@FXML
 	MenuButton logeventmenu;
 

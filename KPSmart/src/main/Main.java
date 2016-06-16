@@ -28,7 +28,8 @@ public class Main {
 	private HashMap<TuplePriority, ArrayList<Integer>> amountOfMailDeliveryTimes;
 	private HashMap<Tuple, ArrayList<Double>> amountOfMail;
 	private ArrayList<DeliveryRequest> deliveryRequests;
-	
+	private HashMap<Tuple,ArrayList<Double>> criticalRoutes;
+
 	private LogWriter writer;
 	private File file;
 
@@ -65,16 +66,18 @@ public class Main {
 		// u.isManager());
 		// }
 		amountOfMailDeliveryTimes = new HashMap<>();
+
+		criticalRoutes = new HashMap<>();
 		amountOfMail = new HashMap<>();
-		
-		
-		//TODO fix file - will be listed in config file with user accounts etc!!
+
+		// TODO fix file - will be listed in config file with user accounts
+		// etc!!
 		try {
 			writer = new LogWriter(new File("abc.xml"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		// read from encrypted file and add them in!
 
 		// read from encrypted file,create User objects and add them in!
@@ -84,8 +87,7 @@ public class Main {
 		// want to look into apache shiro tbh but everyone will have to install
 		// maven. Apache shiro is a really good framework for logins
 	}
-	
-	
+
 	// USER ACCOUNT METHODS
 	public boolean login(String username, String password) {
 		for (User u : accounts) {
@@ -124,17 +126,36 @@ public class Main {
 		return b;
 	}
 	public boolean delete() {
+		boolean b = false;
+		System.out.println(accounts.size());
 		for (User u : accounts) {
 			if (u.getUsername().equals(currentUser.getUsername())
 					&& u.getPassword().equals(currentUser.getPassword())) {
 				accounts.remove(u);
 				logout();
-				return true;
+				b = true;
+				break;
 			}
 		}
-		return false;
+		try {
+			file.delete();
+			file.createNewFile();
+			FileWriter writer = new FileWriter("accounts.txt", true);
+			for (int i = 0; i < accounts.size() - 1; i++) {
+				User u = accounts.get(i);
+				writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
+			}
+			User u = accounts.get(accounts.size() - 1);
+			writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()));
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return b;
 
 	}
+
 	public void add(User u) {
 		try {
 			FileWriter writer = new FileWriter("accounts.txt", true);
@@ -154,9 +175,6 @@ public class Main {
 	public User getCurrentUser() {
 		return currentUser;
 	}
-	public ArrayList<User> getAccounts() {
-		return accounts;
-	}
 	public void addUserToList(User u) {
 		accounts.add(u);
 	}
@@ -164,12 +182,15 @@ public class Main {
 		this.currentUser = currentUser;
 	}
 
-	
+	public ArrayList<User> getAccounts() {
+		return accounts;
+	}
+
 	// LOGGERS
-	public DeliveryRequest logDeliveryRequest(LocalDateTime logTime, String origin,
-			String destination, ArrayList<Leg> legs, double weight,
-			double volume, String priority, int duration, boolean initial) {
-		
+	public DeliveryRequest logDeliveryRequest(LocalDateTime logTime, String origin, String destination,
+			ArrayList<Leg> legs, double weight, double volume, String priority, int duration, boolean initial) {
+
+
 		// find the locations matching the given strings
 		Location originLoc = getLocation(origin);
 		Location destinationLoc = getLocation(destination);
@@ -183,26 +204,26 @@ public class Main {
 		addToAmountOfMail(origin, destination, weight, volume);
 		deliveryRequests.add(request);
 
-//		if (!initial) {
-//			//log in file and add to reports
-//			try {
-//				writer.writeDeliveryRequest(request);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-		//get total cost and rev
+		// if (!initial) {
+		// //log in file and add to reports
+		// try {
+		// writer.writeDeliveryRequest(request);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// }
+		// get total cost and rev
 		double cost = 0;
 		double price = 0;
-		for(Leg l: legs){
+		for (Leg l : legs) {
 			cost += l.getCost();
 			price += l.getPrice();
 		}
-		
+
 		addTotalExp(cost);
 		addTotalRev(price);
 		addEvent();
-		
+
 		return request;
 
 	}
@@ -263,7 +284,7 @@ public class Main {
 			originLoc.addRoute(route);
 		}
 
-
+	/* Log Customer Price */
 		//log in file and add to reports
 		addEvent();
 //		if (!initial) {
@@ -301,15 +322,15 @@ public class Main {
 				c.setVolumeCost(volumeCost);
 				c.setWeightCost(weightCost);
 
-				//log in file and add to reports
+				// log in file and add to reports
 				addEvent();
-//				if (!initial) {
-//					try {
-//						writer.writeCustomerPrice(c);
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//				}
+				// if (!initial) {
+				// try {
+				// writer.writeCustomerPrice(c);
+				// } catch (Exception e) {
+				// e.printStackTrace();
+				// }
+				// }
 				return c;
 			}
 		}
@@ -319,51 +340,64 @@ public class Main {
 		price = new CustomerPrice(originLoc, destinationLoc, priority, weightCost, volumeCost);
 		originLoc.addPrice(price);
 
-		//log in file and add to reports
+		// log in file and add to reports
 		addEvent();
-//		if (!initial) {
-//			try {
-//				writer.writeCustomerPrice(price);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-		
+		// if (!initial) {
+		// try {
+		// writer.writeCustomerPrice(price);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// }
+
 		return price;
 	}
-	public DiscontinueRoute discontinueTransportRoute(String origin, String destination, String company, String type, boolean initial) {
 
-		Location originLoc = getLocation(origin);
-		Location destinationLoc = getLocation(destination);
-
-		Route toCancel = null;
-		// find the matching route out of origin
-		for (Route r : originLoc.getRoutes()) {
-			if (r.getCompany().equals(company) && r.getDestination().getName().equals(destination)
-					&& r.getType().equals(type)) {
-				toCancel = r;
+	public void addToCriticalRoutes(String origin,String dest, String prior,double weight,double volume){
+		Tuple odp = new Tuple(origin, dest, prior);
+		ArrayList<Double> costPrice = new ArrayList<>();
+		
+		Location originLoc = null;
+		Location destinationLoc = null;
+		CustomerPrice price = null;
+		for (int i = 0; i < locations.size(); i++) {
+			if (locations.get(i).getName().equals(origin)) {
+				originLoc = locations.get(i);
+			}
+			if (locations.get(i).getName().equals(dest)) {
+				destinationLoc = locations.get(i);
 			}
 		}
-		
-		DiscontinueRoute disconRoute = new DiscontinueRoute(originLoc, destinationLoc, company, type);
-		if (toCancel != null) {
-			originLoc.removeRoute(toCancel);
-//			if (!initial) {
-//				try {
-//					writer.writeDiscontinue(disconRoute);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-			addEvent();
-			return disconRoute;
-		} else {
-			// TODO display error
-			return null;
+		if (originLoc == null) {
+			originLoc = new Location(origin);
+			addLocation(originLoc);
+		}
+		if (destinationLoc == null) {
+			destinationLoc = new Location(dest);
+			addLocation(destinationLoc);
 		}
 		
+		price = getCustomerPrice(originLoc, destinationLoc, origin, dest, prior);
+		double cp = price.getWeightCost()*weight + price.getVolumeCost()*volume;
+		double rp = 0.0;
+		
+		for (Route r: originLoc.getRoutes()){
+			if (r.getOrigin().equals(originLoc)&&r.getDestination().equals(destinationLoc)){//is the same route
+				rp = r.getWeightCost();//find trans cost
+			}
+		}
+		costPrice.add(cp); //1st element: price
+		costPrice.add(rp); //2nd element: cost
+		
+		if (rp>cp){	
+			criticalRoutes.put(odp, costPrice);
+		}
 	}
 	
+	public HashMap<Tuple, ArrayList<Double>> getCriticalRoutes(){
+		return criticalRoutes;
+	}
+
 	
 	// GETTERS
 	// Locations
@@ -379,6 +413,43 @@ public class Main {
 		}
 		return location;
 	}
+
+	
+	
+	public DiscontinueRoute discontinueTransportRoute(String origin, String destination, String company, String type,
+			boolean initial) {
+
+		Location originLoc = getLocation(origin);
+		Location destinationLoc = getLocation(destination);
+
+		Route toCancel = null;
+		// find the matching route out of origin
+		for (Route r : originLoc.getRoutes()) {
+			if (r.getCompany().equals(company) && r.getDestination().getName().equals(destination)
+					&& r.getType().equals(type)) {
+				toCancel = r;
+			}
+		}
+
+		DiscontinueRoute disconRoute = new DiscontinueRoute(originLoc, destinationLoc, company, type);
+		if (toCancel != null) {
+			originLoc.removeRoute(toCancel);
+			// if (!initial) {
+			// try {
+			// writer.writeDiscontinue(disconRoute);
+			// } catch (Exception e) {
+			// e.printStackTrace();
+			// }
+			// }
+			addEvent();
+			return disconRoute;
+		} else {
+			// TODO display error
+			return null;
+		}
+
+	}
+
 	// Routes
 	public ArrayList<RouteDisplay> getPossibleRoutes(String origin, String destination, double weight, double volume) {
 
@@ -445,10 +516,10 @@ public class Main {
 	}
 	public ArrayList<Route> getRoutes(String origin, String destination){
 		Location originLoc = getLocation(origin);
-		
+
 		ArrayList<Route> disconRoutes = new ArrayList<>();
-		for(Route r:originLoc.getRoutes()){
-			if(r.getDestination().getName().equals(destination)){
+		for (Route r : originLoc.getRoutes()) {
+			if (r.getDestination().getName().equals(destination)) {
 				disconRoutes.add(r);
 			}
 		}
@@ -470,21 +541,7 @@ public class Main {
 		// if there's no customer price, request one
 		// TODO replace console input with GUI
 		if (customerPrice == null) {
-
-			double custWeightCost = -1;
-			double custVolCost = -1;
-			BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-			System.out.print("Enter weightCost");
-			try {
-				custWeightCost = Double.parseDouble(input.readLine());
-			} catch (IOException e) {
-			}
-			System.out.print("Enter volumeCost");
-			try {
-				custVolCost = Double.parseDouble(input.readLine());
-			} catch (IOException e) {
-			}
-			logCustomerPriceUpdate(origin, destination, priority, custWeightCost, custVolCost, false);
+			return null;
 		}
 		return customerPrice;
 	}
@@ -492,9 +549,9 @@ public class Main {
 	public List<DeliveryRequest> getDeliveryRequests() {
 		return deliveryRequests;
 	}
+	
 	public DeliveryRequest getDeliveryDetails(String origin, String destination, double weight, double volume,
 			RouteDisplay route) {
-
 		// get duration
 		int duration = route.getTotalDuration(LocalDateTime.now());
 	
@@ -561,7 +618,7 @@ public class Main {
 					+ " Total Volume:" + amountList.get(1) + " Total Instances: " + amountList.get(2));
 		}
 	}
-
+	
 	// Average Delivery Times
 	public void addToAverageDeliveryTimes(String origin, String destination, int duration, String priority) {
 		boolean success = false;
@@ -592,7 +649,6 @@ public class Main {
 		}
 		return -1;
 	}
-	
 	// Little Reports
 	public void addTotalRev(double amount) {
 		totalRev += amount;
@@ -615,7 +671,6 @@ public class Main {
 		System.out.println("Total Events: " + events);
 		return events;
 	}
-
 
 	public File getFile() {
 		return file;

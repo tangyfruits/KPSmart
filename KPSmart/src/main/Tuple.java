@@ -1,6 +1,84 @@
 package main;
 
 public class Tuple {
+	/**
+	 * A simple class to represent a tuple with Origin and Destination.
+	 * 
+	 * @author Donald Tang
+	 * Edited by Pri Bhula
+	 */
+
+	private String origin;
+	private String destination;
+	private String priority;
+
+	/**
+	 * Constructor
+	 * 
+	 * @param origin
+	 * @param destination
+	 */
+
+	public Tuple(String origin, String destination) {
+		this.origin = origin;
+		this.destination = destination;
+	}
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param origin
+	 * @param destination
+	 * @param priority
+	 */
+
+	public Tuple(String origin, String destination,String priority) {
+		this.origin = origin;
+		this.destination = destination;
+		this.priority = priority;
+	}
+
+	/**
+	 * Getter
+	 * 
+	 * @return name
+	 */
+	public String getOrigin() {
+		return origin;
+	}
+
+	/**
+	 * Getter
+	 * 
+	 * @return name
+	 */
+	public String getDestination() {
+		return destination;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param origin
+	 */
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param destination
+	 */
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -10,6 +88,11 @@ public class Tuple {
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -30,29 +113,5 @@ public class Tuple {
 		} else if (!origin.equals(other.origin))
 			return false;
 		return true;
-	}
-
-	private String origin;
-	private String destination;
-
-	public Tuple(String o, String d) {
-		this.origin = o;
-		this.destination = d;
-	}
-
-	public String getOrigin() {
-		return origin;
-	}
-
-	public String getDestination() {
-		return destination;
-	}
-
-	public void setOrigin(String origin) {
-		this.origin = origin;
-	}
-
-	public void setDestination(String destination) {
-		this.destination = destination;
 	}
 }
