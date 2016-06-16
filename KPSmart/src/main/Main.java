@@ -413,6 +413,7 @@ public class Main {
 		}
 		return location;
 	}
+
 	
 	
 	public DiscontinueRoute discontinueTransportRoute(String origin, String destination, String company, String type,
@@ -565,6 +566,7 @@ public class Main {
 
 		return logDeliveryRequest(LocalDateTime.now(),origin,destination, legs, weight,volume,route.getPriority(),duration, false);
 	}
+
 	
 	// SETTERS + Adders
 	public void addLocation(Location location) {
@@ -669,4 +671,14 @@ public class Main {
 		System.out.println("Total Events: " + events);
 		return events;
 	}
+
+	public File getFile() {
+		return file;
+	}
+
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
 }

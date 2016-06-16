@@ -1,0 +1,81 @@
+@font-face {
+    font-family: 'Gulim';
+    src: url('Gulim.ttf');
+}
+
+* {
+    -fx-font-family: "Gulim";
+}
+
+.button { 
+	-fx-focus-color: transparent; 
+	-fx-faint-focus-color: transparent;
+}
+
+.root { 
+	-fx-focus-color: transparent; 
+	-fx-faint-focus-color: transparent;
+}
+
+#login, #submit{
+    -fx-text-fill: #655a5a;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #FFF3E0;
+}
+
+#reportinfo{
+	-fx-font-size: 15px;
+}
+
+.menu-item:focused {
+    -fx-background-color: #655a5a;
+}
+
+#scroll .thumb{
+	-fx-background-color: transparent;
+}
+
+.scroll-pane {
+  -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical {
+  -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal {
+  -fx-background-color: transparent;
+}
+
+.scroll-pane .corner{
+	-fx-background-color: transparent;
+}
+
+#page {
+	-fx-font-size:15px;
+}
+#routes{
+	-fx-font-size: 16px;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+	-fx-shape: " ";
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #E9D5B9;
+	-fx-background-insets: 5, 0, 0;
+	-fx-background-radius: 2em;
+}
+
+.scroll-bar:horizontal .thumb{
+	-fx-background-color: transparent;
+}

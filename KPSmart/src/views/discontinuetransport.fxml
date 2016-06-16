@@ -103,7 +103,7 @@
       </Button>
        <ScrollPane id="scroll" fx:id="scrollpane" layoutX="275.0" layoutY="279.0" prefHeight="179.0" prefViewportHeight="200.0" prefViewportWidth="317.0" prefWidth="207.0" style="visibility: false; -fx-background-color: transparent;">
          <content>
-            <VBox id="routes" fx:id="discRoutes" layoutX="197.0" layoutY="275.0" prefHeight="180.0" prefWidth="208.0" style="-fx-background-color: FFF3E0; visibility: false;" />
+            <VBox id="routes" fx:id="discRoutes" layoutX="197.0" layoutY="275.0" prefHeight="163.0" prefWidth="208.0" style="-fx-background-color: FFF3E0; visibility: false;" />
          </content>
       </ScrollPane>
       <Button id="submit" fx:id="changeSelection" layoutX="278.0" layoutY="219.0" mnemonicParsing="false" onAction="#reSelect" style="-fx-background-color: E9D5B9; visibility: false;" text="Change Selection">

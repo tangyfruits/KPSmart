@@ -515,6 +515,5 @@ public class LogReader {
 		default:
 			System.out.println("Shit's fuct yo.");
 		}
-	}
-	
+	}	
 }

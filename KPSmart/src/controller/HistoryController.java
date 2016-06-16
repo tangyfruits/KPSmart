@@ -1,9 +1,13 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,20 +17,34 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.LogStepper;
 import main.Main;
 
 public class HistoryController implements Initializable {
-	
-	private Main main;
 
-	public HistoryController(Main main){
-		this.main = main;
-	}
+	private Main main;
+	private LogStepper stepper;
 	
+	private HashMap<String,String> map;
+	
+	@FXML
+	private VBox box;
+	
+	public HistoryController(Main main) {
+		this.main = main;
+		stepper = new LogStepper(new File("KPSmart/src/tests/test_input.xml"));
+	}
+
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {}
+	public void initialize(URL arg0, ResourceBundle arg1) {	}
+
+	public void initData() {
+		HashMap<String, String> item = stepper.latestEvent();
+		display(item);
+	}
 	    
     /** NAV BAR BUTTONS 
      * @throws IOException */
@@ -132,10 +150,10 @@ public class HistoryController implements Initializable {
 
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
 		Scene scene = new Scene(deliveryGUI);
-		
+
 		FormController controller = delivery.getController();
 		controller.initDropdown();
-		
+
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -192,110 +210,196 @@ public class HistoryController implements Initializable {
 		controller.initDropdownWithOther();
 		stage.show();
 	}
-    
-    private boolean firstview = true;
 
+	/*
+	 * Elements
+	 */
+	
 	@FXML
-	private Button previous, next, readLog;
-	@FXML
-	private Text text1, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11, text12, text13, text14,
-			text15, text16, text17, text18, text19, text20, text21, text22, text23, text24, text25, text26, text27,
-			text28, text29, text30, text31, text32, text33, text34;
+	private Button previous, next, first, last;
+	
+	private BooleanProperty hasNext = new SimpleBooleanProperty(false);
+	private BooleanProperty hasPrev = new SimpleBooleanProperty(false);
+
+	
 	@FXML
 	private Label logtype;
-
+	
 	@FXML
-	private void readLogEvent(ActionEvent event) {
-		if (firstview) {
-			readLog.setVisible(false);
-			firstview = false;
-			// readLogEvent(event);
+	private void displayFirst(){
+		display(stepper.firstEvent());
+	}
+	
+	@FXML
+	private void displayLast(){
+		display(stepper.latestEvent());
+	}
+	
+	@FXML
+	private void displayNext(){
+		if (stepper.isNext()) {
+			display(stepper.nextEvent());
+		}
+	}
+	
+	@FXML
+	private void displayPrevious(){
+		if (stepper.isPrev()) {
+			display(stepper.prevEvent());
+		}
+	}
+	
+	/*
+	 * Display of different event types
+	 */
+	
+
+	public void display(HashMap<String,String> item){
+		next.disableProperty().bind(hasNext);
+		last.disableProperty().bind(hasNext);
+		previous.disableProperty().bind(hasPrev);
+		first.disableProperty().bind(hasPrev);
+		if(stepper.isNext()){
+			hasNext.set(false);
+		}
+		else{
+			hasNext.set(true);
+		}
+		if(stepper.isPrev()){
+			hasPrev.set(false);
+		}
+		else{
+			hasPrev.set(true);
+		}
+		box.getChildren().clear();
+		switch (item.get("eventType")) {
+		case "mail":
+			displayMail(item);
+			break;
+		case "cost":
+			displayCost(item);
+			break;
+		case "price":
+			displayPrice(item);
+			break;
+		case "discontinue":
+			displayDiscontinue(item);
+			break;
+		default:
+			System.out.println("Something fucked up");
+			break;
+		}
+	}
+	
+	public void displayMail(HashMap<String, String> item) {
+		logtype.setText("Transport Cost");
+		Text a = new Text("Origin: " + item.get("origin"));
+		box.getChildren().add(a);	
+		a = new Text("Destination: " + item.get("destination"));
+		box.getChildren().add(a);
+		a = new Text("Logged: " + item.get("logged"));
+		box.getChildren().add(a);
+		a = new Text("Weight: " + item.get("weight"));
+		box.getChildren().add(a);
+		a = new Text("Volume: " + item.get("volume"));
+		box.getChildren().add(a);
+		a = new Text("Priority: " + item.get("priority"));
+		box.getChildren().add(a);
+		a = new Text("Duration: " + item.get("duration"));
+		box.getChildren().add(a);
+		a = new Text(" ");
+		box.getChildren().add(a);
+		
+		a = new Text("Legs:");
+		box.getChildren().add(a);
+		
+		for(int i =0; i<Integer.parseInt(item.get("legnum")); i++){
+			int leg = i;
+			a = new Text("	To: " + item.get("leg " +leg +" to"));
+			box.getChildren().add(a);
+			a = new Text("	From: " + item.get("leg " +leg +" from"));
+			box.getChildren().add(a);
+			a = new Text("	Type: " + item.get("leg " +leg +" type"));
+			box.getChildren().add(a);
+			a = new Text("	Company: " + item.get("leg " +leg +" company"));
+			box.getChildren().add(a);
+			a = new Text("	Cost: " + item.get("leg " +leg +" cost"));
+			box.getChildren().add(a);
+			a = new Text("	Price: " + item.get("leg " +leg +" price"));
+			box.getChildren().add(a);
+			if (Integer.parseInt(item.get("legnum"))-1!=leg) {
+				a = new Text("	- - - - - -  ");
+				box.getChildren().add(a);
+			}
 		}
 		
-		// if(CustomerPrice)
-//		logtype.setText("Customer Price");
-//		text1.setText("User: ");
-//		text19.setText("Login Time: ");
-//		text5.setText("Origin: ");
-//		text6.setText("o");
-//		text23.setText("Destination: ");
-//		text24.setText("d");
-//		text9.setText("Priority: ");
-//		text10.setText("p");
-//		text13.setText("Event Type: ");
-//		text14.setText("e");
-//		text27.setText("Weight Cost: ");
-//		text28.setText("w");
-//		text31.setText("Volume Cost: ");
-//		text32.setText("v");
 		
-		// else if(DeliveryRequest)
-//		logtype.setText("Delivery Request");
-//		text1.setText("User: ");
-//		text19.setText("Login Time: ");
-//		text3.setText("Origin: ");
-//		text4.setText("o");
-//		text5.setText("Weight: ");
-//		text6.setText("w");
-//		text7.setText("Volume: ");
-//		text8.setText("v");
-//		text9.setText("Priority: ");
-//		text10.setText("p");
-//		text21.setText("Destination: ");
-//		text22.setText("d");
-//		text23.setText("Duration: ");
-//		text24.setText("du");
-//		text25.setText("Event Type: ");
-//		text26.setText("e");
-		
-		// else if(DiscontinueRoute)
-//		logtype.setText("Discontinue Route");
-//		text1.setText("User: ");
-//		text19.setText("Login Time: ");
-//		text5.setText("Origin: ");
-//		text6.setText("o");
-//		text23.setText("Destination: ");
-//		text24.setText("d");
-//		text9.setText("Company: ");
-//		text10.setText("c");
-//		text13.setText("Event Type: ");
-//		text14.setText("e");
-//		text27.setText("Type: ");
-//		text28.setText("t");
+				
+		box.setSpacing(5);
+	}
 
-		// else if(Route)
-//		logtype.setText("Route");
-//		text1.setText("User: ");
-//		text19.setText("Login Time: ");
-//		text3.setText("Origin: ");
-//		text4.setText("o");
-//		text5.setText("Company: ");
-//		text6.setText("c");
-//		text7.setText("Type: ");
-//		text8.setText("t");
-//		text9.setText("Priority: ");
-//		text10.setText("p");
-//		text11.setText("Weight Cost: ");
-//		text12.setText("wc");
-//		text13.setText("Volume Cost: ");
-//		text14.setText("vc");
-//		text15.setText("Max Weight: ");
-//		text16.setText("mw");
-//		text17.setText("Max Volume: ");
-//		text18.setText("mv");
-//		text21.setText("Destination: ");
-//		text22.setText("d");
-//		text23.setText("Duration: ");
-//		text24.setText("dur");
-//		text25.setText("Frequency: ");
-//		text26.setText("f");
-//		text27.setText("Day: ");
-//		text28.setText("day");
-//		text29.setText("Start Time: ");
-//		text30.setText("st");
-//		text31.setText("Price: ");
-//		text32.setText("$");
-//		text33.setText("Event Type: ");
-//		text34.setText("et");
+	public void displayCost(HashMap<String, String> item) {
+		logtype.setText("Transport Cost");
+		Text a = new Text("To: " + item.get("to"));
+		box.getChildren().add(a);
+		a = new Text("From: " + item.get("from"));
+		box.getChildren().add(a);		
+		a = new Text("Comapny: " + item.get("company"));
+		box.getChildren().add(a);
+		a = new Text("Type: " + item.get("type"));
+		box.getChildren().add(a);
+		a = new Text("Priority: " + item.get("priority"));
+		box.getChildren().add(a);
+		a = new Text("Weight Cost: " + item.get("weightCost"));
+		box.getChildren().add(a);
+		a = new Text("Volume Cost: " + item.get("volumeCost"));
+		box.getChildren().add(a);
+		a = new Text("Max Weight: " + item.get("maxWeight"));
+		box.getChildren().add(a);
+		a = new Text("Max Volume: " + item.get("maxVolume"));
+		box.getChildren().add(a);
+		a = new Text("Duration: " + item.get("duration"));
+		box.getChildren().add(a);
+		a = new Text("Frequency: " + item.get("frequency"));
+		box.getChildren().add(a);
+		a = new Text("Day: " + item.get("day"));
+		box.getChildren().add(a);
+		a = new Text("Hour: " + item.get("hour"));
+		box.getChildren().add(a);
+				
+		box.setSpacing(5);
+	}
+
+	public void displayPrice(HashMap<String, String> item) {
+		logtype.setText("Customer Price");
+		Text a = new Text("To: " + item.get("to"));
+		box.getChildren().add(a);
+		a = new Text("From: " + item.get("from"));
+		box.getChildren().add(a);		
+		a = new Text("Type: " + item.get("type"));
+		box.getChildren().add(a);
+		a = new Text("Priority: " + item.get("priority"));
+		box.getChildren().add(a);
+		a = new Text("Weight Cost: " + item.get("weightCost"));
+		box.getChildren().add(a);
+		a = new Text("Volume Cost: " + item.get("volumeCost"));
+		box.getChildren().add(a);
+						
+		box.setSpacing(5);
+
+	}
+
+	public void displayDiscontinue(HashMap<String, String> item) {
+		logtype.setText("Discontinue Route");
+		Text a = new Text("To: " + item.get("to"));
+		box.getChildren().add(a);
+		a = new Text("From: " + item.get("from"));
+		box.getChildren().add(a);		
+		a = new Text("Type: " + item.get("type"));
+		box.getChildren().add(a);
+		a = new Text("Comapny: " + item.get("company"));
+		box.getChildren().add(a);
+						
+		box.setSpacing(5);
 	}
 }
