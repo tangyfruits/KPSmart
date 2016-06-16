@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -54,70 +55,9 @@ public class Main {
 	
 	private void loadFromConfig() {
 		
-		// .config Exists -  read it
-		if (configFile.isFile()) {
-			try {
-				Scanner sc = new Scanner(configFile);
-				
-				// Read logfile name
-				if (sc.hasNextLine()) {
-					String firstline = sc.nextLine().trim();
-					if (firstline.endsWith(".xml")) {
-						logFile = new File(firstline);
-					} else {
-						System.out.println("bap");
-						try {
-							String file = "";
-							while (sc.hasNextLine()) {
-								String line = sc.nextLine();
-								file += line;
-							}
-							sc.close();
-							FileWriter fw = new FileWriter(configFile);
-							logFile = new File("logfile.xml");
-							fw.write(logFile.getName() + "\n");
-							fw.write(file);
-							fw.flush();
-							fw.close();
-							sc = new Scanner(configFile);
-							sc.nextLine();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-				
-				// Read Users
-				int lineNo = 1;
-				while (sc.hasNextLine()) {
-					try {
-						lineNo++;
-						String scanLine = sc.nextLine();
-						String[] line = scanLine.split(" ");
-						if (line.length == 3) {
-							String username = line[0];
-							String password = line[1];
-							String manager = line[2];
-							boolean b = false;
-							if (manager.equals("true")) {
-								b = true;
-							}
-							accounts.add(new User(username, password, b));
-						} else {
-							System.out.println("Read weird line: \""+scanLine+"\"");
-						}
-					} catch (Exception e) {
-						System.out.println("Error reading config file line "+lineNo);
-					}
-				}
-				sc.close();
-			
-			} catch (FileNotFoundException e1) {
-				e1.printStackTrace();
-			}
-		}
-		// .config does NOT exist - Make new file
-		else {
+		// IF CONFIG DONES'T EXIST
+		if (!configFile.isFile()){
+			System.out.println("config doesn't exist - make new file");
 			try {
 				configFile.createNewFile();
 				FileWriter fw = new FileWriter(configFile);
@@ -126,6 +66,91 @@ public class Main {
 				fw.close();
 			} catch (IOException e) {
 				e.printStackTrace();
+			}
+		
+		// IF CONFIG EXISTS
+		} else {
+			System.out.println("Config exists");
+			try {
+				List<String> lines = Files.readAllLines(configFile.toPath());
+				System.out.println(lines);
+				Scanner sc = new Scanner(configFile);
+				
+				// Config is Empty
+				if (lines.size() <= 0) {
+					System.out.println("Config is empty");
+					try {
+						logFile = new File("logfile.txt");
+						FileWriter fw = new FileWriter(configFile, false);
+						
+						fw.write(logFile.getName() + "\n");
+						fw.flush();
+						fw.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				
+				// Config isn't Empty
+				} else {
+					System.out.println("Config isn't empty");
+					
+					// Read LogfileName
+					String firstline = lines.get(0);
+					if (firstline.endsWith(".xml")) {
+						// Valid Logfile Name
+						logFile = new File(firstline);
+					} else {
+						// Invalid Logfile Name
+						System.out.println("LALLALALA INVALID LOGFILE NAME!!!!!");
+						try {
+							List<String> remainder = lines.subList(1, lines.size());
+
+							FileWriter fw = new FileWriter(configFile, false);
+							logFile = new File("logfile.xml");
+							fw.write(logFile.getName() + "\n");
+							
+							for (String line : remainder) {
+								
+							}
+							
+							fw.flush();
+							fw.close();
+							sc = new Scanner(configFile);
+							sc.nextLine();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				
+					// Read Users
+					int lineNo = 1;
+					while (sc.hasNextLine()) {
+						try {
+							lineNo++;
+							String scanLine = sc.nextLine();
+							String[] line = scanLine.split(" ");
+							if (line.length == 3) {
+								String username = line[0];
+								String password = line[1];
+								String manager = line[2];
+								boolean b = false;
+								if (manager.equals("true")) {
+									b = true;
+								}
+								accounts.add(new User(username, password, b));
+							} else {
+								System.out.println("Read weird line: \""+scanLine+"\"");
+							}
+						} catch (Exception e) {
+							System.out.println("Error reading config file line "+lineNo);
+						}
+					}
+					sc.close();
+				}
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e2) {
+				e2.printStackTrace();
 			}
 		}
 	}

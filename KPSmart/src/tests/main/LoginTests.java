@@ -2,6 +2,11 @@ package tests.main;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import main.Main;
@@ -15,6 +20,35 @@ import main.User;
  *
  */
 public class LoginTests {
+	
+	static private File config = new File(".config");
+	
+	@BeforeClass
+	public static void setup() {
+		// clear config file
+		if (config.isFile()) {
+			try {
+				FileWriter fw = new FileWriter(config);
+				fw.write("");
+				fw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				config.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		// Add essential Users
+		Main m = new Main();
+		m.add(new User("donald", "password123", true));
+		m.add(new User("shelley", "password123", true));
+		m.add(new User("peter", "password123", true));
+		m.add(new User("kaszandra", "password123", true));
+		m.add(new User("priyanka", "password123", true));
+	}
 
 	@Test
 	public void testCorrectLogin_01() {
