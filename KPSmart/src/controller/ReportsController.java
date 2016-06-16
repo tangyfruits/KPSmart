@@ -163,6 +163,51 @@ public class ReportsController implements Initializable {
 		controller.initDropdownWithOther();
 		stage.show();
 	}
+	
+	/** ACCOUNTS MENU ITEM */
+
+	@FXML
+	MenuButton accounts;
+
+	@FXML
+	private void addUserAction(ActionEvent event) throws IOException {
+		FXMLLoader addUser = new FXMLLoader(getClass().getResource(
+				"/views/adduser.fxml"));
+		addUser.setController(new AccountsController(main));
+		Parent addUserGUI = addUser.load();
+
+		Stage stage = (Stage) accounts.getScene().getWindow();
+		Scene scene = new Scene(addUserGUI);
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	@FXML
+	private void editUserAction(ActionEvent event)
+			throws IOException {
+		FXMLLoader editUser = new FXMLLoader(getClass().getResource(
+				"/views/edituser.fxml"));
+		editUser.setController(new AccountsController(main));
+		Parent editUserGUI = editUser.load();
+
+		Stage stage = (Stage) accounts.getScene().getWindow();
+		Scene scene = new Scene(editUserGUI);
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	@FXML
+	private void changePassAction(ActionEvent event) throws IOException {
+		FXMLLoader changePass = new FXMLLoader(getClass().getResource(
+				"/views/changepass.fxml"));
+		changePass.setController(new AccountsController(main));
+		Parent changePassGUI = changePass.load();
+
+		Stage stage = (Stage) accounts.getScene().getWindow();
+		Scene scene = new Scene(changePassGUI);
+		stage.setScene(scene);
+		stage.show();
+	}
  
 	/** REPORTS PAGE */
 	@FXML
