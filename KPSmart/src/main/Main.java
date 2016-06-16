@@ -55,7 +55,7 @@ public class Main {
 	
 	private void loadFromConfig() {
 		
-		// IF CONFIG DONES'T EXIST
+		// IF CONFIG DOESN'T EXIST
 		if (!configFile.isFile()){
 			System.out.println("config doesn't exist - make new file");
 			try {
@@ -103,14 +103,14 @@ public class Main {
 						// Invalid Logfile Name
 						System.out.println("LALLALALA INVALID LOGFILE NAME!!!!!");
 						try {
-							List<String> remainder = lines.subList(1, lines.size());
+							//List<String> remainder = lines.subList(1, lines.size());
 
 							FileWriter fw = new FileWriter(configFile, false);
 							logFile = new File("logfile.xml");
 							fw.write(logFile.getName() + "\n");
 							
-							for (String line : remainder) {
-								
+							for (String line : lines) {
+								fw.write(line);
 							}
 							
 							fw.flush();
