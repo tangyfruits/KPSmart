@@ -191,4 +191,19 @@ public class AccountsController implements Initializable {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	@FXML
+	private void addUserButtonAction(ActionEvent event){
+		
+	}
+	
+	@FXML
+	private void searchButtonAction(ActionEvent event){
+		
+	}
+	
+	@FXML
+	private void changePassButtonAction(ActionEvent event){
+		
+	}
 }

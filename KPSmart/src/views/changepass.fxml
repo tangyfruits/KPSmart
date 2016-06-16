@@ -74,7 +74,7 @@
             <PasswordField GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <Button id="submit" fx:id="changepass" layoutX="279.0" layoutY="257.0" mnemonicParsing="false" style="-fx-background-color: E9D5B9;" text="Change Password" />
+      <Button id="submit" fx:id="changePassButton" layoutX="279.0" layoutY="257.0" mnemonicParsing="false" onAction="#changePassButtonAction" style="-fx-background-color: E9D5B9;" text="Change Password" />
    </children>
    <stylesheets>
 	<URL value="@kps.css" />
