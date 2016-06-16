@@ -29,7 +29,7 @@
                   <Font name="Gulim" size="13.0" />
                </font>
             </Button>
-            <MenuButton fx:id="logeventmenu" layoutX="-1.0" layoutY="1.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="184.0" style="-fx-background-color: E9D5B9;" text="Log Event">
+            <MenuButton fx:id="logeventmenu" layoutX="-1.0" layoutY="1.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="184.0" style="-fx-background-color: E9D5B9;" text="Customer Price Update">
               <items>
                 <MenuItem fx:id="transportRoute" mnemonicParsing="false" onAction="#transportRouteAction" text="Transport Route" />
                 <MenuItem fx:id="deliveryRequest" mnemonicParsing="false" onAction="#deliveryRequestAction" text="Delivery Request" />

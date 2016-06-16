@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -28,6 +29,9 @@ import main.Tuple;
 public class ReportsController implements Initializable {
 	
 	private Main main;
+	
+	private DecimalFormat df = new DecimalFormat("0.00");
+	private DecimalFormat sf = new DecimalFormat("0");
 
 	public ReportsController(Main main){
 		this.main = main;
@@ -37,9 +41,9 @@ public class ReportsController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {}
 	 
 	public void initData(){
-		expenditure.setText(Double.toString(main.getTotalExp()));
-		revenue.setText(Double.toString(main.getTotalRev()));
-		eventcount.setText(Double.toString(main.getTotalEvents()));
+		expenditure.setText("$" +  df.format(main.getTotalExp()));
+		revenue.setText("$" +  df.format(main.getTotalRev()));
+		eventcount.setText(sf.format(main.getTotalEvents()));
 		routeLoadAction();
 	}
 	
@@ -239,7 +243,7 @@ public class ReportsController implements Initializable {
 	    HashMap<Tuple, ArrayList<Double>> temp = main.getAmountOfMail();
 	    report = new ArrayList<RouteLoadRow>();
 	    for(Tuple t: temp.keySet()){
-	    	RouteLoadRow row = new RouteLoadRow(t.getOrigin(), t.getDestination(), Double.toString(temp.get(t).get(0)), Double.toString(temp.get(t).get(1)), Double.toString(temp.get(t).get(2)));
+	    	RouteLoadRow row = new RouteLoadRow(t.getOrigin(), t.getDestination(), Double.toString(temp.get(t).get(0)), Double.toString(temp.get(t).get(1)), sf.format(temp.get(t).get(2)));
 	    	report.add(row);
 	    }
 	   

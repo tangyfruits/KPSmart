@@ -673,7 +673,7 @@ public class FormController implements Initializable {
 				Parent popupGUI = popup.load();
 				modal = new Stage();
 				modal.setScene(new Scene(popupGUI));
-				modal.setTitle("My modal window");
+				modal.setTitle("Enter customer price");
 				modal.initModality(Modality.APPLICATION_MODAL);
 				modal.initOwner(submit.getScene().getWindow());
 				modal.showAndWait();
