@@ -38,7 +38,6 @@ public class Main {
 	private double totalExp;
 	private double totalRev;
 
-	
 	// CONSTRUCTOR
 	public Main() {
 		// Core Logic
@@ -52,48 +51,48 @@ public class Main {
 		loadFromConfig();
 		writer = new LogWriter(logFile);
 	}
-	
+
 	private void loadFromConfig() {
-		
+
 		// IF CONFIG DOESN'T EXIST
-		if (!configFile.isFile()){
+		if (!configFile.isFile()) {
 			System.out.println("config doesn't exist - make new file");
 			try {
 				configFile.createNewFile();
 				FileWriter fw = new FileWriter(configFile);
 				logFile = new File("logfile.xml");
-				fw.write(logFile.getName()+"\n");
+				fw.write(logFile.getName() + "\n");
 				fw.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		
-		// IF CONFIG EXISTS
+
+			// IF CONFIG EXISTS
 		} else {
 			System.out.println("Config exists");
 			try {
 				List<String> lines = Files.readAllLines(configFile.toPath());
 				System.out.println(lines);
 				Scanner sc = new Scanner(configFile);
-				
+
 				// Config is Empty
 				if (lines.size() <= 0) {
 					System.out.println("Config is empty");
 					try {
 						logFile = new File("logfile.txt");
 						FileWriter fw = new FileWriter(configFile, false);
-						
+
 						fw.write(logFile.getName() + "\n");
 						fw.flush();
 						fw.close();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				
-				// Config isn't Empty
+
+					// Config isn't Empty
 				} else {
 					System.out.println("Config isn't empty");
-					
+
 					// Read LogfileName
 					String firstline = lines.get(0);
 					if (firstline.endsWith(".xml")) {
@@ -103,16 +102,17 @@ public class Main {
 						// Invalid Logfile Name
 						System.out.println("LALLALALA INVALID LOGFILE NAME!!!!!");
 						try {
-							//List<String> remainder = lines.subList(1, lines.size());
+							// List<String> remainder = lines.subList(1,
+							// lines.size());
 
 							FileWriter fw = new FileWriter(configFile, false);
 							logFile = new File("logfile.xml");
 							fw.write(logFile.getName() + "\n");
-							
+
 							for (String line : lines) {
 								fw.write(line);
 							}
-							
+
 							fw.flush();
 							fw.close();
 							sc = new Scanner(configFile);
@@ -121,7 +121,7 @@ public class Main {
 							e.printStackTrace();
 						}
 					}
-				
+
 					// Read Users
 					int lineNo = 1;
 					while (sc.hasNextLine()) {
@@ -139,10 +139,10 @@ public class Main {
 								}
 								accounts.add(new User(username, password, b));
 							} else {
-								System.out.println("Read weird line: \""+scanLine+"\"");
+								System.out.println("Read weird line: \"" + scanLine + "\"");
 							}
 						} catch (Exception e) {
-							System.out.println("Error reading config file line "+lineNo);
+							System.out.println("Error reading config file line " + lineNo);
 						}
 					}
 					sc.close();
@@ -154,7 +154,7 @@ public class Main {
 			}
 		}
 	}
-	
+
 	// USER ACCOUNT METHODS
 	public boolean login(String username, String password) {
 		for (User u : accounts) {
@@ -165,11 +165,12 @@ public class Main {
 		}
 		return false;
 	}
+
 	public boolean editPassword(String password) {
 		boolean edited = false;
 		for (User u : accounts) {
-			if (u.getUsername().equals(currentUser.getUsername()) && 
-				u.getPassword().equals(currentUser.getPassword())) {
+			if (u.getUsername().equals(currentUser.getUsername())
+					&& u.getPassword().equals(currentUser.getPassword())) {
 				u.setPassword(password);
 				edited = true;
 			}
@@ -179,7 +180,7 @@ public class Main {
 			configFile.delete();
 			configFile.createNewFile();
 			FileWriter fw = new FileWriter(configFile, true);
-			fw.write(logFile.getName()+"\n");
+			fw.write(logFile.getName() + "\n");
 			for (int i = 0; i < accounts.size(); i++) {
 				User u = accounts.get(i);
 				fw.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
@@ -191,37 +192,33 @@ public class Main {
 		}
 		return edited;
 	}
-	public boolean editManager(boolean manager ) {
-		boolean edited = false;
-		for (User u : accounts) {
-			if (u.getUsername().equals(currentUser.getUsername()) && 
-				u.getPassword().equals(currentUser.getPassword())) {
-				u.setManager(manager);
-				edited = true;
-			}
-		}
-		currentUser.setManager(manager);
+
+	public boolean editManager(String username, boolean manager) {
+		if(currentUser.isManager()){
+		findUser(username).setManager(manager);
 		try {
 			configFile.delete();
 			configFile.createNewFile();
 			FileWriter fw = new FileWriter(configFile, true);
-			fw.write(logFile.getName()+"\n");
+			fw.write(logFile.getName() + "\n");
 			for (int i = 0; i < accounts.size(); i++) {
 				User u = accounts.get(i);
 				fw.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
 			}
 			fw.flush();
 			fw.close();
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		return edited;
+		}}
+		return false;
 	}
+
 	public boolean delete() {
 		boolean removed = false;
 		for (User u : accounts) {
-			if (u.getUsername().equals(currentUser.getUsername()) && 
-				u.getPassword().equals(currentUser.getPassword())) {
+			if (u.getUsername().equals(currentUser.getUsername())
+					&& u.getPassword().equals(currentUser.getPassword())) {
 				accounts.remove(u);
 				logout();
 				removed = true;
@@ -232,7 +229,7 @@ public class Main {
 			configFile.delete();
 			configFile.createNewFile();
 			FileWriter fw = new FileWriter(configFile, true);
-			fw.write(logFile.getName()+"\n");
+			fw.write(logFile.getName() + "\n");
 			for (int i = 0; i < accounts.size(); i++) {
 				User u = accounts.get(i);
 				fw.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
@@ -244,44 +241,50 @@ public class Main {
 		}
 		return removed;
 	}
+
 	public void add(User user) {
 		boolean b = false;
-		for (User u : accounts){
-			if(u.getUsername().equals(user.getUsername())){
-				b=true;
+		for (User u : accounts) {
+			if (u.getUsername().equals(user.getUsername())) {
+				b = true;
 			}
 		}
-		if(!b){
-		try {
-			FileWriter writer = new FileWriter(configFile, true);
-			writer.write(user.getUsername() + " " + user.getPassword() + " " + Boolean.toString(user.isManager()) + "\n");
-			writer.flush();
-			writer.close();
-			accounts.add(user);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (!b) {
+			try {
+				FileWriter writer = new FileWriter(configFile, true);
+				writer.write(user.getUsername() + " " + user.getPassword() + " " + Boolean.toString(user.isManager())
+						+ "\n");
+				writer.flush();
+				writer.close();
+				accounts.add(user);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 		}
-		
 	}
-	}
-	
-	public User findUser(String username){
+
+	public User findUser(String username) {
 		for (User u : accounts) {
-			if (u.getUsername().equals(username)){
+			if (u.getUsername().equals(username)) {
 				return u;
 			}
-	}
+		}
 		return null;
 	}
+
 	public void logout() {
 		currentUser = null;
 	}
+
 	public User getCurrentUser() {
 		return currentUser;
 	}
-	public void addUserToList(User u) {
-		accounts.add(u);
+
+	public void addUserToList(User user) {
+		accounts.add(user);
 	}
+
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
@@ -293,7 +296,6 @@ public class Main {
 	// LOGGERS
 	public DeliveryRequest logDeliveryRequest(LocalDateTime logTime, String origin, String destination,
 			ArrayList<Leg> legs, double weight, double volume, String priority, int duration, boolean initial) {
-
 
 		// find the locations matching the given strings
 		Location originLoc = getLocation(origin);
@@ -331,6 +333,7 @@ public class Main {
 		return request;
 
 	}
+
 	public Route logTransportCostUpdate(String origin, String destination, String company, String type,
 			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, int frequency,
 			DayOfWeek day, int startTime, boolean initial) {
@@ -383,24 +386,25 @@ public class Main {
 		Route route = null;
 		if (!routeExists) {
 			// if it doesn't always exist, create route and add to graph
-			route = new Route(originLoc, destinationLoc, company, type, priority, weightCost, volumeCost,
-					maxWeight, maxVolume, duration, frequency, day, startTime, price);
+			route = new Route(originLoc, destinationLoc, company, type, priority, weightCost, volumeCost, maxWeight,
+					maxVolume, duration, frequency, day, startTime, price);
 			originLoc.addRoute(route);
 		}
 
-	/* Log Customer Price */
-		//log in file and add to reports
+		/* Log Customer Price */
+		// log in file and add to reports
 		addEvent();
-//		if (!initial) {
-//			try {
-//				writer.writeRoute(route);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
+		// if (!initial) {
+		// try {
+		// writer.writeRoute(route);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// }
 		return route;
-		
+
 	}
+
 	public CustomerPrice logCustomerPriceUpdate(String origin, String destination, String priority, double weightCost,
 			double volumeCost, boolean initial) {
 
@@ -456,6 +460,7 @@ public class Main {
 
 		return price;
 	}
+
 	public DiscontinueRoute discontinueTransportRoute(String origin, String destination, String company, String type,
 			boolean initial) {
 
@@ -490,12 +495,12 @@ public class Main {
 
 	}
 
-	
 	// GETTERS
 	// Locations
 	public ArrayList<Location> getLocations() {
 		return locations;
 	}
+
 	public Location getLocation(String name) {
 		Location location = null;
 		for (Location loc : locations) {
@@ -505,6 +510,7 @@ public class Main {
 		}
 		return location;
 	}
+
 	// Routes
 	public ArrayList<RouteDisplay> getPossibleRoutes(String origin, String destination, double weight, double volume) {
 
@@ -569,7 +575,8 @@ public class Main {
 		}
 		return out;
 	}
-	public ArrayList<Route> getRoutes(String origin, String destination){
+
+	public ArrayList<Route> getRoutes(String origin, String destination) {
 		Location originLoc = getLocation(origin);
 
 		ArrayList<Route> disconRoutes = new ArrayList<>();
@@ -580,6 +587,7 @@ public class Main {
 		}
 		return disconRoutes;
 	}
+
 	// Customer Prices
 	public CustomerPrice getCustomerPrice(Location originLoc, Location destinationLoc, String origin,
 			String destination, String priority) {
@@ -600,16 +608,18 @@ public class Main {
 		}
 		return customerPrice;
 	}
+
 	// Delivery Requests
 	public List<DeliveryRequest> getDeliveryRequests() {
 		return deliveryRequests;
 	}
+
 	public DeliveryRequest getDeliveryDetails(String origin, String destination, double weight, double volume,
 			RouteDisplay route) {
 
 		// get duration
 		int duration = route.getTotalDuration(LocalDateTime.now());
-	
+
 		// translate route list into legs
 		ArrayList<Leg> legs = new ArrayList<>();
 		for (Route r : route.getRoute()) {
@@ -619,23 +629,25 @@ public class Main {
 					customerPrice));
 		}
 
-		return logDeliveryRequest(LocalDateTime.now(),origin,destination, legs, weight,volume,route.getPriority(),duration, false);
+		return logDeliveryRequest(LocalDateTime.now(), origin, destination, legs, weight, volume, route.getPriority(),
+				duration, false);
 	}
-	
+
 	// SETTERS + Adders
 	public void addLocation(Location location) {
 		locations.add(location);
 	}
-	
-	
+
 	// REPORTS
 	// Amount of Mail
 	public HashMap<Tuple, ArrayList<Double>> getAmountOfMail() {
 		return amountOfMail;
 	}
+
 	public HashMap<TuplePriority, ArrayList<Integer>> getAmountOfMailDeliveryTimes() {
 		return amountOfMailDeliveryTimes;
 	}
+
 	public void addToAmountOfMail(String origin, String destination, double weight, double volume) {
 		boolean success = false;
 		for (Tuple t : amountOfMail.keySet()) {
@@ -665,6 +677,7 @@ public class Main {
 		}
 		mailReportPrint();
 	}
+
 	private void mailReportPrint() {
 		for (Tuple t : amountOfMail.keySet()) {
 			ArrayList<Double> amountList = amountOfMail.get(t);
@@ -693,6 +706,7 @@ public class Main {
 			amountOfMailDeliveryTimes.put(t, totalAndCount);
 		}
 	}
+
 	public Integer averageDeliveryTime(String origin, String destination, String priority) {
 		for (TuplePriority t : amountOfMailDeliveryTimes.keySet()) {
 			if (t.getOrigin().equals(origin) && t.getDestination().equals(destination)
@@ -703,25 +717,30 @@ public class Main {
 		}
 		return -1;
 	}
-	
+
 	// Little Reports
 	public void addTotalRev(double amount) {
 		totalRev += amount;
 	}
+
 	public void addTotalExp(double amount) {
 		totalExp += amount;
 	}
+
 	public void addEvent() {
 		events += 1;
 	}
+
 	public double getTotalRev() {
 		System.out.println("Total Revenue: $" + totalRev);
 		return totalRev;
 	}
+
 	public double getTotalExp() {
 		System.out.println("Total Expenditure: $" + totalExp);
 		return totalExp;
 	}
+
 	public int getTotalEvents() {
 		System.out.println("Total Events: " + events);
 		return events;
