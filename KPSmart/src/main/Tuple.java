@@ -5,10 +5,12 @@ public class Tuple {
 	 * A simple class to represent a tuple with Origin and Destination.
 	 * 
 	 * @author Donald Tang
+	 * Edited by Pri Bhula
 	 */
 
 	private String origin;
 	private String destination;
+	private String priority;
 
 	/**
 	 * Constructor
@@ -20,6 +22,20 @@ public class Tuple {
 	public Tuple(String origin, String destination) {
 		this.origin = origin;
 		this.destination = destination;
+	}
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param origin
+	 * @param destination
+	 * @param priority
+	 */
+
+	public Tuple(String origin, String destination,String priority) {
+		this.origin = origin;
+		this.destination = destination;
+		this.priority = priority;
 	}
 
 	/**

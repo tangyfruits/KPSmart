@@ -28,6 +28,7 @@ public class Main {
 	private HashMap<TuplePriority, ArrayList<Integer>> amountOfMailDeliveryTimes;
 	private HashMap<Tuple, ArrayList<Double>> amountOfMail;
 	private ArrayList<DeliveryRequest> deliveryRequests;
+	private HashMap<Tuple,ArrayList<Double>> criticalRoutes;
 
 	private LogWriter writer;
 	private File file;
@@ -65,6 +66,8 @@ public class Main {
 		// u.isManager());
 		// }
 		amountOfMailDeliveryTimes = new HashMap<>();
+
+		criticalRoutes = new HashMap<>();
 		amountOfMail = new HashMap<>();
 
 		// TODO fix file - will be listed in config file with user accounts
@@ -85,7 +88,6 @@ public class Main {
 		// maven. Apache shiro is a really good framework for logins
 	}
 
-	
 	// USER ACCOUNT METHODS
 	public boolean login(String username, String password) {
 		for (User u : accounts) {
@@ -153,6 +155,7 @@ public class Main {
 		return b;
 
 	}
+
 	public void add(User u) {
 		try {
 			FileWriter writer = new FileWriter("accounts.txt", true);
@@ -349,6 +352,69 @@ public class Main {
 
 		return price;
 	}
+
+	public void addToCriticalRoutes(String origin,String dest, String prior,double weight,double volume){
+		Tuple odp = new Tuple(origin, dest, prior);
+		ArrayList<Double> costPrice = new ArrayList<>();
+		
+		Location originLoc = null;
+		Location destinationLoc = null;
+		CustomerPrice price = null;
+		for (int i = 0; i < locations.size(); i++) {
+			if (locations.get(i).getName().equals(origin)) {
+				originLoc = locations.get(i);
+			}
+			if (locations.get(i).getName().equals(dest)) {
+				destinationLoc = locations.get(i);
+			}
+		}
+		if (originLoc == null) {
+			originLoc = new Location(origin);
+			addLocation(originLoc);
+		}
+		if (destinationLoc == null) {
+			destinationLoc = new Location(dest);
+			addLocation(destinationLoc);
+		}
+		
+		price = getCustomerPrice(originLoc, destinationLoc, origin, dest, prior);
+		double cp = price.getWeightCost()*weight + price.getVolumeCost()*volume;
+		double rp = 0.0;
+		
+		for (Route r: originLoc.getRoutes()){
+			if (r.getOrigin().equals(originLoc)&&r.getDestination().equals(destinationLoc)){//is the same route
+				rp = r.getWeightCost();//find trans cost
+			}
+		}
+		costPrice.add(cp); //1st element: price
+		costPrice.add(rp); //2nd element: cost
+		
+		if (rp>cp){	
+			criticalRoutes.put(odp, costPrice);
+		}
+	}
+	
+	public HashMap<Tuple, ArrayList<Double>> getCriticalRoutes(){
+		return criticalRoutes;
+	}
+
+	
+	// GETTERS
+	// Locations
+	public ArrayList<Location> getLocations() {
+		return locations;
+	}
+	public Location getLocation(String name) {
+		Location location = null;
+		for (Location loc : locations) {
+			if (loc.getName().equals(name)) {
+				location = loc;
+			}
+		}
+		return location;
+	}
+	
+	
 	public DiscontinueRoute discontinueTransportRoute(String origin, String destination, String company, String type,
 			boolean initial) {
 
@@ -383,21 +449,6 @@ public class Main {
 
 	}
 
-	
-	// GETTERS
-	// Locations
-	public ArrayList<Location> getLocations() {
-		return locations;
-	}
-	public Location getLocation(String name) {
-		Location location = null;
-		for (Location loc : locations) {
-			if (loc.getName().equals(name)) {
-				location = loc;
-			}
-		}
-		return location;
-	}
 	// Routes
 	public ArrayList<RouteDisplay> getPossibleRoutes(String origin, String destination, double weight, double volume) {
 
@@ -497,9 +548,9 @@ public class Main {
 	public List<DeliveryRequest> getDeliveryRequests() {
 		return deliveryRequests;
 	}
+	
 	public DeliveryRequest getDeliveryDetails(String origin, String destination, double weight, double volume,
 			RouteDisplay route) {
-
 		// get duration
 		int duration = route.getTotalDuration(LocalDateTime.now());
 	
@@ -565,7 +616,7 @@ public class Main {
 					+ " Total Volume:" + amountList.get(1) + " Total Instances: " + amountList.get(2));
 		}
 	}
-
+	
 	// Average Delivery Times
 	public void addToAverageDeliveryTimes(String origin, String destination, int duration, String priority) {
 		boolean success = false;
@@ -596,7 +647,6 @@ public class Main {
 		}
 		return -1;
 	}
-	
 	// Little Reports
 	public void addTotalRev(double amount) {
 		totalRev += amount;
