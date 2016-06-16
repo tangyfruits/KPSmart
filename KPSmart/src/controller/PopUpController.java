@@ -39,6 +39,8 @@ public class PopUpController implements Initializable {
 	private TextField weightPrice;
 	@FXML
 	private TextField volumePrice;
+	@FXML
+	private Text error;
 	
 	@FXML
 	private void popUpSubmit(){
@@ -54,6 +56,9 @@ public class PopUpController implements Initializable {
 			r.setPrice(price);
 			System.out.println(r.getPrice().toString());
 			c.closeModal();
+		}
+		else{
+			error.visibleProperty().bind(hasError);
 		}
 	}
 	
