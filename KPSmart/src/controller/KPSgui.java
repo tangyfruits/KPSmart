@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class KPSgui extends Application {
@@ -28,6 +29,7 @@ public class KPSgui extends Application {
 		primaryStage.setTitle("KPSmart");
 		primaryStage.setMinWidth(720);
 		primaryStage.setMinHeight(620);
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("../views/icon.png"))); // must be in /bin/views
 		Scene scene = new Scene(UI, 700, 600);
 		primaryStage.setScene(scene);
 		primaryStage.show();

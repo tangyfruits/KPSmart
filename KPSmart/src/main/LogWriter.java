@@ -66,6 +66,10 @@ public class LogWriter {
 		}
         ensureLogExists();
 	}
+	public LogWriter(File file, boolean logging) {
+		this(file);
+		LOGS = logging;
+	}
 	
 	// METHODS
 	public void ensureLogExists() {
@@ -144,41 +148,51 @@ public class LogWriter {
 	 * Writes Mail Delivery Event to the log file.
 	 * 
 	 * ------- FORMAT -------
-	   <mail>
-	 		<logged>%s</logged>
-	 		<to>%s</to>
-	 		<from>%s</from>
-	 		<legs>
-	 			<leg>
-	 				<to>%s</to>
-	 				<from>%s</from>
-	 				<type>%s</type>
-	 				<company>%s</company>
-	 				<cost>%f</cost>
-	 				<price>%f</price>
- 	 			</leg>
- 	 			<leg>
-	 				<to>%s</to>
-	 				<from>%s</from>
-	 				<type>%s</type>
-	 				<company>%s</company>
-	 				<cost>%f</cost>
-	 				<price>%f</price>
- 	 			</leg>
-	 		</legs>
-			<weight>%f</weight>
-	 		<volume>%f</volume>
-	 		<priority>%s</priority>
-	 		<duration>%d</duration>
-	 	</mail>
+	 * <pre>
+	 * {@literal
+	 * <mail>
+	 *   <logged>%s</logged>
+	 *   <to>%s</to>
+	 *   <from>%s</from>
+	 *   <legs>
+	 *     <leg>
+	 *       <to>%s</to>
+	 *       <from>%s</from>
+	 *       <type>%s</type>
+	 *       <company>%s</company>
+	 *       <cost>%f</cost>
+	 *       <price>%f</price>
+ 	 *     </leg>
+ 	 *     <leg>
+	 *       <to>%s</to>
+	 *       <from>%s</from>
+	 *       <type>%s</type>
+	 *       <company>%s</company>
+	 *       <cost>%f</cost>
+	 *       <price>%f</price>
+ 	 *     </leg>
+	 *   </legs>
+	 *   <weight>%f</weight>
+	 *   <volume>%f</volume>
+	 *   <priority>%s</priority>
+	 *   <duration>%d</duration>
+	 * </mail>
+	 * }
+	 * </pre>
 	 * ----------------------
 	 * 
-	 * @param event
+	 * @param event The delivery request event to write to the log file
 	 * @throws IOException 
 	 */
-	public void writeDeliveryRequest(DeliveryRequest event) throws Exception {
+	public void writeDeliveryRequest(DeliveryRequest event) {
 		
-		doc = docBuilder.parse(logFile);
+		try {
+			doc = docBuilder.parse(logFile);
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		Element events = doc.getDocumentElement();
 		
 		// Make Elements
@@ -250,42 +264,60 @@ public class LogWriter {
         // Write to XML file
         DOMSource    source = new DOMSource(doc);
         StreamResult output = new StreamResult(logFile);
-   	    transformer.transform(source, output);
+   	    try {
+			transformer.transform(source, output);
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
 		
    	    // Console Logging for Testing
    	    if (LOGS) {
+   	    	System.out.println("\n----------mail");
 	        StreamResult consoleResult =  new StreamResult(System.out);
-	      	transformer.transform(source, consoleResult);
+	      	try {
+				transformer.transform(source, consoleResult);
+			} catch (TransformerException e) {
+				e.printStackTrace();
+			}
    	    }
 	}
 
 	/**
-	 * Writes Cost Event to log file.
+	 * Writes Cost Event to log file in the following format
 	 * 
-	 * ------- FORMAT -------
-	   <cost>
-		  <to>%s</to>
-		  <from>%s</from>
-		  <company>%s</company>
-		  <type>%s</type>
-		  <priority>%s</priority>
-		  <weightCost>%f</weightCost>
-		  <volumeCost>%f</volumeCost>
-		  <maxWeight>%d</maxWeight>
-		  <maxVolume>%d</maxVolume>
-		  <duration>%d</duration>
-		  <frequency>%d</frequency>
-		  <day>%s</day>
-		  <hour>%d</hour>
-		</cost>
-	 * ----------------------
+	 * <pre>
+	 * {@literal
+	 * <cost>
+	 *   <to>%s</to>
+	 *   <from>%s</from>
+	 *   <company>%s</company>
+	 *   <type>%s</type>
+	 *   <priority>%s</priority>
+	 *   <weightCost>%f</weightCost>
+	 *   <volumeCost>%f</volumeCost>
+	 *   <maxWeight>%d</maxWeight>
+	 *   <maxVolume>%d</maxVolume>
+	 *   <duration>%d</duration>
+	 *   <frequency>%d</frequency>
+	 *   <day>%s</day>
+	 *   <hour>%d</hour>
+	 * </cost>
+	 * }
+	 * </pre>
 	 * 
-	 * @param event
-	 * @throws IOException 
+	 * @param event The cost event (route) to write to the log file
 	 */
-	public void writeRoute(Route event) throws Exception {
+	public void writeRoute(Route event) {
 		
-		doc = docBuilder.parse(logFile);
+		try {
+			doc = docBuilder.parse(logFile);
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Element events = doc.getDocumentElement();
 		
 		// Make Elements
@@ -338,12 +370,21 @@ public class LogWriter {
         // Write to XML file
         DOMSource    source = new DOMSource(doc);
         StreamResult output = new StreamResult(logFile);
-      	transformer.transform(source, output);
+      	try {
+			transformer.transform(source, output);
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
         
       	// Console Logging for Testing
       	if (LOGS) {
+      		System.out.println("\n----------cost1");
 	        StreamResult consoleResult =  new StreamResult(System.out);
-	      	transformer.transform(source, consoleResult);
+	      	try {
+				transformer.transform(source, consoleResult);
+			} catch (TransformerException e) {
+				e.printStackTrace();
+			}
       	}
 	}
 
@@ -351,22 +392,32 @@ public class LogWriter {
 	 * Writes Price Event to the log file.
 	 * 
 	 * ------- FORMAT -------
-	   <price>
-		  <to>%s</to>
-		  <from>%s</from>
-		  <type>%s</type>
-		  <priority>%s</priority>
-		  <weightCost>%f</weightCost>
-		  <volumeCost>%f</volumeCost>
-		</price>
+	 * <pre>
+	 * {@literal
+	 * <price>
+	 *   <to>%s</to>
+	 *   <from>%s</from>
+	 *   <type>%s</type>
+	 *   <priority>%s</priority>
+	 *   <weightCost>%f</weightCost>
+	 *   <volumeCost>%f</volumeCost>
+	 * </price>
+	 * }
+	 * </pre>
 	 * ----------------------
 	 * 
-	 * @param event
+	 * @param event The price event to write to the log file
 	 * @throws IOException 
 	 */
-	public void writeCustomerPrice(CustomerPrice event) throws Exception {
+	public void writeCustomerPrice(CustomerPrice event) {
 		
-		doc = docBuilder.parse(logFile);
+		try {
+			doc = docBuilder.parse(logFile);
+		} catch (SAXException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		Node events = doc.getDocumentElement();
 		
 		// Make Elements
@@ -395,12 +446,21 @@ public class LogWriter {
         // Write to XML file
         DOMSource    source = new DOMSource(doc);
         StreamResult output = new StreamResult(logFile);
-        transformer.transform(source, output);
+        try {
+			transformer.transform(source, output);
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
         
         // Console Logging for Testing
         if(LOGS) {
+        	System.out.println("\n----------price");
 	        StreamResult consoleResult =  new StreamResult(System.out);
-	      	transformer.transform(source, consoleResult);
+	      	try {
+				transformer.transform(source, consoleResult);
+			} catch (TransformerException e) {
+				e.printStackTrace();
+			}
         }
 	}
 
@@ -408,20 +468,30 @@ public class LogWriter {
 	 * Writes Discontinue Event to log file.
 	 * 
 	 * ------- FORMAT -------
-	   <discontinue>
-  	 	  <company>%s</company>
-  		  <to>%s</to>
-  		  <from>%s</from>
-  		  <type>%s</type>
-	   </discontinue>
+	 * <pre>
+	 * {@literal
+	 * <discontinue>
+	 *   <company>%s</company>
+	 *   <to>%s</to>
+	 *   <from>%s</from>
+	 *   <type>%s</type>
+	 * </discontinue>
+	 * }
+	 * </pre>
 	 * ----------------------
 	 *
-	 * @param event
+	 * @param event The discontinue event to write to the log file
 	 * @throws IOException 
 	 */
-	public void writeDiscontinue(DiscontinueRoute event) throws Exception {
+	public void writeDiscontinue(DiscontinueRoute event) {
 		
-		doc = docBuilder.parse(logFile);
+		try {
+			doc = docBuilder.parse(logFile);
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		Node events = doc.getDocumentElement();
 	  
 	  	// Make Elements
@@ -447,12 +517,21 @@ public class LogWriter {
 	  	// Write to XML file
 	  	DOMSource    source = new DOMSource(doc);
 	  	StreamResult output = new StreamResult(logFile);
-		transformer.transform(source, output);
+		try {
+			transformer.transform(source, output);
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
 	
 		// Console Logging for Testing
 		if(LOGS) {
+			System.out.println("\n----------disc.");
 		  	StreamResult consoleResult =  new StreamResult(System.out);
-			transformer.transform(source, consoleResult);
+			try {
+				transformer.transform(source, consoleResult);
+			} catch (TransformerException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

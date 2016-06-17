@@ -174,6 +174,11 @@ public class LogReader {
 			e.printStackTrace();
 		}
 	}
+	public LogReader(File logFile, Main mainClass, boolean in, boolean out) {
+		this(logFile, mainClass);
+		this.LOGSIN = in;
+		this.LOGSOUT = out;
+	}
 	
 	// METHODS
 	// Main Method
@@ -449,8 +454,7 @@ public class LogReader {
 	
 	// Put Events into System (step 4)
 	private void appendLeg() {
-		// Get the leg objects from the main class (or make new ones)
-		/*
+		// Get the Location objects from the main class (or make new ones)
 		Location from = main.getLocation(leg.origin);
 		if (from == null) {
 			from = new Location(leg.origin);
@@ -461,11 +465,6 @@ public class LogReader {
 			to = new Location(leg.destination);
 			main.addLocation(to);
 		}
-		/**/
-		// TODO Remove this once hooked up to main properly. Alt way for testing only!
-		// TODO Seriously. THis is not the final way shit is meant to be.
-		Location from = new Location(leg.origin);
-		Location to = new Location(leg.destination);
 		
 		Leg legObject = new Leg(from, to, leg.type, leg.company, leg.cost, leg.price) {
 			// For logging purposes
@@ -487,46 +486,40 @@ public class LogReader {
 	}
 	private void sendEvent() {
 		switch (currentEvent.getEventType()) {
+		
 		case "cost":
 			if(LOGSOUT){System.out.println(cost);}
-			
-			/*
 			main.logTransportCostUpdate(cost.origin, cost.destination, 
 					cost.company, cost.type, cost.weightCost, cost.volumeCost, 
 					cost.maxWeight, cost.maxVolume, cost.duration, cost.frequency, 
 					cost.day, cost.startTime, true);
-			/**/
 			cost = null;
 			break;
+		
 		case "mail":
 			if(LOGSOUT){System.out.println(mail);}
-			
-			/*
 			main.logDeliveryRequest(mail.logTime, mail.origin, mail.destination, mail.legs,
 					mail.weight, mail.volume, mail.priority, mail.duration, true);
-			/**/
 			mail = null;
 			break;
+		
 		case "price":
 			if(LOGSOUT){System.out.println(price);}
-			
-			/*
 			main.logCustomerPriceUpdate(price.origin, price.destination, 
 					price.priority, price.weightCost, price.volumeCost, true);
-			/**/
 			price = null;
 			break;
+		
 		case "discontinue":
 			if(LOGSOUT){System.out.println(discont);}
-			
-			/*
-			main.logRouteDiscontinued(discont.origin, discont.destination, 
+			main.discontinueTransportRoute(discont.origin, discont.destination, 
 					discont.company, discont.type, true);
-			/**/
 			discont = null;
 			break;
+		
 		default:
 			System.out.println("Error. Tried to send invalid event type: "+currentEvent.getEventType());
+			break;
 		}
 	}	
 }

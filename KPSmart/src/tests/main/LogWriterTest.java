@@ -17,13 +17,10 @@ import event.*;
 
 public class LogWriterTest {
 	
-	// Console Logging
-	private static boolean LOGS = true;
-	
 	// VARIABLES
-	static File file1 = new File("KPSmart/src/tests/test_1.xml");
-	static File file2 = new File("KPSmart/src/tests/test_2.xml");
-	static File file3 = new File("KPSmart/src/tests/logfile.xml");
+	static File file1 = new File("KPSmart/src/tests/writer_test_1.xml");
+	static File file2 = new File("KPSmart/src/tests/writer_test_2.xml");
+	static File file3 = new File("KPSmart/src/tests/writer_test_3.xml");
 	static LogWriter log;
 	
 	// HELPERS
@@ -45,16 +42,17 @@ public class LogWriterTest {
 	}
 	@AfterClass
 	public static void tearDown() {
+		boolean veto = true;
 		boolean kill3 = false;
 		
-		if (file1.isFile()) {
+		if (file1.isFile() && !veto) {
 			file1.delete();
 		}
 		
-		if (file2.isFile()) {
+		if (file2.isFile() && !veto) {
 			file2.delete();
 		}
-		if (file3.isFile() && kill3) {
+		if (file3.isFile() && kill3 && !veto) {
 			file3.delete();
 		}
 	}
@@ -83,22 +81,21 @@ public class LogWriterTest {
 		assertTrue(file3.isFile());
 	}
 	
-	// Writers
+	// Writers to file3
 	@Test
 	public void testWriteDeliveryRequest() throws Exception {
-		if (LOGS) {System.out.println("\n----------mail");}
 		Location from = new Location("Fresh");
 		Location to = new Location("Clean");
 		LocalDateTime time = LocalDateTime.of(2016, 1, 1, 0, 0);
 		ArrayList<Leg> legs = new ArrayList<Leg>();
 		
 		legs.add(new Leg(from, to, "Seas", "POst dot co", 40.0, 28.4));
+		
 		DeliveryRequest mail = new DeliveryRequest(time, from, to, 40.0, 20.0, "International Air", 30, legs);
 		log.writeDeliveryRequest(mail);
 	}
 	@Test
 	public void testWriteRoute1() throws Exception {
-		if (LOGS) {System.out.println("\n----------cost1");}
 		Location from = new Location("Wellington");
 		Location to =  new Location("Christchurch");
 		CustomerPrice price = new CustomerPrice(from, to, "Low ass Priority", 20.0, 10.0);
@@ -110,8 +107,6 @@ public class LogWriterTest {
 	}
 	@Test
 	public void testWriteRoute2() throws Exception {
-		if (LOGS) {System.out.println("\n----------cost2");}
-		
 		CustomerPrice price = new CustomerPrice(new Location("place"), new Location("otherplace"), "Super Imp", 30.54, 20.0);
 		Route route = new Route(new Location("Auckland"), new Location("Dunedin"), "UPS", "Land", 
 				"Local Standard", 20.8, 56.2, 43,123,33, 2, DayOfWeek.TUESDAY, 20, price);
@@ -119,22 +114,104 @@ public class LogWriterTest {
 	}
 	@Test
 	public void testWriteCustomerPrice1() throws Exception {
-		if (LOGS) {System.out.println("\n----------price1");}
-		
 		CustomerPrice price = new CustomerPrice(new Location("StartPlace"), new Location("EndPlace"), "Stand LOcal brah", 3.0, 5.0);
 		log.writeCustomerPrice(price);
 	}
 	@Test
 	public void testWriteCustomerPrice2() throws Exception {
-		if (LOGS) {System.out.println("\n----------price2");}
-		
 		CustomerPrice price = new CustomerPrice(new Location("place"), new Location("otherplace"), "Super Imp", 30.54, 20.0);
 		log.writeCustomerPrice(price);
 	}
 	@Test
 	public void testWriteDiscontinue() throws Exception {
-		if (LOGS) {System.out.println("\n----------disc.");}
 		DiscontinueRoute disc = new DiscontinueRoute(new Location("Christchurch"), new Location("Wellington"), "NZ Post", "Sea");
 		log.writeDiscontinue(disc);
+	}
+
+	@Test
+	public void writeFile1() {
+		log = new LogWriter(file1, true);
+		
+		Location dud = new Location("Dunedin");
+		Location chc = new Location("Christchurch");
+		Location wlg = new Location("Wellington");
+		Location hlz = new Location("Hamilton");
+		Location akl = new Location("Auckland");
+		Location la = new Location("Los Angeles");
+		Location bud  = new Location("Budapest");
+		
+		CustomerPrice c1 = new CustomerPrice(dud, chc, "Standard", 3, 34);
+		CustomerPrice c2 = new CustomerPrice(chc, dud, "Air", 5, 11);
+		CustomerPrice c3 = new CustomerPrice(chc, wlg, "Air", 235, 24);
+		CustomerPrice c4 = new CustomerPrice(wlg, chc, "Standard", 22, 232);
+		CustomerPrice c5 = new CustomerPrice(wlg, hlz, "Standard", 31, 123);
+		CustomerPrice c6 = new CustomerPrice(chc, akl, "Standard", 11, 22);
+		CustomerPrice c7 = new CustomerPrice(hlz, akl, "Standard", 18, 4);
+		CustomerPrice c8 = new CustomerPrice(akl, wlg, "Standard", 25, 13);
+		CustomerPrice c9 = new CustomerPrice(akl, dud, "Air", 37, 21);
+		CustomerPrice c10 = new CustomerPrice(akl, bud, "Standard", 27, 4);
+		CustomerPrice c11 = new CustomerPrice(akl, la, "Air", 8, 12);
+		CustomerPrice c12 = new CustomerPrice(wlg, akl, "Air", 14, 4);
+		CustomerPrice c13 = new CustomerPrice(chc, wlg, "Standard", 32, 21);
+		CustomerPrice c14 = new CustomerPrice(chc, dud, "Standard", 2, 22);
+		
+		Route r1 = new Route(dud, chc, "BopPop Post", "Sea", "Standard", 5, 14, 200, 650, 43, 23, DayOfWeek.MONDAY, 6, c1);
+		Route r2 = new Route(chc, dud, "NZ POST man", "Air", "Air", 15, 8, 450, 300, 32, 22, DayOfWeek.TUESDAY, 11, c2);
+		Route r3 = new Route(chc, wlg, "NZ POST buh", "Air", "Air", 25, 4, 650, 200, 22, 13, DayOfWeek.THURSDAY, 2, c3);
+		Route r4 = new Route(wlg, chc, "Heella Post", "Sea", "Standard", 4, 45, 120, 600, 36, 48, DayOfWeek.WEDNESDAY, 3, c4);
+		Route r5 = new Route(wlg, hlz, "NZ POST boy", "Land", "Standard", 42, 6, 200, 300, 25, 41, DayOfWeek.MONDAY, 18, c5);
+		Route r6 = new Route(chc, akl, "BopPop Post", "Sea", "Standard", 457, 2, 220, 300, 15, 5, DayOfWeek.MONDAY, 9, c6);
+		Route r7 = new Route(hlz, akl, "*FreshPost*", "Land", "Standard", 6, 6, 300, 200, 47, 16, DayOfWeek.FRIDAY, 22, c7);
+		Route r8 = new Route(akl, wlg, "BopPop Post", "Land", "Standard", 26, 28, 200, 300, 35, 53, DayOfWeek.THURSDAY, 17, c8);
+		Route r9 = new Route(akl, dud, "New Ze POST", "Air", "Air", 26, 26, 650, 300, 2, 11, DayOfWeek.MONDAY, 21, c9);
+		Route r10 = new Route(akl, bud, "NZ POST bo", "Sea", "Standard", 22, 30, 650, 520, 14, 44, DayOfWeek.WEDNESDAY, 15, c10);
+		Route r11 = new Route(akl, la, "BopPop Post", "Air", "Air", 11, 11, 200, 300, 43, 14, DayOfWeek.WEDNESDAY, 8, c11);
+		Route r12 = new Route(wlg, akl, "Fresh Post", "Land", "Standard", 37, 23, 390, 300, 2, 24, DayOfWeek.MONDAY, 14, c12);
+		Route r13 = new Route(chc, wlg, "Jeff's Van", "Sea", "Standard", 26, 20, 200, 200, 27, 12, DayOfWeek.THURSDAY, 16, c13);
+		Route r14 = new Route(chc, dud, "Fresh Post", "Land", "Standard", 18, 6, 650, 210, 15, 24, DayOfWeek.WEDNESDAY, 20, c14);
+		Route r15_6 = new Route(chc, akl, "Fresh Post", "Land", "Standard", 16, 3, 200, 580, 10, 7, DayOfWeek.FRIDAY, 7, c6);
+		Route r16_14 = new Route(chc, dud, "*FreshPost*", "Sea", "Standard", 25, 14, 200, 550, 24, 11, DayOfWeek.FRIDAY, 5, c14);
+		Route r17_1 = new Route(dud, chc, "Jeff's Van", "Land", "Standard", 25, 3, 300, 540, 10, 10, DayOfWeek.THURSDAY, 5, c1);
+		Route r18_9 = new Route(akl, dud, "Jeff's Van", "Air", "Air", 11, 13, 300, 500, 20, 2, DayOfWeek.FRIDAY, 6, c9);
+		Route r19_12 = new Route(wlg, akl, "Johnny Mac", "Air", "Air", 25, 9, 420, 320, 3, 12, DayOfWeek.FRIDAY, 3, c12);
+		Route r20_13 = new Route(chc, wlg, "Jeff's Van", "Land", "Standard", 22, 5, 450, 320, 16, 6, DayOfWeek.THURSDAY, 7, c13);
+		Route r21_13 = new Route(chc, wlg, "FreshPaste", "Land", "Standard", 37, 6, 240, 390, 6, 4, DayOfWeek.FRIDAY, 8, c13);
+		
+		log.writeCustomerPrice(c1);
+		log.writeCustomerPrice(c2);
+		log.writeCustomerPrice(c3);
+		log.writeCustomerPrice(c4);
+		log.writeCustomerPrice(c5);
+		log.writeCustomerPrice(c6);
+		log.writeCustomerPrice(c7);
+		log.writeCustomerPrice(c8);
+		log.writeCustomerPrice(c9);
+		log.writeCustomerPrice(c10);
+		log.writeCustomerPrice(c11);
+		log.writeCustomerPrice(c12);
+		log.writeCustomerPrice(c13);
+		log.writeCustomerPrice(c14);
+		
+		log.writeRoute(r1);
+		log.writeRoute(r2);
+		log.writeRoute(r3);
+		log.writeRoute(r4);
+		log.writeRoute(r5);
+		log.writeRoute(r6);
+		log.writeRoute(r7);
+		log.writeRoute(r8);
+		log.writeRoute(r9);
+		log.writeRoute(r10);
+		log.writeRoute(r11);
+		log.writeRoute(r12);
+		log.writeRoute(r13);
+		log.writeRoute(r14);
+		log.writeRoute(r15_6);
+		log.writeRoute(r16_14);
+		log.writeRoute(r17_1);
+		log.writeRoute(r18_9);
+		log.writeRoute(r19_12);
+		log.writeRoute(r20_13);
+		log.writeRoute(r21_13);
 	}
 }

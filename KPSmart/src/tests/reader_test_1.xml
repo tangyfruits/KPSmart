@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <events>
+  <cost>
+    <to>Christchurch</to>
+    <from>Wellington</from>
+    <company>NZ Post</company>
+    <type>Sea</type>
+    <priority>Local Standard</priority>
+    <weightCost>4.0</weightCost>
+    <volumeCost>6.0</volumeCost>
+    <maxWeight>400</maxWeight>
+    <maxVolume>150</maxVolume>
+    <duration>60</duration>
+    <frequency>12</frequency>
+    <day>Thursday</day>
+    <hour>12</hour>
+  </cost>
+<cost>
+    <to>Dunedin</to>
+    <from>Auckland</from>
+    <company>UPS</company>
+    <type>Land</type>
+    <priority>Local Standard</priority>
+    <weightCost>20.8</weightCost>
+    <volumeCost>56.2</volumeCost>
+    <maxWeight>43</maxWeight>
+    <maxVolume>123</maxVolume>
+    <duration>33</duration>
+    <frequency>2</frequency>
+    <day>Tuesday</day>
+    <hour>20</hour>
+  </cost>
   <discontinue>
     <to>Wellington</to>
     <from>Christchurch</from>
@@ -39,34 +69,4 @@
     <weightCost>30.54</weightCost>
     <volumeCost>20.0</volumeCost>
   </price>
-<cost>
-    <to>Christchurch</to>
-    <from>Wellington</from>
-    <company>NZ Post</company>
-    <type>Sea</type>
-    <priority>Local Standard</priority>
-    <weightCost>4.0</weightCost>
-    <volumeCost>6.0</volumeCost>
-    <maxWeight>400</maxWeight>
-    <maxVolume>150</maxVolume>
-    <duration>60</duration>
-    <frequency>12</frequency>
-    <day>Thursday</day>
-    <hour>12</hour>
-  </cost>
-<cost>
-    <to>Dunedin</to>
-    <from>Auckland</from>
-    <company>UPS</company>
-    <type>Land</type>
-    <priority>Local Standard</priority>
-    <weightCost>20.8</weightCost>
-    <volumeCost>56.2</volumeCost>
-    <maxWeight>43</maxWeight>
-    <maxVolume>123</maxVolume>
-    <duration>33</duration>
-    <frequency>2</frequency>
-    <day>Tuesday</day>
-    <hour>20</hour>
-  </cost>
 </events>
