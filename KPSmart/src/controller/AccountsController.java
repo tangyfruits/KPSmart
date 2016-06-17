@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,27 +15,44 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import main.Main;
 
 public class AccountsController implements Initializable {
 	private Main main;
-	
-	@FXML 
-	private Button history;
-	
-	private BooleanProperty isManager = new SimpleBooleanProperty(false);
 
+	@FXML
+	private MenuButton accounts;
+
+	@FXML
+	private Button history;
+
+	private BooleanProperty isManager = new SimpleBooleanProperty(false);
 
 	public AccountsController(Main main) {
 		this.main = main;
 	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		isManager.set(main.getCurrentUser().isManager());
 		history.visibleProperty().bind(isManager);
+
+		MenuItem changePassword = new MenuItem("Change Password");
+		changePassword.setOnAction(changePassAction());
+		accounts.getItems().add(changePassword);
+
+		if (main.getCurrentUser().isManager()) {
+			MenuItem addUser = new MenuItem("Add User");
+			addUser.setOnAction(addUserAction());
+			accounts.getItems().add(addUser);
+			MenuItem editUser = new MenuItem("Edit User");
+			editUser.setOnAction(editUserAction());
+			accounts.getItems().add(editUser);
+		}
 	}
-	
+
 	/**
 	 * NAV BAR BUTTONS
 	 * 
@@ -52,6 +70,8 @@ public class AccountsController implements Initializable {
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
 		Scene scene = new Scene(historyGUI);
 		stage.setScene(scene);
+		HistoryController cont = history.getController();
+      	cont.initData();
 		stage.show();
 	}
 
@@ -158,55 +178,79 @@ public class AccountsController implements Initializable {
 		controller.initDropdownWithOther();
 		stage.show();
 	}
-	
 
 	/** ACCOUNTS MENU ITEM */
 
 	@FXML
-	MenuButton accounts;
+	private EventHandler<ActionEvent> addUserAction() {
+		return new EventHandler<ActionEvent>() {
 
-	@FXML
-	private void addUserAction(ActionEvent event) throws IOException {
-		FXMLLoader addUser = new FXMLLoader(getClass().getResource(
-				"/views/adduser.fxml"));
-		addUser.setController(new AccountsController(main));
-		Parent addUserGUI = addUser.load();
+			public void handle(ActionEvent event) {
+				FXMLLoader addUser = new FXMLLoader(getClass().getResource(
+						"/views/adduser.fxml"));
+				addUser.setController(new AccountsController(main));
+				Parent addUserGUI = null;
+				try {
+					addUserGUI = addUser.load();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 
-		Stage stage = (Stage) accounts.getScene().getWindow();
-		Scene scene = new Scene(addUserGUI);
-		stage.setScene(scene);
-		stage.show();
+				Stage stage = (Stage) accounts.getScene().getWindow();
+				Scene scene = new Scene(addUserGUI);
+				stage.setScene(scene);
+				stage.show();
+			}
+		};
 	}
 
-	@FXML
-	private void editUserAction(ActionEvent event)
-			throws IOException {
-		FXMLLoader editUser = new FXMLLoader(getClass().getResource(
-				"/views/edituser.fxml"));
-		editUser.setController(new AccountsController(main));
-		Parent editUserGUI = editUser.load();
+	private EventHandler<ActionEvent> editUserAction() {
+		return new EventHandler<ActionEvent>() {
 
-		Stage stage = (Stage) accounts.getScene().getWindow();
-		Scene scene = new Scene(editUserGUI);
-		stage.setScene(scene);
-		stage.show();
+			public void handle(ActionEvent event) {
+				FXMLLoader editUser = new FXMLLoader(getClass().getResource(
+						"/views/edituser.fxml"));
+				editUser.setController(new AccountsController(main));
+				Parent editUserGUI = null;
+				try {
+					editUserGUI = editUser.load();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				Stage stage = (Stage) accounts.getScene().getWindow();
+				Scene scene = new Scene(editUserGUI);
+				stage.setScene(scene);
+				stage.show();
+			}
+		};
 	}
 
-	@FXML
-	private void changePassAction(ActionEvent event) throws IOException {
-		FXMLLoader changePass = new FXMLLoader(getClass().getResource(
-				"/views/changepass.fxml"));
-		changePass.setController(new AccountsController(main));
-		Parent changePassGUI = changePass.load();
+	private EventHandler<ActionEvent> changePassAction() {
+		return new EventHandler<ActionEvent>() {
 
-		Stage stage = (Stage) accounts.getScene().getWindow();
-		Scene scene = new Scene(changePassGUI);
-		stage.setScene(scene);
-		stage.show();
+			public void handle(ActionEvent event) {
+				FXMLLoader changePass = new FXMLLoader(getClass().getResource(
+						"/views/changepass.fxml"));
+				changePass.setController(new AccountsController(main));
+				Parent changePassGUI = null;
+				try {
+					changePassGUI = changePass.load();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				Stage stage = (Stage) accounts.getScene().getWindow();
+				Scene scene = new Scene(changePassGUI);
+				stage.setScene(scene);
+				stage.show();
+			}
+		};
+
 	}
 	
 	@FXML
-	private void addUserButtonAction(ActionEvent event){
+	private void changePassButtonAction(ActionEvent event){
 		
 	}
 	
@@ -216,7 +260,7 @@ public class AccountsController implements Initializable {
 	}
 	
 	@FXML
-	private void changePassButtonAction(ActionEvent event){
+	private void addUserButtonAction(ActionEvent event){
 		
 	}
 }

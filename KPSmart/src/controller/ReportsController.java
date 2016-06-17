@@ -60,10 +60,10 @@ public class ReportsController implements Initializable {
 
 		if (main.getCurrentUser().isManager()) {
 			MenuItem addUser = new MenuItem("Add User");
-			addUser.setOnAction(editUserAction());
+			addUser.setOnAction(addUserAction());
 			accounts.getItems().add(addUser);
 			MenuItem editUser = new MenuItem("Edit User");
-			editUser.setOnAction(addUserAction());
+			editUser.setOnAction(editUserAction());
 			accounts.getItems().add(editUser);
 		}
 		
@@ -249,21 +249,22 @@ public class ReportsController implements Initializable {
 	private EventHandler<ActionEvent> changePassAction() {
 		return new EventHandler<ActionEvent>() {
 
-			public void handle(ActionEvent event) {
+			public void handle(ActionEvent event){
 				FXMLLoader changePass = new FXMLLoader(getClass().getResource(
 						"/views/changepass.fxml"));
 				changePass.setController(new AccountsController(main));
-				Parent changePassGUI = null;
+				Parent changePassGUI;
 				try {
 					changePassGUI = changePass.load();
+					Stage stage = (Stage) accounts.getScene().getWindow();
+					Scene scene = new Scene(changePassGUI);
+					stage.setScene(scene);
+					stage.show();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 
-				Stage stage = (Stage) accounts.getScene().getWindow();
-				Scene scene = new Scene(changePassGUI);
-				stage.setScene(scene);
-				stage.show();
+				
 			}
 		};
 	}
