@@ -32,6 +32,11 @@ public class HistoryController implements Initializable {
 	
 	@FXML
 	private VBox box;
+	@FXML 
+	private Button history;
+	
+	private BooleanProperty isManager = new SimpleBooleanProperty(false);
+
 	
 	public HistoryController(Main main) {
 		this.main = main;
@@ -39,7 +44,10 @@ public class HistoryController implements Initializable {
 	}
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {	}
+	public void initialize(URL arg0, ResourceBundle arg1) {	
+		isManager.set(main.getCurrentUser().isManager());
+		history.visibleProperty().bind(isManager);
+	}
 
 	public void initData() {
 		HashMap<String, String> item = stepper.latestEvent();

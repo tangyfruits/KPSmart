@@ -42,6 +42,12 @@ import main.RouteDisplay;
 public class FormController implements Initializable {
 
 	private Main main;
+	
+	@FXML 
+	private Button history;
+	
+	private BooleanProperty isManager = new SimpleBooleanProperty(false);
+
 
 	public FormController(Main main) {
 		this.main = main;
@@ -49,8 +55,8 @@ public class FormController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-
+		isManager.set(main.getCurrentUser().isManager());
+		history.visibleProperty().bind(isManager);
 	}
 
 	private ArrayList<Location> locs;

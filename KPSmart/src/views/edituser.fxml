@@ -76,8 +76,8 @@
       <GridPane hgap="20.0" layoutX="216.0" layoutY="320.0" prefHeight="18.0" prefWidth="266.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="106.83880615234375" minWidth="10.0" prefWidth="63.32977294921875" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.20590209960938" minWidth="10.0" prefWidth="48.664886474609375" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.33511352539062" minWidth="10.0" prefWidth="108.33511352539062" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.20590209960938" minWidth="10.0" prefWidth="63.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.33511352539062" minWidth="10.0" prefWidth="97.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
