@@ -26,6 +26,8 @@ public class KPSgui extends Application {
 		Parent UI = login.load();
 						
 		primaryStage.setTitle("KPSmart");
+		primaryStage.setMinWidth(720);
+		primaryStage.setMinHeight(620);
 		Scene scene = new Scene(UI, 700, 600);
 		primaryStage.setScene(scene);
 		primaryStage.show();
