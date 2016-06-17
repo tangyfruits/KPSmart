@@ -36,6 +36,7 @@ public class ReportsController implements Initializable {
 	private Main main;
 	
 	private DecimalFormat df = new DecimalFormat("0.00");
+	private DecimalFormat odf = new DecimalFormat("0.0");
 	private DecimalFormat sf = new DecimalFormat("0");
 	
 	@FXML 
@@ -299,10 +300,9 @@ public class ReportsController implements Initializable {
 	    HashMap<Tuple, ArrayList<Double>> temp = main.getAmountOfMail();
 	    report = new ArrayList<RouteLoadRow>();
 	    for(Tuple t: temp.keySet()){
-	    	RouteLoadRow row = new RouteLoadRow(t.getOrigin(), t.getDestination(), Double.toString(temp.get(t).get(0)), Double.toString(temp.get(t).get(1)), sf.format(temp.get(t).get(2)));
+	    	RouteLoadRow row = new RouteLoadRow(t.getOrigin(), t.getDestination(), odf.format(temp.get(t).get(0)), odf.format(temp.get(t).get(1)), sf.format(temp.get(t).get(2)));
 	    	report.add(row);
 	    }
-	   
 	    origin.setCellValueFactory(new PropertyValueFactory<Tuple,String>("origin"));
 	    dest.setCellValueFactory(new PropertyValueFactory<Tuple,String>("destination"));
 	    totalWeight.setCellValueFactory(new PropertyValueFactory<Tuple,String>("totalWeight"));
@@ -318,9 +318,13 @@ public class ReportsController implements Initializable {
 	@FXML
 	private TableColumn<Tuple,String> critDest;
 	@FXML
+	private TableColumn<Tuple,String> critPriority;
+	@FXML
 	private TableColumn<Tuple,String> critPrice;
 	@FXML
 	private TableColumn<Tuple,String> critCost;
+	@FXML
+	private TableColumn<Tuple,String> critDiff;
 	
 	private ArrayList<CriticalRoutesRow> critReport;
 	
@@ -329,14 +333,17 @@ public class ReportsController implements Initializable {
 		HashMap<TuplePriority, ArrayList<Double>> temp = main.getCriticalRoutes();
 	    critReport = new ArrayList<>();
 	    for(TuplePriority t: temp.keySet()){
-	    	CriticalRoutesRow row = new CriticalRoutesRow(t.getOrigin(), t.getDestination(), Double.toString(temp.get(t).get(0)), Double.toString(temp.get(t).get(1)));
+	    	CriticalRoutesRow row = new CriticalRoutesRow(t.getOrigin(), t.getDestination(),t.getPriority(), "$" +  df.format(temp.get(t).get(0)),"$" +  df.format(temp.get(t).get(1)),
+	    			"$" +  df.format(temp.get(t).get(2)));
 	    	critReport.add(row);
 	    }
-	   
+	    
 	    critOrigin.setCellValueFactory(new PropertyValueFactory<Tuple,String>("origin"));
 	    critDest.setCellValueFactory(new PropertyValueFactory<Tuple,String>("destination"));
+	    critPriority.setCellValueFactory(new PropertyValueFactory<Tuple,String>("priority"));
 	    critPrice.setCellValueFactory(new PropertyValueFactory<Tuple,String>("price"));
 	    critCost.setCellValueFactory(new PropertyValueFactory<Tuple,String>("cost"));
+	    critDiff.setCellValueFactory(new PropertyValueFactory<Tuple,String>("diff"));
 	    criticalTable.getItems().setAll(critReport);
 	}
 	
@@ -359,10 +366,9 @@ public class ReportsController implements Initializable {
 	    avReport = new ArrayList<>();
 	    for(TuplePriority t: temp.keySet()){
 	    	Double average = (double)temp.get(t).get(0)/(double)temp.get(t).get(1);
-	    	AverageTimesRow row = new AverageTimesRow(t.getOrigin(), t.getDestination(), t.getPriority(), Double.toString(average));
+	    	AverageTimesRow row = new AverageTimesRow(t.getOrigin(), t.getDestination(), t.getPriority(), odf.format(average)+ " hrs");
 	    	avReport.add(row);
 	    }
-	   
 	    avOrigin.setCellValueFactory(new PropertyValueFactory<Tuple,String>("origin"));
 	    avDest.setCellValueFactory(new PropertyValueFactory<Tuple,String>("destination"));
 	    avPriority.setCellValueFactory(new PropertyValueFactory<Tuple,String>("priority"));

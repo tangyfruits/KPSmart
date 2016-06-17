@@ -629,50 +629,48 @@ public class Main {
 		TuplePriority odp = new TuplePriority(origin, dest, prior);
 		ArrayList<Double> costPrice = new ArrayList<>();
 		
-//		Location originLoc = null;
-//		Location destinationLoc = null;
-//		CustomerPrice price = null;
-//		for (int i = 0; i < locations.size(); i++) {
-//			if (locations.get(i).getName().equals(origin)) {
-//				originLoc = locations.get(i);
-//			}
-//			if (locations.get(i).getName().equals(dest)) {
-//				destinationLoc = locations.get(i);
-//			}
-//		}
-//		if (originLoc == null) {
-//			originLoc = new Location(origin);
-//			addLocation(originLoc);
-//		}
-//		if (destinationLoc == null) {
-//			destinationLoc = new Location(dest);
-//			addLocation(destinationLoc);
-//		}
-//		
-//		price = getCustomerPrice(originLoc, destinationLoc, origin, dest, prior);
-//		double cp = price.getWeightCost()*weight + price.getVolumeCost()*volume;
-//		double rp = 0.0;
-//		
-//		for (Route r: originLoc.getRoutes()){
-//			if (r.getOrigin().equals(originLoc)&&r.getDestination().equals(destinationLoc)){//is the same route
-//				rp = r.getWeightCost();//find trans cost
-//			}
-//		}
 		double cp = 0;
 		double rp = 0;
 		for(Leg l :legs){
 			cp += l.getCost();
 			rp += l.getPrice();
 		}
-		costPrice.add(cp); //1st element: price
-		costPrice.add(rp); //2nd element: cost
+
 		
-		if (rp<cp){	
-			criticalRoutes.put(odp, costPrice);
+		boolean success = false;
+		for (TuplePriority t : criticalRoutes.keySet()) {
+			if (t.getOrigin().equals(origin) && t.getDestination().equals(dest)) {
+				costPrice = criticalRoutes.get(t);
+				costPrice.set(0, costPrice.get(0) + cp);
+				costPrice.set(1, costPrice.get(1) + rp);
+				costPrice.set(2, costPrice.get(2)+1);
+				criticalRoutes.put(t, costPrice);
+				success = true;
+			}
+		}
+		if (!success) {
+			TuplePriority t = new TuplePriority(origin, dest, prior);
+			costPrice = new ArrayList<>();
+			costPrice.add(cp);
+			costPrice.add(rp);
+			costPrice.add(1.0);
+			criticalRoutes.put(t, costPrice);
 		}
 	}	
 	public HashMap<TuplePriority, ArrayList<Double>> getCriticalRoutes(){
-		return criticalRoutes;
+		HashMap<TuplePriority, ArrayList<Double>> criticals = new HashMap<>();
+		for(TuplePriority t: criticalRoutes.keySet()){
+			Double averageCost = criticalRoutes.get(t).get(0)/criticalRoutes.get(t).get(2);
+			Double averagePrice = criticalRoutes.get(t).get(1)/criticalRoutes.get(t).get(2);
+			if(averageCost>averagePrice){
+				ArrayList<Double> averages = new ArrayList<>();
+				averages.add(averageCost);
+				averages.add(averagePrice);
+				averages.add(averageCost-averagePrice);
+				criticals.put(t, averages);
+			}
+		}
+		return criticals;
 	}
 	
 	// Amount of Mail

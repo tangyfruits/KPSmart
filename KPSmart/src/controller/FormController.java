@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -870,6 +871,7 @@ public class FormController implements Initializable {
 		}
 	}
 	
+	private DecimalFormat df = new DecimalFormat("0.00");
 
 	@FXML
 	private void findPrioritiesButtonAction(ActionEvent event) {
@@ -889,7 +891,7 @@ public class FormController implements Initializable {
 				submit.visibleProperty().bind(hasPriorities);
 				reselect.visibleProperty().bind(hasPriorities);
 				firstChoice.setText(routes.get(0).getPriority() + ": $"
-						+ routes.get(0).getPrice());
+						+ df.format(routes.get(0).getPrice()));
 				firstChoice.visibleProperty().bind(hasPriorities);
 				if (routes.size() == 2) {
 					secondChoice.setText(routes.get(1).getPriority() + ": $"
