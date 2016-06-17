@@ -26,40 +26,40 @@ public class CriticalTests {
 		v = 1.5;
 		
 	}
-	
-	@Test
-	public void test1() {
-		setUp();
-		main.addToCriticalRoutes(o, d, p, w, v);
-		System.out.println(main.getCriticalRoutes().remove(0));
-	}
-	
-	@Test
-	public void test2() {
-		setUp();
-		main.addToCriticalRoutes(o, d, p, w, v);
-		System.out.println(main.getCriticalRoutes().remove(0));
-	}
-	
-	@Test
-	public void test3() {
-		setUp();
-		main.addToCriticalRoutes(o, d, p, w, v);
-		System.out.println(main.getCriticalRoutes().remove(0));
-	}
-	
-	@Test
-	public void test4() {
-		setUp();
-		main.addToCriticalRoutes(o, d, p, w, v);
-		System.out.println(main.getCriticalRoutes().remove(0));
-	}
-	
-	@Test
-	public void test5() {
-		setUp();
-		main.addToCriticalRoutes(o, d, p, w, v);
-		System.out.println(main.getCriticalRoutes().remove(0));
-	}
+//	
+//	@Test
+//	public void test1() {
+//		setUp();
+//		main.addToCriticalRoutes(o, d, p, w, v);
+//		System.out.println(main.getCriticalRoutes().remove(0));
+//	}
+//	
+//	@Test
+//	public void test2() {
+//		setUp();
+//		main.addToCriticalRoutes(o, d, p, w, v);
+//		System.out.println(main.getCriticalRoutes().remove(0));
+//	}
+//	
+//	@Test
+//	public void test3() {
+//		setUp();
+//		main.addToCriticalRoutes(o, d, p, w, v);
+//		System.out.println(main.getCriticalRoutes().remove(0));
+//	}
+//	
+//	@Test
+//	public void test4() {
+//		setUp();
+//		main.addToCriticalRoutes(o, d, p, w, v);
+//		System.out.println(main.getCriticalRoutes().remove(0));
+//	}
+//	
+//	@Test
+//	public void test5() {
+//		setUp();
+//		main.addToCriticalRoutes(o, d, p, w, v);
+//		System.out.println(main.getCriticalRoutes().remove(0));
+//	}
 
 }

@@ -26,7 +26,7 @@ public class Main {
 	private HashMap<TuplePriority, ArrayList<Integer>> amountOfMailDeliveryTimes;
 	private HashMap<Tuple, ArrayList<Double>> amountOfMail;
 	private ArrayList<DeliveryRequest> deliveryRequests;
-	private HashMap<Tuple,ArrayList<Double>> criticalRoutes;
+	private HashMap<TuplePriority,ArrayList<Double>> criticalRoutes;
 
 	private File configFile;
 	private File logFile;
@@ -294,7 +294,9 @@ public class Main {
 
 		// add to delivery events field
 		addToAverageDeliveryTimes(origin, destination, duration, priority);
+		System.out.println("Duration: "+duration);
 		addToAmountOfMail(origin, destination, weight, volume);
+		addToCriticalRoutes(origin, destination, priority, legs);
 		deliveryRequests.add(request);
 
 		// if (!initial) {
@@ -623,47 +625,53 @@ public class Main {
 
 	// REPORTS
 	// Critical Routes
-	public void addToCriticalRoutes(String origin,String dest, String prior,double weight,double volume){
-		Tuple odp = new Tuple(origin, dest, prior);
+	public void addToCriticalRoutes(String origin,String dest, String prior, ArrayList<Leg> legs){
+		TuplePriority odp = new TuplePriority(origin, dest, prior);
 		ArrayList<Double> costPrice = new ArrayList<>();
 		
-		Location originLoc = null;
-		Location destinationLoc = null;
-		CustomerPrice price = null;
-		for (int i = 0; i < locations.size(); i++) {
-			if (locations.get(i).getName().equals(origin)) {
-				originLoc = locations.get(i);
-			}
-			if (locations.get(i).getName().equals(dest)) {
-				destinationLoc = locations.get(i);
-			}
-		}
-		if (originLoc == null) {
-			originLoc = new Location(origin);
-			addLocation(originLoc);
-		}
-		if (destinationLoc == null) {
-			destinationLoc = new Location(dest);
-			addLocation(destinationLoc);
-		}
-		
-		price = getCustomerPrice(originLoc, destinationLoc, origin, dest, prior);
-		double cp = price.getWeightCost()*weight + price.getVolumeCost()*volume;
-		double rp = 0.0;
-		
-		for (Route r: originLoc.getRoutes()){
-			if (r.getOrigin().equals(originLoc)&&r.getDestination().equals(destinationLoc)){//is the same route
-				rp = r.getWeightCost();//find trans cost
-			}
+//		Location originLoc = null;
+//		Location destinationLoc = null;
+//		CustomerPrice price = null;
+//		for (int i = 0; i < locations.size(); i++) {
+//			if (locations.get(i).getName().equals(origin)) {
+//				originLoc = locations.get(i);
+//			}
+//			if (locations.get(i).getName().equals(dest)) {
+//				destinationLoc = locations.get(i);
+//			}
+//		}
+//		if (originLoc == null) {
+//			originLoc = new Location(origin);
+//			addLocation(originLoc);
+//		}
+//		if (destinationLoc == null) {
+//			destinationLoc = new Location(dest);
+//			addLocation(destinationLoc);
+//		}
+//		
+//		price = getCustomerPrice(originLoc, destinationLoc, origin, dest, prior);
+//		double cp = price.getWeightCost()*weight + price.getVolumeCost()*volume;
+//		double rp = 0.0;
+//		
+//		for (Route r: originLoc.getRoutes()){
+//			if (r.getOrigin().equals(originLoc)&&r.getDestination().equals(destinationLoc)){//is the same route
+//				rp = r.getWeightCost();//find trans cost
+//			}
+//		}
+		double cp = 0;
+		double rp = 0;
+		for(Leg l :legs){
+			cp += l.getCost();
+			rp += l.getPrice();
 		}
 		costPrice.add(cp); //1st element: price
 		costPrice.add(rp); //2nd element: cost
 		
-		if (rp>cp){	
+		if (rp<cp){	
 			criticalRoutes.put(odp, costPrice);
 		}
 	}	
-	public HashMap<Tuple, ArrayList<Double>> getCriticalRoutes(){
+	public HashMap<TuplePriority, ArrayList<Double>> getCriticalRoutes(){
 		return criticalRoutes;
 	}
 	

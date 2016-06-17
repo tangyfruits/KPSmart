@@ -28,6 +28,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Main;
 import main.Tuple;
+import main.TuplePriority;
 
 
 public class ReportsController implements Initializable {
@@ -75,6 +76,8 @@ public class ReportsController implements Initializable {
 		revenue.setText("$" +  df.format(main.getTotalRev()));
 		eventcount.setText(sf.format(main.getTotalEvents()));
 		routeLoadAction();
+		criticalRoutesAction();
+		averageTimesAction();
 	}
 	
     /** NAV BAR BUTTONS 
@@ -290,7 +293,7 @@ public class ReportsController implements Initializable {
 	private TableColumn<Tuple,String> totalCount;
 		
 	private ArrayList<RouteLoadRow> report;
-
+		
 	@FXML
 	private void routeLoadAction() {
 	    HashMap<Tuple, ArrayList<Double>> temp = main.getAmountOfMail();
@@ -307,6 +310,63 @@ public class ReportsController implements Initializable {
 	    totalCount.setCellValueFactory(new PropertyValueFactory<Tuple,String>("totalCount"));
 	    table.getItems().setAll(report);
 	}
-
 	
+	@FXML
+	private TableView<CriticalRoutesRow> criticalTable;
+	@FXML
+	private TableColumn<Tuple,String> critOrigin;
+	@FXML
+	private TableColumn<Tuple,String> critDest;
+	@FXML
+	private TableColumn<Tuple,String> critPrice;
+	@FXML
+	private TableColumn<Tuple,String> critCost;
+	
+	private ArrayList<CriticalRoutesRow> critReport;
+	
+	@FXML
+	private void criticalRoutesAction(){
+		HashMap<TuplePriority, ArrayList<Double>> temp = main.getCriticalRoutes();
+	    critReport = new ArrayList<>();
+	    for(TuplePriority t: temp.keySet()){
+	    	CriticalRoutesRow row = new CriticalRoutesRow(t.getOrigin(), t.getDestination(), Double.toString(temp.get(t).get(0)), Double.toString(temp.get(t).get(1)));
+	    	critReport.add(row);
+	    }
+	   
+	    critOrigin.setCellValueFactory(new PropertyValueFactory<Tuple,String>("origin"));
+	    critDest.setCellValueFactory(new PropertyValueFactory<Tuple,String>("destination"));
+	    critPrice.setCellValueFactory(new PropertyValueFactory<Tuple,String>("price"));
+	    critCost.setCellValueFactory(new PropertyValueFactory<Tuple,String>("cost"));
+	    criticalTable.getItems().setAll(critReport);
+	}
+	
+	@FXML
+	private TableView<AverageTimesRow> average;
+	@FXML
+	private TableColumn<Tuple,String> avOrigin;
+	@FXML
+	private TableColumn<Tuple,String> avDest;
+	@FXML
+	private TableColumn<Tuple,String> avPriority;
+	@FXML
+	private TableColumn<Tuple,String> avTime;
+	
+	private ArrayList<AverageTimesRow> avReport;
+
+	@FXML
+	private void averageTimesAction(){
+		HashMap<TuplePriority, ArrayList<Integer>> temp = main.getAmountOfMailDeliveryTimes();
+	    avReport = new ArrayList<>();
+	    for(TuplePriority t: temp.keySet()){
+	    	Double average = (double)temp.get(t).get(0)/(double)temp.get(t).get(1);
+	    	AverageTimesRow row = new AverageTimesRow(t.getOrigin(), t.getDestination(), t.getPriority(), Double.toString(average));
+	    	avReport.add(row);
+	    }
+	   
+	    avOrigin.setCellValueFactory(new PropertyValueFactory<Tuple,String>("origin"));
+	    avDest.setCellValueFactory(new PropertyValueFactory<Tuple,String>("destination"));
+	    avPriority.setCellValueFactory(new PropertyValueFactory<Tuple,String>("priority"));
+	    avTime.setCellValueFactory(new PropertyValueFactory<Tuple,String>("time"));
+	    average.getItems().setAll(avReport);
+	}
 }
