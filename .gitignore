@@ -10,3 +10,6 @@ KPSmart/.settings/
 
 # Ignoring LogFile
 logfile.xml
+
+# Doc files
+/doc

@@ -297,14 +297,14 @@ public class Main {
 		addToAmountOfMail(origin, destination, weight, volume);
 		deliveryRequests.add(request);
 
-		// if (!initial) {
-		// //log in file and add to reports
-		// try {
-		// writer.writeDeliveryRequest(request);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// }
+		if (!initial) {
+			//log in file and add to reports
+			try {
+				writer.writeDeliveryRequest(request);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		// get total cost and rev
 		double cost = 0;
 		double price = 0;
@@ -318,9 +318,7 @@ public class Main {
 		addEvent();
 
 		return request;
-
 	}
-
 	public Route logTransportCostUpdate(String origin, String destination, String company, String type,
 			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, int frequency,
 			DayOfWeek day, int startTime, boolean initial) {
@@ -381,17 +379,16 @@ public class Main {
 		/* Log Customer Price */
 		// log in file and add to reports
 		addEvent();
-		// if (!initial) {
-		// try {
-		// writer.writeRoute(route);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// }
+		if (!initial) {
+			try {
+				writer.writeRoute(route);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return route;
 
 	}
-
 	public CustomerPrice logCustomerPriceUpdate(String origin, String destination, String priority, double weightCost,
 			double volumeCost, boolean initial) {
 
@@ -419,13 +416,13 @@ public class Main {
 
 				// log in file and add to reports
 				addEvent();
-				// if (!initial) {
-				// try {
-				// writer.writeCustomerPrice(c);
-				// } catch (Exception e) {
-				// e.printStackTrace();
-				// }
-				// }
+				if (!initial) {
+					try {
+						writer.writeCustomerPrice(c);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 				return c;
 			}
 		}
@@ -437,17 +434,16 @@ public class Main {
 
 		// log in file and add to reports
 		addEvent();
-		// if (!initial) {
-		// try {
-		// writer.writeCustomerPrice(price);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// }
+		if (!initial) {
+			try {
+				writer.writeCustomerPrice(price);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
 		return price;
 	}
-
 	public DiscontinueRoute discontinueTransportRoute(String origin, String destination, String company, String type,
 			boolean initial) {
 
@@ -466,13 +462,13 @@ public class Main {
 		DiscontinueRoute disconRoute = new DiscontinueRoute(originLoc, destinationLoc, company, type);
 		if (toCancel != null) {
 			originLoc.removeRoute(toCancel);
-			// if (!initial) {
-			// try {
-			// writer.writeDiscontinue(disconRoute);
-			// } catch (Exception e) {
-			// e.printStackTrace();
-			// }
-			// }
+			if (!initial) {
+				try {
+					writer.writeDiscontinue(disconRoute);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 			addEvent();
 			return disconRoute;
 		} else {
