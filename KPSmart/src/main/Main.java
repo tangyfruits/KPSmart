@@ -1,17 +1,15 @@
 package main;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.nio.file.Files;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
 
 import event.CustomerPrice;
 import event.DeliveryRequest;
@@ -30,62 +28,129 @@ public class Main {
 	private ArrayList<DeliveryRequest> deliveryRequests;
 	private HashMap<Tuple,ArrayList<Double>> criticalRoutes;
 
+	private File configFile;
+	private File logFile;
 	private LogWriter writer;
-	private File file;
 
 	private int events;
 	private double totalExp;
 	private double totalRev;
 
-	
-	// CONSTRUCTOR
+	// CONSTRUCTOR + Helper
 	public Main() {
-
+		// Core Logic
 		locations = new ArrayList<Location>();
-		accounts = new ArrayList<User>();
 		deliveryRequests = new ArrayList<DeliveryRequest>();
-		file = new File("accounts.txt");
-		try {
-			Scanner sc = new Scanner(file);
-			while (sc.hasNextLine()) {
-				String username = sc.next();
-				String password = sc.next();
-				String manager = sc.next();
-				boolean b = false;
-				if (manager.equals("true")) {
-					b = true;
-				}
-				accounts.add(new User(username, password, b));
-			}
-			sc.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		// for (User u : m.accounts) {
-		// System.out.println(u.getUsername() + u.getPassword() +
-		// u.isManager());
-		// }
+		accounts = new ArrayList<User>();
+		
+		// Reports
 		amountOfMailDeliveryTimes = new HashMap<>();
 
 		criticalRoutes = new HashMap<>();
 		amountOfMail = new HashMap<>();
+		
+		// Link Up Files
+		configFile = new File(".config");
+		logFile = loadFromConfig("logfile.xml"); // <--Parameter is default name if no log file name found in config
+		writer = new LogWriter(logFile);
+	}
+	private File loadFromConfig(String defaultLogName) {
+		
+		//System.out.println("\n----- LOADING FROM CONFIG ------");
+		File log = new File(defaultLogName);
+		
+		// CONFIG FILE DOESN'T EXIST
+		if (!configFile.isFile()){
+			//System.out.println("config doesn't exist - make new file");
+			try {
+				configFile.createNewFile();
+				FileWriter fw = new FileWriter(configFile);
+				fw.write(log.getName()+"\n");
+				fw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
+		// CONFIG FILE EXISTS
+		} else {
+			//System.out.println("Config exists");
+			try {
+				List<String> lines = Files.readAllLines(configFile.toPath());
+				/*
+				System.out.println("--FILE CONTENTS:--");
+				for (String l : lines) {
+					System.out.println(l);
+				}
+				System.out.println("------------------");
+				/**/
+				// Config is Empty
+				if (lines.size() <= 0) {
+					//System.out.println("Config is empty");
+					try {
+						FileWriter fw = new FileWriter(configFile, false);
+						
+						fw.write(log.getName() + "\n");
+						fw.flush();
+						fw.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 
-		// TODO fix file - will be listed in config file with user accounts
-		// etc!!
-		try {
-			writer = new LogWriter(new File("abc.xml"));
-		} catch (Exception e) {
-			e.printStackTrace();
+					// Config isn't Empty
+				} else {
+					//System.out.println("Config isn't empty");
+					String firstline = lines.get(0);
+					
+					// 1 - Read LogfileName
+					// Valid Logfile Name
+					if (firstline.endsWith(".xml")) {
+						log = new File(firstline);
+					// Invalid Logfile Name
+					} else {
+						//System.out.println("INVALID LOGFILE NAME: \""+firstline+"\"");
+						try {
+							FileWriter fw = new FileWriter(configFile, false);
+							fw.write(log.getName() + "\n");
+							
+							for (String line : lines) {
+								fw.write(line+"\n");
+							}
+							fw.flush();
+							fw.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				
+					// 2 - Read Users
+					for (int i = 1; i < lines.size(); i++) {
+						try {
+							String line = lines.get(i);
+							String[] words = line.split(" ");
+							if (words.length == 3) {
+								String username = words[0];
+								String password = words[1];
+								String manager = words[2];
+								boolean b = false;
+								if (manager.equals("true")) {
+									b = true;
+								}
+								accounts.add(new User(username, password, b));
+							} else {
+								System.out.println("Line " + i + " not 3 words: \"" + line + "\"");
+							}
+						} catch (Exception e) {
+							System.out.println("Error reading config file line "+i);
+						}
+					}
+				}
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e2) {
+				e2.printStackTrace();
+			}
 		}
-
-		// read from encrypted file and add them in!
-
-		// read from encrypted file,create User objects and add them in!
-		// if ( accounts.containsValue("String") &&
-		// accounts.get("String").equals("password);
-		// currentUser = new User();
-		// want to look into apache shiro tbh but everyone will have to install
-		// maven. Apache shiro is a really good framework for logins
+		return log;
 	}
 
 	// USER ACCOUNT METHODS
@@ -98,90 +163,119 @@ public class Main {
 		}
 		return false;
 	}
-	public boolean edit(String password) {
-		boolean b = false;
+	public boolean editPassword(String password) {
+		boolean edited = false;
 		for (User u : accounts) {
 			if (u.getUsername().equals(currentUser.getUsername())
 					&& u.getPassword().equals(currentUser.getPassword())) {
 				u.setPassword(password);
-				b = true;
+				edited = true;
 			}
 		}
 		currentUser.setPassword(password);
 		try {
-			file.delete();
-			file.createNewFile();
-			FileWriter writer = new FileWriter("accounts.txt", true);
-			for (int i = 0; i < accounts.size() - 1; i++) {
+			configFile.delete();
+			configFile.createNewFile();
+			FileWriter fw = new FileWriter(configFile, true);
+			fw.write(logFile.getName() + "\n");
+			for (int i = 0; i < accounts.size(); i++) {
 				User u = accounts.get(i);
-				writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
+				fw.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
 			}
-			User u = accounts.get(accounts.size() - 1);
-			writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()));
-			writer.flush();
-			writer.close();
+			fw.flush();
+			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return b;
+		return edited;
+	}
+	public boolean editManager(String username, boolean manager) {
+		if(currentUser.isManager()){
+		findUser(username).setManager(manager);
+		try {
+			configFile.delete();
+			configFile.createNewFile();
+			FileWriter fw = new FileWriter(configFile, true);
+			fw.write(logFile.getName() + "\n");
+			for (int i = 0; i < accounts.size(); i++) {
+				User u = accounts.get(i);
+				fw.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
+			}
+			fw.flush();
+			fw.close();
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}}
+		return false;
 	}
 	public boolean delete() {
-		boolean b = false;
-		System.out.println(accounts.size());
+		boolean removed = false;
 		for (User u : accounts) {
 			if (u.getUsername().equals(currentUser.getUsername())
 					&& u.getPassword().equals(currentUser.getPassword())) {
 				accounts.remove(u);
 				logout();
-				b = true;
+				removed = true;
 				break;
 			}
 		}
 		try {
-			file.delete();
-			file.createNewFile();
-			FileWriter writer = new FileWriter("accounts.txt", true);
-			for (int i = 0; i < accounts.size() - 1; i++) {
+			configFile.delete();
+			configFile.createNewFile();
+			FileWriter fw = new FileWriter(configFile, true);
+			fw.write(logFile.getName() + "\n");
+			for (int i = 0; i < accounts.size(); i++) {
 				User u = accounts.get(i);
-				writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
+				fw.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()) + "\n");
 			}
-			User u = accounts.get(accounts.size() - 1);
-			writer.write(u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()));
-			writer.flush();
-			writer.close();
+			fw.flush();
+			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return b;
-
+		return removed;
 	}
-
-	public void add(User u) {
-		try {
-			FileWriter writer = new FileWriter("accounts.txt", true);
-			writer.write("\n" + u.getUsername() + " " + u.getPassword() + " " + Boolean.toString(u.isManager()));
-			writer.flush();
-			writer.close();
-			accounts.add(u);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void add(User user) {
+		boolean b = false;
+		for (User u : accounts) {
+			if (u.getUsername().equals(user.getUsername())) {
+				b = true;
+			}
 		}
-
+		if (!b) {
+			try {
+				FileWriter writer = new FileWriter(configFile, true);
+				writer.write(user.getUsername() + " " + user.getPassword() + " " + Boolean.toString(user.isManager()) + "\n");
+				writer.flush();
+				writer.close();
+				accounts.add(user);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}	
+		}
 	}
 	public void logout() {
 		currentUser = null;
 	}
+
+	public User findUser(String username) {
+		for (User u : accounts) {
+			if (u.getUsername().equals(username)) {
+				return u;
+			}
+		}
+		return null;
+	}
 	public User getCurrentUser() {
 		return currentUser;
 	}
-	public void addUserToList(User u) {
-		accounts.add(u);
+	public void addUserToList(User user) {
+		accounts.add(user);
 	}
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
-
 	public ArrayList<User> getAccounts() {
 		return accounts;
 	}
@@ -189,7 +283,6 @@ public class Main {
 	// LOGGERS
 	public DeliveryRequest logDeliveryRequest(LocalDateTime logTime, String origin, String destination,
 			ArrayList<Leg> legs, double weight, double volume, String priority, int duration, boolean initial) {
-
 
 		// find the locations matching the given strings
 		Location originLoc = getLocation(origin);
@@ -227,6 +320,7 @@ public class Main {
 		return request;
 
 	}
+
 	public Route logTransportCostUpdate(String origin, String destination, String company, String type,
 			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, int frequency,
 			DayOfWeek day, int startTime, boolean initial) {
@@ -279,24 +373,25 @@ public class Main {
 		Route route = null;
 		if (!routeExists) {
 			// if it doesn't always exist, create route and add to graph
-			route = new Route(originLoc, destinationLoc, company, type, priority, weightCost, volumeCost,
-					maxWeight, maxVolume, duration, frequency, day, startTime, price);
+			route = new Route(originLoc, destinationLoc, company, type, priority, weightCost, volumeCost, maxWeight,
+					maxVolume, duration, frequency, day, startTime, price);
 			originLoc.addRoute(route);
 		}
 
-	/* Log Customer Price */
-		//log in file and add to reports
+		/* Log Customer Price */
+		// log in file and add to reports
 		addEvent();
-//		if (!initial) {
-//			try {
-//				writer.writeRoute(route);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
+		// if (!initial) {
+		// try {
+		// writer.writeRoute(route);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// }
 		return route;
-		
+
 	}
+
 	public CustomerPrice logCustomerPriceUpdate(String origin, String destination, String priority, double weightCost,
 			double volumeCost, boolean initial) {
 
@@ -353,69 +448,6 @@ public class Main {
 		return price;
 	}
 
-	public void addToCriticalRoutes(String origin,String dest, String prior,double weight,double volume){
-		Tuple odp = new Tuple(origin, dest, prior);
-		ArrayList<Double> costPrice = new ArrayList<>();
-		
-		Location originLoc = null;
-		Location destinationLoc = null;
-		CustomerPrice price = null;
-		for (int i = 0; i < locations.size(); i++) {
-			if (locations.get(i).getName().equals(origin)) {
-				originLoc = locations.get(i);
-			}
-			if (locations.get(i).getName().equals(dest)) {
-				destinationLoc = locations.get(i);
-			}
-		}
-		if (originLoc == null) {
-			originLoc = new Location(origin);
-			addLocation(originLoc);
-		}
-		if (destinationLoc == null) {
-			destinationLoc = new Location(dest);
-			addLocation(destinationLoc);
-		}
-		
-		price = getCustomerPrice(originLoc, destinationLoc, origin, dest, prior);
-		double cp = price.getWeightCost()*weight + price.getVolumeCost()*volume;
-		double rp = 0.0;
-		
-		for (Route r: originLoc.getRoutes()){
-			if (r.getOrigin().equals(originLoc)&&r.getDestination().equals(destinationLoc)){//is the same route
-				rp = r.getWeightCost();//find trans cost
-			}
-		}
-		costPrice.add(cp); //1st element: price
-		costPrice.add(rp); //2nd element: cost
-		
-		if (rp>cp){	
-			criticalRoutes.put(odp, costPrice);
-		}
-	}
-	
-	public HashMap<Tuple, ArrayList<Double>> getCriticalRoutes(){
-		return criticalRoutes;
-	}
-
-	
-	// GETTERS
-	// Locations
-	public ArrayList<Location> getLocations() {
-		return locations;
-	}
-	public Location getLocation(String name) {
-		Location location = null;
-		for (Location loc : locations) {
-			if (loc.getName().equals(name)) {
-				location = loc;
-			}
-		}
-		return location;
-	}
-
-	
-	
 	public DiscontinueRoute discontinueTransportRoute(String origin, String destination, String company, String type,
 			boolean initial) {
 
@@ -450,7 +482,33 @@ public class Main {
 
 	}
 
+	// GETTERS
+	// Locations
+	public ArrayList<Location> getLocations() {
+		return locations;
+	}
+	public Location getLocation(String name) {
+		Location location = null;
+		for (Location loc : locations) {
+			if (loc.getName().equals(name)) {
+				location = loc;
+			}
+		}
+		return location;
+	}
+
 	// Routes
+	public ArrayList<Route> getRoutes(String origin, String destination) {
+		Location originLoc = getLocation(origin);
+
+		ArrayList<Route> disconRoutes = new ArrayList<>();
+		for (Route r : originLoc.getRoutes()) {
+			if (r.getDestination().getName().equals(destination)) {
+				disconRoutes.add(r);
+			}
+		}
+		return disconRoutes;
+	}
 	public ArrayList<RouteDisplay> getPossibleRoutes(String origin, String destination, double weight, double volume) {
 
 		// find the locations matching the given strings
@@ -514,17 +572,7 @@ public class Main {
 		}
 		return out;
 	}
-	public ArrayList<Route> getRoutes(String origin, String destination){
-		Location originLoc = getLocation(origin);
 
-		ArrayList<Route> disconRoutes = new ArrayList<>();
-		for (Route r : originLoc.getRoutes()) {
-			if (r.getDestination().getName().equals(destination)) {
-				disconRoutes.add(r);
-			}
-		}
-		return disconRoutes;
-	}
 	// Customer Prices
 	public CustomerPrice getCustomerPrice(Location originLoc, Location destinationLoc, String origin,
 			String destination, String priority) {
@@ -545,16 +593,16 @@ public class Main {
 		}
 		return customerPrice;
 	}
+
 	// Delivery Requests
 	public List<DeliveryRequest> getDeliveryRequests() {
 		return deliveryRequests;
 	}
-	
 	public DeliveryRequest getDeliveryDetails(String origin, String destination, double weight, double volume,
 			RouteDisplay route) {
 		// get duration
 		int duration = route.getTotalDuration(LocalDateTime.now());
-	
+
 		// translate route list into legs
 		ArrayList<Leg> legs = new ArrayList<>();
 		for (Route r : route.getRoute()) {
@@ -564,17 +612,61 @@ public class Main {
 					customerPrice));
 		}
 
-		return logDeliveryRequest(LocalDateTime.now(),origin,destination, legs, weight,volume,route.getPriority(),duration, false);
+		return logDeliveryRequest(LocalDateTime.now(), origin, destination, legs, weight, volume, route.getPriority(),
+				duration, false);
 	}
 
-	
 	// SETTERS + Adders
 	public void addLocation(Location location) {
 		locations.add(location);
 	}
-	
-	
+
 	// REPORTS
+	// Critical Routes
+	public void addToCriticalRoutes(String origin,String dest, String prior,double weight,double volume){
+		Tuple odp = new Tuple(origin, dest, prior);
+		ArrayList<Double> costPrice = new ArrayList<>();
+		
+		Location originLoc = null;
+		Location destinationLoc = null;
+		CustomerPrice price = null;
+		for (int i = 0; i < locations.size(); i++) {
+			if (locations.get(i).getName().equals(origin)) {
+				originLoc = locations.get(i);
+			}
+			if (locations.get(i).getName().equals(dest)) {
+				destinationLoc = locations.get(i);
+			}
+		}
+		if (originLoc == null) {
+			originLoc = new Location(origin);
+			addLocation(originLoc);
+		}
+		if (destinationLoc == null) {
+			destinationLoc = new Location(dest);
+			addLocation(destinationLoc);
+		}
+		
+		price = getCustomerPrice(originLoc, destinationLoc, origin, dest, prior);
+		double cp = price.getWeightCost()*weight + price.getVolumeCost()*volume;
+		double rp = 0.0;
+		
+		for (Route r: originLoc.getRoutes()){
+			if (r.getOrigin().equals(originLoc)&&r.getDestination().equals(destinationLoc)){//is the same route
+				rp = r.getWeightCost();//find trans cost
+			}
+		}
+		costPrice.add(cp); //1st element: price
+		costPrice.add(rp); //2nd element: cost
+		
+		if (rp>cp){	
+			criticalRoutes.put(odp, costPrice);
+		}
+	}	
+	public HashMap<Tuple, ArrayList<Double>> getCriticalRoutes(){
+		return criticalRoutes;
+	}
+	
 	// Amount of Mail
 	public HashMap<Tuple, ArrayList<Double>> getAmountOfMail() {
 		return amountOfMail;
@@ -649,6 +741,7 @@ public class Main {
 		}
 		return -1;
 	}
+
 	// Little Reports
 	public void addTotalRev(double amount) {
 		totalRev += amount;
@@ -671,14 +764,12 @@ public class Main {
 		System.out.println("Total Events: " + events);
 		return events;
 	}
-
-	public File getFile() {
-		return file;
+	
+	// LOGFILE SHIT FOR LULZ
+	public File getLogFile() {
+		return logFile;
 	}
-
-
-	public void setFile(File file) {
-		this.file = file;
+	public void setLogFile(File file) {
+		this.logFile = file;
 	}
-
 }
