@@ -149,6 +149,27 @@ public class LoginTests {
 		m.editPassword("password123");
 		assertTrue(m.getCurrentUser().getPassword().equals("password123"));
 	}
+	@Test
+	public void testEditUser_04() {
+		Main m = new Main();
+		m.login("shelley", "password123");
+		m.editManager("peter", false);
+		assertFalse(m.findUser("peter").isManager());
+	}
+	@Test
+	public void testEditUser_05() {
+		Main m = new Main();
+		m.login("shelley", "password123");
+		m.editManager("donald", false);
+		assertFalse(m.findUser("donald").isManager());
+	}
+	@Test
+	public void testEditUser_06() {
+		Main m = new Main();
+		m.login("shelley", "password123");
+		m.editManager("donald", false);
+		assertFalse(m.findUser("donald").isManager());
+	}
 
 	@Test
 	public void testDeleteUser_01() {
@@ -196,5 +217,36 @@ public class LoginTests {
 		m.add(new User("david", "password123", true));
 		assertTrue(m.login("david", "password123"));
 	}
+	@Test
+	public void testFindUser_01() {
+		Main m = new Main();
+		m.login("donald", "password123");
+		assertTrue(m.getCurrentUser() == m.findUser("donald"));
+	}
+	@Test
+	public void testFindUser_02() {
+		Main m = new Main();
+		m.login("peter", "password123");
+		assertTrue(m.getCurrentUser() == m.findUser("peter"));
+	}
+	@Test
+	public void testFindUser_03() {
+		Main m = new Main();
+		m.login("shelley", "password123");
+		assertTrue(m.getCurrentUser() == m.findUser("shelley"));
+	}
+	@Test
+	public void testFindUser_04() {
+		Main m = new Main();
+		m.login("pri", "password123");
+		assertTrue(m.getCurrentUser() == m.findUser("pri"));
+	}
+	@Test
+	public void testFindUser_05() {
+		Main m = new Main();
+		m.login("kaszandra", "password123");
+		assertTrue(m.getCurrentUser() == m.findUser("kaszandra"));
+	}
+	
 
 }
