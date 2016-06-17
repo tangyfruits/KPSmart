@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -50,20 +51,28 @@ public class LoginTests {
 		m.add(new User("priyanka", "password123", true));
 	}
 
+	@AfterClass
+	public static void tearDown() {
+		Main m = new Main();
+		m.add(new User("donald", "password123", true));
+		m.add(new User("shelley", "password123", true));
+		m.add(new User("peter", "password123", true));
+		m.login("david", "password123");
+		m.delete();
+	}
+	
 	@Test
 	public void testCorrectLogin_01() {
 		Main m = new Main();
 		assertTrue(m.login("donald", "password123"));
 
 	}
-
 	@Test
 	public void testCorrectLogin_02() {
 		Main m = new Main();
 		assertTrue(m.login("peter", "password123"));
 
 	}
-
 	@Test
 	public void testCorrectLogin_03() {
 		Main m = new Main();
@@ -77,14 +86,12 @@ public class LoginTests {
 		assertFalse(m.login("admin", "password123"));
 
 	}
-
 	@Test
 	public void testIncorrectLogin_02() {
 		Main m = new Main();
 		assertFalse(m.login("hacker", "password123"));
 
 	}
-
 	@Test
 	public void testIncorrectLogin_03() {
 		Main m = new Main();
@@ -106,7 +113,6 @@ public class LoginTests {
 		assertNull(m.getCurrentUser());
 
 	}
-
 	@Test
 	public void testLogoutUser_02() {
 		Main m = new Main();
@@ -114,7 +120,6 @@ public class LoginTests {
 		m.logout();
 		assertNull(m.getCurrentUser());
 	}
-
 	@Test
 	public void testLogoutUser_03() {
 		Main m = new Main();
@@ -130,7 +135,6 @@ public class LoginTests {
 		m.editPassword("password987");
 		assertTrue(m.getCurrentUser().getPassword().equals("password987"));
 	}
-
 	@Test
 	public void testEditUser_02() {
 		Main m = new Main();
@@ -138,7 +142,6 @@ public class LoginTests {
 		m.editPassword("password987");
 		assertTrue(m.getCurrentUser().getPassword().equals("password987"));
 	}
-
 	@Test
 	public void testEditUser_03() {
 		Main m = new Main();
@@ -154,7 +157,6 @@ public class LoginTests {
 		m.delete();
 		assertNull(m.getCurrentUser());
 	}
-
 	@Test
 	public void testDeleteUser_02() {
 		Main m = new Main();
@@ -162,7 +164,6 @@ public class LoginTests {
 		m.delete();
 		assertNull(m.getCurrentUser());
 	}
-
 	@Test
 	public void testDeleteUser_03() {
 		Main m = new Main();
@@ -177,21 +178,18 @@ public class LoginTests {
 		m.add(new User("donald", "password123", true));
 		assertTrue(m.login("donald", "password123"));
 	}
-
 	@Test
 	public void testTryAddUser_02() {
 		Main m = new Main();
 		m.add(new User("peter", "password123", true));
 		assertTrue(m.login("peter", "password123"));
 	}
-
 	@Test
 	public void testTryAddUser_03() {
 		Main m = new Main();
 		m.add(new User("shelley", "password123", true));
 		assertTrue(m.login("shelley", "password123"));
 	}
-
 	@Test
 	public void testTryAddUser_04() {
 		Main m = new Main();

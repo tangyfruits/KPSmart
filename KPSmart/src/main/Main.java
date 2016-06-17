@@ -1,18 +1,15 @@
 package main;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
 
 import event.CustomerPrice;
 import event.DeliveryRequest;
@@ -39,51 +36,58 @@ public class Main {
 	private double totalRev;
 
 	
-	// CONSTRUCTOR
+	// CONSTRUCTOR + Helper
 	public Main() {
 		// Core Logic
 		locations = new ArrayList<Location>();
 		deliveryRequests = new ArrayList<DeliveryRequest>();
 		accounts = new ArrayList<User>();
-		configFile = new File(".config");
+		
 		// Reports
 		amountOfMailDeliveryTimes = new HashMap<>();
 		amountOfMail = new HashMap<>();
-		loadFromConfig();
+		
+		// Link Up Files
+		configFile = new File(".config");
+		logFile = loadFromConfig("logfile.xml"); // <--Parameter is default name if no log file name found in config
 		writer = new LogWriter(logFile);
 	}
-	
-	private void loadFromConfig() {
+	private File loadFromConfig(String defaultLogName) {
 		
-		// IF CONFIG DOESN'T EXIST
+		//System.out.println("\n----- LOADING FROM CONFIG ------");
+		File log = new File(defaultLogName);
+		
+		// CONFIG FILE DOESN'T EXIST
 		if (!configFile.isFile()){
-			System.out.println("config doesn't exist - make new file");
+			//System.out.println("config doesn't exist - make new file");
 			try {
 				configFile.createNewFile();
 				FileWriter fw = new FileWriter(configFile);
-				logFile = new File("logfile.xml");
-				fw.write(logFile.getName()+"\n");
+				fw.write(log.getName()+"\n");
 				fw.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		
-		// IF CONFIG EXISTS
+		// CONFIG FILE EXISTS
 		} else {
-			System.out.println("Config exists");
+			//System.out.println("Config exists");
 			try {
 				List<String> lines = Files.readAllLines(configFile.toPath());
-				System.out.println(lines);
-				Scanner sc = new Scanner(configFile);
-				
+				/*
+				System.out.println("--FILE CONTENTS:--");
+				for (String l : lines) {
+					System.out.println(l);
+				}
+				System.out.println("------------------");
+				/**/
 				// Config is Empty
 				if (lines.size() <= 0) {
-					System.out.println("Config is empty");
+					//System.out.println("Config is empty");
 					try {
-						logFile = new File("logfile.txt");
 						FileWriter fw = new FileWriter(configFile, false);
 						
-						fw.write(logFile.getName() + "\n");
+						fw.write(log.getName() + "\n");
 						fw.flush();
 						fw.close();
 					} catch (IOException e) {
@@ -92,60 +96,51 @@ public class Main {
 				
 				// Config isn't Empty
 				} else {
-					System.out.println("Config isn't empty");
-					
-					// Read LogfileName
+					//System.out.println("Config isn't empty");
 					String firstline = lines.get(0);
+					
+					// 1 - Read LogfileName
+					// Valid Logfile Name
 					if (firstline.endsWith(".xml")) {
-						// Valid Logfile Name
-						logFile = new File(firstline);
+						log = new File(firstline);
+					// Invalid Logfile Name
 					} else {
-						// Invalid Logfile Name
-						System.out.println("LALLALALA INVALID LOGFILE NAME!!!!!");
+						//System.out.println("INVALID LOGFILE NAME: \""+firstline+"\"");
 						try {
-							//List<String> remainder = lines.subList(1, lines.size());
-
 							FileWriter fw = new FileWriter(configFile, false);
-							logFile = new File("logfile.xml");
-							fw.write(logFile.getName() + "\n");
+							fw.write(log.getName() + "\n");
 							
 							for (String line : lines) {
-								fw.write(line);
+								fw.write(line+"\n");
 							}
-							
 							fw.flush();
 							fw.close();
-							sc = new Scanner(configFile);
-							sc.nextLine();
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
 					}
 				
-					// Read Users
-					int lineNo = 1;
-					while (sc.hasNextLine()) {
+					// 2 - Read Users
+					for (int i = 1; i < lines.size(); i++) {
 						try {
-							lineNo++;
-							String scanLine = sc.nextLine();
-							String[] line = scanLine.split(" ");
-							if (line.length == 3) {
-								String username = line[0];
-								String password = line[1];
-								String manager = line[2];
+							String line = lines.get(i);
+							String[] words = line.split(" ");
+							if (words.length == 3) {
+								String username = words[0];
+								String password = words[1];
+								String manager = words[2];
 								boolean b = false;
 								if (manager.equals("true")) {
 									b = true;
 								}
 								accounts.add(new User(username, password, b));
 							} else {
-								System.out.println("Read weird line: \""+scanLine+"\"");
+								System.out.println("Line "+i+" not 3 words:"+" \""+line+"\"");
 							}
 						} catch (Exception e) {
-							System.out.println("Error reading config file line "+lineNo);
+							System.out.println("Error reading config file line "+i);
 						}
 					}
-					sc.close();
 				}
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
@@ -153,6 +148,7 @@ public class Main {
 				e2.printStackTrace();
 			}
 		}
+		return log;
 	}
 	
 	// USER ACCOUNT METHODS
@@ -252,17 +248,19 @@ public class Main {
 			}
 		}
 		if(!b){
-		try {
-			FileWriter writer = new FileWriter(configFile, true);
-			writer.write(user.getUsername() + " " + user.getPassword() + " " + Boolean.toString(user.isManager()) + "\n");
-			writer.flush();
-			writer.close();
-			accounts.add(user);
-		} catch (IOException e) {
-			e.printStackTrace();
+			try {
+				FileWriter writer = new FileWriter(configFile, true);
+				writer.write(user.getUsername() + " " + user.getPassword() + " " + Boolean.toString(user.isManager()) + "\n");
+				writer.flush();
+				writer.close();
+				accounts.add(user);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}	
 		}
-		
 	}
+	public void logout() {
+		currentUser = null;
 	}
 	
 	public User findUser(String username){
@@ -273,9 +271,6 @@ public class Main {
 	}
 		return null;
 	}
-	public void logout() {
-		currentUser = null;
-	}
 	public User getCurrentUser() {
 		return currentUser;
 	}
@@ -285,7 +280,6 @@ public class Main {
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
-
 	public ArrayList<User> getAccounts() {
 		return accounts;
 	}
