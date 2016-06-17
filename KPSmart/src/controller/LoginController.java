@@ -57,8 +57,9 @@ public class LoginController implements Initializable {
 			Scene scene = new Scene(kpsguiUI);
 			stage.setScene(scene);
 			stage.show();
-		}
-		else{
+		} else if (pass.equals("")) {
+			password.requestFocus();
+		} else{
 			idnumber.clear();
 			password.clear();
 			idnumber.requestFocus();
