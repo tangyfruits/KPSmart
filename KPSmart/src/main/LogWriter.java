@@ -201,9 +201,10 @@ public class LogWriter {
     		Element leg = doc.createElement("leg");
             Element legTo = doc.createElement("to");
             Element legFrom = doc.createElement("from");
-            Element company = doc.createElement("company");
-            Element cost = doc.createElement("cost");
-            Element price = doc.createElement("price");
+            Element legType = doc.createElement("type");
+            Element legCompany = doc.createElement("company");
+            Element legCost = doc.createElement("cost");
+            Element legPrice = doc.createElement("price");
             
             if (origin == "") {
             	origin = legObject.getOrigin().getName();
@@ -212,15 +213,17 @@ public class LogWriter {
             
             legTo.appendChild(doc.createTextNode(legObject.getDestination().getName()));
             legFrom.appendChild(doc.createTextNode(legObject.getOrigin().getName()));
-            company.appendChild(doc.createTextNode(legObject.getCompany()));
-            cost.appendChild(doc.createTextNode(Double.toString(legObject.getCost())));
-            price.appendChild(doc.createTextNode(Double.toString(legObject.getPrice())));
+            legType.appendChild(doc.createTextNode(legObject.getType()));
+            legCompany.appendChild(doc.createTextNode(legObject.getCompany()));
+            legCost.appendChild(doc.createTextNode(Double.toString(legObject.getCost())));
+            legPrice.appendChild(doc.createTextNode(Double.toString(legObject.getPrice())));
             
             leg.appendChild(legTo);
             leg.appendChild(legFrom);
-            leg.appendChild(company);
-            leg.appendChild(cost);
-            leg.appendChild(price);
+            leg.appendChild(legType);
+            leg.appendChild(legCompany);
+            leg.appendChild(legCost);
+            leg.appendChild(legPrice);
             legs.appendChild(leg);
     	}
         

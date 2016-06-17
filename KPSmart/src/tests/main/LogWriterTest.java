@@ -1,7 +1,6 @@
 package tests.main;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,7 +43,6 @@ public class LogWriterTest {
 		
 		log = new LogWriter(file3);
 	}
-	
 	@AfterClass
 	public static void tearDown() {
 		boolean kill3 = false;
@@ -60,7 +58,6 @@ public class LogWriterTest {
 			file3.delete();
 		}
 	}
-	
 	
 	// TESTS
 	// Log File Existence Checkers
@@ -139,9 +136,5 @@ public class LogWriterTest {
 		if (LOGS) {System.out.println("\n----------disc.");}
 		DiscontinueRoute disc = new DiscontinueRoute(new Location("Christchurch"), new Location("Wellington"), "NZ Post", "Sea");
 		log.writeDiscontinue(disc);
-	}
-	
-	public void testClearFile() {
-		
 	}
 }

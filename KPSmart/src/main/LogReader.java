@@ -15,6 +15,10 @@ import javax.xml.stream.events.XMLEvent;
 
 public class LogReader {
 	
+	// Logging
+	private boolean LOGSIN = false;
+	private boolean LOGSOUT = false;
+	
 	// LOCAL CLASSES
 	class MailEvent implements Event {
 		public LocalDateTime logTime;
@@ -37,7 +41,7 @@ public class LogReader {
 			for (Leg leg : legs) {
 				str += leg.toString();
 			}
-			str += "weig: " + Double.toHexString(weight) + "\n";
+			str += "weig: " + Double.toString(weight) + "\n";
 			str += "volu: " + Double.toString(volume) + "\n";
 			str += "prio: " + priority + "\n";
 			str += "dura: " + Integer.toString(duration) + "\n";
@@ -61,8 +65,8 @@ public class LogReader {
 			str += "dest: " + destination + "\n";
 			str += "type: " + type + "\n";
 			str += "comp: " + company + "\n";
-			str += "cost: $" + cost + "\n";
-			str += "pric: $" + price + "\n";
+			str += "cost: " + cost + "\n";
+			str += "pric: " + price + "\n";
 			return str;
 		}
 	}
@@ -91,10 +95,10 @@ public class LogReader {
 			str += "comp: " + company + "\n";
 			str += "type: " + type + "\n";
 			str += "prio: " + priority + "\n";
-			str += "Wcst: $" + weightCost + "\n";
-			str += "Vcst: $" + volumeCost + "\n";
-			str += "maxW: " + maxWeight + " kg\n";
-			str += "maxV: " + maxVolume + "kg\n";
+			str += "Wcst: " + weightCost + "\n";
+			str += "Vcst: " + volumeCost + "\n";
+			str += "maxW: " + maxWeight + "\n";
+			str += "maxV: " + maxVolume + "\n";
 			str += "dura: " + duration + "\n";
 			str += "freq: " + frequency + "\n";
 			str += "day : " + day + "\n";
@@ -117,8 +121,8 @@ public class LogReader {
 			str += "orig: " + origin + "\n";
 			str += "dest: " + destination + "\n";
 			str += "prio: " + priority + "\n";
-			str += "Wcst: $" + weightCost + "\n";
-			str += "Vcst: $" + volumeCost + "\n";
+			str += "Wcst: " + weightCost + "\n";
+			str += "Vcst: " + volumeCost + "\n";
 			return str;
 		}
 	}
@@ -191,18 +195,18 @@ public class LogReader {
             // OPENING TAG
             if(xmlEvent == XMLStreamConstants.START_ELEMENT) {
             	String tagName = event.asStartElement().getName().getLocalPart();
-            	System.out.println("-------OPEN: \""+tagName+"\"");
+            	if(LOGSIN){System.out.println("-------OPEN: \""+tagName+"\"");}
             	
-            	if (currentEvent == null) {         		// Lvl 1 tags: <mail>, <price>, <cost>, <discontinue>
+            	if (currentEvent == null) {         	// Lvl 1 tags: <mail>, <price>, <cost>, <discontinue>
             		setCurrentEvent(tagName);
             		
-            	} else if (currentVariable == "") {   		// Lvl 2 tags: <legs>, <to>, <from>, etc
+            	} else if (currentVariable == "") {   	// Lvl 2 tags: <legs>, <to>, <from>, etc
             		setCurrentVariable(tagName);
             		
-            	} else if (!inLeg) {						// Lvl 3 tags: <leg>
+            	} else if (!inLeg) {					// Lvl 3 tags: <leg>
         			setCurrentEvent(tagName);
             		 
-            	} else if (legVariable == "") { 			// Lvl 4 tags: ...<to>, <from>, etc
+            	} else if (legVariable == "") { 		// Lvl 4 tags: ...<to>, <from>, etc
 	            		legVariable = tagName;
 	            
             	} else {
@@ -214,14 +218,14 @@ public class LogReader {
             	String characters = event.asCharacters().getData().trim();
             	
             	if (!characters.equals("")) {
-            		System.out.println("--------TXT: \""+characters.trim());
+            		if(LOGSIN){System.out.println("--------TXT: \""+characters.trim());}
             		setVariable(characters);
             	}
             
             // CLOSING TAG	
             } else if (xmlEvent == XMLStreamConstants.END_ELEMENT) {
             	String endTagName = event.asEndElement().getName().getLocalPart();
-            	System.out.println("------CLOSE: \""+endTagName+"\"");
+            	if(LOGSIN){System.out.println("------CLOSE: \""+endTagName+"\"");}
             	if (legVariable != "") {
             		legVariable = "";
             	} else if (inLeg) {
@@ -233,7 +237,7 @@ public class LogReader {
             		sendEvent();
             		currentEvent = null;
             	} else if (endTagName.equals("events")) {
-            		System.out.println("'events' Tag Closed");
+            		if(LOGSIN){System.out.println("'events' Tag Closed");}
             	} else {
             		System.out.println("There has been an error!!! (Closing Tag)");
             	}
@@ -260,7 +264,7 @@ public class LogReader {
      	   	discont = new DiscontinueEvent();
 			currentEvent = discont;
 		} else if (xmlTagName.equalsIgnoreCase("events")) {
-			System.out.println("'events' Tag Opened");
+			//System.out.println("'events' Tag Opened");
 		} else {
 			System.out.println("Error setting current event: Invalid tagname: \""+xmlTagName+"\"");
 		}
@@ -309,9 +313,6 @@ public class LogReader {
 		case "from":
 			mail.origin = data;
 			break;
-		/*case "legs":
-			mail.legs = new ArrayList<Leg>();
-			break;*/
 		case "weight":
 			mail.weight = Double.parseDouble(data);
 			break;
@@ -324,8 +325,6 @@ public class LogReader {
 		case "duration":
 			mail.duration = Integer.parseInt(data);
 			break;
-			
-			
 		default:
 			System.out.println("Error. Invalid MailEvent Var: \""+currentVariable+"\" : \""+data+"\"");
 			break;
@@ -464,10 +463,24 @@ public class LogReader {
 		}
 		/**/
 		// TODO Remove this once hooked up to main properly. Alt way for testing only!
+		// TODO Seriously. THis is not the final way shit is meant to be.
 		Location from = new Location(leg.origin);
 		Location to = new Location(leg.destination);
 		
-		Leg legObject = new Leg(from, to, leg.type, leg.company, leg.cost, leg.price);
+		Leg legObject = new Leg(from, to, leg.type, leg.company, leg.cost, leg.price) {
+			// For logging purposes
+			@Override
+			public String toString() {
+				String str = "\tLEG EVENT\n";
+				str += "\torig: " + this.getOrigin().getName() + "\n";
+				str += "\tdest: " + this.getDestination().getName() + "\n";
+				str += "\ttype: " + this.getType() + "\n";
+				str += "\tcomp: " + this.getCompany() + "\n";
+				str += "\tcost: " + this.getCost() + "\n";
+				str += "\tpric: " + this.getPrice() + "\n";
+				return str;
+			}
+		};
 		mail.legs.add(legObject);
 		leg = null;
 		currentEvent = mail;
@@ -475,7 +488,7 @@ public class LogReader {
 	private void sendEvent() {
 		switch (currentEvent.getEventType()) {
 		case "cost":
-			System.out.println(cost);
+			if(LOGSOUT){System.out.println(cost);}
 			
 			/*
 			main.logTransportCostUpdate(cost.origin, cost.destination, 
@@ -486,7 +499,7 @@ public class LogReader {
 			cost = null;
 			break;
 		case "mail":
-			System.out.println(mail);
+			if(LOGSOUT){System.out.println(mail);}
 			
 			/*
 			main.logDeliveryRequest(mail.logTime, mail.origin, mail.destination, mail.legs,
@@ -495,7 +508,7 @@ public class LogReader {
 			mail = null;
 			break;
 		case "price":
-			System.out.println(price);
+			if(LOGSOUT){System.out.println(price);}
 			
 			/*
 			main.logCustomerPriceUpdate(price.origin, price.destination, 
@@ -504,7 +517,7 @@ public class LogReader {
 			price = null;
 			break;
 		case "discontinue":
-			System.out.println(discont);
+			if(LOGSOUT){System.out.println(discont);}
 			
 			/*
 			main.logRouteDiscontinued(discont.origin, discont.destination, 
@@ -513,7 +526,7 @@ public class LogReader {
 			discont = null;
 			break;
 		default:
-			System.out.println("Shit's fuct yo.");
+			System.out.println("Error. Tried to send invalid event type: "+currentEvent.getEventType());
 		}
 	}	
 }
