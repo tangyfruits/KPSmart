@@ -19,12 +19,12 @@
       </Label>
       <Pane layoutX="160.0" layoutY="20.0" prefHeight="25.0" prefWidth="533.0">
          <children>
-            <Button fx:id="reports" layoutX="252.0" layoutY="1.0" mnemonicParsing="false" onAction="#reportButtonAction" style="-fx-background-color: E9D5B9;" text="Reports">
+            <Button fx:id="reports" layoutX="188.0" layoutY="1.0" mnemonicParsing="false" onAction="#reportButtonAction" style="-fx-background-color: E9D5B9;" text="Reports">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="history" layoutX="188.0" layoutY="1.0" mnemonicParsing="false" onAction="#historyButtonAction" style="-fx-background-color: E9D5B9;" text="History">
+            <Button fx:id="history" layoutX="409.0" layoutY="1.0" mnemonicParsing="false" onAction="#historyButtonAction" style="-fx-background-color: E9D5B9;" text="History">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
@@ -45,15 +45,10 @@
                   <Font name="Gulim" size="13.0" />
                </font>
             </Button>
-            <MenuButton fx:id="accounts" layoutX="322.0" layoutY="1.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="147.0" style="-fx-background-color: E9D5B9;" text="Edit User">
+            <MenuButton fx:id="accounts" layoutX="257.0" layoutY="1.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="147.0" style="-fx-background-color: E9D5B9;" text="Edit User">
                <font>
                   <Font name="Gulim" size="13.0" />
                </font>
-               <items>
-                  <MenuItem fx:id="addUser" mnemonicParsing="false" onAction="#addUserAction" text="Add User" />
-                  <MenuItem fx:id="edituser" mnemonicParsing="false" onAction="#editUserAction" text="Edit User" />
-                  <MenuItem fx:id="changepass" mnemonicParsing="false" onAction="#changePassAction" text="Change Password" />
-               </items>
             </MenuButton>
          </children>
       </Pane>
