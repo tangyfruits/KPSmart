@@ -1,4 +1,4 @@
-# Class files - Nope not going to ignore them
+# Class files
 KPSmart/bin/
 /bin/
 
@@ -8,5 +8,5 @@ KPSmart/bin/
 KPSmart/.settings/
 .settings
 
-# NOT Ignoring LogFiles
-#*.xml
+# Ignoring LogFile
+logfile.xml

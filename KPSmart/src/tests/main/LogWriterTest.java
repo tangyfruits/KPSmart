@@ -21,9 +21,9 @@ public class LogWriterTest {
 	private static boolean LOGS = true;
 	
 	// VARIABLES
-	static File file1 = new File("KPSmart/src/tests/test_1.xml");
-	static File file2 = new File("KPSmart/src/tests/test_2.xml");
-	static File file3 = new File("KPSmart/src/tests/logfile.xml");
+	static File file1 = new File("KPSmart/src/tests/writer_test_1.xml");
+	static File file2 = new File("KPSmart/src/tests/writer_test_2.xml");
+	static File file3 = new File("KPSmart/src/tests/writer_test_3.xml");
 	static LogWriter log;
 	
 	// HELPERS
@@ -45,16 +45,17 @@ public class LogWriterTest {
 	}
 	@AfterClass
 	public static void tearDown() {
+		boolean veto = true;
 		boolean kill3 = false;
 		
-		if (file1.isFile()) {
+		if (file1.isFile() && !veto) {
 			file1.delete();
 		}
 		
-		if (file2.isFile()) {
+		if (file2.isFile() && !veto) {
 			file2.delete();
 		}
-		if (file3.isFile() && kill3) {
+		if (file3.isFile() && kill3 && !veto) {
 			file3.delete();
 		}
 	}
@@ -83,22 +84,21 @@ public class LogWriterTest {
 		assertTrue(file3.isFile());
 	}
 	
-	// Writers
+	// Writers to file3
 	@Test
 	public void testWriteDeliveryRequest() throws Exception {
-		if (LOGS) {System.out.println("\n----------mail");}
 		Location from = new Location("Fresh");
 		Location to = new Location("Clean");
 		LocalDateTime time = LocalDateTime.of(2016, 1, 1, 0, 0);
 		ArrayList<Leg> legs = new ArrayList<Leg>();
 		
 		legs.add(new Leg(from, to, "Seas", "POst dot co", 40.0, 28.4));
+		
 		DeliveryRequest mail = new DeliveryRequest(time, from, to, 40.0, 20.0, "International Air", 30, legs);
 		log.writeDeliveryRequest(mail);
 	}
 	@Test
 	public void testWriteRoute1() throws Exception {
-		if (LOGS) {System.out.println("\n----------cost1");}
 		Location from = new Location("Wellington");
 		Location to =  new Location("Christchurch");
 		CustomerPrice price = new CustomerPrice(from, to, "Low ass Priority", 20.0, 10.0);
@@ -110,8 +110,6 @@ public class LogWriterTest {
 	}
 	@Test
 	public void testWriteRoute2() throws Exception {
-		if (LOGS) {System.out.println("\n----------cost2");}
-		
 		CustomerPrice price = new CustomerPrice(new Location("place"), new Location("otherplace"), "Super Imp", 30.54, 20.0);
 		Route route = new Route(new Location("Auckland"), new Location("Dunedin"), "UPS", "Land", 
 				"Local Standard", 20.8, 56.2, 43,123,33, 2, DayOfWeek.TUESDAY, 20, price);
@@ -119,22 +117,20 @@ public class LogWriterTest {
 	}
 	@Test
 	public void testWriteCustomerPrice1() throws Exception {
-		if (LOGS) {System.out.println("\n----------price1");}
-		
 		CustomerPrice price = new CustomerPrice(new Location("StartPlace"), new Location("EndPlace"), "Stand LOcal brah", 3.0, 5.0);
 		log.writeCustomerPrice(price);
 	}
 	@Test
 	public void testWriteCustomerPrice2() throws Exception {
-		if (LOGS) {System.out.println("\n----------price2");}
-		
 		CustomerPrice price = new CustomerPrice(new Location("place"), new Location("otherplace"), "Super Imp", 30.54, 20.0);
 		log.writeCustomerPrice(price);
 	}
 	@Test
 	public void testWriteDiscontinue() throws Exception {
-		if (LOGS) {System.out.println("\n----------disc.");}
 		DiscontinueRoute disc = new DiscontinueRoute(new Location("Christchurch"), new Location("Wellington"), "NZ Post", "Sea");
 		log.writeDiscontinue(disc);
 	}
+
+	
+
 }

@@ -174,6 +174,11 @@ public class LogReader {
 			e.printStackTrace();
 		}
 	}
+	public LogReader(File logFile, Main mainClass, boolean in, boolean out) {
+		this(logFile, mainClass);
+		this.LOGSIN = in;
+		this.LOGSOUT = out;
+	}
 	
 	// METHODS
 	// Main Method
@@ -487,46 +492,40 @@ public class LogReader {
 	}
 	private void sendEvent() {
 		switch (currentEvent.getEventType()) {
+		
 		case "cost":
 			if(LOGSOUT){System.out.println(cost);}
-			
-			/*
 			main.logTransportCostUpdate(cost.origin, cost.destination, 
 					cost.company, cost.type, cost.weightCost, cost.volumeCost, 
 					cost.maxWeight, cost.maxVolume, cost.duration, cost.frequency, 
 					cost.day, cost.startTime, true);
-			/**/
 			cost = null;
 			break;
+		
 		case "mail":
 			if(LOGSOUT){System.out.println(mail);}
-			
-			/*
 			main.logDeliveryRequest(mail.logTime, mail.origin, mail.destination, mail.legs,
 					mail.weight, mail.volume, mail.priority, mail.duration, true);
-			/**/
 			mail = null;
 			break;
+		
 		case "price":
 			if(LOGSOUT){System.out.println(price);}
-			
-			/*
 			main.logCustomerPriceUpdate(price.origin, price.destination, 
 					price.priority, price.weightCost, price.volumeCost, true);
-			/**/
 			price = null;
 			break;
+		
 		case "discontinue":
 			if(LOGSOUT){System.out.println(discont);}
-			
-			/*
-			main.logRouteDiscontinued(discont.origin, discont.destination, 
+			main.discontinueTransportRoute(discont.origin, discont.destination, 
 					discont.company, discont.type, true);
-			/**/
 			discont = null;
 			break;
+		
 		default:
 			System.out.println("Error. Tried to send invalid event type: "+currentEvent.getEventType());
+			break;
 		}
 	}	
 }

@@ -254,6 +254,7 @@ public class LogWriter {
 		
    	    // Console Logging for Testing
    	    if (LOGS) {
+   	    	System.out.println("\n----------mail");
 	        StreamResult consoleResult =  new StreamResult(System.out);
 	      	transformer.transform(source, consoleResult);
    	    }
@@ -342,6 +343,7 @@ public class LogWriter {
         
       	// Console Logging for Testing
       	if (LOGS) {
+      		System.out.println("\n----------cost1");
 	        StreamResult consoleResult =  new StreamResult(System.out);
 	      	transformer.transform(source, consoleResult);
       	}
@@ -399,6 +401,7 @@ public class LogWriter {
         
         // Console Logging for Testing
         if(LOGS) {
+        	System.out.println("\n----------price");
 	        StreamResult consoleResult =  new StreamResult(System.out);
 	      	transformer.transform(source, consoleResult);
         }
@@ -451,6 +454,7 @@ public class LogWriter {
 	
 		// Console Logging for Testing
 		if(LOGS) {
+			System.out.println("\n----------disc.");
 		  	StreamResult consoleResult =  new StreamResult(System.out);
 			transformer.transform(source, consoleResult);
 		}
