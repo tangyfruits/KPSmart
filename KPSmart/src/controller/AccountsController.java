@@ -16,10 +16,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Main;
+import main.User;
 
 public class AccountsController implements Initializable {
 	private Main main;
@@ -305,8 +308,66 @@ public class AccountsController implements Initializable {
 	}
 	
 	@FXML
+	private TextField user;
+	
+	@FXML
+	private Text userDisplay, manStat;
+	@FXML
+	private GridPane options;
+	
+	@FXML
+	private Button updateButton, searchButton;
+	
+	private BooleanProperty hasUser = new SimpleBooleanProperty(false);
+	
+	private User u = null;
+	
+	@FXML
 	private void searchButtonAction(ActionEvent event){
+		updateButton.visibleProperty().bind(hasUser);
+		if(!user.getText().isEmpty()){
+			u = main.findUser(user.getText());
+			hasUser.set(true);
+		}
 		
+		if(u!=null){
+			userDisplay.setText("User found: " +u.getUsername());
+			if(u.isManager()){
+				manStat.setText("Current Role: Manager");
+			}
+			else{
+				manStat.setText("Current Role: Clerk");
+			}
+			options.visibleProperty().set(true);			
+		}
+	}
+	
+	boolean manager = false;
+	
+	@FXML
+	private RadioButton managerB, clerkB;
+	
+	@FXML
+	private void managerButton(ActionEvent event){
+		manager = true;
+	}
+	
+	@FXML
+	private void clerkButton(ActionEvent event){
+		manager = false;
+	}
+	
+	@FXML
+	private void updateButtonAction(ActionEvent event){
+		BooleanProperty updated = new SimpleBooleanProperty(main.editManager(u.getUsername(), manager));
+		if(updated.get() == true){
+			confirmation.visibleProperty().bind(updated);
+			user.setDisable(true);
+			searchButton.setDisable(true);
+			managerB.setDisable(true);
+			clerkB.setDisable(true);
+			updateButton.setDisable(true);			
+		}
 	}
 	
 	@FXML
