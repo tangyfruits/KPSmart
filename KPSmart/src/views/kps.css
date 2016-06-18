@@ -30,6 +30,26 @@
     -fx-background-color: #FFF3E0;
 }
 
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+	-fx-shape: " ";
+}
+
+.scroll-bar:vertical .thumb {
+	-fx-background-insets: 5, 0, 0;
+	-fx-background-radius: 2em;
+}
+
+.scroll-bar:horizontal {
+  -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal .thumb{
+	-fx-background-color: transparent;
+	-fx-background-insets: 5, 0, 0;
+	-fx-background-radius: 2em;
+}
+
 #reportinfo{
 	-fx-font-size: 15px;
 }
@@ -38,8 +58,19 @@
     -fx-background-color: #655a5a;
 }
 
-#scroll .thumb{
+#routeload .scroll-bar:vertical .thumb{
+	-fx-background-color: #E9D5B9;
+}
+#scroll .scroll-bar:vertical .thumb{
 	-fx-background-color: transparent;
+}
+
+#critroutes .scroll-bar:vertical .thumb{
+	-fx-background-color: #F2DFC4;
+}
+
+#avedeltimes .scroll-bar:vertical .thumb{
+	-fx-background-color: #FAE7CC;
 }
 
 .scroll-pane {
@@ -47,10 +78,6 @@
 }
 
 .scroll-bar:vertical {
-  -fx-background-color: transparent;
-}
-
-.scroll-bar:horizontal {
   -fx-background-color: transparent;
 }
 
@@ -63,19 +90,4 @@
 }
 #routes{
 	-fx-font-size: 16px;
-}
-
-.scroll-bar .increment-arrow,
-.scroll-bar .decrement-arrow {
-	-fx-shape: " ";
-}
-
-.scroll-bar:vertical .thumb {
-    -fx-background-color: #E9D5B9;
-	-fx-background-insets: 5, 0, 0;
-	-fx-background-radius: 2em;
-}
-
-.scroll-bar:horizontal .thumb{
-	-fx-background-color: transparent;
 }
