@@ -16,6 +16,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Main;
 
@@ -248,10 +250,58 @@ public class AccountsController implements Initializable {
 		};
 
 	}
+	@FXML
+	private TextField pass1,pass2;
+	private BooleanProperty hasError = new SimpleBooleanProperty(false);
+	private BooleanProperty nonMatch = new SimpleBooleanProperty(false);
+	
+	@FXML
+	private Text error, match, confirmation, fail;
+	@FXML
+	private Button changePassButton;
+	
+	private void validatePassword(){
+		hasError.set(false);
+		nonMatch.set(false);
+
+		if (pass1.getText().isEmpty()) {
+			hasError.set(true);
+			pass1.setStyle("-fx-background-color: #ffff99");
+		} else {
+			pass1.setStyle("-fx-background-color:  white");
+		}
+		if (pass2.getText().isEmpty()) {
+			hasError.set(true);
+			pass2.setStyle("-fx-control-inner-background: #ffff99");
+		} else {
+			pass2.setStyle("-fx-control-inner-background: white");
+		}
+		
+		if (!hasError.get()) {
+			if (!pass1.getText().equals(pass2.getText())) {
+				nonMatch.set(true);
+			}
+		}		
+	}
 	
 	@FXML
 	private void changePassButtonAction(ActionEvent event){
+		error.visibleProperty().bind(hasError);
+		match.visibleProperty().bind(nonMatch);
+		validatePassword();
 		
+		if (!hasError.get() && !nonMatch.get()) {
+			BooleanProperty changed = new SimpleBooleanProperty(
+					main.editPassword(pass1.getText()));
+			if (changed.get() == true) {
+				confirmation.visibleProperty().bind(changed);
+				pass1.setDisable(true);
+				pass2.setDisable(true);
+				changePassButton.setDisable(true);
+			} else {
+				fail.visibleProperty().set(true);
+			}
+		}			
 	}
 	
 	@FXML

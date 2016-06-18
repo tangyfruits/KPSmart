@@ -63,13 +63,25 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <PasswordField layoutX="162.0" layoutY="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <PasswordField fx:id="pass2" layoutX="162.0" layoutY="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Text layoutX="92.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Password:" />
             <Text layoutX="92.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Password:" GridPane.rowIndex="1" />
-            <PasswordField GridPane.columnIndex="1" />
+            <PasswordField fx:id="pass1" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <Button id="submit" fx:id="changePassButton" layoutX="279.0" layoutY="257.0" mnemonicParsing="false" onAction="#changePassButtonAction" style="-fx-background-color: E9D5B9;" text="Change Password" />
+      <Text fx:id="error" fill="#eb0a0a" layoutX="261.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: false;" text="Please complete both fields" />
+      <Text fx:id="match" fill="#eb0a0a" layoutX="261.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: false;" text="Your passwords must match" />
+      <Text fx:id="confirmation" fill="#509a55" layoutX="191.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: false;" text="Thanks. Your request has been processed!">
+         <font>
+            <Font name="Gulim" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="fail" fill="#ee240d" layoutX="242.0" layoutY="357.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: false;" text="Sorry, something went wrong.  Please try again." textAlignment="CENTER" wrappingWidth="217.0">
+         <font>
+            <Font name="Gulim" size="18.0" />
+         </font>
+      </Text>
    </children>
    <stylesheets>
 	<URL value="@kps.css" />

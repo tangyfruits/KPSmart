@@ -753,63 +753,59 @@ public class FormController implements Initializable {
 	/** PRICE UPDATE FORM */
 
 	public void validatePrice(String wc, String vc) {
-		if (selectedOrigin.isEmpty() || selectedOrigin.equals("Other")
-				|| selectedDest.isEmpty() || selectedDest.equals("Other")
-				|| wc.isEmpty() || !isDouble(wc) || vc.isEmpty()
-				|| !isDouble(vc) || priority.isEmpty()) {
-			
-			if (selectedOrigin.isEmpty() && !originMenu.getText().equals("Other")) {
-				hasError.set(true);
-				originMenu.setStyle("-fx-background-color: #ffff99");
-			} else{
-				originMenu.setStyle("-fx-background-color:  E9D5B9");
-			}
-			if (selectedOrigin.isEmpty() && originMenu.getText().equals("Other")) {
-				hasError.set(true);
-				otherOrigin.setStyle("-fx-control-inner-background: #ffff99");
-			} else{
-				otherOrigin.setStyle("-fx-control-inner-background: white");
-			}
-			if (selectedDest.isEmpty() && !destinationMenu.getText().equals("Other")) {
-				hasError.set(true);
-				destinationMenu.setStyle("-fx-background-color: #ffff99");
-			} else{
-				destinationMenu.setStyle("-fx-background-color: E9D5B9");
+		hasError.set(false);
 
-			}
-			if (selectedDest.isEmpty() && destinationMenu.getText().equals("Other")) {
-				hasError.set(true);
-				otherDest.setStyle("-fx-control-inner-background: #ffff99");
-
-			} else{
-				otherDest.setStyle("-fx-control-inner-background: white");
-
-			}
-			if (wc.isEmpty() || !isDouble(wc)) {
-				hasError.set(true);
-				weightcost.setStyle("-fx-control-inner-background: #ffff99");
-			} else{
-				weightcost.setStyle("-fx-control-inner-background: white");
-
-			}
-			if (vc.isEmpty() || !isDouble(vc)) {
-				hasError.set(true);
-				 volumecost.setStyle("-fx-control-inner-background: #ffff99");
-			} else {
-				 volumecost.setStyle("-fx-control-inner-background: white");
-
-			}
-			if (priority.isEmpty()) {
-				hasError.set(true);
-				prioritymenu.setStyle("-fx-background-color:  #ffff99");
-
-			} else {
-				prioritymenu.setStyle("-fx-background-color:  E9D5B9");
-
-			}				
+		if (selectedOrigin.isEmpty() && !originMenu.getText().equals("Other")) {
+			hasError.set(true);
+			originMenu.setStyle("-fx-background-color: #ffff99");
 		} else {
-			hasError.set(false);
+			originMenu.setStyle("-fx-background-color:  E9D5B9");
 		}
+		if (selectedOrigin.isEmpty() && originMenu.getText().equals("Other")) {
+			hasError.set(true);
+			otherOrigin.setStyle("-fx-control-inner-background: #ffff99");
+		} else {
+			otherOrigin.setStyle("-fx-control-inner-background: white");
+		}
+		if (selectedDest.isEmpty()
+				&& !destinationMenu.getText().equals("Other")) {
+			hasError.set(true);
+			destinationMenu.setStyle("-fx-background-color: #ffff99");
+		} else {
+			destinationMenu.setStyle("-fx-background-color: E9D5B9");
+
+		}
+		if (selectedDest.isEmpty() && destinationMenu.getText().equals("Other")) {
+			hasError.set(true);
+			otherDest.setStyle("-fx-control-inner-background: #ffff99");
+
+		} else {
+			otherDest.setStyle("-fx-control-inner-background: white");
+
+		}
+		if (wc.isEmpty() || !isDouble(wc)) {
+			hasError.set(true);
+			weightcost.setStyle("-fx-control-inner-background: #ffff99");
+		} else {
+			weightcost.setStyle("-fx-control-inner-background: white");
+
+		}
+		if (vc.isEmpty() || !isDouble(vc)) {
+			hasError.set(true);
+			volumecost.setStyle("-fx-control-inner-background: #ffff99");
+		} else {
+			volumecost.setStyle("-fx-control-inner-background: white");
+
+		}
+		if (priority.isEmpty()) {
+			hasError.set(true);
+			prioritymenu.setStyle("-fx-background-color:  #ffff99");
+
+		} else {
+			prioritymenu.setStyle("-fx-background-color:  E9D5B9");
+
+		}
+
 	}
 
 	@FXML
