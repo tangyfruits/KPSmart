@@ -126,16 +126,18 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-            <Tab style="-fx-background-color: FAE7CC; -fx-font-family: Gulim;" text="Critical Routes">
+            <Tab fx:id="critical" style="-fx-background-color: FAE7CC; -fx-font-family: Gulim;" text="Critical Routes">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: FAE7CC; -fx-background-radius: 10;">
                      <children>
-                        <TableView layoutX="25.0" layoutY="14.0" prefHeight="341.0" prefWidth="548.0" style="-fx-background-color: FAE7CC;">
+                        <TableView fx:id="criticalTable" layoutX="25.0" layoutY="14.0" prefHeight="341.0" prefWidth="548.0" style="-fx-background-color: FAE7CC;">
                           <columns>
-                            <TableColumn prefWidth="137.0" text="Origin" />
-                            <TableColumn prefWidth="137.0" text="Destination" />
-                              <TableColumn prefWidth="137.0" text="Price" />
-                              <TableColumn prefWidth="137.0" text="Cost" />
+                            <TableColumn fx:id="critOrigin" prefWidth="104.0" style="-fx-background-color: E9D5B9;" text="Origin" />
+                            <TableColumn fx:id="critDest" prefWidth="94.0" style="-fx-background-color: E9D5B9;" text="Destination" />
+                              <TableColumn fx:id="critPriority" prefWidth="122.0" style="-fx-background-color: E9D5B9;" text="Priority" />
+                              <TableColumn fx:id="critPrice" minWidth="6.0" prefWidth="79.0" style="-fx-background-color: E9D5B9;" text="Av. Price" />
+                              <TableColumn fx:id="critCost" minWidth="0.0" prefWidth="66.0" style="-fx-background-color: E9D5B9;" text="Av. Cost" />
+                              <TableColumn fx:id="critDiff" prefWidth="82.0" style="-fx-background-color: E9D5B9;" text="Difference" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
@@ -145,13 +147,12 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: FFEDD3; -fx-background-radius: 10;">
                      <children>
-                        <TableView layoutX="25.0" layoutY="14.0" prefHeight="341.0" prefWidth="548.0" style="-fx-background-color: FFEDD3;">
+                        <TableView fx:id="average" layoutX="25.0" layoutY="14.0" prefHeight="341.0" prefWidth="548.0" style="-fx-background-color: FFEDD3;">
                           <columns>
-                            <TableColumn prefWidth="114.0" text="Priority" />
-                            <TableColumn prefWidth="126.0" text="Origin" />
-                              <TableColumn prefWidth="120.0" text="Destination" />
-                              <TableColumn prefWidth="53.0" />
-                              <TableColumn prefWidth="134.0" text="Delivery Time" />
+                            <TableColumn fx:id="avOrigin" prefWidth="126.0" style="-fx-background-color: E9D5B9;" text="Origin" />
+                              <TableColumn fx:id="avDest" prefWidth="120.0" style="-fx-background-color: E9D5B9;" text="Destination" />
+                            <TableColumn fx:id="avPriority" prefWidth="157.0" style="-fx-background-color: E9D5B9;" text="Priority" />
+                              <TableColumn fx:id="avTime" prefWidth="144.0" style="-fx-background-color: E9D5B9;" text="Av. Delivery Time" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>

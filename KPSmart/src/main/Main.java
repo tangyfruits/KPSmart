@@ -26,7 +26,7 @@ public class Main {
 	private HashMap<TuplePriority, ArrayList<Integer>> amountOfMailDeliveryTimes;
 	private HashMap<Tuple, ArrayList<Double>> amountOfMail;
 	private ArrayList<DeliveryRequest> deliveryRequests;
-	private HashMap<Tuple,ArrayList<Double>> criticalRoutes;
+	private HashMap<TuplePriority,ArrayList<Double>> criticalRoutes;
 
 	private File configFile;
 	private File logFile;
@@ -295,6 +295,7 @@ public class Main {
 		// add to delivery events field
 		addToAverageDeliveryTimes(origin, destination, duration, priority);
 		addToAmountOfMail(origin, destination, weight, volume);
+		addToCriticalRoutes(origin, destination, priority, legs);
 		deliveryRequests.add(request);
 
 		if (!initial) {
@@ -351,7 +352,7 @@ public class Main {
 		price = getCustomerPrice(originLoc, destinationLoc, origin, destination, priority);
 
 		// check if route already exists, if it does, update it
-		Boolean routeExists = false;
+		Boolean routeExists = false; 
 		for (int k = 0; k < originLoc.getRoutes().size(); k++) {
 			Route r = originLoc.getRoutes().get(k);
 			if (r.getDestination().equals(destinationLoc) && r.getCompany().equals(company)
@@ -619,48 +620,52 @@ public class Main {
 
 	// REPORTS
 	// Critical Routes
-	public void addToCriticalRoutes(String origin,String dest, String prior,double weight,double volume){
-		Tuple odp = new Tuple(origin, dest, prior);
+	public void addToCriticalRoutes(String origin,String dest, String prior, ArrayList<Leg> legs){
+		TuplePriority odp = new TuplePriority(origin, dest, prior);
 		ArrayList<Double> costPrice = new ArrayList<>();
 		
-		Location originLoc = null;
-		Location destinationLoc = null;
-		CustomerPrice price = null;
-		for (int i = 0; i < locations.size(); i++) {
-			if (locations.get(i).getName().equals(origin)) {
-				originLoc = locations.get(i);
-			}
-			if (locations.get(i).getName().equals(dest)) {
-				destinationLoc = locations.get(i);
-			}
+		double cp = 0;
+		double rp = 0;
+		for(Leg l :legs){
+			cp += l.getCost();
+			rp += l.getPrice();
 		}
-		if (originLoc == null) {
-			originLoc = new Location(origin);
-			addLocation(originLoc);
-		}
-		if (destinationLoc == null) {
-			destinationLoc = new Location(dest);
-			addLocation(destinationLoc);
-		}
+
 		
-		price = getCustomerPrice(originLoc, destinationLoc, origin, dest, prior);
-		double cp = price.getWeightCost()*weight + price.getVolumeCost()*volume;
-		double rp = 0.0;
-		
-		for (Route r: originLoc.getRoutes()){
-			if (r.getOrigin().equals(originLoc)&&r.getDestination().equals(destinationLoc)){//is the same route
-				rp = r.getWeightCost();//find trans cost
+		boolean success = false;
+		for (TuplePriority t : criticalRoutes.keySet()) {
+			if (t.getOrigin().equals(origin) && t.getDestination().equals(dest)) {
+				costPrice = criticalRoutes.get(t);
+				costPrice.set(0, costPrice.get(0) + cp);
+				costPrice.set(1, costPrice.get(1) + rp);
+				costPrice.set(2, costPrice.get(2)+1);
+				criticalRoutes.put(t, costPrice);
+				success = true;
 			}
 		}
-		costPrice.add(cp); //1st element: price
-		costPrice.add(rp); //2nd element: cost
-		
-		if (rp>cp){	
-			criticalRoutes.put(odp, costPrice);
+		if (!success) {
+			TuplePriority t = new TuplePriority(origin, dest, prior);
+			costPrice = new ArrayList<>();
+			costPrice.add(cp);
+			costPrice.add(rp);
+			costPrice.add(1.0);
+			criticalRoutes.put(t, costPrice);
 		}
 	}	
-	public HashMap<Tuple, ArrayList<Double>> getCriticalRoutes(){
-		return criticalRoutes;
+	public HashMap<TuplePriority, ArrayList<Double>> getCriticalRoutes(){
+		HashMap<TuplePriority, ArrayList<Double>> criticals = new HashMap<>();
+		for(TuplePriority t: criticalRoutes.keySet()){
+			Double averageCost = criticalRoutes.get(t).get(0)/criticalRoutes.get(t).get(2);
+			Double averagePrice = criticalRoutes.get(t).get(1)/criticalRoutes.get(t).get(2);
+			if(averageCost>averagePrice){
+				ArrayList<Double> averages = new ArrayList<>();
+				averages.add(averageCost);
+				averages.add(averagePrice);
+				averages.add(averageCost-averagePrice);
+				criticals.put(t, averages);
+			}
+		}
+		return criticals;
 	}
 	
 	// Amount of Mail
@@ -702,8 +707,8 @@ public class Main {
 	private void mailReportPrint() {
 		for (Tuple t : amountOfMail.keySet()) {
 			ArrayList<Double> amountList = amountOfMail.get(t);
-			System.out.println(t.getOrigin() + " to " + t.getDestination() + ". Total Weight: " + amountList.get(0)
-					+ " Total Volume:" + amountList.get(1) + " Total Instances: " + amountList.get(2));
+//			System.out.println(t.getOrigin() + " to " + t.getDestination() + ". Total Weight: " + amountList.get(0)
+//					+ " Total Volume:" + amountList.get(1) + " Total Instances: " + amountList.get(2));
 		}
 	}
 	

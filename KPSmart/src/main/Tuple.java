@@ -10,7 +10,6 @@ public class Tuple {
 
 	private String origin;
 	private String destination;
-	private String priority;
 
 	/**
 	 * Constructor
@@ -24,20 +23,6 @@ public class Tuple {
 		this.destination = destination;
 	}
 	
-	/**
-	 * Constructor
-	 * 
-	 * @param origin
-	 * @param destination
-	 * @param priority
-	 */
-
-	public Tuple(String origin, String destination,String priority) {
-		this.origin = origin;
-		this.destination = destination;
-		this.priority = priority;
-	}
-
 	/**
 	 * Getter
 	 * 
