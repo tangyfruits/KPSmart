@@ -294,7 +294,6 @@ public class Main {
 
 		// add to delivery events field
 		addToAverageDeliveryTimes(origin, destination, duration, priority);
-		System.out.println("Duration: "+duration);
 		addToAmountOfMail(origin, destination, weight, volume);
 		addToCriticalRoutes(origin, destination, priority, legs);
 		deliveryRequests.add(request);
@@ -355,7 +354,7 @@ public class Main {
 		price = getCustomerPrice(originLoc, destinationLoc, origin, destination, priority);
 
 		// check if route already exists, if it does, update it
-		Boolean routeExists = false;
+		Boolean routeExists = false; 
 		for (int k = 0; k < originLoc.getRoutes().size(); k++) {
 			Route r = originLoc.getRoutes().get(k);
 			if (r.getDestination().equals(destinationLoc) && r.getCompany().equals(company)
@@ -712,8 +711,8 @@ public class Main {
 	private void mailReportPrint() {
 		for (Tuple t : amountOfMail.keySet()) {
 			ArrayList<Double> amountList = amountOfMail.get(t);
-			System.out.println(t.getOrigin() + " to " + t.getDestination() + ". Total Weight: " + amountList.get(0)
-					+ " Total Volume:" + amountList.get(1) + " Total Instances: " + amountList.get(2));
+//			System.out.println(t.getOrigin() + " to " + t.getDestination() + ". Total Weight: " + amountList.get(0)
+//					+ " Total Volume:" + amountList.get(1) + " Total Instances: " + amountList.get(2));
 		}
 	}
 	
