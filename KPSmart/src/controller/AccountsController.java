@@ -311,12 +311,12 @@ public class AccountsController implements Initializable {
 	private TextField user;
 	
 	@FXML
-	private Text userDisplay, manStat;
+	private Text userDisplay, manStat, userExists;
 	@FXML
 	private GridPane options;
 	
 	@FXML
-	private Button updateButton, searchButton;
+	private Button updateButton, searchButton, addUserButton;
 	
 	private BooleanProperty hasUser = new SimpleBooleanProperty(false);
 	
@@ -342,7 +342,8 @@ public class AccountsController implements Initializable {
 		}
 	}
 	
-	boolean manager = false;
+	boolean manager;
+	boolean hasChosen = false;
 	
 	@FXML
 	private RadioButton managerB, clerkB;
@@ -350,28 +351,82 @@ public class AccountsController implements Initializable {
 	@FXML
 	private void managerButton(ActionEvent event){
 		manager = true;
+		hasChosen = true;
 	}
 	
 	@FXML
 	private void clerkButton(ActionEvent event){
 		manager = false;
+		hasChosen = true;
 	}
 	
 	@FXML
 	private void updateButtonAction(ActionEvent event){
-		BooleanProperty updated = new SimpleBooleanProperty(main.editManager(u.getUsername(), manager));
-		if(updated.get() == true){
-			confirmation.visibleProperty().bind(updated);
-			user.setDisable(true);
-			searchButton.setDisable(true);
-			managerB.setDisable(true);
-			clerkB.setDisable(true);
-			updateButton.setDisable(true);			
+		BooleanProperty updated;
+		if (hasChosen) {
+			updated = new SimpleBooleanProperty(main.editManager(
+					u.getUsername(), manager));
+
+			if (updated.get() == true) {
+				confirmation.visibleProperty().bind(updated);
+				user.setDisable(true);
+				searchButton.setDisable(true);
+				managerB.setDisable(true);
+				clerkB.setDisable(true);
+				updateButton.setDisable(true);
+			}
+		}
+	}
+	
+	@FXML
+	private TextField username,password;
+	
+	private void validateAddUser(){
+		hasError.set(false);
+		if(username.getText().isEmpty()){
+			hasError.set(true);
+			username.setStyle("-fx-background-color: #ffff99");
+		} else {
+			username.setStyle("-fx-background-color:  white");
+		}
+		if(password.getText().isEmpty()){
+			hasError.set(true);
+			password.setStyle("-fx-background-color: #ffff99");
+		} else {
+			password.setStyle("-fx-background-color:  white");
+		}
+		if(!hasChosen){
+			hasError.set(true);
+			managerB.setStyle("-fx-background-color: #ffff99");
+			clerkB.setStyle("-fx-background-color: #ffff99");
+		}
+		else{
+			managerB.setStyle("-fx-background-color: #FFF3E0");
+			clerkB.setStyle("-fx-background-color: #FFF3E0");
 		}
 	}
 	
 	@FXML
 	private void addUserButtonAction(ActionEvent event){
-		
+		validateAddUser();
+		error.visibleProperty().bind(hasError);
+		if(!hasError.get()){
+			userExists.visibleProperty().bind(hasUser);
+			u = main.findUser(username.getText());
+			if(u == null){
+				hasUser.set(false);
+				u = new User(username.getText(),password.getText(), manager);
+				main.add(u);
+				confirmation.visibleProperty().set(true);
+				username.setDisable(true);
+				password.setDisable(true);
+				managerB.setDisable(true);
+				clerkB.setDisable(true);
+				addUserButton.setDisable(true);
+			}
+			else{
+				hasUser.set(true);
+			}
+		}
 	}
 }

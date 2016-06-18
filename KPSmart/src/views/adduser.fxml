@@ -69,22 +69,41 @@
             <TextField fx:id="username" layoutX="162.0" layoutY="156.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <GridPane hgap="20.0" layoutX="190.0" layoutY="237.0" prefHeight="18.0" prefWidth="240.0">
+      <Button id="submit" fx:id="addUserButton" layoutX="300.0" layoutY="282.0" mnemonicParsing="false" onAction="#addUserButtonAction" style="-fx-background-color: E9D5B9;" text="Add User" />
+      <GridPane fx:id="options" hgap="20.0" layoutX="200.0" layoutY="245.0" prefHeight="18.0" prefWidth="319.0" style="visibility: true;">
+         <children>
+            <Text layoutX="193.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role:" wrappingWidth="62.30859375" />
+            <RadioButton fx:id="managerB" layoutX="268.0" layoutY="284.0" mnemonicParsing="false" onAction="#managerButton" prefHeight="20.0" prefWidth="111.0" text="Manager" GridPane.columnIndex="1">
+               <toggleGroup>
+                  <ToggleGroup fx:id="man1" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="clerkB" layoutX="330.0" layoutY="284.0" mnemonicParsing="false" onAction="#clerkButton" text="Clerk" toggleGroup="$man1" GridPane.columnIndex="2" />
+         </children>
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="106.83880615234375" minWidth="10.0" prefWidth="61.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="101.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="117.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
-         <children>
-            <Text layoutX="191.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manager:" />
-            <RadioButton layoutX="283.0" layoutY="242.0" mnemonicParsing="false" text="Yes" GridPane.columnIndex="1" />
-            <RadioButton layoutX="345.0" layoutY="238.0" mnemonicParsing="false" text="No" GridPane.columnIndex="2" />
-         </children>
       </GridPane>
-      <Button id="submit" fx:id="addUserButton" layoutX="300.0" layoutY="282.0" mnemonicParsing="false" onAction="#addUserButtonAction" style="-fx-background-color: E9D5B9;" text="Add User" />
+      <Text fx:id="confirmation" fill="#509a55" layoutX="215.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: false;" text="Thanks.  The new user has been added!">
+         <font>
+            <Font name="Gulim" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="userExists" fill="#e41919" layoutX="228.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: false;" text="That username already exists.  Please choose again." textAlignment="CENTER" wrappingWidth="223.5322265625">
+         <font>
+            <Font name="Gulim" size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="error" fill="#eb0909" layoutX="259.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: false;" text="Please complete all fields" textAlignment="CENTER">
+         <font>
+            <Font name="Gulim" size="18.0" />
+         </font>
+      </Text>
    </children>
    <stylesheets>
 	<URL value="@kps.css" />
