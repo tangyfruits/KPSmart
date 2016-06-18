@@ -44,7 +44,7 @@ public class HistoryController implements Initializable {
 	
 	public HistoryController(Main main) {
 		this.main = main;
-		stepper = new LogStepper(new File("KPSmart/src/tests/test_input.xml"));
+		stepper = new LogStepper(main.getLogFile());
 	}
 
 	@Override
@@ -426,8 +426,6 @@ public class HistoryController implements Initializable {
 		box.getChildren().add(a);
 		a = new Text("From: " + item.get("from"));
 		box.getChildren().add(a);		
-		a = new Text("Type: " + item.get("type"));
-		box.getChildren().add(a);
 		a = new Text("Priority: " + item.get("priority"));
 		box.getChildren().add(a);
 		a = new Text("Weight Cost: " + item.get("weightCost"));
