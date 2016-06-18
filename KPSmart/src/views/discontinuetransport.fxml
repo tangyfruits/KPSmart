@@ -116,6 +116,11 @@
             <Font name="Gulim" size="18.0" />
          </font>
       </Text>
+      <Text fx:id="noRoutes" layoutX="163.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: false;" text="Sorry, there are no routes available for your selection.  Please choose different values" textAlignment="CENTER" wrappingWidth="394.92578125">
+         <font>
+            <Font name="Gulim" size="15.0" />
+         </font>
+      </Text>
    </children>
    <stylesheets>
 	<URL value="@kps.css" />

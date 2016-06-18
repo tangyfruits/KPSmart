@@ -754,15 +754,12 @@ public class Main {
 		events += 1;
 	}
 	public double getTotalRev() {
-		System.out.println("Total Revenue: $" + totalRev);
 		return totalRev;
 	}
 	public double getTotalExp() {
-		System.out.println("Total Expenditure: $" + totalExp);
 		return totalExp;
 	}
 	public int getTotalEvents() {
-		System.out.println("Total Events: " + events);
 		return events;
 	}
 	

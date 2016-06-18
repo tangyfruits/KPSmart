@@ -26,12 +26,12 @@
           </font>
         </Label>
         <TextField fx:id="idnumber" prefHeight="27.0" prefWidth="287.0" GridPane.columnIndex="2" />
-        <Label font="$x1" text="ID Number:" GridPane.columnIndex="1" />
+        <Label font="$x1" prefHeight="24.0" prefWidth="122.0" text="Username:" GridPane.columnIndex="1" />
         <PasswordField fx:id="password" prefHeight="27.0" prefWidth="286.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       </children>
       <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="88.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.0" minWidth="-Infinity" prefWidth="132.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       </columnConstraints>
