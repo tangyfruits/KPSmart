@@ -146,6 +146,7 @@ public class ReportsController implements Initializable {
 		
 		FormController controller = delivery.getController();
 		controller.initDropdown();
+		controller.initReq();
 		
 		stage.setScene(scene);
 		stage.show();
@@ -184,6 +185,7 @@ public class ReportsController implements Initializable {
 		FormController controller = route.getController();
 		controller.initDropdownWithOther();
 		controller.timeMenu();
+		controller.initRoute();
 		stage.show();
 	}
 
@@ -201,6 +203,7 @@ public class ReportsController implements Initializable {
 		stage.setScene(scene);
 		FormController controller = price.getController();
 		controller.initDropdownWithOther();
+		controller.initPrice();
 		stage.show();
 	}
 	
@@ -301,7 +304,7 @@ public class ReportsController implements Initializable {
 	    HashMap<Tuple, ArrayList<Double>> temp = main.getAmountOfMail();
 	    report = new ArrayList<RouteLoadRow>();
 	    for(Tuple t: temp.keySet()){
-	    	RouteLoadRow row = new RouteLoadRow(t.getOrigin(), t.getDestination(), odf.format(temp.get(t).get(0)), odf.format(temp.get(t).get(1)), sf.format(temp.get(t).get(2)));
+	    	RouteLoadRow row = new RouteLoadRow(t.getOrigin(), t.getDestination(), odf.format(temp.get(t).get(0))+" g", odf.format(temp.get(t).get(1))+" cm\u00b3", sf.format(temp.get(t).get(2)));
 	    	report.add(row);
 	    }
 	    origin.setCellValueFactory(new PropertyValueFactory<Tuple,String>("origin"));

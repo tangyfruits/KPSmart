@@ -75,6 +75,19 @@ public class FormController implements Initializable {
 		}
 	}
 
+	@FXML
+	private Text vol, maxVol;
+	
+	public void initReq(){
+		vol.setText("Volume (cm\u00b3)");
+	}
+	public void initPrice(){
+		vol.setText("Volume Cost (cm\u00b3)");
+	}
+	public void initRoute(){
+		vol.setText("Volume Cost (cm\u00b3)");
+		maxVol.setText("Max Volume (cm\u00b3)");
+	}
 	private ArrayList<Location> locs;
 	@FXML
 	private MenuButton originMenu;
@@ -259,7 +272,7 @@ public class FormController implements Initializable {
 
 		FormController controller = delivery.getController();
 		controller.initDropdown();
-
+		controller.initReq();
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -297,6 +310,7 @@ public class FormController implements Initializable {
 		FormController controller = route.getController();
 		controller.initDropdownWithOther();
 		controller.timeMenu();
+		controller.initRoute();
 		stage.show();
 	}
 
@@ -314,6 +328,7 @@ public class FormController implements Initializable {
 		stage.setScene(scene);
 		FormController controller = price.getController();
 		controller.initDropdownWithOther();
+		controller.initPrice();
 		stage.show();
 	}
 	
@@ -1000,6 +1015,8 @@ public class FormController implements Initializable {
 	private ScrollPane scrollpane;
 
 	private BooleanProperty hasRoutes = new SimpleBooleanProperty(false);
+	
+	private BooleanProperty available = new SimpleBooleanProperty(false);
 
 	@FXML
 	private VBox discRoutes;
@@ -1034,36 +1051,41 @@ public class FormController implements Initializable {
 		error.visibleProperty().bind(hasError);
 
 		validateDiscontinue();
+		noRoutes.visibleProperty().bind(available);
 		if (!hasError.get()) {
 			disconRoutes = main.getRoutes(selectedOrigin, selectedDest);
-			final ToggleGroup group = new ToggleGroup();
-			group.selectedToggleProperty().addListener(
-					new ChangeListener<Toggle>() {
-						@Override
-						public void changed(
-								ObservableValue<? extends Toggle> ov, Toggle t,
-								Toggle t1) {
-							selectedRoute = (Route) t1.getUserData();
-						}
-					});
-			for (Route r : disconRoutes) {
-				RadioButton b = new RadioButton(r.getCompany() + ": "
-						+ r.getPriority());
-				b.setUserData(r);
-				b.setToggleGroup(group);
-				discRoutes.getChildren().add(b);
+			if (disconRoutes.size()>0) {
+				final ToggleGroup group = new ToggleGroup();
+				group.selectedToggleProperty().addListener(
+						new ChangeListener<Toggle>() {
+							@Override
+							public void changed(
+									ObservableValue<? extends Toggle> ov,
+									Toggle t, Toggle t1) {
+								selectedRoute = (Route) t1.getUserData();
+							}
+						});
+				for (Route r : disconRoutes) {
+					RadioButton b = new RadioButton(r.getCompany() + ": "
+							+ r.getPriority());
+					b.setUserData(r);
+					b.setToggleGroup(group);
+					discRoutes.getChildren().add(b);
+				}
+				discRoutes.setSpacing(5);
+				changeSelection.visibleProperty().bind(hasRoutes);
+				discRoutes.visibleProperty().bind(hasRoutes);
+				submit.visibleProperty().bind(hasRoutes);
+				scrollpane.visibleProperty().bind(hasRoutes);
+				hasRoutes.set(true);
+				originMenu.setDisable(true);
+				destinationMenu.setDisable(true);
+				findroutes.setDisable(true);
 			}
-			discRoutes.setSpacing(5);
-
-			changeSelection.visibleProperty().bind(hasRoutes);
-			discRoutes.visibleProperty().bind(hasRoutes);
-			submit.visibleProperty().bind(hasRoutes);
-			scrollpane.visibleProperty().bind(hasRoutes);
-			hasRoutes.set(true);
-
-			originMenu.setDisable(true);
-			destinationMenu.setDisable(true);
-			findroutes.setDisable(true);
+			else{
+				available.set(true);
+				changeSelection.visibleProperty().bind(available);
+			}
 		}
 	}
 
@@ -1074,6 +1096,7 @@ public class FormController implements Initializable {
 		findroutes.setDisable(false);
 		hasRoutes.set(false);
 		discRoutes.getChildren().clear();
+		available.set(false);
 	}
 
 	@FXML

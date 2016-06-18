@@ -203,7 +203,7 @@ public class HistoryController implements Initializable {
 
 		FormController controller = delivery.getController();
 		controller.initDropdown();
-
+		controller.initReq();
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -241,6 +241,7 @@ public class HistoryController implements Initializable {
 		FormController controller = route.getController();
 		controller.initDropdownWithOther();
 		controller.timeMenu();
+		controller.initRoute();
 		stage.show();
 	}
 
@@ -258,6 +259,7 @@ public class HistoryController implements Initializable {
 		stage.setScene(scene);
 		FormController controller = price.getController();
 		controller.initDropdownWithOther();
+		controller.initPrice();
 		stage.show();
 	}
 

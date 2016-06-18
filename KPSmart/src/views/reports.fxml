@@ -109,9 +109,9 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: F2DFC4; -fx-background-radius: 10;">
                      <children>
-                        <ScrollPane layoutX="16.0" layoutY="14.0" prefHeight="379.0" prefWidth="565.0" style="-fx-background-color: F2DFC4;">
+                        <ScrollPane layoutX="16.0" layoutY="14.0" prefHeight="379.0" prefWidth="565.0" style="-fx-background-color: E9D5B9;">
                            <content>
-                              <TableView fx:id="table" prefHeight="381.0" prefWidth="548.0" style="-fx-background-color: F2DFC4; -fx-background: F2DFC4;">
+                              <TableView fx:id="table" prefHeight="381.0" prefWidth="548.0" style="-fx-background-color: E9D5B9; -fx-background: E9D5B9;">
 
                                 <columns>
                                   <TableColumn fx:id="origin" prefWidth="100.01358795166016" style="-fx-background-color: E9D5B9;" text="Origin" />
@@ -130,16 +130,20 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: FAE7CC; -fx-background-radius: 10;">
                      <children>
-                        <TableView fx:id="criticalTable" layoutX="25.0" layoutY="14.0" prefHeight="341.0" prefWidth="548.0" style="-fx-background-color: FAE7CC;">
-                          <columns>
-                            <TableColumn fx:id="critOrigin" prefWidth="104.0" style="-fx-background-color: E9D5B9;" text="Origin" />
-                            <TableColumn fx:id="critDest" prefWidth="94.0" style="-fx-background-color: E9D5B9;" text="Destination" />
-                              <TableColumn fx:id="critPriority" prefWidth="122.0" style="-fx-background-color: E9D5B9;" text="Priority" />
-                              <TableColumn fx:id="critPrice" minWidth="6.0" prefWidth="79.0" style="-fx-background-color: E9D5B9;" text="Av. Price" />
-                              <TableColumn fx:id="critCost" minWidth="0.0" prefWidth="66.0" style="-fx-background-color: E9D5B9;" text="Av. Cost" />
-                              <TableColumn fx:id="critDiff" prefWidth="82.0" style="-fx-background-color: E9D5B9;" text="Difference" />
-                          </columns>
-                        </TableView>
+                        <ScrollPane layoutX="16.0" layoutY="14.0" prefHeight="379.0" prefWidth="565.0" style="-fx-background-color: F2DFC4;">
+                           <content>
+                              <TableView fx:id="criticalTable" prefHeight="381.0" prefWidth="548.0" style="-fx-background-color: F2DFC4;">
+                                <columns>
+                                  <TableColumn fx:id="critOrigin" prefWidth="104.0" style="-fx-background-color: F2DFC4;" text="Origin" />
+                                  <TableColumn fx:id="critDest" prefWidth="94.0" style="-fx-background-color: F2DFC4;" text="Destination" />
+                                    <TableColumn fx:id="critPriority" prefWidth="122.0" style="-fx-background-color: F2DFC4;" text="Priority" />
+                                    <TableColumn fx:id="critPrice" minWidth="6.0" prefWidth="79.0" style="-fx-background-color: F2DFC4;" text="Av. Price" />
+                                    <TableColumn fx:id="critCost" minWidth="0.0" prefWidth="66.0" style="-fx-background-color: F2DFC4;" text="Av. Cost" />
+                                    <TableColumn fx:id="critDiff" prefWidth="82.0" style="-fx-background-color: F2DFC4;" text="Difference" />
+                                </columns>
+                              </TableView>
+                           </content>
+                        </ScrollPane>
                      </children></AnchorPane>
                </content>
             </Tab>
@@ -147,14 +151,18 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: FFEDD3; -fx-background-radius: 10;">
                      <children>
-                        <TableView fx:id="average" layoutX="25.0" layoutY="14.0" prefHeight="341.0" prefWidth="548.0" style="-fx-background-color: FFEDD3;">
-                          <columns>
-                            <TableColumn fx:id="avOrigin" prefWidth="126.0" style="-fx-background-color: E9D5B9;" text="Origin" />
-                              <TableColumn fx:id="avDest" prefWidth="120.0" style="-fx-background-color: E9D5B9;" text="Destination" />
-                            <TableColumn fx:id="avPriority" prefWidth="157.0" style="-fx-background-color: E9D5B9;" text="Priority" />
-                              <TableColumn fx:id="avTime" prefWidth="144.0" style="-fx-background-color: E9D5B9;" text="Av. Delivery Time" />
-                          </columns>
-                        </TableView>
+                        <ScrollPane layoutX="16.0" layoutY="14.0" prefHeight="379.0" prefWidth="565.0" style="-fx-background-color: FAE7CC;">
+                           <content>
+                              <TableView fx:id="average" prefHeight="381.0" prefWidth="560.0" style="-fx-background-color: FAE7CC;">
+                                <columns>
+                                  <TableColumn fx:id="avOrigin" prefWidth="126.0" style="-fx-background-color: FAE7CC;" text="Origin" />
+                                    <TableColumn fx:id="avDest" prefWidth="120.0" style="-fx-background-color: FAE7CC;" text="Destination" />
+                                  <TableColumn fx:id="avPriority" prefWidth="131.0" style="-fx-background-color: FAE7CC;" text="Priority" />
+                                    <TableColumn fx:id="avTime" prefWidth="182.0" style="-fx-background-color: FAE7CC;" text="Av. Delivery Time" />
+                                </columns>
+                              </TableView>
+                           </content>
+                        </ScrollPane>
                      </children></AnchorPane>
                </content>
             </Tab>
