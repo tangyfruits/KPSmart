@@ -64,7 +64,7 @@
          </rowConstraints>
          <children>
             <Text layoutX="193.0" layoutY="186.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter user:" />
-            <Button id="submit" fx:id="searchButton" layoutX="522.0" layoutY="169.0" mnemonicParsing="false" onAction="#searchButtonAction" prefHeight="26.0" prefWidth="82.0" style="-fx-background-color: E9D5B9;" text="Search" GridPane.columnIndex="2" />
+            <Button id="submit" fx:id="searchButton" defaultButton="true" layoutX="522.0" layoutY="169.0" mnemonicParsing="false" onAction="#searchButtonAction" prefHeight="26.0" prefWidth="82.0" style="-fx-background-color: E9D5B9;" text="Search" GridPane.columnIndex="2" />
             <TextField fx:id="user" layoutX="280.0" layoutY="169.0" prefHeight="24.0" prefWidth="214.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>

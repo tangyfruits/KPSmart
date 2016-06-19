@@ -51,8 +51,10 @@ public class LoginController implements Initializable {
 		String pass = this.password.getText();
 		
 		if (main.login(id, pass)) {
-			FXMLLoader kpsgui = new FXMLLoader(getClass().getResource("/views/kpsgui.fxml"));
-			kpsgui.setController(new ReportsController(main));
+			FXMLLoader kpsgui = new FXMLLoader(getClass().getResource("/views/reports.fxml"));
+			ReportsController reports = new ReportsController(main);
+			kpsgui.setController(reports);
+			
 			Parent kpsguiUI = kpsgui.load();
 
 			Node node = (Node) event.getSource();
@@ -60,6 +62,7 @@ public class LoginController implements Initializable {
 			Scene scene = new Scene(kpsguiUI);
 			stage.setScene(scene);
 			stage.show();
+			reports.initData();
 			
 		} else if (pass.equals("")) {
 			password.requestFocus();

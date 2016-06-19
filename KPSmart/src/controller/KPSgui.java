@@ -1,15 +1,14 @@
 package controller;
 
-import java.time.DayOfWeek;
-
-import main.LogReader;
-import main.Main;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import main.LogReader;
+import main.Main;
 
 public class KPSgui extends Application {
 	
@@ -19,10 +18,7 @@ public class KPSgui extends Application {
 	public void start(Stage primaryStage) throws Exception {		
 
 		main = new Main();
-        //main.logCustomerPriceUpdate("Wellington", "Auckland", "Air", 1, 1, false);
-        //main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "Air", 4, 4, 15, 15, 12, 24, DayOfWeek.THURSDAY, 12, false);
-        //main.logCustomerPriceUpdate("Wellington", "Auckland", "Standard", 2, 5, false);
-        LogReader reader = new LogReader(main.getLogFile(), main, false, true);
+        LogReader reader = new LogReader(main.getLogFile(), main);
     	reader.parseFile();
 		
         FXMLLoader login = new FXMLLoader(getClass().getResource("/views/login.fxml"));

@@ -55,7 +55,7 @@
       <Separator layoutY="61.0" prefHeight="5.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
       <ScrollPane layoutX="197.0" layoutY="155.0" prefHeight="335.0" prefViewportHeight="279.0" prefViewportWidth="519.0" prefWidth="326.0">
          <content>
-            <VBox fx:id="box" prefHeight="317.0" prefWidth="333.0" style="-fx-background-color: FFF3E0;" />
+            <VBox fx:id="displayBox" prefHeight="317.0" prefWidth="333.0" style="-fx-background-color: FFF3E0;" />
          </content>
       </ScrollPane>
       <Button id="page" fx:id="first" layoutX="59.0" layoutY="514.0" mnemonicParsing="false" onAction="#displayFirst" style="-fx-background-color: FFF3E0;" text="&lt;&lt;">

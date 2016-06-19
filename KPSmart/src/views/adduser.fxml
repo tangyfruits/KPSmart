@@ -69,7 +69,7 @@
             <TextField fx:id="username" layoutX="162.0" layoutY="156.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <Button id="submit" fx:id="addUserButton" layoutX="300.0" layoutY="282.0" mnemonicParsing="false" onAction="#addUserButtonAction" style="-fx-background-color: E9D5B9;" text="Add User" />
+      <Button id="submit" fx:id="addUserButton" defaultButton="true" layoutX="300.0" layoutY="282.0" mnemonicParsing="false" onAction="#addUserButtonAction" style="-fx-background-color: E9D5B9;" text="Add User" />
       <GridPane fx:id="options" hgap="20.0" layoutX="200.0" layoutY="245.0" prefHeight="18.0" prefWidth="319.0" style="visibility: true;">
          <children>
             <Text layoutX="193.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role:" wrappingWidth="62.30859375" />

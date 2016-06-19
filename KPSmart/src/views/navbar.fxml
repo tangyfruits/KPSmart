@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="700.0" style="-fx-background-color: FFF3E0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane fx:id="navbar" layoutY="14.0" minHeight="-Infinity" prefHeight="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label layoutX="9.0" minWidth="-Infinity" text="KPSmart" textFill="#655a5a">
+                     <font>
+                        <Font name="Gulim" size="35.0" />
+                     </font>
+                  </Label>
+                  <Region prefHeight="10.0" prefWidth="500.0" />
+                  <MenuButton fx:id="logeventmenu" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="184.0" style="-fx-background-color: E9D5B9;" text="Log Event">
+                     <font>
+                        <Font name="Gulim" size="13.0" />
+                     </font>
+                     <items>
+                        <MenuItem fx:id="transportRoute" mnemonicParsing="false" onAction="#transportRouteAction" text="Transport Route" />
+                        <MenuItem fx:id="deliveryRequest" mnemonicParsing="false" onAction="#deliveryRequestAction" text="Delivery Request" />
+                        <MenuItem fx:id="discontinueTransport" mnemonicParsing="false" onAction="#discontinueTransportAction" text="Discontinue Transport" />
+                        <MenuItem fx:id="priceUpdate" mnemonicParsing="false" onAction="#priceUpdateAction" text="Customer Price Update" />
+                     </items>
+                  </MenuButton>
+                  <Button fx:id="reports" minWidth="-Infinity" mnemonicParsing="false" onAction="#reportButtonAction" style="-fx-background-color: E9D5B9;" text="Reports">
+                     <font>
+                        <Font name="Gulim" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="history" minWidth="-Infinity" mnemonicParsing="false" onAction="#historyButtonAction" style="-fx-background-color: E9D5B9;" text="History">
+                     <font>
+                        <Font name="Gulim" size="13.0" />
+                     </font>
+                  </Button>
+                  <Region prefHeight="0.0" prefWidth="500.0" />
+                  <MenuButton fx:id="accounts" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="147.0" style="-fx-background-color: E9D5B9;" text="Add User">
+                     <font>
+                        <Font name="Gulim" size="13.0" />
+                     </font>
+                     <items>
+                        <MenuItem mnemonicParsing="false" onMenuValidation="#changePass" text="Change Password" />
+                     </items>
+                  </MenuButton>
+                  <Button fx:id="logout" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonAction" style="-fx-background-color: E9D5B9;" text="Logout">
+                     <font>
+                        <Font name="Gulim" size="13.0" />
+                     </font>
+                  </Button>
+                  <Region prefHeight="0.0" prefWidth="0.0" />
+               </children>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <Separator prefHeight="5.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+   </children>
+   <stylesheets>
+      <URL value="@kps.css" />
+   </stylesheets>
+</AnchorPane>
