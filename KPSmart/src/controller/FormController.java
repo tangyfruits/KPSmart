@@ -487,7 +487,7 @@ public class FormController extends NavBarController {
 				FXMLLoader popup = new FXMLLoader(getClass().getResource(
 						"/views/popup.fxml"));
 				popup.setController(new PopUpController(main, selectedOrigin,
-						selectedDest, priority, r, this));
+						selectedDest, r.getPriority(), r, this));
 				Parent popupGUI = popup.load();
 				modal = new Stage();
 				modal.setScene(new Scene(popupGUI));
