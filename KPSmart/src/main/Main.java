@@ -209,13 +209,12 @@ public class Main {
 		}}
 		return false;
 	}
-	public boolean delete() {
+	public boolean delete(User user) {
 		boolean removed = false;
 		for (User u : accounts) {
-			if (u.getUsername().equals(currentUser.getUsername())
-					&& u.getPassword().equals(currentUser.getPassword())) {
+			if (u.getUsername().equals(user.getUsername())
+					&& u.getPassword().equals(user.getPassword())) {
 				accounts.remove(u);
-				logout();
 				removed = true;
 				break;
 			}

@@ -50,6 +50,10 @@ public class NavBarController implements Initializable {
 			MenuItem editUser = new MenuItem("Edit User");
 			editUser.setOnAction(editUserAction());
 			accounts.getItems().add(editUser);
+			
+			MenuItem deleteUser = new MenuItem("Delete User");
+			deleteUser.setOnAction(deleteUserAction());
+			accounts.getItems().add(deleteUser);
 		}
 	}
 	
@@ -244,6 +248,27 @@ public class NavBarController implements Initializable {
 				}
 
 				
+			}
+		};
+	}
+	protected EventHandler<ActionEvent> deleteUserAction() {
+		return new EventHandler<ActionEvent>() {
+
+			public void handle(ActionEvent event) {
+				FXMLLoader deleteUser = new FXMLLoader(getClass().getResource(
+						"/views/deleteUser.fxml"));
+				deleteUser.setController(new AccountsController(main));
+				Parent deleteUserGUI = null;
+				try {
+					deleteUserGUI = deleteUser.load();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				Stage stage = (Stage) accounts.getScene().getWindow();
+				Scene scene = new Scene(deleteUserGUI);
+				stage.setScene(scene);
+				stage.show();
 			}
 		};
 	}

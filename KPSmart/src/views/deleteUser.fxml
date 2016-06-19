@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import java.util.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: FFF3E0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="9.0" layoutY="14.0" text="KPSmart" textFill="#655a5a">
+         <font>
+            <Font name="Gulim" size="35.0" />
+         </font>
+      </Label>
+      <Pane layoutX="160.0" layoutY="20.0" prefHeight="25.0" prefWidth="533.0">
+         <children>
+            <Button fx:id="reports" layoutX="188.0" layoutY="1.0" mnemonicParsing="false" onAction="#reportButtonAction" style="-fx-background-color: E9D5B9;" text="Reports">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="history" layoutX="409.0" layoutY="1.0" mnemonicParsing="false" onAction="#historyButtonAction" style="-fx-background-color: E9D5B9;" text="History">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Button>
+            <MenuButton fx:id="logeventmenu" layoutX="-1.0" layoutY="1.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="184.0" style="-fx-background-color: E9D5B9;" text="Log Event">
+              <items>
+                <MenuItem fx:id="transportRoute" mnemonicParsing="false" onAction="#transportRouteAction" text="Transport Route" />
+                <MenuItem fx:id="deliveryRequest" mnemonicParsing="false" onAction="#deliveryRequestAction" text="Delivery Request" />
+                <MenuItem fx:id="discontinueTransport" mnemonicParsing="false" onAction="#discontinueTransportAction" text="Discontinue Transport" />
+                  <MenuItem fx:id="priceUpdate" mnemonicParsing="false" onAction="#priceUpdateAction" text="Customer Price Update" />
+              </items>
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </MenuButton>
+            <Button fx:id="logout" layoutX="474.0" layoutY="1.0" mnemonicParsing="false" onAction="#logoutButtonAction" style="-fx-background-color: E9D5B9;" text="Logout">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </Button>
+            <MenuButton fx:id="accounts" layoutX="257.0" layoutY="1.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="147.0" style="-fx-background-color: E9D5B9;" text="Edit User">
+               <font>
+                  <Font name="Gulim" size="13.0" />
+               </font>
+            </MenuButton>
+         </children>
+      </Pane>
+      <Separator layoutY="61.0" prefHeight="5.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+      <GridPane hgap="20.0" layoutX="152.0" layoutY="164.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Text layoutX="193.0" layoutY="186.1591796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter user:" />
+            <Button id="submit" fx:id="searchButton" defaultButton="true" layoutX="522.0" layoutY="169.0" mnemonicParsing="false" onAction="#findUser" prefHeight="26.0" prefWidth="82.0" style="-fx-background-color: E9D5B9;" text="Search" GridPane.columnIndex="2" />
+            <TextField fx:id="user" layoutX="280.0" layoutY="169.0" prefHeight="24.0" prefWidth="214.0" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <Text fx:id="userDisplay" layoutX="258.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: true;" textAlignment="CENTER" wrappingWidth="184.0">
+         <font>
+            <Font name="Gulim" size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="manStat" layoutX="258.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: true;" textAlignment="CENTER" wrappingWidth="184.0">
+         <font>
+            <Font name="Gulim" size="16.0" />
+         </font>
+      </Text>
+      <Button id="submit" fx:id="updateButton" layoutX="297.0" layoutY="319.0" mnemonicParsing="false" onAction="#deleteUserAction" prefHeight="26.0" prefWidth="107.0" style="-fx-background-color: E9D5B9; visibility: false;" text="Delete User" />
+      <Text fx:id="confirmation" fill="#509a55" layoutX="207.0" layoutY="431.0" strokeType="OUTSIDE" strokeWidth="0.0" style="visibility: false;" text="Thanks.  The user has been deleted!">
+         <font>
+            <Font name="Gulim" size="18.0" />
+         </font>
+      </Text>
+   </children>
+   <stylesheets>
+	<URL value="@kps.css" />
+   </stylesheets>
+</AnchorPane>
