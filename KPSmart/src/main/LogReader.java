@@ -266,6 +266,15 @@ public class LogReader {
             	}
             }
 		}
+		
+		for(Location l: main.getLocations()){
+    		for(Route r: l.getRoutes()){
+    			if(r.getPrice() == null){
+    				CustomerPrice p = main.getCustomerPrice(r.getOrigin(), r.getDestination(), r.getOrigin().getName(), r.getDestination().getName(), r.getPriority());
+    				r.setPrice(p);
+    			}
+    		}
+    	}
 	}
 	
 	// Event Starter (step 1)
