@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <events>
   <cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
     <to>Christchurch</to>
     <from>Wellington</from>
     <company>NZ Post</company>
@@ -16,6 +18,8 @@
     <hour>12</hour>
   </cost>
 <cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
     <to>Dunedin</to>
     <from>Auckland</from>
     <company>UPS</company>
@@ -31,14 +35,16 @@
     <hour>20</hour>
   </cost>
   <discontinue>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
     <to>Wellington</to>
     <from>Christchurch</from>
     <company>NZ Post</company>
     <type>Sea</type>
   </discontinue>
-<mail>
-    <logged>2016-01-01T00:00</logged>
-    <to>Clean</to>
+<mail>    
+   <logged>2016-01-01T00:00</logged>
+   <user>shelley</user>
     <from>Fresh</from>
     <legs>
       <leg>
@@ -56,6 +62,8 @@
     <duration>30</duration>
   </mail>
 <price>
+   <logged>2016-01-01T00:00</logged>
+   <user>shelley</user>
     <to>EndPlace</to>
     <from>StartPlace</from>
     <priority>Stand LOcal brah</priority>
@@ -63,6 +71,8 @@
     <volumeCost>5.0</volumeCost>
   </price>
 <price>
+   <logged>2016-01-01T00:00</logged>
+   <user>shelley</user>
     <to>otherplace</to>
     <from>place</from>
     <priority>Super Imp</priority>

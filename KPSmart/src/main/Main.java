@@ -281,7 +281,7 @@ public class Main {
 
 	// LOGGERS
 	public DeliveryRequest logDeliveryRequest(LocalDateTime logTime, String origin, String destination,
-			ArrayList<Leg> legs, double weight, double volume, String priority, int duration, boolean initial) {
+			ArrayList<Leg> legs, double weight, double volume, String priority, int duration, boolean initial, String user) {
 
 		// find the locations matching the given strings
 		Location originLoc = getLocation(origin);
@@ -289,7 +289,7 @@ public class Main {
 
 		// create Delivery request
 		DeliveryRequest request = new DeliveryRequest(LocalDateTime.now(), originLoc, destinationLoc, weight, volume,
-				priority, duration, legs);
+				priority, duration, legs, user);
 
 		// add to delivery events field
 		addToAverageDeliveryTimes(origin, destination, duration, priority);
@@ -321,7 +321,7 @@ public class Main {
 	}
 	public Route logTransportCostUpdate(String origin, String destination, String company, String type,
 			double weightCost, double volumeCost, int maxWeight, int maxVolume, int duration, int frequency,
-			DayOfWeek day, int startTime, boolean initial) {
+			DayOfWeek day, int startTime, boolean initial, LocalDateTime logTime, String user) {
 
 		// find the Locations matching the given strings, if they are already in
 		// the graph
@@ -364,7 +364,12 @@ public class Main {
 				r.setFrequency(frequency);
 				r.setDay(day);
 				r.setStartTime(startTime);
+				r.setLogTime(logTime);
+				r.setUser(user);
+				
 				routeExists = true;
+				
+				//write route to file
 			}
 		}
 
@@ -372,7 +377,7 @@ public class Main {
 		if (!routeExists) {
 			// if it doesn't always exist, create route and add to graph
 			route = new Route(originLoc, destinationLoc, company, type, priority, weightCost, volumeCost, maxWeight,
-					maxVolume, duration, frequency, day, startTime, price);
+					maxVolume, duration, frequency, day, startTime, price, logTime,user);
 			originLoc.addRoute(route);
 		}
 
@@ -390,7 +395,7 @@ public class Main {
 
 	}
 	public CustomerPrice logCustomerPriceUpdate(String origin, String destination, String priority, double weightCost,
-			double volumeCost, boolean initial) {
+			double volumeCost, boolean initial, LocalDateTime logTime, String user) {
 
 		// find the locations matching the given strings, if they are already in
 		// the graph
@@ -413,6 +418,8 @@ public class Main {
 			if (c.getDestination().equals(destinationLoc) && c.getPriority().equals(priority)) {
 				c.setVolumeCost(volumeCost);
 				c.setWeightCost(weightCost);
+				c.setLogTime(logTime);
+				c.setUser(user);
 
 				// log in file and add to reports
 				addEvent();
@@ -429,7 +436,7 @@ public class Main {
 
 		// if it doesn't exist, create it, add it to the relevant Location
 		CustomerPrice price;
-		price = new CustomerPrice(originLoc, destinationLoc, priority, weightCost, volumeCost);
+		price = new CustomerPrice(originLoc, destinationLoc, priority, weightCost, volumeCost, logTime, user);
 		originLoc.addPrice(price);
 
 		// log in file and add to reports
@@ -445,7 +452,7 @@ public class Main {
 		return price;
 	}
 	public DiscontinueRoute discontinueTransportRoute(String origin, String destination, String company, String type,
-			boolean initial) {
+			boolean initial, LocalDateTime logTime, String user) {
 
 		Location originLoc = getLocation(origin);
 		Location destinationLoc = getLocation(destination);
@@ -459,7 +466,7 @@ public class Main {
 			}
 		}
 
-		DiscontinueRoute disconRoute = new DiscontinueRoute(originLoc, destinationLoc, company, type);
+		DiscontinueRoute disconRoute = new DiscontinueRoute(originLoc, destinationLoc, company, type, logTime, user);
 		if (toCancel != null) {
 			originLoc.removeRoute(toCancel);
 			if (!initial) {
@@ -595,7 +602,7 @@ public class Main {
 		return deliveryRequests;
 	}
 	public DeliveryRequest getDeliveryDetails(String origin, String destination, double weight, double volume,
-			RouteDisplay route) {
+			RouteDisplay route, String user) {
 		// get duration
 		int duration = route.getTotalDuration(LocalDateTime.now());
 
@@ -609,7 +616,7 @@ public class Main {
 		}
 
 		return logDeliveryRequest(LocalDateTime.now(), origin, destination, legs, weight, volume, route.getPriority(),
-				duration, false);
+				duration, false, user);
 	}
 
 	// SETTERS + Adders

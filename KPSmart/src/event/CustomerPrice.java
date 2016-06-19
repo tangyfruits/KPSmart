@@ -1,10 +1,14 @@
 package event;
 
+import java.time.LocalDateTime;
+
 import main.*;
 
 public class CustomerPrice implements Event {
 	
 	// FIELDS
+	private LocalDateTime logTime;
+	private String user;
 	private Location origin;
 	private Location destination;
 	private String priority;
@@ -14,12 +18,14 @@ public class CustomerPrice implements Event {
 
 	// CONSTRUCTORS
 	public CustomerPrice(Location origin, Location destination,
-			String priority, double weightCost, double volumeCost) {
+			String priority, double weightCost, double volumeCost, LocalDateTime logTime, String user) {
 		this.origin = origin;
 		this.destination = destination;
 		this.priority = priority;
 		this.weightCost = weightCost;
 		this.volumeCost = volumeCost;
+		this.logTime = logTime;
+		this.user = user;
 	}
 	
 	// METHODS
@@ -42,6 +48,12 @@ public class CustomerPrice implements Event {
 	public String getEventType() {
 		return eventType;
 	}
+	public LocalDateTime getLogTime(){
+		return logTime;
+	}
+	public String getUser() {
+		return user;
+	}
 	
 	// Setters
 	public void setWeightCost(double weightCost) {
@@ -49,6 +61,12 @@ public class CustomerPrice implements Event {
 	}
 	public void setVolumeCost(double volumeCost) {
 		this.volumeCost = volumeCost;
+	}
+	public void setLogTime(LocalDateTime logTime){
+		this.logTime = logTime;
+	}
+	public void setUser(String user){
+		this.user = user;
 	}
 	
 	// To String
