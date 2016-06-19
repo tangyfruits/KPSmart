@@ -9,6 +9,7 @@ public class DeliveryRequest implements Event{
 	
 	// FIELDS
 	private LocalDateTime logTime;
+	private String user;
 	private Location origin;
 	private Location destination;
 	private ArrayList<Leg> legs;
@@ -20,7 +21,7 @@ public class DeliveryRequest implements Event{
 	
 	// CONSTRUCTOR
 	public DeliveryRequest(LocalDateTime logTime, Location origin, Location destination, double weight, double volume, 
-			String priority, int duration, ArrayList<Leg> legs) {
+			String priority, int duration, ArrayList<Leg> legs, String user) {
 		this.logTime = logTime;
 		this.origin = origin;
 		this.destination = destination;
@@ -29,6 +30,7 @@ public class DeliveryRequest implements Event{
 		this.priority = priority;
 		this.duration = duration;
 		this.legs = legs;
+		this.user = user;
 	}
 	
 	// METHODS
@@ -59,5 +61,8 @@ public class DeliveryRequest implements Event{
 	}
 	public String getEventType() {
 		return eventType;
+	}
+	public String getUser() {
+		return user;
 	}
 }

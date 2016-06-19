@@ -1,10 +1,12 @@
 package tests.event;
 
 import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
@@ -24,11 +26,11 @@ public class RouteTest {
 	public void testRoute() {
 		from = new Location("Christchurch");
 		to = new Location("Auckland");
-		price = new CustomerPrice(from, to, "More Priority", 3000.4, 4000.0);
+		price = new CustomerPrice(from, to, "More Priority", 3000.4, 4000.0, LocalDateTime.now(), "User");
 		
 		cost = new Route(from, to, "Company", "Type", "Priority", 
 				4.0, 8.0, 400, 800, 100, 
-				12, DayOfWeek.MONDAY, 6, price);
+				12, DayOfWeek.MONDAY, 6, price, LocalDateTime.now(), "User");
 	}
 	
 	// Methods
@@ -36,15 +38,14 @@ public class RouteTest {
 	public void testEquals() {
 		Route r = new Route(from, to, "Company", "Type", "Priorityblalalal", 
 				4.0, 8.0, 400, 800, 100, 
-				12, DayOfWeek.MONDAY, 6, new CustomerPrice(from, to, "lolol", 0.0, 1.0));
-		
+				12, DayOfWeek.MONDAY, 6, new CustomerPrice(from, to, "lolol", 0.0, 1.0, LocalDateTime.now(), "User"), LocalDateTime.now(), "User");
 		assertTrue(cost.equals(r));
 	}
 	@Test
 	public void testEquals2() {
 		Route r = new Route(from, to, "Company2", "Type", "Priority", 
 				4.0, 8.0, 400, 800, 100, 
-				12, DayOfWeek.WEDNESDAY, 6, new CustomerPrice(from, to, "lolol", 0.0, 1.0));
+				12, DayOfWeek.WEDNESDAY, 6, new CustomerPrice(from, to, "lolol", 0.0, 1.0, LocalDateTime.now(), "User"), LocalDateTime.now(), "User");
 		
 		assertFalse(cost.equals(r));
 	}
@@ -55,7 +56,7 @@ public class RouteTest {
 		
 		Route r = new Route(from, to, "Company", "Type", "Priority", 
 				4.0, 8.0, 400, 800, 100, 
-				12, DayOfWeek.MONDAY, 6, new CustomerPrice(from, to, "lolol", 0.0, 1.0));
+				12, DayOfWeek.MONDAY, 6, new CustomerPrice(from, to, "lolol", 0.0, 1.0, LocalDateTime.now(), "User"), LocalDateTime.now(), "User");
 		
 		assertFalse(cost.equals(r));
 	}

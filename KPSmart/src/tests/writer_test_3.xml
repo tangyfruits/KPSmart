@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <events>
   <discontinue>
+    <logged>2016-06-19T23:48:30.567</logged>
+    <user>User</user>
     <to>Wellington</to>
     <from>Christchurch</from>
     <company>NZ Post</company>
@@ -8,6 +10,7 @@
   </discontinue>
 <mail>
     <logged>2016-01-01T00:00</logged>
+    <user>User</user>
     <to>Clean</to>
     <from>Fresh</from>
     <legs>
@@ -26,6 +29,8 @@
     <duration>30</duration>
   </mail>
 <price>
+    <logged>2016-06-19T23:48:30.575</logged>
+    <user>User</user>
     <to>EndPlace</to>
     <from>StartPlace</from>
     <priority>Stand LOcal brah</priority>
@@ -33,6 +38,8 @@
     <volumeCost>5.0</volumeCost>
   </price>
 <price>
+    <logged>2016-06-19T23:48:30.582</logged>
+    <user>User</user>
     <to>otherplace</to>
     <from>place</from>
     <priority>Super Imp</priority>

@@ -2,6 +2,8 @@ package tests.event;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDateTime;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +20,7 @@ public class CustomerPriceTest {
 		Location from = new Location("Somewhere over the Mediterrainian Sea");
 		Location to = new Location("French Guinea");
 		
-		price = new CustomerPrice(from, to, "Hella urgent", 333.2, .20);
+		price = new CustomerPrice(from, to, "Hella urgent", 333.2, .20, LocalDateTime.now(), "User");
 	}
 	
 	// Getters

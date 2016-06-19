@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <events>
   <price>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Christchurch</to>
     <from>Dunedin</from>
     <priority>Standard</priority>
@@ -8,6 +10,8 @@
     <volumeCost>34.0</volumeCost>
   </price>
 <price>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Dunedin</to>
     <from>Christchurch</from>
     <priority>Air</priority>
@@ -15,6 +19,8 @@
     <volumeCost>11.0</volumeCost>
   </price>
 <price>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Wellington</to>
     <from>Christchurch</from>
     <priority>Air</priority>
@@ -22,6 +28,8 @@
     <volumeCost>24.0</volumeCost>
   </price>
 <price>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Christchurch</to>
     <from>Wellington</from>
     <priority>Standard</priority>
@@ -29,6 +37,8 @@
     <volumeCost>232.0</volumeCost>
   </price>
 <price>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Hamilton</to>
     <from>Wellington</from>
     <priority>Standard</priority>
@@ -36,6 +46,8 @@
     <volumeCost>123.0</volumeCost>
   </price>
 <price>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Auckland</to>
     <from>Christchurch</from>
     <priority>Standard</priority>
@@ -43,6 +55,8 @@
     <volumeCost>22.0</volumeCost>
   </price>
 <price>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Auckland</to>
     <from>Hamilton</from>
     <priority>Standard</priority>
@@ -50,6 +64,8 @@
     <volumeCost>4.0</volumeCost>
   </price>
 <price>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Wellington</to>
     <from>Auckland</from>
     <priority>Standard</priority>
@@ -57,6 +73,8 @@
     <volumeCost>13.0</volumeCost>
   </price>
 <price>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Dunedin</to>
     <from>Auckland</from>
     <priority>Air</priority>
@@ -64,6 +82,8 @@
     <volumeCost>21.0</volumeCost>
   </price>
 <price>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Budapest</to>
     <from>Auckland</from>
     <priority>Standard</priority>
@@ -71,6 +91,8 @@
     <volumeCost>4.0</volumeCost>
   </price>
 <price>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Los Angeles</to>
     <from>Auckland</from>
     <priority>Air</priority>
@@ -78,6 +100,8 @@
     <volumeCost>12.0</volumeCost>
   </price>
 <price>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Auckland</to>
     <from>Wellington</from>
     <priority>Air</priority>
@@ -85,6 +109,8 @@
     <volumeCost>4.0</volumeCost>
   </price>
 <price>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Wellington</to>
     <from>Christchurch</from>
     <priority>Standard</priority>
@@ -92,6 +118,8 @@
     <volumeCost>21.0</volumeCost>
   </price>
 <price>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Dunedin</to>
     <from>Christchurch</from>
     <priority>Standard</priority>
@@ -99,6 +127,8 @@
     <volumeCost>22.0</volumeCost>
   </price>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Christchurch</to>
     <from>Dunedin</from>
     <company>BopPop Post</company>
@@ -114,6 +144,8 @@
     <hour>6</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Dunedin</to>
     <from>Christchurch</from>
     <company>NZ POST man</company>
@@ -129,6 +161,8 @@
     <hour>11</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Wellington</to>
     <from>Christchurch</from>
     <company>NZ POST buh</company>
@@ -144,6 +178,8 @@
     <hour>2</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Christchurch</to>
     <from>Wellington</from>
     <company>Heella Post</company>
@@ -159,6 +195,8 @@
     <hour>3</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Hamilton</to>
     <from>Wellington</from>
     <company>NZ POST boy</company>
@@ -174,6 +212,8 @@
     <hour>18</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Auckland</to>
     <from>Christchurch</from>
     <company>BopPop Post</company>
@@ -189,6 +229,8 @@
     <hour>9</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Auckland</to>
     <from>Hamilton</from>
     <company>*FreshPost*</company>
@@ -204,6 +246,8 @@
     <hour>22</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Wellington</to>
     <from>Auckland</from>
     <company>BopPop Post</company>
@@ -219,6 +263,8 @@
     <hour>17</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Dunedin</to>
     <from>Auckland</from>
     <company>New Ze POST</company>
@@ -234,6 +280,8 @@
     <hour>21</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Budapest</to>
     <from>Auckland</from>
     <company>NZ POST bo</company>
@@ -249,6 +297,8 @@
     <hour>15</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Los Angeles</to>
     <from>Auckland</from>
     <company>BopPop Post</company>
@@ -264,6 +314,8 @@
     <hour>8</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Auckland</to>
     <from>Wellington</from>
     <company>Fresh Post</company>
@@ -279,6 +331,8 @@
     <hour>14</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Wellington</to>
     <from>Christchurch</from>
     <company>Jeff's Van</company>
@@ -294,6 +348,8 @@
     <hour>16</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Dunedin</to>
     <from>Christchurch</from>
     <company>Fresh Post</company>
@@ -309,6 +365,8 @@
     <hour>20</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Auckland</to>
     <from>Christchurch</from>
     <company>Fresh Post</company>
@@ -324,6 +382,8 @@
     <hour>7</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Dunedin</to>
     <from>Christchurch</from>
     <company>*FreshPost*</company>
@@ -339,6 +399,8 @@
     <hour>5</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Christchurch</to>
     <from>Dunedin</from>
     <company>Jeff's Van</company>
@@ -354,6 +416,8 @@
     <hour>5</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Dunedin</to>
     <from>Auckland</from>
     <company>Jeff's Van</company>
@@ -369,6 +433,8 @@
     <hour>6</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Auckland</to>
     <from>Wellington</from>
     <company>Johnny Mac</company>
@@ -384,6 +450,8 @@
     <hour>3</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Wellington</to>
     <from>Christchurch</from>
     <company>Jeff's Van</company>
@@ -399,6 +467,8 @@
     <hour>7</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:30.607</logged>
+    <user>User</user>
     <to>Wellington</to>
     <from>Christchurch</from>
     <company>FreshPaste</company>
@@ -414,6 +484,8 @@
     <hour>8</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:31.775</logged>
+    <user>User</user>
     <to>Christchurch</to>
     <from>Wellington</from>
     <company>NZ Post</company>
@@ -429,6 +501,8 @@
     <hour>12</hour>
   </cost>
 <cost>
+    <logged>2016-06-19T23:48:31.779</logged>
+    <user>User</user>
     <to>Dunedin</to>
     <from>Auckland</from>
     <company>UPS</company>

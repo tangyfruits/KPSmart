@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import main.*;
 
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -28,9 +29,9 @@ public class CriticalTests {
 		p = "Air";
 		this.w = w;
 		this.v = v;
-		main.logCustomerPriceUpdate(o, d, p, 5, 3, false);
+		main.logCustomerPriceUpdate(o, d, p, 5, 3, false, LocalDateTime.now(), "User");
 		main.logTransportCostUpdate(o, d, "UPS", p, 3, 5, 20, 30, 15, 24,
-				DayOfWeek.MONDAY, 12, false);
+				DayOfWeek.MONDAY, 12, false, LocalDateTime.now(), "User");
 		ArrayList<RouteDisplay> route = main.getPossibleRoutes(o, d, w, v);
 		legs = new ArrayList<>();
 		for (Route r : route.get(0).getRoute()) {
@@ -107,13 +108,13 @@ public class CriticalTests {
 		p = "Air";
 		w = 2;
 		v = 4;
-		main.logCustomerPriceUpdate(o, s, p, 5, 3, false);
-		main.logCustomerPriceUpdate(s, d, p, 5, 3, false);
+		main.logCustomerPriceUpdate(o, s, p, 5, 3, false, LocalDateTime.now(), "User");
+		main.logCustomerPriceUpdate(s, d, p, 5, 3, false, LocalDateTime.now(), "User");
 
 		main.logTransportCostUpdate(o, s, "UPS", p, 3, 5, 20, 30, 15, 24,
-				DayOfWeek.MONDAY, 12, false);
+				DayOfWeek.MONDAY, 12, false,LocalDateTime.now(), "User");
 		main.logTransportCostUpdate(s, d, "UPS", p, 3, 5, 20, 30, 15, 24,
-				DayOfWeek.MONDAY, 12, false);
+				DayOfWeek.MONDAY, 12, false, LocalDateTime.now(), "User");
 		ArrayList<RouteDisplay> route = main.getPossibleRoutes(o, d, w, v);
 		assertEquals(2, route.get(0).getRoute().size());
 		legs = new ArrayList<>();
