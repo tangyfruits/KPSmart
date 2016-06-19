@@ -214,4 +214,19 @@ public class LogWriterTest {
 		log.writeRoute(r20_13);
 		log.writeRoute(r21_13);
 	}
+	
+	@Test
+	public void extraHelp() {
+		Location wlg = new Location("Wellington");
+		Location akl = new Location("Auckland");
+		
+		CustomerPrice pa = new CustomerPrice(wlg, akl, "Air", 1, 1);
+		CustomerPrice ps = new CustomerPrice(wlg, akl, "Standard", 2, 5);
+		Route ra = new Route(wlg, akl, "UPS", "Air", "Air", 4, 4, 15, 15, 12, 24, DayOfWeek.THURSDAY, 12, pa);
+        
+		LogWriter writer = new LogWriter(new File("logfile.xml"), true);
+		writer.writeCustomerPrice(pa);
+		writer.writeCustomerPrice(ps);
+		writer.writeRoute(ra);
+	}
 }

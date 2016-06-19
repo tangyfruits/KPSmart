@@ -51,7 +51,7 @@ public class Main {
 		
 		// Link Up Files
 		configFile = new File(".config");
-		logFile = loadFromConfig("logfile.xml"); // <--Parameter is default name if no log file name found in config
+		logFile = loadFromConfig("logfile.xml"); // <--Default name if no logfile name found in config
 		writer = new LogWriter(logFile);
 	}
 	private File loadFromConfig(String defaultLogName) {

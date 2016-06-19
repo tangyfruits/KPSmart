@@ -269,7 +269,7 @@ public class LogReader {
      	   	discont = new DiscontinueEvent();
 			currentEvent = discont;
 		} else if (xmlTagName.equalsIgnoreCase("events")) {
-			//System.out.println("'events' Tag Opened");
+			if(LOGSIN){System.out.println("'events' Tag Opened");}
 		} else {
 			System.out.println("Error setting current event: Invalid tagname: \""+xmlTagName+"\"");
 		}

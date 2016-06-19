@@ -1,2 +1,51 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<events/>
+<events>
+  <price>
+    <to>Auckland</to>
+    <from>Wellington</from>
+    <priority>Air</priority>
+    <weightCost>1.0</weightCost>
+    <volumeCost>1.0</volumeCost>
+  </price>
+<price>
+    <to>Auckland</to>
+    <from>Wellington</from>
+    <priority>Standard</priority>
+    <weightCost>2.0</weightCost>
+    <volumeCost>5.0</volumeCost>
+  </price>
+<cost>
+    <to>Auckland</to>
+    <from>Wellington</from>
+    <company>UPS</company>
+    <type>Air</type>
+    <priority>Air</priority>
+    <weightCost>4.0</weightCost>
+    <volumeCost>4.0</volumeCost>
+    <maxWeight>15</maxWeight>
+    <maxVolume>15</maxVolume>
+    <duration>12</duration>
+    <frequency>24</frequency>
+    <day>Thursday</day>
+    <hour>12</hour>
+  </cost>
+<mail>
+    <logged>2016-06-19T11:55:45.928</logged>
+    <to>Auckland</to>
+    <from>Wellington</from>
+    <legs>
+      <leg>
+        <to>Auckland</to>
+        <from>Wellington</from>
+        <type>Air</type>
+        <company>UPS</company>
+        <cost>44.0</cost>
+        <price>11.0</price>
+      </leg>
+    </legs>
+    <weight>10.0</weight>
+    <volume>1.0</volume>
+    <priority>Domestic Air</priority>
+    <duration>61</duration>
+  </mail>
+</events>
