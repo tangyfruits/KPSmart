@@ -1,14 +1,20 @@
 package controller;
 
+import java.io.IOException;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import main.Main;
 import main.User;
 
@@ -74,7 +80,7 @@ public class AccountsController extends NavBarController {
 		}			
 	}
 	
-	//  Edit User + Create User
+	//  Edit User + Create User + Delete User
 	@FXML
 	private TextField user;
 	
@@ -95,10 +101,11 @@ public class AccountsController extends NavBarController {
 		updateButton.visibleProperty().bind(hasUser);
 		if(!user.getText().isEmpty()){
 			u = main.findUser(user.getText());
-			hasUser.set(true);
+			
 		}
 		
 		if(u!=null){
+			hasUser.set(true);
 			userDisplay.setText("User found: " +u.getUsername());
 			if(u.isManager()){
 				manStat.setText("Current Role: Manager");
@@ -107,6 +114,10 @@ public class AccountsController extends NavBarController {
 				manStat.setText("Current Role: Clerk");
 			}
 			options.visibleProperty().set(true);			
+		}
+		else{
+			userDisplay.setText("No user has been found");
+			manStat.setText("Please try again");
 		}
 	}
 	
@@ -195,6 +206,54 @@ public class AccountsController extends NavBarController {
 			else{
 				hasUser.set(true);
 			}
+		}
+	}
+
+	@FXML
+	private void findUser(ActionEvent event){
+		updateButton.visibleProperty().bind(hasUser);
+		if(!user.getText().isEmpty()){
+			u = main.findUser(user.getText());
+			
+		}
+		
+		if(u!=null){
+			hasUser.set(true);
+			userDisplay.setText("User found: " +u.getUsername());
+			if(u.isManager()){
+				manStat.setText("Current Role: Manager");
+			}
+			else{
+				manStat.setText("Current Role: Clerk");
+			}
+		}
+		else{
+			userDisplay.setText("No user has been found");
+			manStat.setText("Please try again");
+		}
+	}
+	
+	@FXML
+	private void deleteUserAction(ActionEvent event) throws IOException{
+		boolean removed = main.delete(u);
+		confirmation.visibleProperty().set(removed);
+		if(removed){
+			user.setDisable(true);
+			searchButton.setDisable(true);
+			updateButton.setDisable(true);
+		}
+		if(u.getUsername().equals(main.getCurrentUser().getUsername())){
+			logoutButtonAction(event);
+//			main.logout();
+//	    	FXMLLoader login = new FXMLLoader(getClass().getResource("/views/login.fxml"));
+//	    	login.setController(new LoginController(main));
+//	    	Parent loginGUI = login.load();
+//	    	
+//	    	
+//	    	Stage stage = (Stage) logeventmenu.getScene().getWindow();
+//	    	Scene scene = new Scene(loginGUI);
+//	      	stage.setScene(scene);
+//	    	stage.show();
 		}
 	}
 }

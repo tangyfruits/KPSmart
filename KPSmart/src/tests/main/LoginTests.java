@@ -58,7 +58,7 @@ public class LoginTests {
 		m.add(new User("shelley", "password123", true));
 		m.add(new User("peter", "password123", true));
 		m.login("david", "password123");
-		m.delete();
+		m.delete(m.getCurrentUser());
 	}
 	
 	@Test
@@ -175,21 +175,21 @@ public class LoginTests {
 	public void testDeleteUser_01() {
 		Main m = new Main();
 		m.login("peter", "password123");
-		m.delete();
+		m.delete(m.getCurrentUser());
 		assertNull(m.getCurrentUser());
 	}
 	@Test
 	public void testDeleteUser_02() {
 		Main m = new Main();
 		m.login("shelley", "password123");
-		m.delete();
+		m.delete(m.getCurrentUser());
 		assertNull(m.getCurrentUser());
 	}
 	@Test
 	public void testDeleteUser_03() {
 		Main m = new Main();
 		m.login("donald", "password123");
-		m.delete();
+		m.delete(m.getCurrentUser());
 		assertNull(m.getCurrentUser());
 	}
 
