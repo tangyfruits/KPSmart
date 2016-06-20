@@ -19,7 +19,7 @@ import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import main.Main;
 
-public class NavBarController implements Initializable {
+public abstract class NavBarController implements Initializable {
 
 	protected Main main;
 	
@@ -56,7 +56,6 @@ public class NavBarController implements Initializable {
 			accounts.getItems().add(deleteUser);
 		}
 	}
-	
 	
 	// METHODS
 	// BUTTON HANDLERS
@@ -233,8 +232,7 @@ public class NavBarController implements Initializable {
 		return new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent event){
-				FXMLLoader changePass = new FXMLLoader(getClass().getResource(
-						"/views/changepass.fxml"));
+				FXMLLoader changePass = new FXMLLoader(getClass().getResource("/views/changepass.fxml"));
 				changePass.setController(new AccountsController(main));
 				Parent changePassGUI;
 				try {
@@ -246,8 +244,6 @@ public class NavBarController implements Initializable {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-
-				
 			}
 		};
 	}

@@ -6,15 +6,11 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import main.Main;
 import main.User;
 
@@ -24,10 +20,9 @@ public class AccountsController extends NavBarController {
 	public AccountsController(Main main) {
 		this.main = main;
 	}
-
+	
 	// Change Password
 	@FXML
-	
 	private TextField pass1,pass2;
 	private BooleanProperty hasError = new SimpleBooleanProperty(false);
 	private BooleanProperty nonMatch = new SimpleBooleanProperty(false);

@@ -18,6 +18,7 @@ public class KPSgui extends Application {
 	public void start(Stage primaryStage) throws Exception {		
 
 		main = new Main();
+		
         LogReader reader = new LogReader(main.getLogFile(), main);
     	reader.parseFile();
 		
