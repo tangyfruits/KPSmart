@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import event.CustomerPrice;
@@ -480,13 +481,13 @@ public class FormController extends NavBarController {
 					company.getText(), type, Double.parseDouble(wc),
 					Double.parseDouble(vc), Integer.parseInt(mw),
 					Integer.parseInt(mv), Integer.parseInt(d),
-					Integer.parseInt(f), DayOfWeek.valueOf(day), time, false);
+					Integer.parseInt(f), DayOfWeek.valueOf(day), time, false, LocalDateTime.now(), main.getCurrentUser().getUsername());
 			if (r.getPrice() == null) {
 
 				FXMLLoader popup = new FXMLLoader(getClass().getResource(
 						"/views/popup.fxml"));
 				popup.setController(new PopUpController(main, selectedOrigin,
-						selectedDest, priority, r, this));
+						selectedDest, r.getPriority(), r, this));
 				Parent popupGUI = popup.load();
 				modal = new Stage();
 				modal.setScene(new Scene(popupGUI));
@@ -600,7 +601,7 @@ public class FormController extends NavBarController {
 		if (!hasError.get()) {
 			CustomerPrice price = main.logCustomerPriceUpdate(selectedOrigin,
 					selectedDest, priority, Double.parseDouble(wc),
-					Double.parseDouble(vc), false);
+					Double.parseDouble(vc), false, LocalDateTime.now(), main.getCurrentUser().getUsername());
 			if (price != null) {
 				confirmation.visibleProperty().bind(completed);
 				completed.set(true);
@@ -723,7 +724,7 @@ public class FormController extends NavBarController {
 		if (!(chosenPriority == null)) {
 			DeliveryRequest req = main.getDeliveryDetails(selectedOrigin,
 					selectedDest, Double.parseDouble(this.weight.getText()),
-					Double.parseDouble(this.volume.getText()), chosenPriority);
+					Double.parseDouble(this.volume.getText()), chosenPriority, main.getCurrentUser().getUsername());
 
 			chosenPriority = null;
 			routes = null;
@@ -861,7 +862,7 @@ public class FormController extends NavBarController {
 		if (selectedRoute != null) {
 			DiscontinueRoute route = main.discontinueTransportRoute(
 					selectedOrigin, selectedDest, selectedRoute.getCompany(),
-					selectedRoute.getType(), false);
+					selectedRoute.getType(), false, LocalDateTime.now(), main.getCurrentUser().getUsername());
 			if (route != null) {
 				changeSelection.setDisable(true);
 				for (Node r : discRoutes.getChildren()) {

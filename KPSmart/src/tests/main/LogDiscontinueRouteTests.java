@@ -3,6 +3,7 @@ package tests.main;
 import static org.junit.Assert.*;
 
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import main.Location;
@@ -27,7 +28,7 @@ public class LogDiscontinueRouteTests {
 		// check there are 3 routes out of origin
 		assertEquals(3, main.getLocations().get(0).getRoutes().size());
 		// discontinue route
-		main.discontinueTransportRoute("Wellington", "Auckland", "UPS", "Air",false);
+		main.discontinueTransportRoute("Wellington", "Auckland", "UPS", "Air",false, LocalDateTime.now(), "User");
 		// check only 2 routes now
 		assertEquals(2, main.getLocations().get(0).getRoutes().size());
 	}
@@ -39,11 +40,11 @@ public class LogDiscontinueRouteTests {
 		// check there are 3 routes out of origin
 		assertEquals(3, main.getLocations().get(0).getRoutes().size());
 		// discontinue route
-		main.discontinueTransportRoute("Wellington", "Auckland", "UPS", "Air",false);
+		main.discontinueTransportRoute("Wellington", "Auckland", "UPS", "Air",false, LocalDateTime.now(), "User");
 		// check only 2 routes now
 		assertEquals(2, main.getLocations().get(0).getRoutes().size());
 		// try same route again
-		main.discontinueTransportRoute("Wellington", "Auckland", "UPS", "Air",false);
+		main.discontinueTransportRoute("Wellington", "Auckland", "UPS", "Air",false, LocalDateTime.now(), "User");
 		// check still 2 routes
 		assertEquals(2, main.getLocations().get(0).getRoutes().size());
 	}
@@ -57,7 +58,7 @@ public class LogDiscontinueRouteTests {
 		Route r = main.getLocations().get(0).getRoutes().get(0);
 		assertEquals("UPS", r.getCompany());
 		// discontinue route
-		main.discontinueTransportRoute("Wellington", "Auckland", "UPS", "Air",false);
+		main.discontinueTransportRoute("Wellington", "Auckland", "UPS", "Air",false, LocalDateTime.now(), "User");
 		// check only 2 routes now
 		assertEquals(2, main.getLocations().get(0).getRoutes().size());
 		// check route again
@@ -72,7 +73,7 @@ public class LogDiscontinueRouteTests {
 		// check there are 3 routes out of origin
 		assertEquals(3, main.getLocations().get(0).getRoutes().size());
 		// discontinue route
-		main.discontinueTransportRoute("Wellington", "Auckland", "PostHaste", "Air",false);
+		main.discontinueTransportRoute("Wellington", "Auckland", "PostHaste", "Air",false, LocalDateTime.now(), "User");
 		// check still 3 routes now
 		assertEquals(3, main.getLocations().get(0).getRoutes().size());
 	}
@@ -81,13 +82,13 @@ public class LogDiscontinueRouteTests {
 	public Main setUpRoutes() {
 		Main main = new Main();
 		CustomerPrice price = main.logCustomerPriceUpdate("Wellington",
-				"Auckland", "Air", 15, 14,false);
+				"Auckland", "Air", 15, 14,false, LocalDateTime.now(), "User");
 		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", 
-				"Air", 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,15,false);
+				"Air", 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,15,false, LocalDateTime.now(), "User");
 		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost",
-				"Air", 2.5, 2.8, 8, 12, 12, 32, DayOfWeek.MONDAY,15,false);
+				"Air", 2.5, 2.8, 8, 12, 12, 32, DayOfWeek.MONDAY,15,false, LocalDateTime.now(), "User");
 		main.logTransportCostUpdate("Wellington", "Auckland", "USPS",
-				"Air", 2.5, 2.8, 8, 12, 12, 32, DayOfWeek.MONDAY,15,false);
+				"Air", 2.5, 2.8, 8, 12, 12, 32, DayOfWeek.MONDAY,15,false, LocalDateTime.now(), "User");
 		return main;
 
 	}

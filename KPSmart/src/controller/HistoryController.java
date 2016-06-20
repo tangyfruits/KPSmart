@@ -98,13 +98,12 @@ public class HistoryController extends NavBarController {
 		}
 	}
 	public void displayMail(HashMap<String, String> item) {
-		logtype.setText("Transport Cost");
+		logtype.setText("Delivery Request");
 		Text a = new Text("Origin: " + item.get("origin"));
 		displayBox.getChildren().add(a);	
 		a = new Text("Destination: " + item.get("destination"));
 		displayBox.getChildren().add(a);
-		a = new Text("Logged: " + item.get("logged"));
-		displayBox.getChildren().add(a);
+		
 		a = new Text("Weight: " + item.get("weight"));
 		displayBox.getChildren().add(a);
 		a = new Text("Volume: " + item.get("volume"));
@@ -112,6 +111,10 @@ public class HistoryController extends NavBarController {
 		a = new Text("Priority: " + item.get("priority"));
 		displayBox.getChildren().add(a);
 		a = new Text("Duration: " + item.get("duration"));
+		displayBox.getChildren().add(a);
+		a = new Text("User: " + item.get("user"));
+		displayBox.getChildren().add(a);
+		a = new Text("Logged: " + item.get("logged"));
 		displayBox.getChildren().add(a);
 		a = new Text(" ");
 		displayBox.getChildren().add(a);
@@ -148,7 +151,7 @@ public class HistoryController extends NavBarController {
 		Text a = new Text("To: " + item.get("to"));
 		displayBox.getChildren().add(a);
 		a = new Text("From: " + item.get("from"));
-		displayBox.getChildren().add(a);		
+		displayBox.getChildren().add(a);
 		a = new Text("Comapny: " + item.get("company"));
 		displayBox.getChildren().add(a);
 		a = new Text("Type: " + item.get("type"));
@@ -171,6 +174,11 @@ public class HistoryController extends NavBarController {
 		displayBox.getChildren().add(a);
 		a = new Text("Hour: " + item.get("hour"));
 		displayBox.getChildren().add(a);
+		a = new Text("User: " + item.get("user"));
+		displayBox.getChildren().add(a);
+		a = new Text("Logged: " + item.get("logged"));
+		displayBox.getChildren().add(a);
+
 				
 		displayBox.setSpacing(5);
 	}
@@ -179,12 +187,16 @@ public class HistoryController extends NavBarController {
 		Text a = new Text("To: " + item.get("to"));
 		displayBox.getChildren().add(a);
 		a = new Text("From: " + item.get("from"));
-		displayBox.getChildren().add(a);		
+		displayBox.getChildren().add(a);	
 		a = new Text("Priority: " + item.get("priority"));
 		displayBox.getChildren().add(a);
 		a = new Text("Weight Cost: " + item.get("weightCost"));
 		displayBox.getChildren().add(a);
 		a = new Text("Volume Cost: " + item.get("volumeCost"));
+		displayBox.getChildren().add(a);
+		a = new Text("User: " + item.get("user"));
+		displayBox.getChildren().add(a);
+		a = new Text("Logged: " + item.get("logged"));
 		displayBox.getChildren().add(a);
 						
 		displayBox.setSpacing(5);
@@ -195,12 +207,15 @@ public class HistoryController extends NavBarController {
 		Text a = new Text("To: " + item.get("to"));
 		displayBox.getChildren().add(a);
 		a = new Text("From: " + item.get("from"));
-		displayBox.getChildren().add(a);		
+		displayBox.getChildren().add(a);	
 		a = new Text("Type: " + item.get("type"));
 		displayBox.getChildren().add(a);
 		a = new Text("Comapny: " + item.get("company"));
 		displayBox.getChildren().add(a);
-						
+		a = new Text("User: " + item.get("user"));
+		displayBox.getChildren().add(a);
+		a = new Text("Logged: " + item.get("logged"));
+		displayBox.getChildren().add(a);
 		displayBox.setSpacing(5);
 	}
 }

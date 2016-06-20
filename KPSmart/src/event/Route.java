@@ -1,12 +1,15 @@
 package event;
 
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 
 import main.Location;
 
 public class Route implements Event {
 	
 	// FIELDS
+	private LocalDateTime logTime;
+	private String user;
 	private Location origin;
 	private Location destination;
 	private String company;
@@ -26,7 +29,8 @@ public class Route implements Event {
 	// CONSTRUCTOR
 	public Route(Location origin, Location destination, String company, String type, 
 			String priority, double weightCost, double volumeCost, int maxWeight, 
-			int maxVolume, int duration, int frequency, DayOfWeek day, int startTime, CustomerPrice customerPrice){
+			int maxVolume, int duration, int frequency, DayOfWeek day, int startTime, CustomerPrice customerPrice,
+			LocalDateTime logTime, String user) {
 
 		this.origin = origin;
 		this.destination = destination;
@@ -42,6 +46,8 @@ public class Route implements Event {
 		this.day = day;
 		this.startTime = startTime;
 		this.price = customerPrice;
+		this.logTime = logTime;
+		this.user = user;
 	}
 
 	// METHODS
@@ -106,6 +112,12 @@ public class Route implements Event {
 	public String getEventType() {
 		return eventType;
 	}
+	public LocalDateTime getLogTime(){
+		return logTime;
+	}
+	public String getUser() {
+		return user;
+	}
 	
 	// Setters
 	public void setPriority(String priority) {
@@ -138,7 +150,12 @@ public class Route implements Event {
 	public void setPrice(CustomerPrice price) {
 		this.price = price;
 	}
-	
+	public void setLogTime(LocalDateTime logTime) {
+		this.logTime = logTime;
+	}
+	public void setUser(String user) {
+		this.user = user;
+	}
 	// Printers
 	public String toString(){
 		return ("R ORIGIN: "+getOrigin().toString()+" R DEST: "+getDestination().toString());

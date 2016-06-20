@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <events>
-  <price>
+ <price>
+   	<logged>2016-06-19T22:38:20.639</logged>
+    <user>shelley</user>
     <to>Auckland</to>
     <from>Wellington</from>
     <priority>Air</priority>
@@ -8,6 +10,8 @@
     <volumeCost>1.0</volumeCost>
   </price>
 <price>
+ 	<logged>2016-06-19T22:38:20.639</logged>
+    <user>shelley</user>
     <to>Auckland</to>
     <from>Wellington</from>
     <priority>Standard</priority>
@@ -15,6 +19,8 @@
     <volumeCost>5.0</volumeCost>
   </price>
 <cost>
+ 	<logged>2016-06-19T22:38:20.639</logged>
+    <user>shelley</user>
     <to>Auckland</to>
     <from>Wellington</from>
     <company>UPS</company>
@@ -31,6 +37,7 @@
   </cost>
 <mail>
     <logged>2016-06-19T11:55:45.928</logged>
+    <user>shelley</user>
     <to>Auckland</to>
     <from>Wellington</from>
     <legs>
@@ -47,5 +54,151 @@
     <volume>1.0</volume>
     <priority>Domestic Air</priority>
     <duration>61</duration>
+  </mail>
+<cost>
+    <logged>2016-06-19T22:38:14.284</logged>
+    <user>shelley</user>
+    <to>Paris</to>
+    <from>Wellington</from>
+    <company>asdfghj</company>
+    <type>Land</type>
+    <priority>Standard</priority>
+    <weightCost>12.0</weightCost>
+    <volumeCost>12.0</volumeCost>
+    <maxWeight>123</maxWeight>
+    <maxVolume>123</maxVolume>
+    <duration>12</duration>
+    <frequency>12</frequency>
+    <day>Tuesday</day>
+    <hour>13</hour>
+  </cost>
+<price>
+    <logged>2016-06-19T22:38:20.639</logged>
+    <user>shelley</user>
+    <to>Paris</to>
+    <from>Wellington</from>
+    <priority/>
+    <weightCost>14.0</weightCost>
+    <volumeCost>14.0</volumeCost>
+  </price>
+<mail>
+    <logged>2016-06-19T23:19:44.520</logged>
+    <user>donald</user>
+    <to>Auckland</to>
+    <from>Wellington</from>
+    <legs>
+      <leg>
+        <to>Auckland</to>
+        <from>Wellington</from>
+        <type>Air</type>
+        <company>UPS</company>
+        <cost>96.0</cost>
+        <price>24.0</price>
+      </leg>
+    </legs>
+    <weight>12.0</weight>
+    <volume>12.0</volume>
+    <priority>Domestic Air</priority>
+    <duration>73</duration>
+  </mail>
+<discontinue>
+    <logged>2016-06-19T23:31:03.043</logged>
+    <user>donald</user>
+    <to>Paris</to>
+    <from>Wellington</from>
+    <company>asdfghj</company>
+    <type>Land</type>
+  </discontinue>
+<cost>
+    <logged>2016-06-20T00:20:56.670</logged>
+    <user>donald</user>
+    <to>Rome</to>
+    <from>Wellington</from>
+    <company>sdfghjkl</company>
+    <type>Land</type>
+    <priority>Standard</priority>
+    <weightCost>12.0</weightCost>
+    <volumeCost>12.0</volumeCost>
+    <maxWeight>123</maxWeight>
+    <maxVolume>123</maxVolume>
+    <duration>12</duration>
+    <frequency>12</frequency>
+    <day>Tuesday</day>
+    <hour>20</hour>
+  </cost>
+<price>
+    <logged>2016-06-20T00:21:02.619</logged>
+    <user>donald</user>
+    <to>Rome</to>
+    <from>Wellington</from>
+    <priority>Standard</priority>
+    <weightCost>15.0</weightCost>
+    <volumeCost>15.0</volumeCost>
+  </price>
+<cost>
+    <logged>2016-06-20T00:27:27.980</logged>
+    <user>shelley</user>
+    <to>Sydney</to>
+    <from>Wellington</from>
+    <company>sdfghjkookmn</company>
+    <type>Air</type>
+    <priority>Air</priority>
+    <weightCost>12.0</weightCost>
+    <volumeCost>12.0</volumeCost>
+    <maxWeight>123</maxWeight>
+    <maxVolume>123</maxVolume>
+    <duration>12</duration>
+    <frequency>12</frequency>
+    <day>Wednesday</day>
+    <hour>13</hour>
+  </cost>
+<price>
+    <logged>2016-06-20T00:27:33.827</logged>
+    <user>shelley</user>
+    <to>Sydney</to>
+    <from>Wellington</from>
+    <priority>Air</priority>
+    <weightCost>15.0</weightCost>
+    <volumeCost>15.0</volumeCost>
+  </price>
+<mail>
+    <logged>2016-06-20T00:28:04.956</logged>
+    <user>shelley</user>
+    <to>Sydney</to>
+    <from>Wellington</from>
+    <legs>
+      <leg>
+        <to>Sydney</to>
+        <from>Wellington</from>
+        <type>Air</type>
+        <company>sdfghjkookmn</company>
+        <cost>288.0</cost>
+        <price>360.0</price>
+      </leg>
+    </legs>
+    <weight>12.0</weight>
+    <volume>12.0</volume>
+    <priority>International Air</priority>
+    <duration>13</duration>
+  </mail>
+<mail>
+    <logged>2016-06-20T00:29:05.769</logged>
+    <user>shelley</user>
+    <to>Rome</to>
+    <from>Wellington</from>
+    <legs>
+      <leg>
+        <to>Rome</to>
+        <from>Wellington</from>
+        <type>Land</type>
+        <company>sdfghjkl</company>
+        <cost>288.0</cost>
+        <price>360.0</price>
+      </leg>
+    </legs>
+    <weight>12.0</weight>
+    <volume>12.0</volume>
+    <priority>International Standard</priority>
+    <duration>20</duration>
   </mail>
 </events>

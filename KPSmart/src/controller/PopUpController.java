@@ -1,6 +1,7 @@
 package controller;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 import event.CustomerPrice;
@@ -52,7 +53,7 @@ public class PopUpController implements Initializable {
 		if (!hasError.get()) {
 			CustomerPrice price = main.logCustomerPriceUpdate(origin, dest,
 					priority, Double.parseDouble(w), Double.parseDouble(v),
-					false);
+					false, LocalDateTime.now(), main.getCurrentUser().getUsername());
 			r.setPrice(price);
 			System.out.println(r.getPrice().toString());
 			c.closeModal();

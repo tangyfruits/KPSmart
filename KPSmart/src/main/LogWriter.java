@@ -152,6 +152,7 @@ public class LogWriter {
 	 * {@literal
 	 * <mail>
 	 *   <logged>%s</logged>
+	 *   <user>%s</user>
 	 *   <to>%s</to>
 	 *   <from>%s</from>
 	 *   <legs>
@@ -198,6 +199,7 @@ public class LogWriter {
 		// Make Elements
         Element mail = doc.createElement("mail");
         Element logged = doc.createElement("logged");
+        Element user = doc.createElement("user");
         Element to = doc.createElement("to");
         Element from = doc.createElement("from");
         Element legs = doc.createElement("legs");
@@ -243,6 +245,7 @@ public class LogWriter {
         
     	 // Add text values to tags
     	logged.appendChild(doc.createTextNode(event.getLogTime().toString()));
+    	user.appendChild(doc.createTextNode(event.getUser()));
         to.appendChild(doc.createTextNode(destination));
         from.appendChild(doc.createTextNode(origin));
         weight.appendChild(doc.createTextNode(Double.toString(event.getWeight())));
@@ -253,6 +256,7 @@ public class LogWriter {
         // Add tags together
         events.appendChild(mail);
         mail.appendChild(logged);
+        mail.appendChild(user);
         mail.appendChild(to);
         mail.appendChild(from);
         mail.appendChild(legs);
@@ -288,6 +292,8 @@ public class LogWriter {
 	 * <pre>
 	 * {@literal
 	 * <cost>
+	 *   <logged>%s</logged>
+	 *   <user>%s</user>
 	 *   <to>%s</to>
 	 *   <from>%s</from>
 	 *   <company>%s</company>
@@ -322,6 +328,8 @@ public class LogWriter {
 		
 		// Make Elements
         Element cost = doc.createElement("cost");
+        Element logged = doc.createElement("logged");
+        Element user = doc.createElement("user");
         Element to = doc.createElement("to");
         Element from = doc.createElement("from");
         Element company = doc.createElement("company");
@@ -337,6 +345,8 @@ public class LogWriter {
         Element hour = doc.createElement("hour");
         
         // Add text values to tags
+        logged.appendChild(doc.createTextNode(event.getLogTime().toString()));
+    	user.appendChild(doc.createTextNode(event.getUser()));
         to.appendChild(doc.createTextNode(event.getDestination().getName()));
         from.appendChild(doc.createTextNode(event.getOrigin().getName()));
         company.appendChild(doc.createTextNode(event.getCompany()));
@@ -352,6 +362,8 @@ public class LogWriter {
         hour.appendChild(doc.createTextNode(Integer.toString(event.getStartTime())));
         
         // Add tags together
+        cost.appendChild(logged);
+        cost.appendChild(user);
         cost.appendChild(to);
         cost.appendChild(from);
         cost.appendChild(company);
@@ -395,6 +407,8 @@ public class LogWriter {
 	 * <pre>
 	 * {@literal
 	 * <price>
+	 * 	<logged>%S</logged>
+	 * 	<user>%s</user>
 	 *   <to>%s</to>
 	 *   <from>%s</from>
 	 *   <type>%s</type>
@@ -422,6 +436,8 @@ public class LogWriter {
 		
 		// Make Elements
         Element price = doc.createElement("price");
+        Element logged = doc.createElement("logged");
+        Element user = doc.createElement("user");
         Element to = doc.createElement("to");
         Element from = doc.createElement("from");
         Element priority = doc.createElement("priority");
@@ -429,6 +445,8 @@ public class LogWriter {
         Element volumeCost = doc.createElement("volumeCost");
         
         // Add text values to tags
+        logged.appendChild(doc.createTextNode(event.getLogTime().toString()));
+    	user.appendChild(doc.createTextNode(event.getUser()));
         to.appendChild(doc.createTextNode(event.getDestination().getName()));
         from.appendChild(doc.createTextNode(event.getOrigin().getName()));
         priority.appendChild(doc.createTextNode(event.getPriority()));
@@ -436,6 +454,8 @@ public class LogWriter {
         volumeCost.appendChild(doc.createTextNode(Double.toString(event.getVolumeCost())));
         
         // Add tags together
+        price.appendChild(logged);
+        price.appendChild(user);
         price.appendChild(to);
         price.appendChild(from);
         price.appendChild(priority);
@@ -471,6 +491,8 @@ public class LogWriter {
 	 * <pre>
 	 * {@literal
 	 * <discontinue>
+	 * 	<logged>%S</logged>
+	 * 	<user>%s</user>
 	 *   <company>%s</company>
 	 *   <to>%s</to>
 	 *   <from>%s</from>
@@ -496,18 +518,24 @@ public class LogWriter {
 	  
 	  	// Make Elements
 	  	Element discontinue = doc.createElement("discontinue");
+	  	Element logged = doc.createElement("logged");
+	    Element user = doc.createElement("user");
 	  	Element to = doc.createElement("to");
 	  	Element from = doc.createElement("from");
 	  	Element company = doc.createElement("company");
 	  	Element type = doc.createElement("type");
 	  	
 	  	// Add text values to tags
+	  	logged.appendChild(doc.createTextNode(event.getLogTime().toString()));
+    	user.appendChild(doc.createTextNode(event.getUser()));
 	  	to.appendChild(doc.createTextNode(event.getDestination().getName()));
 	  	from.appendChild(doc.createTextNode(event.getOrigin().getName()));
 	  	company.appendChild(doc.createTextNode(event.getCompany()));
 	  	type.appendChild(doc.createTextNode(event.getType()));
 	  	
 	  	// add tags together
+	  	discontinue.appendChild(logged);
+	    discontinue.appendChild(user);
 	  	discontinue.appendChild(to);
 	  	discontinue.appendChild(from);
 	  	discontinue.appendChild(company);

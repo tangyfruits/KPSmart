@@ -168,6 +168,7 @@ public class LogStepper {
 		case "mail":
 			map.put("eventType", "mail");
 			map.put("logged",      event.getElementsByTagName("logged").item(0).getTextContent());
+			map.put("user", 	   event.getElementsByTagName("user").item(0).getTextContent());
 			map.put("destination", event.getElementsByTagName("to").item(0).getTextContent());
 			map.put("origin",      event.getElementsByTagName("from").item(0).getTextContent());
 			
@@ -195,6 +196,8 @@ public class LogStepper {
 			map.put("eventType", "cost");
 			map.put("to", 		  event.getElementsByTagName("to").item(0).getTextContent());
 			map.put("from", 	  event.getElementsByTagName("from").item(0).getTextContent());
+			map.put("logged",     event.getElementsByTagName("logged").item(0).getTextContent());
+			map.put("user", 	  event.getElementsByTagName("user").item(0).getTextContent());
 			map.put("company", 	  event.getElementsByTagName("company").item(0).getTextContent());
 			map.put("type", 	  event.getElementsByTagName("type").item(0).getTextContent());
 			map.put("priority",   event.getElementsByTagName("priority").item(0).getTextContent());
@@ -212,6 +215,8 @@ public class LogStepper {
 			map.put("eventType", "price");
 			map.put("to", 		  event.getElementsByTagName("to").item(0).getTextContent());
 			map.put("from", 	  event.getElementsByTagName("from").item(0).getTextContent());
+			map.put("logged",     event.getElementsByTagName("logged").item(0).getTextContent());
+			map.put("user", 	  event.getElementsByTagName("user").item(0).getTextContent());
 			map.put("priority",   event.getElementsByTagName("priority").item(0).getTextContent());
 			map.put("weightCost", event.getElementsByTagName("weightCost").item(0).getTextContent());
 			map.put("volumeCost", event.getElementsByTagName("volumeCost").item(0).getTextContent());
@@ -220,6 +225,8 @@ public class LogStepper {
 		case "discontinue":
 			map.put("eventType", "discontinue");
 			map.put("company", event.getElementsByTagName("company").item(0).getTextContent());
+			map.put("logged",     event.getElementsByTagName("logged").item(0).getTextContent());
+			map.put("user", 	  event.getElementsByTagName("user").item(0).getTextContent());
 			map.put("to", 	   event.getElementsByTagName("to").item(0).getTextContent());
 			map.put("from",    event.getElementsByTagName("from").item(0).getTextContent());
 			map.put("type",    event.getElementsByTagName("type").item(0).getTextContent());

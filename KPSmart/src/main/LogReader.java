@@ -22,6 +22,7 @@ public class LogReader {
 	// LOCAL CLASSES
 	class MailEvent implements Event {
 		public LocalDateTime logTime;
+		public String user;
 		public String origin;
 		public String destination;
 		public ArrayList<Leg> legs;
@@ -36,6 +37,7 @@ public class LogReader {
 		public String toString() {
 			String str = "MAIL EVENT\n";
 			str += "log : " + logTime.toString() + "\n";
+			str += "user : " + user + "\n";
 			str += "orig: " + origin + "\n";
 			str += "dest: " + destination + "\n";
 			for (Leg leg : legs) {
@@ -49,6 +51,8 @@ public class LogReader {
 		}
 	}
 	class LegEvent implements Event {
+		public LocalDateTime logTime;
+		public String user;
 		public String origin;
 		public String destination;
 		public String type;
@@ -61,6 +65,8 @@ public class LogReader {
 		}
 		public String toString() {
 			String str = "LEG EVENT\n";
+			str += "log : " + logTime.toString() + "\n";
+			str += "user : " + user + "\n";
 			str += "orig: " + origin + "\n";
 			str += "dest: " + destination + "\n";
 			str += "type: " + type + "\n";
@@ -71,6 +77,8 @@ public class LogReader {
 		}
 	}
 	class CostEvent implements Event {
+		public LocalDateTime logTime;
+		public String user;
 		public String origin;
 		public String destination;
 		public String company;
@@ -90,6 +98,8 @@ public class LogReader {
 		}
 		public String toString() {
 			String str = "COST EVENT\n";
+			str += "log : " + logTime.toString() + "\n";
+			str += "user : " + user + "\n";
 			str += "orig: " + origin + "\n";
 			str += "dest: " + destination + "\n";
 			str += "comp: " + company + "\n";
@@ -107,6 +117,8 @@ public class LogReader {
 		}
 	}
 	class PriceEvent implements Event {
+		public LocalDateTime logTime;
+		public String user;
 		public String origin;
 		public String destination;
 		public String priority;
@@ -118,6 +130,8 @@ public class LogReader {
 		}
 		public String toString() {
 			String str = "PRICE EVENT\n";
+			str += "log : " + logTime.toString() + "\n";
+			str += "user : " + user + "\n";
 			str += "orig: " + origin + "\n";
 			str += "dest: " + destination + "\n";
 			str += "prio: " + priority + "\n";
@@ -127,6 +141,8 @@ public class LogReader {
 		}
 	}
 	class DiscontinueEvent implements Event {
+		public LocalDateTime logTime;
+		public String user;
 		public String origin;
 		public String destination;
 		public String company;
@@ -137,6 +153,8 @@ public class LogReader {
 		}
 		public String toString() {
 			String str = "DISCONT. EVENT\n";
+			str += "log : " + logTime.toString() + "\n";
+			str += "user : " + user + "\n";
 			str += "orig: " + origin + "\n";
 			str += "dest: " + destination + "\n";
 			str += "comp: " + company + "\n";
@@ -248,6 +266,15 @@ public class LogReader {
             	}
             }
 		}
+		
+		for(Location l: main.getLocations()){
+    		for(Route r: l.getRoutes()){
+    			if(r.getPrice() == null){
+    				CustomerPrice p = main.getCustomerPrice(r.getOrigin(), r.getDestination(), r.getOrigin().getName(), r.getDestination().getName(), r.getPriority());
+    				r.setPrice(p);
+    			}
+    		}
+    	}
 	}
 	
 	// Event Starter (step 1)
@@ -312,6 +339,9 @@ public class LogReader {
 		case "logged":
 			mail.logTime = LocalDateTime.parse(data);
 			break;
+		case "user":
+			mail.user = data;
+			break;
 		case "to":
 			mail.destination = data;
 			break;
@@ -366,6 +396,12 @@ public class LogReader {
 	}
 	private void setCostVariable(String data) {
 		switch (currentVariable) {
+		case "logged":
+			cost.logTime = LocalDateTime.parse(data);
+			break;
+		case "user":
+			cost.user = data;
+			break;
 		case "from":
 			cost.origin = data;
 			break;
@@ -412,6 +448,12 @@ public class LogReader {
 	}
 	private void setPriceVariable(String data) {
 		switch (currentVariable) {
+		case "logged":
+			price.logTime = LocalDateTime.parse(data);
+			break;
+		case "user":
+			price.user = data;
+			break;
 		case "from":
 			price.origin = data;
 			break;
@@ -434,6 +476,12 @@ public class LogReader {
 	}
 	private void setDiscontinueVariable(String data) {
 		switch (currentVariable) {
+		case "logged":
+			discont.logTime = LocalDateTime.parse(data);
+			break;
+		case "user":
+			discont.user = data;
+			break;
 		case "from":
 			discont.origin = data;
 			break;
@@ -492,28 +540,28 @@ public class LogReader {
 			main.logTransportCostUpdate(cost.origin, cost.destination, 
 					cost.company, cost.type, cost.weightCost, cost.volumeCost, 
 					cost.maxWeight, cost.maxVolume, cost.duration, cost.frequency, 
-					cost.day, cost.startTime, true);
+					cost.day, cost.startTime, true, cost.logTime, cost.user);
 			cost = null;
 			break;
 		
 		case "mail":
 			if(LOGSOUT){System.out.println(mail);}
 			main.logDeliveryRequest(mail.logTime, mail.origin, mail.destination, mail.legs,
-					mail.weight, mail.volume, mail.priority, mail.duration, true);
+					mail.weight, mail.volume, mail.priority, mail.duration, true, mail.user);
 			mail = null;
 			break;
 		
 		case "price":
 			if(LOGSOUT){System.out.println(price);}
 			main.logCustomerPriceUpdate(price.origin, price.destination, 
-					price.priority, price.weightCost, price.volumeCost, true);
+					price.priority, price.weightCost, price.volumeCost, true, price.logTime, price.user);
 			price = null;
 			break;
 		
 		case "discontinue":
 			if(LOGSOUT){System.out.println(discont);}
 			main.discontinueTransportRoute(discont.origin, discont.destination, 
-					discont.company, discont.type, true);
+					discont.company, discont.type, true, discont.logTime, discont.user);
 			discont = null;
 			break;
 		
