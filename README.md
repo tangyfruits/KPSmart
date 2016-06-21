@@ -17,12 +17,12 @@ Next use ant to the compile the .java files into .class files. This command uses
 ```
 ant
 ```
-If all compiled correctly, you should now be able tyo run the program using this command:
+If all compiled correctly, you should now be able to run the program using this command:
 ```
 java -cp ./KPSmart/bin controller.KPSgui
 ```
 
 ### Eclipse
-Open Eclipse. Import the project by goin to *File > Import* then selecting *General > Existing Projects into Workspace*. From there select the *SWEN301Project2* directory as the root directory.
+Open Eclipse. Import the project by going to *File > Import* then selecting *General > Existing Projects into Workspace*. From there select the *SWEN301Project2* directory as the root directory.
 
 Once the project is imported, inside Eclipse simply navigate to *KPSmart/src/controller/KPSgui.java* and run that class.
