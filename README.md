@@ -22,7 +22,7 @@ If all compiled correctly, you should now be able tyo run the program using this
 java -cp ./KPSmart/bin controller.KPSgui
 ```
 
-### In Eclipse
+### Eclipse
 Open Eclipse. Import the project by goin to *File > Import* then selecting *General > Existing Projects into Workspace*. From there select the *SWEN301Project2* directory as the root directory.
 
-Once the project is imported, inside Eclipse simply navigate to KPSmart/src/controller/KPSgui.java and run that class.
+Once the project is imported, inside Eclipse simply navigate to *KPSmart/src/controller/KPSgui.java* and run that class.
