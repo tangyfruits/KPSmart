@@ -1,5 +1,5 @@
-# SWEN301Project2
-This is a collaborative project for the Kelburn Postal Service. We are using Scrum as our software methodology. The program is written mostly in Java.  
+# KPSmart
+This is a collaborative project for the (fictional) Kelburn Postal Service for Assignment 2 of SWEN301 at Victoria University of Wellington. We used using Scrum as our software methodology. The program is written in Java using the JavaFX library and the GUIs are written in FXML.  
 
 *Project Leader:*	Donald Tang  
 *Chief Programmer:* Peter Scriven  
