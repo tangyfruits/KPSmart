@@ -152,7 +152,7 @@ public class HistoryController extends NavBarController {
 		displayBox.getChildren().add(a);
 		a = new Text("From: " + item.get("from"));
 		displayBox.getChildren().add(a);
-		a = new Text("Comapny: " + item.get("company"));
+		a = new Text("Company: " + item.get("company"));
 		displayBox.getChildren().add(a);
 		a = new Text("Type: " + item.get("type"));
 		displayBox.getChildren().add(a);
@@ -210,7 +210,7 @@ public class HistoryController extends NavBarController {
 		displayBox.getChildren().add(a);	
 		a = new Text("Type: " + item.get("type"));
 		displayBox.getChildren().add(a);
-		a = new Text("Comapny: " + item.get("company"));
+		a = new Text("Company: " + item.get("company"));
 		displayBox.getChildren().add(a);
 		a = new Text("User: " + item.get("user"));
 		displayBox.getChildren().add(a);
