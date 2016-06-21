@@ -59,7 +59,7 @@ public class LoginController implements Initializable {
 
 			Node node = (Node) event.getSource();
 			Stage stage = (Stage) node.getScene().getWindow();
-			Scene scene = new Scene(kpsguiUI);
+			Scene scene = new Scene(kpsguiUI, 720,620);
 			stage.setScene(scene);
 			stage.show();
 			reports.initData();

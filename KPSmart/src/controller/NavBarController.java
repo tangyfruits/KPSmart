@@ -68,7 +68,7 @@ public abstract class NavBarController implements Initializable {
     	
     	
     	Stage stage = (Stage) logeventmenu.getScene().getWindow();
-    	Scene scene = new Scene(historyGUI);
+    	Scene scene = new Scene(historyGUI, 720,620);
       	stage.setScene(scene);
       	HistoryController cont = history.getController();
       	cont.initData();
@@ -90,7 +90,7 @@ public abstract class NavBarController implements Initializable {
     	
     	
     	Stage stage = (Stage) logeventmenu.getScene().getWindow();
-    	Scene scene = new Scene(reportsGUI);
+    	Scene scene = new Scene(reportsGUI, 720,620);
     	
       	stage.setScene(scene);
       	
@@ -107,7 +107,7 @@ public abstract class NavBarController implements Initializable {
     	
     	
     	Stage stage = (Stage) logeventmenu.getScene().getWindow();
-    	Scene scene = new Scene(loginGUI);
+    	Scene scene = new Scene(loginGUI, 720,620);
       	stage.setScene(scene);
     	stage.show();
     }
@@ -122,7 +122,7 @@ public abstract class NavBarController implements Initializable {
 		Parent deliveryGUI = delivery.load();
 
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
-		Scene scene = new Scene(deliveryGUI);
+		Scene scene = new Scene(deliveryGUI, 720,620);
 		
 		FormController controller = delivery.getController();
 		controller.initDropdown();
@@ -142,7 +142,7 @@ public abstract class NavBarController implements Initializable {
 		Parent discontinueGUI = discontinue.load();
 
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
-		Scene scene = new Scene(discontinueGUI);
+		Scene scene = new Scene(discontinueGUI, 720,620);
 		stage.setScene(scene);
 		FormController controller = discontinue.getController();
 		controller.initDropdown();
@@ -158,7 +158,7 @@ public abstract class NavBarController implements Initializable {
 		Parent routeGUI = route.load();
 
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
-		Scene scene = new Scene(routeGUI);
+		Scene scene = new Scene(routeGUI, 720,620);
 		stage.setScene(scene);
 		FormController controller = route.getController();
 		controller.initDropdownWithOther();
@@ -176,7 +176,7 @@ public abstract class NavBarController implements Initializable {
 		Parent priceGUI = price.load();
 
 		Stage stage = (Stage) logeventmenu.getScene().getWindow();
-		Scene scene = new Scene(priceGUI);
+		Scene scene = new Scene(priceGUI, 720,620);
 		stage.setScene(scene);
 		FormController controller = price.getController();
 		controller.initDropdownWithOther();
@@ -201,7 +201,7 @@ public abstract class NavBarController implements Initializable {
 				}
 
 				Stage stage = (Stage) accounts.getScene().getWindow();
-				Scene scene = new Scene(addUserGUI);
+				Scene scene = new Scene(addUserGUI, 720,620);
 				stage.setScene(scene);
 				stage.show();
 			}
@@ -222,7 +222,7 @@ public abstract class NavBarController implements Initializable {
 				}
 
 				Stage stage = (Stage) accounts.getScene().getWindow();
-				Scene scene = new Scene(editUserGUI);
+				Scene scene = new Scene(editUserGUI, 720,620);
 				stage.setScene(scene);
 				stage.show();
 			}
@@ -238,7 +238,7 @@ public abstract class NavBarController implements Initializable {
 				try {
 					changePassGUI = changePass.load();
 					Stage stage = (Stage) accounts.getScene().getWindow();
-					Scene scene = new Scene(changePassGUI);
+					Scene scene = new Scene(changePassGUI, 720,620);
 					stage.setScene(scene);
 					stage.show();
 				} catch (IOException e) {
@@ -262,7 +262,7 @@ public abstract class NavBarController implements Initializable {
 				}
 
 				Stage stage = (Stage) accounts.getScene().getWindow();
-				Scene scene = new Scene(deleteUserGUI);
+				Scene scene = new Scene(deleteUserGUI, 720,620);
 				stage.setScene(scene);
 				stage.show();
 			}
@@ -277,7 +277,7 @@ public abstract class NavBarController implements Initializable {
 		try {
 			changePassGUI = changePass.load();
 			Stage stage = (Stage) accounts.getScene().getWindow();
-			Scene scene = new Scene(changePassGUI);
+			Scene scene = new Scene(changePassGUI, 720,620);
 			stage.setScene(scene);
 			stage.show();
 		} catch (IOException e) {
