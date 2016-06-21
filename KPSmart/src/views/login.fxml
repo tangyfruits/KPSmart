@@ -43,7 +43,7 @@
       <HBox layoutX="309.0" layoutY="309.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Region maxHeight="-Infinity" minWidth="200.0" prefHeight="30.0" prefWidth="2000.0" />
-          <Button fx:id="login" defaultButton="true" layoutX="309.0" layoutY="309.0" maxWidth="70.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#logInButtonAction" prefWidth="70.0" style="-fx-background-color: E9D5B9;" text="Log In" AnchorPane.leftAnchor="309.0" AnchorPane.rightAnchor="321.0">
+          <Button fx:id="login" defaultButton="true" layoutX="309.0" layoutY="309.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#logInButtonAction" style="-fx-background-color: E9D5B9;" text="Log In" AnchorPane.leftAnchor="309.0" AnchorPane.rightAnchor="321.0">
             <font>
               <Font size="15.0" />
             </font>
