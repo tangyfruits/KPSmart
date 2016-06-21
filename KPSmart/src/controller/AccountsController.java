@@ -239,16 +239,6 @@ public class AccountsController extends NavBarController {
 		}
 		if(u.getUsername().equals(main.getCurrentUser().getUsername())){
 			logoutButtonAction(event);
-//			main.logout();
-//	    	FXMLLoader login = new FXMLLoader(getClass().getResource("/views/login.fxml"));
-//	    	login.setController(new LoginController(main));
-//	    	Parent loginGUI = login.load();
-//	    	
-//	    	
-//	    	Stage stage = (Stage) logeventmenu.getScene().getWindow();
-//	    	Scene scene = new Scene(loginGUI);
-//	      	stage.setScene(scene);
-//	    	stage.show();
 		}
 	}
 }

@@ -31,7 +31,7 @@ public class KPSgui extends Application {
 		primaryStage.setMinHeight(620);
 		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("../views/icon.png"))); // must be in /bin/views
 		
-		Scene scene = new Scene(UI, 700, 600);
+		Scene scene = new Scene(UI, 720, 620);
 		primaryStage.setScene(scene);
 		
 		primaryStage.show();
