@@ -8,20 +8,6 @@ This is a collaborative project for the (fictional) Kelburn Postal Service for A
 *Chief Tester:* Priyanka Bhula  
 
 ## Compilation and Running
-### Command Line
-First ensure you are in the correct directory.
-```
-cd SWEN301Project2
-```
-Next use ant to the compile the .java files into .class files. This command uses *build.xml* and requires that you have *ant* installed.
-```
-ant
-```
-If all compiled correctly, you should now be able to run the program using this command:
-```
-java -cp ./KPSmart/bin controller.KPSgui
-```
-
 ### Eclipse
 Open Eclipse. Import the project by going to *File > Import* then selecting *General > Existing Projects into Workspace*. From there select the *SWEN301Project2* directory as the root directory.
 
