@@ -20,11 +20,11 @@ import javafx.stage.Stage;
 import main.Main;
 
 public class LoginController implements Initializable {
-	
+
 	// FIELDS
 	private Main main;
 	private BooleanProperty b = new SimpleBooleanProperty(false);
-	
+
 	// CONSTRUCTOR
 	public LoginController(Main main) {
 		this.main = main;
@@ -32,8 +32,6 @@ public class LoginController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-
 	}
 
 	/** LOG IN SCREEN **/
@@ -49,24 +47,24 @@ public class LoginController implements Initializable {
 		loginerror.visibleProperty().bind(b);
 		String id = this.idnumber.getText();
 		String pass = this.password.getText();
-		
+
 		if (main.login(id, pass)) {
 			FXMLLoader kpsgui = new FXMLLoader(getClass().getResource("/views/reports.fxml"));
 			ReportsController reports = new ReportsController(main);
 			kpsgui.setController(reports);
-			
+
 			Parent kpsguiUI = kpsgui.load();
 
 			Node node = (Node) event.getSource();
 			Stage stage = (Stage) node.getScene().getWindow();
-			Scene scene = new Scene(kpsguiUI, 720,620);
+			Scene scene = new Scene(kpsguiUI, 720, 620);
 			stage.setScene(scene);
 			stage.show();
 			reports.initData();
-			
+
 		} else if (pass.equals("")) {
 			password.requestFocus();
-			
+
 		} else {
 			idnumber.clear();
 			password.clear();

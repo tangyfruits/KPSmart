@@ -11,49 +11,55 @@ import event.CustomerPrice;
 import main.Location;
 
 public class CustomerPriceTest {
-	
+
 	CustomerPrice price;
-	
+
 	// Constructor
 	@Before
 	public void testCustomerPrice() {
 		Location from = new Location("Somewhere over the Mediterrainian Sea");
 		Location to = new Location("French Guinea");
-		
+
 		price = new CustomerPrice(from, to, "Hella urgent", 333.2, .20, LocalDateTime.now(), "User");
 	}
-	
+
 	// Getters
 	@Test
 	public void testGetOrigin() {
 		assertEquals("Somewhere over the Mediterrainian Sea", price.getOrigin().getName());
 	}
+
 	@Test
 	public void testGetDestination() {
 		assertEquals("French Guinea", price.getDestination().getName());
 	}
+
 	@Test
 	public void testGetPriority() {
 		assertEquals("Hella urgent", price.getPriority());
 	}
+
 	@Test
 	public void testGetWeightCost() {
 		assertEquals(333.2, price.getWeightCost(), 0.00001);
 	}
+
 	@Test
 	public void testGetVolumeCost() {
 		assertEquals(.20, price.getVolumeCost(), 0.001);
 	}
+
 	public void testGetEventType() {
 		assertEquals("price", price.getEventType());
 	}
-	
+
 	// Setters
 	@Test
 	public void testSetWeightCost() {
 		price.setWeightCost(235235.234);
 		assertEquals(235235.234, price.getWeightCost(), 0.00001);
 	}
+
 	@Test
 	public void testSetVolumeCost() {
 		price.setVolumeCost(383838.234234);
@@ -63,13 +69,9 @@ public class CustomerPriceTest {
 	// toString
 	@Test
 	public void testToString() {
-		String thing = "CustomerPrice [origin=" + price.getOrigin() + 
-					   ", destination=" + price.getDestination() + 
-					   ", priority=" + price.getPriority() + 
-					   ", weightCost=" + price.getWeightCost() + 
-					   ", volumeCost=" + price.getVolumeCost() + "]";
-		//System.out.println(thing);
-		//System.out.println(price.toString());
+		String thing = "CustomerPrice [origin=" + price.getOrigin() + ", destination=" + price.getDestination()
+				+ ", priority=" + price.getPriority() + ", weightCost=" + price.getWeightCost() + ", volumeCost="
+				+ price.getVolumeCost() + "]";
 		assertEquals(thing, price.toString());
 	}
 }

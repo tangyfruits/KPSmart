@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<events>
+  <price>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Christchurch</to>
+    <from>Dunedin</from>
+    <priority>Standard</priority>
+    <weightCost>3.0</weightCost>
+    <volumeCost>34.0</volumeCost>
+  </price>
+<price>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Dunedin</to>
+    <from>Christchurch</from>
+    <priority>Air</priority>
+    <weightCost>5.0</weightCost>
+    <volumeCost>11.0</volumeCost>
+  </price>
+<price>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Wellington</to>
+    <from>Christchurch</from>
+    <priority>Air</priority>
+    <weightCost>235.0</weightCost>
+    <volumeCost>24.0</volumeCost>
+  </price>
+<price>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Christchurch</to>
+    <from>Wellington</from>
+    <priority>Standard</priority>
+    <weightCost>22.0</weightCost>
+    <volumeCost>232.0</volumeCost>
+  </price>
+<price>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Hamilton</to>
+    <from>Wellington</from>
+    <priority>Standard</priority>
+    <weightCost>31.0</weightCost>
+    <volumeCost>123.0</volumeCost>
+  </price>
+<price>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Auckland</to>
+    <from>Christchurch</from>
+    <priority>Standard</priority>
+    <weightCost>11.0</weightCost>
+    <volumeCost>22.0</volumeCost>
+  </price>
+<price>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Auckland</to>
+    <from>Hamilton</from>
+    <priority>Standard</priority>
+    <weightCost>18.0</weightCost>
+    <volumeCost>4.0</volumeCost>
+  </price>
+<price>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Wellington</to>
+    <from>Auckland</from>
+    <priority>Standard</priority>
+    <weightCost>25.0</weightCost>
+    <volumeCost>13.0</volumeCost>
+  </price>
+<price>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Dunedin</to>
+    <from>Auckland</from>
+    <priority>Air</priority>
+    <weightCost>37.0</weightCost>
+    <volumeCost>21.0</volumeCost>
+  </price>
+<price>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Budapest</to>
+    <from>Auckland</from>
+    <priority>Standard</priority>
+    <weightCost>27.0</weightCost>
+    <volumeCost>4.0</volumeCost>
+  </price>
+<price>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Los Angeles</to>
+    <from>Auckland</from>
+    <priority>Air</priority>
+    <weightCost>8.0</weightCost>
+    <volumeCost>12.0</volumeCost>
+  </price>
+<price>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Auckland</to>
+    <from>Wellington</from>
+    <priority>Air</priority>
+    <weightCost>14.0</weightCost>
+    <volumeCost>4.0</volumeCost>
+  </price>
+<price>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Wellington</to>
+    <from>Christchurch</from>
+    <priority>Standard</priority>
+    <weightCost>32.0</weightCost>
+    <volumeCost>21.0</volumeCost>
+  </price>
+<price>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Dunedin</to>
+    <from>Christchurch</from>
+    <priority>Standard</priority>
+    <weightCost>2.0</weightCost>
+    <volumeCost>22.0</volumeCost>
+  </price>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Christchurch</to>
+    <from>Dunedin</from>
+    <company>BopPop Post</company>
+    <type>Sea</type>
+    <priority>Standard</priority>
+    <weightCost>5.0</weightCost>
+    <volumeCost>14.0</volumeCost>
+    <maxWeight>200</maxWeight>
+    <maxVolume>650</maxVolume>
+    <duration>43</duration>
+    <frequency>23</frequency>
+    <day>Monday</day>
+    <hour>6</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Dunedin</to>
+    <from>Christchurch</from>
+    <company>NZ POST man</company>
+    <type>Air</type>
+    <priority>Air</priority>
+    <weightCost>15.0</weightCost>
+    <volumeCost>8.0</volumeCost>
+    <maxWeight>450</maxWeight>
+    <maxVolume>300</maxVolume>
+    <duration>32</duration>
+    <frequency>22</frequency>
+    <day>Tuesday</day>
+    <hour>11</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Wellington</to>
+    <from>Christchurch</from>
+    <company>NZ POST buh</company>
+    <type>Air</type>
+    <priority>Air</priority>
+    <weightCost>25.0</weightCost>
+    <volumeCost>4.0</volumeCost>
+    <maxWeight>650</maxWeight>
+    <maxVolume>200</maxVolume>
+    <duration>22</duration>
+    <frequency>13</frequency>
+    <day>Thursday</day>
+    <hour>2</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Christchurch</to>
+    <from>Wellington</from>
+    <company>Heella Post</company>
+    <type>Sea</type>
+    <priority>Standard</priority>
+    <weightCost>4.0</weightCost>
+    <volumeCost>45.0</volumeCost>
+    <maxWeight>120</maxWeight>
+    <maxVolume>600</maxVolume>
+    <duration>36</duration>
+    <frequency>48</frequency>
+    <day>Wednesday</day>
+    <hour>3</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Hamilton</to>
+    <from>Wellington</from>
+    <company>NZ POST boy</company>
+    <type>Land</type>
+    <priority>Standard</priority>
+    <weightCost>42.0</weightCost>
+    <volumeCost>6.0</volumeCost>
+    <maxWeight>200</maxWeight>
+    <maxVolume>300</maxVolume>
+    <duration>25</duration>
+    <frequency>41</frequency>
+    <day>Monday</day>
+    <hour>18</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Auckland</to>
+    <from>Christchurch</from>
+    <company>BopPop Post</company>
+    <type>Sea</type>
+    <priority>Standard</priority>
+    <weightCost>457.0</weightCost>
+    <volumeCost>2.0</volumeCost>
+    <maxWeight>220</maxWeight>
+    <maxVolume>300</maxVolume>
+    <duration>15</duration>
+    <frequency>5</frequency>
+    <day>Monday</day>
+    <hour>9</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Auckland</to>
+    <from>Hamilton</from>
+    <company>*FreshPost*</company>
+    <type>Land</type>
+    <priority>Standard</priority>
+    <weightCost>6.0</weightCost>
+    <volumeCost>6.0</volumeCost>
+    <maxWeight>300</maxWeight>
+    <maxVolume>200</maxVolume>
+    <duration>47</duration>
+    <frequency>16</frequency>
+    <day>Friday</day>
+    <hour>22</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Wellington</to>
+    <from>Auckland</from>
+    <company>BopPop Post</company>
+    <type>Land</type>
+    <priority>Standard</priority>
+    <weightCost>26.0</weightCost>
+    <volumeCost>28.0</volumeCost>
+    <maxWeight>200</maxWeight>
+    <maxVolume>300</maxVolume>
+    <duration>35</duration>
+    <frequency>53</frequency>
+    <day>Thursday</day>
+    <hour>17</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Dunedin</to>
+    <from>Auckland</from>
+    <company>New Ze POST</company>
+    <type>Air</type>
+    <priority>Air</priority>
+    <weightCost>26.0</weightCost>
+    <volumeCost>26.0</volumeCost>
+    <maxWeight>650</maxWeight>
+    <maxVolume>300</maxVolume>
+    <duration>2</duration>
+    <frequency>11</frequency>
+    <day>Monday</day>
+    <hour>21</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Budapest</to>
+    <from>Auckland</from>
+    <company>NZ POST bo</company>
+    <type>Sea</type>
+    <priority>Standard</priority>
+    <weightCost>22.0</weightCost>
+    <volumeCost>30.0</volumeCost>
+    <maxWeight>650</maxWeight>
+    <maxVolume>520</maxVolume>
+    <duration>14</duration>
+    <frequency>44</frequency>
+    <day>Wednesday</day>
+    <hour>15</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Los Angeles</to>
+    <from>Auckland</from>
+    <company>BopPop Post</company>
+    <type>Air</type>
+    <priority>Air</priority>
+    <weightCost>11.0</weightCost>
+    <volumeCost>11.0</volumeCost>
+    <maxWeight>200</maxWeight>
+    <maxVolume>300</maxVolume>
+    <duration>43</duration>
+    <frequency>14</frequency>
+    <day>Wednesday</day>
+    <hour>8</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Auckland</to>
+    <from>Wellington</from>
+    <company>Fresh Post</company>
+    <type>Land</type>
+    <priority>Standard</priority>
+    <weightCost>37.0</weightCost>
+    <volumeCost>23.0</volumeCost>
+    <maxWeight>390</maxWeight>
+    <maxVolume>300</maxVolume>
+    <duration>2</duration>
+    <frequency>24</frequency>
+    <day>Monday</day>
+    <hour>14</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Wellington</to>
+    <from>Christchurch</from>
+    <company>Jeff's Van</company>
+    <type>Sea</type>
+    <priority>Standard</priority>
+    <weightCost>26.0</weightCost>
+    <volumeCost>20.0</volumeCost>
+    <maxWeight>200</maxWeight>
+    <maxVolume>200</maxVolume>
+    <duration>27</duration>
+    <frequency>12</frequency>
+    <day>Thursday</day>
+    <hour>16</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Dunedin</to>
+    <from>Christchurch</from>
+    <company>Fresh Post</company>
+    <type>Land</type>
+    <priority>Standard</priority>
+    <weightCost>18.0</weightCost>
+    <volumeCost>6.0</volumeCost>
+    <maxWeight>650</maxWeight>
+    <maxVolume>210</maxVolume>
+    <duration>15</duration>
+    <frequency>24</frequency>
+    <day>Wednesday</day>
+    <hour>20</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Auckland</to>
+    <from>Christchurch</from>
+    <company>Fresh Post</company>
+    <type>Land</type>
+    <priority>Standard</priority>
+    <weightCost>16.0</weightCost>
+    <volumeCost>3.0</volumeCost>
+    <maxWeight>200</maxWeight>
+    <maxVolume>580</maxVolume>
+    <duration>10</duration>
+    <frequency>7</frequency>
+    <day>Friday</day>
+    <hour>7</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Dunedin</to>
+    <from>Christchurch</from>
+    <company>*FreshPost*</company>
+    <type>Sea</type>
+    <priority>Standard</priority>
+    <weightCost>25.0</weightCost>
+    <volumeCost>14.0</volumeCost>
+    <maxWeight>200</maxWeight>
+    <maxVolume>550</maxVolume>
+    <duration>24</duration>
+    <frequency>11</frequency>
+    <day>Friday</day>
+    <hour>5</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Christchurch</to>
+    <from>Dunedin</from>
+    <company>Jeff's Van</company>
+    <type>Land</type>
+    <priority>Standard</priority>
+    <weightCost>25.0</weightCost>
+    <volumeCost>3.0</volumeCost>
+    <maxWeight>300</maxWeight>
+    <maxVolume>540</maxVolume>
+    <duration>10</duration>
+    <frequency>10</frequency>
+    <day>Thursday</day>
+    <hour>5</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Dunedin</to>
+    <from>Auckland</from>
+    <company>Jeff's Van</company>
+    <type>Air</type>
+    <priority>Air</priority>
+    <weightCost>11.0</weightCost>
+    <volumeCost>13.0</volumeCost>
+    <maxWeight>300</maxWeight>
+    <maxVolume>500</maxVolume>
+    <duration>20</duration>
+    <frequency>2</frequency>
+    <day>Friday</day>
+    <hour>6</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Auckland</to>
+    <from>Wellington</from>
+    <company>Johnny Mac</company>
+    <type>Air</type>
+    <priority>Air</priority>
+    <weightCost>25.0</weightCost>
+    <volumeCost>9.0</volumeCost>
+    <maxWeight>420</maxWeight>
+    <maxVolume>320</maxVolume>
+    <duration>3</duration>
+    <frequency>12</frequency>
+    <day>Friday</day>
+    <hour>3</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Wellington</to>
+    <from>Christchurch</from>
+    <company>Jeff's Van</company>
+    <type>Land</type>
+    <priority>Standard</priority>
+    <weightCost>22.0</weightCost>
+    <volumeCost>5.0</volumeCost>
+    <maxWeight>450</maxWeight>
+    <maxVolume>320</maxVolume>
+    <duration>16</duration>
+    <frequency>6</frequency>
+    <day>Thursday</day>
+    <hour>7</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Wellington</to>
+    <from>Christchurch</from>
+    <company>FreshPaste</company>
+    <type>Land</type>
+    <priority>Standard</priority>
+    <weightCost>37.0</weightCost>
+    <volumeCost>6.0</volumeCost>
+    <maxWeight>240</maxWeight>
+    <maxVolume>390</maxVolume>
+    <duration>6</duration>
+    <frequency>4</frequency>
+    <day>Friday</day>
+    <hour>8</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Christchurch</to>
+    <from>Wellington</from>
+    <company>NZ Post</company>
+    <type>Sea</type>
+    <priority>Local Standard</priority>
+    <weightCost>4.0</weightCost>
+    <volumeCost>6.0</volumeCost>
+    <maxWeight>400</maxWeight>
+    <maxVolume>150</maxVolume>
+    <duration>60</duration>
+    <frequency>12</frequency>
+    <day>Thursday</day>
+    <hour>12</hour>
+  </cost>
+<cost>
+    <logged>2016-01-01T00:00</logged>
+    <user>shelley</user>
+    <to>Dunedin</to>
+    <from>Auckland</from>
+    <company>UPS</company>
+    <type>Land</type>
+    <priority>Local Standard</priority>
+    <weightCost>20.8</weightCost>
+    <volumeCost>56.2</volumeCost>
+    <maxWeight>43</maxWeight>
+    <maxVolume>123</maxVolume>
+    <duration>33</duration>
+    <frequency>2</frequency>
+    <day>Tuesday</day>
+    <hour>20</hour>
+  </cost>
+</events>

@@ -4,8 +4,7 @@ public class Tuple {
 	/**
 	 * A simple class to represent a tuple with Origin and Destination.
 	 * 
-	 * @author Donald Tang
-	 * Edited by Pri Bhula
+	 * @author Donald Tang Edited by Pri Bhula
 	 */
 
 	private String origin;
@@ -22,7 +21,7 @@ public class Tuple {
 		this.origin = origin;
 		this.destination = destination;
 	}
-	
+
 	/**
 	 * Getter
 	 * 

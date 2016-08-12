@@ -24,6 +24,7 @@ public class MailReportTests {
 		assertTrue(t.getOrigin().equals("Wellington") && t.getDestination().equals("Auckland")
 				&& amountOfMailDeliveryTimes.get(t).get(0) == 2.0 && amountOfMailDeliveryTimes.get(t).get(1) == 3.0);
 	}
+
 	@Test
 	public void test2() {
 		Main m = new Main();
@@ -36,6 +37,7 @@ public class MailReportTests {
 		assertTrue(t.getOrigin().equals("Wellington") && t.getDestination().equals("Auckland")
 				&& amountOfMailDeliveryTimes.get(t).get(0) == 7.0 && amountOfMailDeliveryTimes.get(t).get(1) == 9.0);
 	}
+
 	@Test
 	public void test3() {
 		Main m = new Main();

@@ -41,17 +41,6 @@ public class AStarTests {
 	CustomerPrice cp4 = new CustomerPrice(loc1, loc3, "Air", 2.0, 2.0, LocalDateTime.now(), "User");
 	CustomerPrice cp5 = new CustomerPrice(loc2, loc3, "Land", 1.0, 1.0, LocalDateTime.now(), "User");
 	CustomerPrice cp6 = new CustomerPrice(loc2, loc3, "Air", 2.0, 2.0, LocalDateTime.now(), "User");
-	
-//	Route r1 = new Route(loc1, loc2, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp1);
-//	Route r2 = new Route(loc1, loc2, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp2);
-//	Route r3 = new Route(loc1, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp3);
-//	Route r4 = new Route(loc1, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp4);
-//	Route r5 = new Route(loc2, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp5);
-//	Route r6 = new Route(loc2, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,1, cp6);
-//	AStar astar = new AStar(loc1, loc2);
-//	AStar astarNull = new AStar(null, null);
-	
-
 	CustomerPrice cp7 = new CustomerPrice(loc2, loc4, "Land", 1.0, 1.0, LocalDateTime.now(), "User");
 	CustomerPrice cp8 = new CustomerPrice(loc2, loc4, "Air", 2.0, 2.0, LocalDateTime.now(), "User");
 	CustomerPrice cp9 = new CustomerPrice(loc4, loc5, "Land", 1.0, 1.0, LocalDateTime.now(), "User");
@@ -63,28 +52,38 @@ public class AStarTests {
 	CustomerPrice cp15 = new CustomerPrice(loc1, loc3, "TEST", 1.0, 1.0, LocalDateTime.now(), "User");
 	CustomerPrice cp16 = new CustomerPrice(loc3, loc6, "Land", 1.0, 1.0, LocalDateTime.now(), "User");
 
-	Route r1 = new Route(loc1, loc2, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp1, LocalDateTime.now(), "User");
-	Route r2 = new Route(loc1, loc2, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp2, LocalDateTime.now(), "User");
-	Route r3 = new Route(loc1, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp3, LocalDateTime.now(), "User");
-	Route r4 = new Route(loc1, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp4, LocalDateTime.now(), "User");
-	Route r5 = new Route(loc2, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp5, LocalDateTime.now(), "User");
-	Route r6 = new Route(loc2, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp6, LocalDateTime.now(), "User");
-	Route r7 = new Route(loc2, loc4, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp7, LocalDateTime.now(), "User");
-	Route r8 = new Route(loc2, loc4, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp8, LocalDateTime.now(), "User");
-	Route r9 = new Route(loc4, loc5, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp9, LocalDateTime.now(), "User");
-	Route r10 = new Route(loc4, loc5, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp10, LocalDateTime.now(), "User");
-	Route r11 = new Route(loc3, loc5, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp11, LocalDateTime.now(), "User");
-	Route r12 = new Route(loc3, loc5, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp12, LocalDateTime.now(), "User");
-	Route r13 = new Route(loc3, loc4, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp13, LocalDateTime.now(), "User");
-	Route r14 = new Route(loc3, loc4, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp14, LocalDateTime.now(), "User");
-	Route r15 = new Route(loc1, loc3, "", "", "TEST", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp15, LocalDateTime.now(), "User");
-	Route r16 = new Route(loc3, loc6, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY,15, cp16, LocalDateTime.now(), "User");
-
-	// Should do a test where there is no route between the origin and
-	// destination
-
-	// Also one where there is a route between them but no air route.
-
+	Route r1 = new Route(loc1, loc2, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp1,
+			LocalDateTime.now(), "User");
+	Route r2 = new Route(loc1, loc2, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp2,
+			LocalDateTime.now(), "User");
+	Route r3 = new Route(loc1, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp3,
+			LocalDateTime.now(), "User");
+	Route r4 = new Route(loc1, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp4,
+			LocalDateTime.now(), "User");
+	Route r5 = new Route(loc2, loc3, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp5,
+			LocalDateTime.now(), "User");
+	Route r6 = new Route(loc2, loc3, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp6,
+			LocalDateTime.now(), "User");
+	Route r7 = new Route(loc2, loc4, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp7,
+			LocalDateTime.now(), "User");
+	Route r8 = new Route(loc2, loc4, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp8,
+			LocalDateTime.now(), "User");
+	Route r9 = new Route(loc4, loc5, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp9,
+			LocalDateTime.now(), "User");
+	Route r10 = new Route(loc4, loc5, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp10,
+			LocalDateTime.now(), "User");
+	Route r11 = new Route(loc3, loc5, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp11,
+			LocalDateTime.now(), "User");
+	Route r12 = new Route(loc3, loc5, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp12,
+			LocalDateTime.now(), "User");
+	Route r13 = new Route(loc3, loc4, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp13,
+			LocalDateTime.now(), "User");
+	Route r14 = new Route(loc3, loc4, "", "", "Air", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp14,
+			LocalDateTime.now(), "User");
+	Route r15 = new Route(loc1, loc3, "", "", "TEST", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp15,
+			LocalDateTime.now(), "User");
+	Route r16 = new Route(loc3, loc6, "", "", "Land", 1.0, 1.0, 99, 99, 5, 5, DayOfWeek.MONDAY, 15, cp16,
+			LocalDateTime.now(), "User");
 
 	@Test
 	public void testDirectRoute1() {
@@ -104,7 +103,7 @@ public class AStarTests {
 		AStar astar = new AStar(locations, loc1, loc5);
 
 		ArrayList<ArrayList<Route>> bestRoutes = astar.twoListsOfRoutes(2, 2);
-		assertTrue(bestRoutes.get(0).get(0).getOrigin().getName().equals("Lower Hutt" )
+		assertTrue(bestRoutes.get(0).get(0).getOrigin().getName().equals("Lower Hutt")
 				&& bestRoutes.get(0).get(0).getDestination().getName().equals("Auckland"));
 	}
 
@@ -184,8 +183,6 @@ public class AStarTests {
 	}
 
 	// HELPER
-
-	// helper methods
 	private void addRoutesToLocations() {
 		if (!routesAdded) {
 			loc1.addRoute(r1);

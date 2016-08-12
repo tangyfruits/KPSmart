@@ -6,15 +6,15 @@ public class RouteLoadRow {
 	private String totalWeight;
 	private String totalVolume;
 	private String totalCount;
-	
-	public RouteLoadRow(String origin, String destination, String totalWeight, String totalVolume, String totalCount){
+
+	public RouteLoadRow(String origin, String destination, String totalWeight, String totalVolume, String totalCount) {
 		this.origin = origin;
 		this.destination = destination;
 		this.totalWeight = totalWeight;
 		this.totalVolume = totalVolume;
 		this.totalCount = totalCount;
 	}
-	
+
 	public String getOrigin() {
 		return origin;
 	}

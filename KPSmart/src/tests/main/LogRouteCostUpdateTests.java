@@ -14,14 +14,15 @@ import org.junit.Test;
 import event.Route;
 
 /**
- * Will need to manually input customerPrices in console to run these. 
+ * Will need to manually input customerPrices in console to run these.
+ * 
  * @author Shelley
  *
  */
 public class LogRouteCostUpdateTests {
 
-	//add Locations that don't already exist
-	@Test 
+	// add Locations that don't already exist
+	@Test
 	public void test1() {
 		Main main = setUpRoutes();
 		assertEquals(2, main.getLocations().size());
@@ -58,8 +59,8 @@ public class LogRouteCostUpdateTests {
 	@Test
 	public void test3() {
 		Main main = setUpRoutes();
-		main.logTransportCostUpdate("Wellington", "Hastings", "UPS", "air",
-				 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,15, false, LocalDateTime.now(), "User");
+		main.logTransportCostUpdate("Wellington", "Hastings", "UPS", "air", 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,
+				15, false, LocalDateTime.now(), "User");
 		List<Location> locs = main.getLocations();
 		// has added origin, but not dest again
 		assertEquals(3, locs.size());
@@ -69,8 +70,8 @@ public class LogRouteCostUpdateTests {
 	@Test
 	public void test4() {
 		Main main = setUpRoutes();
-		main.logTransportCostUpdate("Hastings", "Auckland", "UPS", "air",
-				 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,15, false, LocalDateTime.now(), "User");
+		main.logTransportCostUpdate("Hastings", "Auckland", "UPS", "air", 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,
+				15, false, LocalDateTime.now(), "User");
 		List<Location> locs = main.getLocations();
 		// has added dest but not origin again
 		assertEquals(3, locs.size());
@@ -82,8 +83,8 @@ public class LogRouteCostUpdateTests {
 		Main main = setUpRoutes();
 		// check there is only one route out of origin
 		assertEquals(1, main.getLocations().get(0).getRoutes().size());
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "land",
-				 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,15, false, LocalDateTime.now(), "User");
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "land", 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,
+				15, false, LocalDateTime.now(), "User");
 		// check there are still only 2 locations
 		assertEquals(2, main.getLocations().size());
 		// check a second route has been added
@@ -96,8 +97,8 @@ public class LogRouteCostUpdateTests {
 		Main main = setUpRoutes();
 		// check only one route
 		assertEquals(1, main.getLocations().get(0).getRoutes().size());
-		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost", "air",
-				 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,15, false, LocalDateTime.now(), "User");
+		main.logTransportCostUpdate("Wellington", "Auckland", "NZPost", "air", 3.5, 4.5, 15, 50, 12, 18,
+				DayOfWeek.MONDAY, 15, false, LocalDateTime.now(), "User");
 		// check there are still only two locations
 		assertEquals(2, main.getLocations().size());
 		// check a second route hass been added
@@ -110,8 +111,8 @@ public class LogRouteCostUpdateTests {
 		Main main = setUpRoutes();
 		// check that there is only one route out of origin
 		assertEquals(1, main.getLocations().get(0).getRoutes().size());
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air",
-				 5.8, 15, 15, 50, 12, 18, DayOfWeek.MONDAY,15, false, LocalDateTime.now(), "User");
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air", 5.8, 15, 15, 50, 12, 18, DayOfWeek.MONDAY,
+				15, false, LocalDateTime.now(), "User");
 		// check there is still only one route
 		assertEquals(1, main.getLocations().get(0).getRoutes().size());
 	}
@@ -124,8 +125,8 @@ public class LogRouteCostUpdateTests {
 		// check the initial values
 		assertEquals(15, routeStart.getMaxWeight(), 0);
 		assertEquals(50, routeStart.getMaxVolume(), 0);
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air",
-				 3.5, 4.5, 20, 60, 12, 18, DayOfWeek.MONDAY,15,false, LocalDateTime.now(), "User");
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air", 3.5, 4.5, 20, 60, 12, 18, DayOfWeek.MONDAY,
+				15, false, LocalDateTime.now(), "User");
 		// check the route has the new values
 		assertEquals(20, routeStart.getMaxWeight(), 0);
 		assertEquals(60, routeStart.getMaxVolume(), 0);
@@ -139,8 +140,8 @@ public class LogRouteCostUpdateTests {
 		// check the initial values
 		assertEquals(3.5, routeStart.getWeightCost(), 0);
 		assertEquals(4.5, routeStart.getVolumeCost(), 0);
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air",
-				5.8, 15, 15, 50, 12, 18, DayOfWeek.MONDAY,15,false, LocalDateTime.now(), "User");
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air", 5.8, 15, 15, 50, 12, 18, DayOfWeek.MONDAY,
+				15, false, LocalDateTime.now(), "User");
 		// check the route has the new values
 		assertEquals(5.8, routeStart.getWeightCost(), 0);
 		assertEquals(15, routeStart.getVolumeCost(), 0);
@@ -155,8 +156,8 @@ public class LogRouteCostUpdateTests {
 		assertEquals(12, routeStart.getDuration(), 0);
 		assertEquals(18, routeStart.getFrequency(), 0);
 		assertEquals(DayOfWeek.MONDAY, routeStart.getDay());
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air",
-				 3.5, 4.5, 15, 50, 20, 60, DayOfWeek.MONDAY,15,false, LocalDateTime.now(), "User");
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air", 3.5, 4.5, 15, 50, 20, 60, DayOfWeek.MONDAY,
+				15, false, LocalDateTime.now(), "User");
 		// check the route has the new values
 		assertEquals(20, routeStart.getDuration(), 0);
 		assertEquals(60, routeStart.getFrequency(), 0);
@@ -169,8 +170,8 @@ public class LogRouteCostUpdateTests {
 		Main main = setUpRoutes();
 		// check there is only one route
 		assertEquals(1, main.getLocations().get(0).getRoutes().size());
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air",
-				3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,15,false, LocalDateTime.now(), "User");
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air", 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,
+				15, false, LocalDateTime.now(), "User");
 		assertEquals(2, main.getLocations().size());
 		// check there is still only one route
 		assertEquals(1, main.getLocations().get(0).getRoutes().size());
@@ -179,8 +180,8 @@ public class LogRouteCostUpdateTests {
 	// HELPER
 	public Main setUpRoutes() {
 		Main main = new Main();
-		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air",
-				 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,15,false, LocalDateTime.now(), "User");
+		main.logTransportCostUpdate("Wellington", "Auckland", "UPS", "air", 3.5, 4.5, 15, 50, 12, 18, DayOfWeek.MONDAY,
+				15, false, LocalDateTime.now(), "User");
 		return main;
 	}
 

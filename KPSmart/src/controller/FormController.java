@@ -47,17 +47,20 @@ public class FormController extends NavBarController {
 
 	@FXML
 	private Text vol, maxVol;
-	
-	public void initReq(){
+
+	public void initReq() {
 		vol.setText("Volume (cm\u00b3)");
 	}
-	public void initPrice(){
+
+	public void initPrice() {
 		vol.setText("Volume Cost (cm\u00b3)");
 	}
-	public void initRoute(){
+
+	public void initRoute() {
 		vol.setText("Volume Cost (cm\u00b3)");
 		maxVol.setText("Max Volume (cm\u00b3)");
 	}
+
 	private ArrayList<Location> locs;
 	@FXML
 	private MenuButton originMenu;
@@ -133,6 +136,7 @@ public class FormController extends NavBarController {
 			}
 		};
 	}
+
 	private EventHandler<ActionEvent> setOtherDest() {
 		return new EventHandler<ActionEvent>() {
 
@@ -145,6 +149,7 @@ public class FormController extends NavBarController {
 			}
 		};
 	}
+
 	private EventHandler<ActionEvent> setOtherOrigin() {
 		return new EventHandler<ActionEvent>() {
 
@@ -157,6 +162,7 @@ public class FormController extends NavBarController {
 			}
 		};
 	}
+
 	private EventHandler<ActionEvent> setSelectedDest() {
 
 		return new EventHandler<ActionEvent>() {
@@ -170,8 +176,6 @@ public class FormController extends NavBarController {
 			}
 		};
 	}
-
-
 
 	// Priority Menu
 	@FXML
@@ -212,11 +216,13 @@ public class FormController extends NavBarController {
 		type = "Air";
 		typemenu.setText("Air");
 	}
+
 	@FXML
 	private void landTypeAction(ActionEvent event) {
 		type = "Land";
 		typemenu.setText("Land");
 	}
+
 	@FXML
 	private void seaTypeAction(ActionEvent event) {
 		type = "Sea";
@@ -254,26 +260,31 @@ public class FormController extends NavBarController {
 	private MenuButton dayMenu;
 
 	private String day = "";
+
 	@FXML
 	private void mondayAction(ActionEvent event) {
 		day = "MONDAY";
 		dayMenu.setText("Monday");
 	}
+
 	@FXML
 	private void tuesdayAction(ActionEvent event) {
 		day = "TUESDAY";
 		dayMenu.setText("Tuesday");
 	}
+
 	@FXML
 	private void wednesdayAction(ActionEvent event) {
 		day = "WEDNESDAY";
 		dayMenu.setText("Wednesday");
 	}
+
 	@FXML
 	private void thursdayAction(ActionEvent event) {
 		day = "THURSDAY";
 		dayMenu.setText("Thursday");
 	}
+
 	@FXML
 	private void fridayAction(ActionEvent event) {
 		day = "FRIDAY";
@@ -313,6 +324,7 @@ public class FormController extends NavBarController {
 			timeMenu.getItems().add(m);
 		}
 	}
+
 	private EventHandler<ActionEvent> setTime() {
 		return new EventHandler<ActionEvent>() {
 
@@ -347,32 +359,29 @@ public class FormController extends NavBarController {
 
 	/** TRANSPORT ROUTE FORM */
 
-	private void validateRoute(String mw, String mv, String wc, String vc,
-			String d, String f) {
-		if (selectedOrigin.isEmpty() || selectedOrigin.equals("Other")
-				|| selectedDest.isEmpty() || selectedDest.equals("Other")
-				|| type.isEmpty() || company.getText().isEmpty()
-				|| mw.isEmpty() || !isDouble(mw) || mv.isEmpty()
-				|| !isDouble(mv) || wc.isEmpty() || !isDouble(wc)
-				|| vc.isEmpty() || !isDouble(vc) || d.isEmpty() || !isDouble(d)
-				|| f.isEmpty() || !isDouble(f) || day.isEmpty() || time == -1) {
+	private void validateRoute(String mw, String mv, String wc, String vc, String d, String f) {
+		if (selectedOrigin.isEmpty() || selectedOrigin.equals("Other") || selectedDest.isEmpty()
+				|| selectedDest.equals("Other") || type.isEmpty() || company.getText().isEmpty() || mw.isEmpty()
+				|| !isDouble(mw) || mv.isEmpty() || !isDouble(mv) || wc.isEmpty() || !isDouble(wc) || vc.isEmpty()
+				|| !isDouble(vc) || d.isEmpty() || !isDouble(d) || f.isEmpty() || !isDouble(f) || day.isEmpty()
+				|| time == -1) {
 
 			if (selectedOrigin.isEmpty() && !originMenu.getText().equals("Other")) {
 				hasError.set(true);
 				originMenu.setStyle("-fx-background-color: #ffff99");
-			} else{
+			} else {
 				originMenu.setStyle("-fx-background-color:  E9D5B9");
 			}
 			if (selectedOrigin.isEmpty() && originMenu.getText().equals("Other")) {
 				hasError.set(true);
 				otherOrigin.setStyle("-fx-control-inner-background: #ffff99");
-			} else{
+			} else {
 				otherOrigin.setStyle("-fx-control-inner-background: white");
 			}
 			if (selectedDest.isEmpty() && !destinationMenu.getText().equals("Other")) {
 				hasError.set(true);
 				destinationMenu.setStyle("-fx-background-color: #ffff99");
-			} else{
+			} else {
 				destinationMenu.setStyle("-fx-background-color: E9D5B9");
 
 			}
@@ -380,73 +389,73 @@ public class FormController extends NavBarController {
 				hasError.set(true);
 				otherDest.setStyle("-fx-control-inner-background: #ffff99");
 
-			} else{
+			} else {
 				otherDest.setStyle("-fx-control-inner-background: white");
 
 			}
-			if(type.isEmpty()){
+			if (type.isEmpty()) {
 				typemenu.setStyle("-fx-background-color: #ffff99");
-			}else{
+			} else {
 				typemenu.setStyle("-fx-background-color: E9D5B9");
 			}
-			if(company.getText().isEmpty()){
+			if (company.getText().isEmpty()) {
 				company.setStyle("-fx-control-inner-background: #ffff99");
-			} else{
+			} else {
 				company.setStyle("-fx-control-inner-background: white");
 
 			}
 			if (mw.isEmpty() || !isDouble(mw)) {
 				hasError.set(true);
 				maxweight.setStyle("-fx-control-inner-background: #ffff99");
-			} else{
+			} else {
 				maxweight.setStyle("-fx-control-inner-background: white");
 
 			}
 			if (mv.isEmpty() || !isDouble(mv)) {
 				hasError.set(true);
-				 maxvolume.setStyle("-fx-control-inner-background: #ffff99");
+				maxvolume.setStyle("-fx-control-inner-background: #ffff99");
 			} else {
-				 maxvolume.setStyle("-fx-control-inner-background: white");
+				maxvolume.setStyle("-fx-control-inner-background: white");
 
 			}
 			if (wc.isEmpty() || !isDouble(wc)) {
 				hasError.set(true);
 				weightcost.setStyle("-fx-control-inner-background: #ffff99");
-			} else{
+			} else {
 				weightcost.setStyle("-fx-control-inner-background: white");
 
 			}
 			if (vc.isEmpty() || !isDouble(vc)) {
 				hasError.set(true);
-				 volumecost.setStyle("-fx-control-inner-background: #ffff99");
+				volumecost.setStyle("-fx-control-inner-background: #ffff99");
 			} else {
-				 volumecost.setStyle("-fx-control-inner-background: white");
+				volumecost.setStyle("-fx-control-inner-background: white");
 
 			}
 			if (f.isEmpty() || !isDouble(f)) {
 				hasError.set(true);
 				frequency.setStyle("-fx-control-inner-background: #ffff99");
-			} else{
+			} else {
 				frequency.setStyle("-fx-control-inner-background: white");
 
 			}
 			if (d.isEmpty() || !isDouble(d)) {
 				hasError.set(true);
-				 duration.setStyle("-fx-control-inner-background: #ffff99");
+				duration.setStyle("-fx-control-inner-background: #ffff99");
 			} else {
-				 duration.setStyle("-fx-control-inner-background: white");
+				duration.setStyle("-fx-control-inner-background: white");
 
-			}	
-			if(day.isEmpty()){
+			}
+			if (day.isEmpty()) {
 				hasError.set(true);
 				dayMenu.setStyle("-fx-background-color: #ffff99");
-			}else{
+			} else {
 				dayMenu.setStyle("-fx-background-color: E9D5B9");
 			}
-			if(time == -1){
+			if (time == -1) {
 				hasError.set(true);
 				timeMenu.setStyle("-fx-background-color: #ffff99");
-			}else{
+			} else {
 				timeMenu.setStyle("-fx-background-color: E9D5B9");
 			}
 		} else {
@@ -455,6 +464,7 @@ public class FormController extends NavBarController {
 	}
 
 	private Stage modal;
+
 	@FXML
 	private void transportRouteButtonAction(ActionEvent event) throws IOException {
 		error.visibleProperty().bind(hasError);
@@ -477,17 +487,14 @@ public class FormController extends NavBarController {
 		validateRoute(mw, mv, wc, vc, d, f);
 
 		if (!hasError.get()) {
-			Route r = main.logTransportCostUpdate(selectedOrigin, selectedDest,
-					company.getText(), type, Double.parseDouble(wc),
-					Double.parseDouble(vc), Integer.parseInt(mw),
-					Integer.parseInt(mv), Integer.parseInt(d),
-					Integer.parseInt(f), DayOfWeek.valueOf(day), time, false, LocalDateTime.now(), main.getCurrentUser().getUsername());
+			Route r = main.logTransportCostUpdate(selectedOrigin, selectedDest, company.getText(), type,
+					Double.parseDouble(wc), Double.parseDouble(vc), Integer.parseInt(mw), Integer.parseInt(mv),
+					Integer.parseInt(d), Integer.parseInt(f), DayOfWeek.valueOf(day), time, false, LocalDateTime.now(),
+					main.getCurrentUser().getUsername());
 			if (r.getPrice() == null) {
 
-				FXMLLoader popup = new FXMLLoader(getClass().getResource(
-						"/views/popup.fxml"));
-				popup.setController(new PopUpController(main, selectedOrigin,
-						selectedDest, r.getPriority(), r, this));
+				FXMLLoader popup = new FXMLLoader(getClass().getResource("/views/popup.fxml"));
+				popup.setController(new PopUpController(main, selectedOrigin, selectedDest, r.getPriority(), r, this));
 				Parent popupGUI = popup.load();
 				modal = new Stage();
 				modal.setScene(new Scene(popupGUI));
@@ -518,8 +525,8 @@ public class FormController extends NavBarController {
 			}
 		}
 	}
-	
-	public void closeModal(){
+
+	public void closeModal() {
 		modal.close();
 	}
 
@@ -540,8 +547,7 @@ public class FormController extends NavBarController {
 		} else {
 			otherOrigin.setStyle("-fx-control-inner-background: white");
 		}
-		if (selectedDest.isEmpty()
-				&& !destinationMenu.getText().equals("Other")) {
+		if (selectedDest.isEmpty() && !destinationMenu.getText().equals("Other")) {
 			hasError.set(true);
 			destinationMenu.setStyle("-fx-background-color: #ffff99");
 		} else {
@@ -599,9 +605,9 @@ public class FormController extends NavBarController {
 		validatePrice(wc, vc);
 
 		if (!hasError.get()) {
-			CustomerPrice price = main.logCustomerPriceUpdate(selectedOrigin,
-					selectedDest, priority, Double.parseDouble(wc),
-					Double.parseDouble(vc), false, LocalDateTime.now(), main.getCurrentUser().getUsername());
+			CustomerPrice price = main.logCustomerPriceUpdate(selectedOrigin, selectedDest, priority,
+					Double.parseDouble(wc), Double.parseDouble(vc), false, LocalDateTime.now(),
+					main.getCurrentUser().getUsername());
 			if (price != null) {
 				confirmation.visibleProperty().bind(completed);
 				completed.set(true);
@@ -648,36 +654,37 @@ public class FormController extends NavBarController {
 	private BooleanProperty routeless = new SimpleBooleanProperty(false);
 
 	private void validateDelivery(String w, String v) {
-		if (selectedOrigin.isEmpty() || selectedDest.isEmpty()
-				|| w.isEmpty() || !isDouble(w) || v.isEmpty() || !isDouble(v)) {
+		if (selectedOrigin.isEmpty() || selectedDest.isEmpty() || w.isEmpty() || !isDouble(w) || v.isEmpty()
+				|| !isDouble(v)) {
 			if (selectedOrigin.isEmpty()) {
 				hasError.set(true);
 				originMenu.setStyle("-fx-background-color: #ffff99");
-			} else{
+			} else {
 				originMenu.setStyle("-fx-background-color:  E9D5B9");
 			}
 			if (selectedDest.isEmpty()) {
 				hasError.set(true);
 				destinationMenu.setStyle("-fx-background-color: #ffff99");
-			} else{
+			} else {
 				destinationMenu.setStyle("-fx-background-color: E9D5B9");
 			}
 			if (w.isEmpty() || !isDouble(w)) {
 				hasError.set(true);
-				 weight.setStyle("-fx-control-inner-background: #ffff99");
+				weight.setStyle("-fx-control-inner-background: #ffff99");
 			} else {
-				 weight.setStyle("-fx-control-inner-background: white");
-			}if (v.isEmpty() || !isDouble(v)) {
+				weight.setStyle("-fx-control-inner-background: white");
+			}
+			if (v.isEmpty() || !isDouble(v)) {
 				hasError.set(true);
-				 volume.setStyle("-fx-control-inner-background: #ffff99");
+				volume.setStyle("-fx-control-inner-background: #ffff99");
 			} else {
-				 volume.setStyle("-fx-control-inner-background: white");
+				volume.setStyle("-fx-control-inner-background: white");
 			}
 		} else {
 			hasError.set(false);
 		}
 	}
-	
+
 	private DecimalFormat df = new DecimalFormat("0.00");
 
 	@FXML
@@ -692,17 +699,14 @@ public class FormController extends NavBarController {
 		validateDelivery(w, v);
 
 		if (!hasError.get()) {
-			routes = main.getPossibleRoutes(selectedOrigin, selectedDest,
-					Double.parseDouble(w), Double.parseDouble(v));
+			routes = main.getPossibleRoutes(selectedOrigin, selectedDest, Double.parseDouble(w), Double.parseDouble(v));
 			if (routes.size() > 0) {
 				submit.visibleProperty().bind(hasPriorities);
 				reselect.visibleProperty().bind(hasPriorities);
-				firstChoice.setText(routes.get(0).getPriority() + ": $"
-						+ df.format(routes.get(0).getPrice()));
+				firstChoice.setText(routes.get(0).getPriority() + ": $" + df.format(routes.get(0).getPrice()));
 				firstChoice.visibleProperty().bind(hasPriorities);
 				if (routes.size() == 2) {
-					secondChoice.setText(routes.get(1).getPriority() + ": $"
-							+ routes.get(1).getPrice());
+					secondChoice.setText(routes.get(1).getPriority() + ": $" + routes.get(1).getPrice());
 					secondChoice.visibleProperty().bind(hasPriorities);
 				}
 				hasPriorities.set(true);
@@ -722,9 +726,9 @@ public class FormController extends NavBarController {
 	@FXML
 	private void deliveryRequestButtonAction(ActionEvent event) {
 		if (!(chosenPriority == null)) {
-			DeliveryRequest req = main.getDeliveryDetails(selectedOrigin,
-					selectedDest, Double.parseDouble(this.weight.getText()),
-					Double.parseDouble(this.volume.getText()), chosenPriority, main.getCurrentUser().getUsername());
+			DeliveryRequest req = main.getDeliveryDetails(selectedOrigin, selectedDest,
+					Double.parseDouble(this.weight.getText()), Double.parseDouble(this.volume.getText()),
+					chosenPriority, main.getCurrentUser().getUsername());
 
 			chosenPriority = null;
 			routes = null;
@@ -773,7 +777,7 @@ public class FormController extends NavBarController {
 	private ScrollPane scrollpane;
 
 	private BooleanProperty hasRoutes = new SimpleBooleanProperty(false);
-	
+
 	private BooleanProperty available = new SimpleBooleanProperty(false);
 
 	@FXML
@@ -783,17 +787,17 @@ public class FormController extends NavBarController {
 
 	private void validateDiscontinue() {
 		if (selectedOrigin.isEmpty() || selectedDest.isEmpty()) {
-			
+
 			if (selectedOrigin.isEmpty()) {
 				hasError.set(true);
 				originMenu.setStyle("-fx-background-color: #ffff99");
-			} else{
+			} else {
 				originMenu.setStyle("-fx-background-color:  E9D5B9");
 			}
 			if (selectedDest.isEmpty()) {
 				hasError.set(true);
 				destinationMenu.setStyle("-fx-background-color: #ffff99");
-			} else{
+			} else {
 				destinationMenu.setStyle("-fx-background-color: E9D5B9");
 
 			}
@@ -812,20 +816,16 @@ public class FormController extends NavBarController {
 		noRoutes.visibleProperty().bind(available);
 		if (!hasError.get()) {
 			disconRoutes = main.getRoutes(selectedOrigin, selectedDest);
-			if (disconRoutes.size()>0) {
+			if (disconRoutes.size() > 0) {
 				final ToggleGroup group = new ToggleGroup();
-				group.selectedToggleProperty().addListener(
-						new ChangeListener<Toggle>() {
-							@Override
-							public void changed(
-									ObservableValue<? extends Toggle> ov,
-									Toggle t, Toggle t1) {
-								selectedRoute = (Route) t1.getUserData();
-							}
-						});
+				group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+					@Override
+					public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
+						selectedRoute = (Route) t1.getUserData();
+					}
+				});
 				for (Route r : disconRoutes) {
-					RadioButton b = new RadioButton(r.getCompany() + ": "
-							+ r.getPriority());
+					RadioButton b = new RadioButton(r.getCompany() + ": " + r.getPriority());
 					b.setUserData(r);
 					b.setToggleGroup(group);
 					discRoutes.getChildren().add(b);
@@ -839,8 +839,7 @@ public class FormController extends NavBarController {
 				originMenu.setDisable(true);
 				destinationMenu.setDisable(true);
 				findroutes.setDisable(true);
-			}
-			else{
+			} else {
 				available.set(true);
 				changeSelection.visibleProperty().bind(available);
 			}
@@ -860,9 +859,9 @@ public class FormController extends NavBarController {
 	@FXML
 	private void discTransportButtonAction(ActionEvent event) {
 		if (selectedRoute != null) {
-			DiscontinueRoute route = main.discontinueTransportRoute(
-					selectedOrigin, selectedDest, selectedRoute.getCompany(),
-					selectedRoute.getType(), false, LocalDateTime.now(), main.getCurrentUser().getUsername());
+			DiscontinueRoute route = main.discontinueTransportRoute(selectedOrigin, selectedDest,
+					selectedRoute.getCompany(), selectedRoute.getType(), false, LocalDateTime.now(),
+					main.getCurrentUser().getUsername());
 			if (route != null) {
 				changeSelection.setDisable(true);
 				for (Node r : discRoutes.getChildren()) {

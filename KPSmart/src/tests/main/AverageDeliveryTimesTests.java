@@ -41,6 +41,7 @@ public class AverageDeliveryTimesTests {
 				&& t.getPriority().equals("Air") && m.averageDeliveryTime("Wellington", "Auckland", "Air") == 7);
 
 	}
+
 	@Test
 	public void test3() {
 		Main m = new Main();
@@ -72,6 +73,7 @@ public class AverageDeliveryTimesTests {
 				&& t.getPriority().equals("Air") && m.averageDeliveryTime("Wellington", "Hamilton", "Air") == 25);
 
 	}
+
 	@Test
 	public void test5() {
 		Main m = new Main();

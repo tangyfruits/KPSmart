@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import main.Location;
 
-public class DeliveryRequest implements Event{
-	
+public class DeliveryRequest implements Event {
+
 	// FIELDS
 	private LocalDateTime logTime;
 	private String user;
@@ -18,9 +18,9 @@ public class DeliveryRequest implements Event{
 	private String priority;
 	private int duration;
 	private final String eventType = "cost";
-	
+
 	// CONSTRUCTOR
-	public DeliveryRequest(LocalDateTime logTime, Location origin, Location destination, double weight, double volume, 
+	public DeliveryRequest(LocalDateTime logTime, Location origin, Location destination, double weight, double volume,
 			String priority, int duration, ArrayList<Leg> legs, String user) {
 		this.logTime = logTime;
 		this.origin = origin;
@@ -32,36 +32,45 @@ public class DeliveryRequest implements Event{
 		this.legs = legs;
 		this.user = user;
 	}
-	
+
 	// METHODS
 	// Getters
 	public LocalDateTime getLogTime() {
 		return logTime;
 	}
+
 	public Location getOrigin() {
 		return origin;
 	}
+
 	public Location getDestination() {
 		return destination;
 	}
+
 	public ArrayList<Leg> getLegs() {
 		return legs;
 	}
+
 	public double getWeight() {
 		return weight;
 	}
+
 	public double getVolume() {
 		return volume;
 	}
+
 	public String getPriority() {
 		return priority;
 	}
+
 	public int getDuration() {
 		return duration;
 	}
+
 	public String getEventType() {
 		return eventType;
 	}
+
 	public String getUser() {
 		return user;
 	}
